@@ -100,7 +100,7 @@ const useStyles = makeStyles(theme => ({
                 >
                     <MenuIcon />
                 </IconButton>
-                <img src={logo} className={classes.logo} />
+                <img src={logo} alt="" className={classes.logo} />
                 <Button className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
                 </Toolbar>
             </AppBar>

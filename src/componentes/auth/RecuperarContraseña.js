@@ -75,7 +75,7 @@ const RecuperarContraseña = () => {
     return ( 
     <>
         <div>
-            <img src={logo} className={classes.logo}></img>
+            <img src={logo} alt="" className={classes.logo}></img>
         </div>
         <Card className={classes.cartaRecuperarContraseña}>
             <CardContent>

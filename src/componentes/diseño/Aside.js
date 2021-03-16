@@ -15,8 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import TodayIcon from '@material-ui/icons/Today';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import GroupIcon from '@material-ui/icons/Group';
+
 const esAdmin = false;
 
 const useStyles = makeStyles(theme => ({
@@ -48,13 +47,7 @@ const Aside = () => {
     const handleClickSubMenu = () => {
         abrirSubMenu(!subMenu);
     }
-
-    //para cargar los menús del admin
-    const menuAdmin = [
-        { titulo: "Administración de usuarios", icono: PersonIcon },
-        { titulo: "Administración de playas de estacionamiento", icono: StoreMallDirectoryIcon },
-        { titulo: "Acerca", icono: InfoIcon }
-    ]
+    
     const menuPrincipal = (
         <div>
             &nbsp;
