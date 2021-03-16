@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CommuteIcon from '@material-ui/icons/Commute';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -9,7 +9,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-
+import InfoIcon from '@material-ui/icons/Info';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import TodayIcon from '@material-ui/icons/Today';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import GroupIcon from '@material-ui/icons/Group';
 const esAdmin = false;
 
 const useStyles = makeStyles(theme => ({
@@ -28,22 +35,25 @@ const useStyles = makeStyles(theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 18
     },
+    nested: {
+        paddingLeft: theme.spacing(5),
+    },
 }));
 
 const Aside = () => {
     const classes = useStyles();
-    //para cargar los menús del encargado
-    const menuEncargado = [
-        { titulo: "Reservas del día", icono: CommuteIcon },
-        { titulo: "Ingresar pago", icono: MonetizationOnIcon },
-        { titulo: "Reportes", icono: EqualizerIcon },
-        { titulo: "Datos del estacionamiento y tarifas", icono: StoreMallDirectoryIcon },
-        { titulo: "Datos del encargado", icono: PersonIcon }
-    ]
+    //state para controlar los submenús
+    const [subMenu, abrirSubMenu ] = useState(false);
+
+    const handleClickSubMenu = () => {
+        abrirSubMenu(!subMenu);
+    }
+
     //para cargar los menús del admin
     const menuAdmin = [
         { titulo: "Administración de usuarios", icono: PersonIcon },
-        { titulo: "Administración de playas de estacionamiento", icono: StoreMallDirectoryIcon }
+        { titulo: "Administración de playas de estacionamiento", icono: StoreMallDirectoryIcon },
+        { titulo: "Acerca", icono: InfoIcon }
     ]
     const menuPrincipal = (
         <div>
@@ -55,26 +65,97 @@ const Aside = () => {
             <Divider></Divider>
             {!esAdmin ?
             <List>
-            {menuEncargado.map((item) => (
+                <ListItem button onClick= { handleClickSubMenu }>
+                    <ListItemIcon>
+                        <CommuteIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Reservas">
+                    </ListItemText>
+                    {subMenu ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+                </ListItem>
+                <Collapse in={subMenu} timeout="auto" unmountOnExit>
+                    <List disablePadding>
+                    <ListItem button className={classes.nested}>
+                        <ListItemIcon>
+                        <TodayIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Reservas del día" />
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                        <ListItemIcon>
+                        <DateRangeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Calendario de reservas" />
+                    </ListItem>
+                    </List>
+                </Collapse>
                 <ListItem button>
                     <ListItemIcon>
-                        {React.createElement(item.icono)}
+                        <MonetizationOnIcon/>
                     </ListItemIcon>
-                    <ListItemText classes={{primary:classes.titulosMenu}}>
-                        {`${item.titulo}`}
+                    <ListItemText>
+                        Ingresar nuevo pago
                     </ListItemText>
                 </ListItem>
-            ))}
-            </List>
-            :<List>
-            {menuAdmin.map((item) => (
                 <ListItem button>
                     <ListItemIcon>
-                        {React.createElement(item.icono)}
+                        <StoreMallDirectoryIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={`${item.titulo}`} />
+                    <ListItemText>
+                        Datos del estacionamiento y tarifas
+                    </ListItemText>
                 </ListItem>
-            ))}
+                <ListItem button>
+                    <ListItemIcon>
+                        <EqualizerIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Reportes
+                    </ListItemText>
+                </ListItem>
+                &nbsp;
+                <Divider></Divider>
+                <ListItem button>
+                    <ListItemIcon>
+                        <PersonIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Datos del encargado
+                    </ListItemText>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <InfoIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Acerca
+                    </ListItemText>
+                </ListItem>
+            </List>
+            :<List>
+                <ListItem button onClick={handleClickSubMenu}>
+                    <ListItemIcon>
+                        <PersonIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Administración de usuarios">
+                    </ListItemText>
+                </ListItem>
+                <ListItem button onClick={handleClickSubMenu}>
+                    <ListItemIcon>
+                        <StoreMallDirectoryIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Administración de playas de estacionamiento">
+                    </ListItemText>
+                </ListItem>
+                <Divider></Divider>
+                <ListItem button>
+                    <ListItemIcon>
+                        <InfoIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Acerca
+                    </ListItemText>
+                </ListItem>
             </List>
             }
         </div>

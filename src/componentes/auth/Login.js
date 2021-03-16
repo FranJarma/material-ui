@@ -106,11 +106,13 @@ const Login = () => {
                     </Grid>
                     &nbsp;
                     <Grid item>
+                    <Link to={'/home'}>
                     <Button
                         className={classes.botonIniciarSesion}
                         variant="contained"
                     >Iniciar sesión
                     </Button>
+                    </Link>
                     </Grid>
                     &nbsp;
                     <Grid item>
