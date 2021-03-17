@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import TodayIcon from '@material-ui/icons/Today';
+import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
 
@@ -68,12 +69,14 @@ const Aside = () => {
                 </ListItem>
                 <Collapse in={subMenu} timeout="auto" unmountOnExit>
                     <List disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                        <TodayIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Reservas del día" />
-                    </ListItem>
+                    <Link to={'/reservas-del-dia'}>
+                        <ListItem button className={classes.nested}>
+                            <ListItemIcon>
+                            <TodayIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Reservas del día" />
+                        </ListItem>
+                    </Link>
                     <ListItem button className={classes.nested}>
                         <ListItemIcon>
                         <DateRangeIcon />

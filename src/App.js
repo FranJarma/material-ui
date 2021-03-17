@@ -4,6 +4,7 @@ import Login from './componentes/auth/Login.js';
 import Registrar from './componentes/auth/Registrar.js';
 import RecuperarContraseña from './componentes/auth/RecuperarContraseña.js';
 import Spinner from './componentes/diseño/Spinner.js';
+import ReservasHoy from './componentes/reservas/ReservasHoy.js';
 
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -26,6 +27,9 @@ function App() {
       </Route>
       <Route path="/spinner">
         <Spinner/>
+      </Route>
+      <Route path="/reservas-del-dia">
+        <ReservasHoy/>
       </Route>
     </Router>
     </>

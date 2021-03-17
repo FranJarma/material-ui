@@ -61,7 +61,7 @@ const Spinner = () => {
         <div className={classes.root}>
             <img src={logo} alt="" className={classes.logo}></img>
             &nbsp;
-            <Typography className={classes.subtituloCarta}>Cargando...</Typography>
+            <Typography className={classes.subtituloCarta}>Cargando... Espere por favor</Typography>
             <LinearProgress variant="determinate" value={progreso} />
         </div>
      );
