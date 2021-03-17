@@ -1,14 +1,13 @@
 import React from 'react';
-import Footer from './../diseño/Footer.js';
 import Navbar from './../diseño/Navbar.js';
-import { List, ListItemAvatar, ListItemText, Divider, makeStyles, Typography, ListItem, Avatar } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
+import { List, ListItemAvatar, ListItemText, Divider, makeStyles, Typography, ListItem, Avatar, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        fontSize: 25
+        fontSize: 25,
+        textAlign: "center"
     },
     cartaReservas: {
         flexGrow: 1,
@@ -23,15 +22,28 @@ const useStyles = makeStyles((theme) => ({
             marginRight: "1rem"
         },
     },
-    tituloReserva: {
-
+    botonPagado: {
+        backgroundColor: "#14a37f",
+        color: "#ffffff",
+        float: "right",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#14a37f",
+        }
     },
-    subtituloReserva: {
-
+    botonNoPagado: {
+        backgroundColor: "#fbc02d",
+        color: "#ffffff",
+        float: "right",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#fbc02d",
+        }
     },
-    imagenReserva: {
-
-    }
 }));
 
 const ReservasHoy = () => {
@@ -45,33 +57,122 @@ const ReservasHoy = () => {
             <ListItem button>
                 <ListItemAvatar>
                     <Avatar>
-                        <PersonIcon/>
+                        F
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Francisco Alfredo Jarma" secondary="16:00 - 18:20">
+                <ListItemText primary="Francisco Jarma" className={classes.tituloReserva} secondary ={
+                    <>
+                    <Typography>Patente: LZY450</Typography>
+                    <Typography>Automóvil: Volkswagen Gol Rojo</Typography>
+                    <Typography>Horario: 16-17</Typography>
+                    <Typography>Precio: $100</Typography>
+                    <Typography color="secondary">Penalidad: $15</Typography>
+                    </>}>
+                </ListItemText>
+                <ListItemText>
+                    <Button className= {classes.botonPagado}>Pagada</Button>
                 </ListItemText>
             </ListItem>
             <Divider></Divider>
             <ListItem button>
                 <ListItemAvatar>
                     <Avatar>
-                        <PersonIcon/>
+                        E
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Roberto Gómez Bolaños" secondary="17:00 - 18:20">
+                <ListItemText primary="Estanislao Gonzáles Pérez" secondary ={
+                    <>
+                    <Typography>Patente: KEA512</Typography>
+                    <Typography>Automóvil: Ford KA</Typography>
+                    <Typography>Horario: 16-17</Typography>
+                    <Typography>Precio: $100</Typography>
+                    <Typography color="secondary">Penalidad: $15</Typography>
+                    </>}>
+                </ListItemText>
+                <ListItemText>
+                    <Button className= {classes.botonNoPagado}>No pagada</Button>
+                </ListItemText>
+            </ListItem>
+                <Divider></Divider>
+            <ListItem button>
+                <ListItemAvatar>
+                    <Avatar>
+                        R
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Roberto Gomez" secondary ={
+                    <>
+                    <Typography>Patente: KAV412</Typography>
+                    <Typography>Automóvil: Volkswagen Gol Blanco</Typography>
+                    <Typography>Horario: 16-18</Typography>
+                    <Typography>Precio: $200</Typography>
+                    <Typography color="secondary">Penalidad: $15</Typography>
+                    </>}>
+                </ListItemText>
+                <ListItemText>
+                    <Button className= {classes.botonNoPagado}>No Pagada</Button>
+                </ListItemText>
+            </ListItem>
+            <ListItem button>
+                <ListItemAvatar>
+                    <Avatar>
+                        F
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Francisco Jarma" className={classes.tituloReserva} secondary ={
+                    <>
+                    <Typography>Patente: LZY450</Typography>
+                    <Typography>Automóvil: Volkswagen Gol Rojo</Typography>
+                    <Typography>Horario: 16-17</Typography>
+                    <Typography>Precio: $100</Typography>
+                    <Typography color="primary">Penalidad: $0</Typography>
+                    </>}>
+                </ListItemText>
+                <ListItemText>
+                    <Button className= {classes.botonPagado}>Pagada</Button>
                 </ListItemText>
             </ListItem>
             <Divider></Divider>
             <ListItem button>
                 <ListItemAvatar>
                     <Avatar>
-                        <PersonIcon/>
+                        E
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Andrea Gómez" secondary="16:00 - 18:20">
+                <ListItemText primary="Estanislao Gonzáles Pérez" secondary ={
+                    <>
+                    <Typography>Patente: KEA512</Typography>
+                    <Typography>Automóvil: Ford KA</Typography>
+                    <Typography>Horario: 16-17</Typography>
+                    <Typography>Precio: $100</Typography>
+                    <Typography color="primary">Penalidad: $0</Typography>
+                    </>}>
+                </ListItemText>
+                <ListItemText>
+                    <Button className= {classes.botonNoPagado}>No pagada</Button>
                 </ListItemText>
             </ListItem>
-            </List>
+                <Divider></Divider>
+            <ListItem button>
+                <ListItemAvatar>
+                    <Avatar>
+                        R
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Roberto Gomez" secondary ={
+                    <>
+                    <Typography>Patente: KAV412</Typography>
+                    <Typography>Automóvil: Volkswagen Gol Blanco</Typography>
+                    <Typography>Horario: 16-18</Typography>
+                    <Typography>Precio: $200</Typography>
+                    <Typography color="primary">Penalidad: $0</Typography>
+                    </>}>
+                </ListItemText>
+                <ListItemText>
+                    <Button className= {classes.botonNoPagado}>No Pagada</Button>
+                </ListItemText>
+            </ListItem>
+        </List>
     </main>
     );
 }

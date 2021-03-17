@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
         margin: "auto"
     },
     footer: {
-        position: "relative",
+        position: "absolute",
         bottom: 0,
         width: "100%"
     }
