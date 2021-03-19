@@ -25,11 +25,11 @@ const useStyles = makeStyles( theme => ({
     botonRecuperarContraseña: {
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 15,
-        backgroundColor: "#14a37f",
+        backgroundColor: "#4db6ac",
         marginLeft: 20,
         width: "91%",
         "&:hover":{
-            backgroundColor: "#14a37f"
+            backgroundColor: "#4db6ac"
         }
     },
     botonVolver: {
@@ -46,10 +46,10 @@ const useStyles = makeStyles( theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         marginLeft: 20,
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#14a37f"
+            borderColor: "#4db6ac"
         },
         "& .MuiFormLabel-root.Mui-focused": {
-            color: "#14a37f"
+            color: "#4db6ac"
         }
     },
     logo: {

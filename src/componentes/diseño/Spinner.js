@@ -10,7 +10,7 @@ const useStyles = makeStyles( theme => ({
       marginTop: '15rem',
       marginLeft: 'auto',
       marginRight: 'auto',
-      color: '#14a37f'
+      color: '#4db6ac'
     },
     logo: {
         marginTop: "1rem",

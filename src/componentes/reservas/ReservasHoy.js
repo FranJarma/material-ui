@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, ListItemAvatar, ListItemText, Divider, makeStyles, Typography, ListItem, Avatar, Button } from '@material-ui/core';
+import Buscar from './../diseño/Buscar.js';
+import Paginacion from './../diseño/Paginacion.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -23,25 +25,25 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     botonPagado: {
-        backgroundColor: "#14a37f",
+        backgroundColor: "#448aff",
         color: "#ffffff",
         float: "right",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
         "&:hover":{
-            backgroundColor: "#14a37f",
+            backgroundColor: "#448aff",
         }
     },
     botonNoPagado: {
-        backgroundColor: "#fbc02d",
+        backgroundColor: "#ff9800",
         color: "#ffffff",
         float: "right",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
         "&:hover":{
-            backgroundColor: "#fbc02d",
+            backgroundColor: "#ff9800",
         }
     },
 }));
@@ -54,6 +56,7 @@ const ReservasHoy = () => {
             <Typography className={classes.titulo}>Reservas del día de hoy</Typography>
             &nbsp;
             <List className = {classes.cartaReservas}>
+            <Buscar/>
                 <ListItem button>
                     <ListItemAvatar>
                         <Avatar>
@@ -67,7 +70,6 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Lugar: 11</Typography>
-                        <Typography color="secondary">Penalidad: $15</Typography>
                         </>}>
                     </ListItemText>
                     <ListItemText>
@@ -88,7 +90,6 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Lugar: 16</Typography>
-                        <Typography color="secondary">Penalidad: $15</Typography>
                         </>}>
                     </ListItemText>
                     <ListItemText>
@@ -109,7 +110,6 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
                         <Typography>Lugar: 14</Typography>
-                        <Typography color="secondary">Penalidad: $15</Typography>
                         </>}>
                     </ListItemText>
                     <ListItemText>
@@ -129,7 +129,6 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Lugar: 13</Typography>
-                        <Typography color="primary">Penalidad: $0</Typography>
                         </>}>
                     </ListItemText>
                     <ListItemText>
@@ -150,7 +149,6 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Lugar: 17</Typography>
-                        <Typography color="primary">Penalidad: $0</Typography>
                         </>}>
                     </ListItemText>
                     <ListItemText>
@@ -171,7 +169,6 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
                         <Typography>Lugar: 1</Typography>
-                        <Typography color="primary">Penalidad: $0</Typography>
                         </>}>
                     </ListItemText>
                     <ListItemText>
@@ -179,6 +176,7 @@ const ReservasHoy = () => {
                     </ListItemText>
                 </ListItem>
             </List>
+            <Paginacion/>
         </>
     );
 }

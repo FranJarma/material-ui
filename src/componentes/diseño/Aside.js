@@ -16,6 +16,7 @@ import Collapse from '@material-ui/core/Collapse';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import TodayIcon from '@material-ui/icons/Today';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
+import StarIcon from '@material-ui/icons/Star';
 import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: theme.spacing(5),
     },
     botonCerrarSesionNavbar: {
-        backgroundColor: "#14a37f",
+        backgroundColor: "#4db6ac",
         color: "#FFFFFF",
         textAlign:'center',
         width: '50%',
@@ -51,7 +52,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: 15,
         borderRadius: "1rem",
         "&:hover":{
-            backgroundColor: "#14a37f",
+            backgroundColor: "#4db6ac",
         }
     }
 }));
@@ -88,7 +89,7 @@ const Aside = () => {
                     <Link to={'/reservas-del-dia'}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                            <TodayIcon />
+                            <TodayIcon  />
                             </ListItemIcon>
                             <ListItemText primary="Reservas del día" />
                         </ListItem>
@@ -103,7 +104,7 @@ const Aside = () => {
                         <ListItemIcon>
                         <SwapVertIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Devolver reserva" />
+                        <ListItemText primary="Cambiar fecha de reserva" />
                     </ListItem>
                     </List>
                 </Collapse>
@@ -121,6 +122,14 @@ const Aside = () => {
                     </ListItemIcon>
                     <ListItemText>
                         Datos del estacionamiento y tarifas
+                    </ListItemText>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <StarIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Comentarios y valoraciones
                     </ListItemText>
                 </ListItem>
                 <ListItem button>

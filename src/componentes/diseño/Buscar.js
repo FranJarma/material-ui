@@ -6,11 +6,11 @@ const useStyles = makeStyles((theme)=>({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: "#FFFFFF",
-        color: "#000000",
-        [theme.breakpoints.up('sm')]: {
-            width: '30%',
-            marginLeft:"30rem"
+        flexGrow: 1,
+        paddingLeft: 20,
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "auto",
+            maxWidth: "35%"
         },
       },
     searchIcon: {
@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme)=>({
     },
     inputRoot: {
         color: 'inherit',
+        fontSize: 20,
+        fontFamily: "Roboto Condensed, sans-serif",
       },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),

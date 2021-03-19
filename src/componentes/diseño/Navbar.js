@@ -11,14 +11,13 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import logo from "./../../imagenes/logo.png";
 import Aside from "./Aside.js";
-import Buscar from './Buscar.js';
 
 const anchoNavbarPx = 300;
 
 const useStyles = makeStyles(theme => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: "#14a37f"
+        backgroundColor: "#4db6ac"
         },
     toolbar: theme.mixins.toolbar,
     root: {
@@ -55,12 +54,13 @@ const useStyles = makeStyles(theme => ({
         },
         [theme.breakpoints.up('lg')]:{
             width: 200,
+            marginLeft: "2.5rem"
         },
     },
     cerrarMenuBoton: {
         marginRight: 'auto',
         marginLeft: 0,
-        color: "#14a37f"
+        color: "#4db6ac"
     },
 }));
 
@@ -91,7 +91,6 @@ const useStyles = makeStyles(theme => ({
                     <MenuIcon />
                 </IconButton>
                 <img src={logo} alt="" className={classes.logo} />
-                <Buscar/>
                 </Toolbar>
             </AppBar>
             
