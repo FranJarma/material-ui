@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import logo from "./../../imagenes/logo.png";
 import Aside from "./Aside.js";
+import Buscar from './Buscar.js';
 
 const anchoNavbarPx = 300;
 
@@ -34,44 +35,33 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('sm')]: {
         display: 'none',
         },
+        color: "#ffffff"
     },
     contenidoMenu: {
-        width: anchoNavbarPx
+        width: anchoNavbarPx,
     },
     contenido: {
         flexGrow: 1,
         padding: theme.spacing(3),
     },
     logo: {
-        marginTop: "auto",
-        marginLeft: "auto",
         [theme.breakpoints.up('xs')]:{
-            width: 250,
+            width: 150,
+            paddingRight: "1rem"
 
         },
         [theme.breakpoints.up('sm')]:{
-            width: 250,
+            width: 180,
         },
         [theme.breakpoints.up('lg')]:{
-            width: 280,
+            width: 200,
         },
     },
     cerrarMenuBoton: {
         marginRight: 'auto',
         marginLeft: 0,
+        color: "#14a37f"
     },
-    botonCerrarSesionNavbar: {
-        backgroundColor: "#FFFFFF",
-        color: "#14a37f",
-        marginLeft:'auto',
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 15,
-        borderRadius: "1rem",
-        "&:hover":{
-            backgroundColor: "#FFFFFF",
-        }
-    }
 }));
 
     const Navbar = () => {
@@ -101,7 +91,7 @@ const useStyles = makeStyles(theme => ({
                     <MenuIcon />
                 </IconButton>
                 <img src={logo} alt="" className={classes.logo} />
-                <Button className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
+                <Buscar/>
                 </Toolbar>
             </AppBar>
             
@@ -119,9 +109,9 @@ const useStyles = makeStyles(theme => ({
                     keepMounted: true,
                     }}
                 >
-                    <IconButton onClick={handleAbrirNavbar} className={classes.cerrarMenuBoton}>
-                    <CloseIcon/>
-                    </IconButton>
+                    <Button onClick={handleAbrirNavbar} className={classes.cerrarMenuBoton}>
+                    <CloseIcon />
+                    </Button>
                     <Aside/>
                 </Drawer>
                 </Hidden>

@@ -66,6 +66,7 @@ const ReservasHoy = () => {
                         <Typography>Automóvil: Volkswagen Gol Rojo</Typography>
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
+                        <Typography>Lugar: 11</Typography>
                         <Typography color="secondary">Penalidad: $15</Typography>
                         </>}>
                     </ListItemText>
@@ -86,6 +87,7 @@ const ReservasHoy = () => {
                         <Typography>Automóvil: Ford KA</Typography>
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
+                        <Typography>Lugar: 16</Typography>
                         <Typography color="secondary">Penalidad: $15</Typography>
                         </>}>
                     </ListItemText>
@@ -106,6 +108,7 @@ const ReservasHoy = () => {
                         <Typography>Automóvil: Volkswagen Gol Blanco</Typography>
                         <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
+                        <Typography>Lugar: 14</Typography>
                         <Typography color="secondary">Penalidad: $15</Typography>
                         </>}>
                     </ListItemText>
@@ -125,6 +128,7 @@ const ReservasHoy = () => {
                         <Typography>Automóvil: Volkswagen Gol Rojo</Typography>
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
+                        <Typography>Lugar: 13</Typography>
                         <Typography color="primary">Penalidad: $0</Typography>
                         </>}>
                     </ListItemText>
@@ -145,6 +149,7 @@ const ReservasHoy = () => {
                         <Typography>Automóvil: Ford KA</Typography>
                         <Typography>Horario: 16-17</Typography>
                         <Typography>Precio: $100</Typography>
+                        <Typography>Lugar: 17</Typography>
                         <Typography color="primary">Penalidad: $0</Typography>
                         </>}>
                     </ListItemText>
@@ -165,6 +170,7 @@ const ReservasHoy = () => {
                         <Typography>Automóvil: Volkswagen Gol Blanco</Typography>
                         <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
+                        <Typography>Lugar: 1</Typography>
                         <Typography color="primary">Penalidad: $0</Typography>
                         </>}>
                     </ListItemText>

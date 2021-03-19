@@ -4,7 +4,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
 import PersonIcon from '@material-ui/icons/Person';
-import {Divider, ListItemIcon, makeStyles} from '@material-ui/core';
+import {Button, Divider, ListItemIcon, makeStyles} from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import TodayIcon from '@material-ui/icons/Today';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
 import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
@@ -23,8 +24,8 @@ const useStyles = makeStyles(theme => ({
     tituloAside: {
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        fontSize: 20,
-        textAlign: "center"
+        fontSize: 15,
+        textAlign: "center",
     },
     imagenPerfil: {
         margin: "auto",
@@ -33,11 +34,26 @@ const useStyles = makeStyles(theme => ({
     },
     titulosMenu: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18
+        fontSize: 18,
     },
     nested: {
         paddingLeft: theme.spacing(5),
     },
+    botonCerrarSesionNavbar: {
+        backgroundColor: "#14a37f",
+        color: "#FFFFFF",
+        textAlign:'center',
+        width: '50%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        borderRadius: "1rem",
+        "&:hover":{
+            backgroundColor: "#14a37f",
+        }
+    }
 }));
 
 const Aside = () => {
@@ -50,7 +66,7 @@ const Aside = () => {
     }
     
     const menuPrincipal = (
-        <div>
+        <>
             &nbsp;
             <Typography className={classes.tituloAside}>
                 {!esAdmin ? "Playa de Estacionamiento del Convento" : "Administrador"}
@@ -82,6 +98,12 @@ const Aside = () => {
                         <DateRangeIcon />
                         </ListItemIcon>
                         <ListItemText primary="Calendario de reservas" />
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                        <ListItemIcon>
+                        <SwapVertIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Devolver reserva" />
                     </ListItem>
                     </List>
                 </Collapse>
@@ -152,9 +174,14 @@ const Aside = () => {
                         Acerca
                     </ListItemText>
                 </ListItem>
+
             </List>
+
             }
-        </div>
+            <Divider></Divider>
+            &nbsp;
+            <Button className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
+        </>
     );
     return ( menuPrincipal );
 }
