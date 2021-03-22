@@ -94,12 +94,14 @@ const Aside = () => {
                             <ListItemText primary="Reservas del día" />
                         </ListItem>
                     </Link>
+                    <Link to={'/reservas-calendario'}>
                     <ListItem button className={classes.nested}>
                         <ListItemIcon>
                         <DateRangeIcon />
                         </ListItemIcon>
                         <ListItemText primary="Calendario de reservas" />
                     </ListItem>
+                    </Link>
                     <ListItem button className={classes.nested}>
                         <ListItemIcon>
                         <SwapVertIcon />

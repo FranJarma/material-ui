@@ -58,8 +58,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     cerrarMenuBoton: {
-        marginRight: 'auto',
-        marginLeft: 0,
+        marginLeft: 'auto',
         color: "#4db6ac"
     },
 }));

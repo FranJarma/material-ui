@@ -1,16 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
-import { List, ListItemAvatar, ListItemText, Divider, makeStyles, Typography, ListItem, Avatar, Button } from '@material-ui/core';
+import { List, ListItemAvatar, ListItemText, Divider, makeStyles,
+Typography, ListItem, Avatar, Button } from '@material-ui/core';
 import Buscar from './../diseño/Buscar.js';
 import Paginacion from './../diseño/Paginacion.js';
-import CheckIcon from '@material-ui/icons/Check';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
+import {
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
+
 const useStyles = makeStyles((theme) => ({
     titulo: {
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 25,
         textAlign: "center"
+    },
+    container: {
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "20rem"
+        },
+    },
+    inputFecha: {
+        width: "20rem",
+        fontFamily: "Roboto Condensed, sans-serif",
+        height:"3rem",
+        marginLeft: "1rem",
     },
     cartaReservas: {
         flexGrow: 1,
@@ -25,40 +40,43 @@ const useStyles = makeStyles((theme) => ({
             marginRight: "1rem"
         },
     },
-    botonValidarReserva: {
-        backgroundColor: "#448aff",
+    botonBuscar: {
+        backgroundColor: "#3f51b5",
         color: "#ffffff",
-        float: "right",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "auto",
-        alignContent: "auto",
+        marginLeft: "0.5rem",
         fontSize: 15,
+        marginTop: "0.5rem",
         "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    botonConcluirReserva: {
-        backgroundColor: "#43a047",
-        color: "#ffffff",
-        float: "right",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        marginLeft: "auto",
-        alignContent: "auto",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#43a047",
+            backgroundColor: "#3f51b5",
         }
     },
 }));
 
-const ReservasHoy = () => {
+const ReservasCalendario = () => {
+    const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
     const classes = useStyles();
     return (
         <>  
             <Navbar/>
-            <Typography className={classes.titulo}>Reservas del día de hoy</Typography>
+            <Typography className={classes.titulo}>Calendario de reservas</Typography>
+            &nbsp;
+            <form className={classes.container}>
+            <KeyboardDatePicker
+                className={classes.inputFecha}
+                id="date-picker-dialog"
+                label="Por favor seleccione una fecha"
+                format="dd/MM/yyyy"
+                disableFuture
+                value={fechaSeleccionada}
+                onChange={handleCambiarFecha}
+                KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                }}
+        />
+        <Button className= {classes.botonBuscar}>Consultar</Button>
+            </form>
             &nbsp;
             <List className = {classes.cartaReservas}>
             <Buscar/>
@@ -77,11 +95,6 @@ const ReservasHoy = () => {
                         <Typography>Lugar: 11</Typography>
                         </>}>
                     </ListItemText>
-                    <ListItemText>
-                        <Button
-                        endIcon={<CheckIcon/>}
-                        className= {classes.botonValidarReserva}>Validar</Button>
-                    </ListItemText>
                 </ListItem>
                 <Divider></Divider>
                 <ListItem button>
@@ -98,11 +111,6 @@ const ReservasHoy = () => {
                         <Typography>Hora de ingreso: -</Typography>
                         <Typography>Lugar: 16</Typography>
                         </>}>
-                    </ListItemText>
-                    <ListItemText>
-                        <Button
-                        endIcon={<CheckIcon/>}
-                        className= {classes.botonValidarReserva}>Validar</Button>
                     </ListItemText>
                 </ListItem>
                     <Divider></Divider>
@@ -122,11 +130,6 @@ const ReservasHoy = () => {
                         <Typography>Lugar: 14</Typography>
                         </>}>
                     </ListItemText>
-                    <ListItemText>
-                        <Button
-                        endIcon={<CheckIcon/>}
-                        className= {classes.botonValidarReserva}>Validar</Button>
-                    </ListItemText>
                 </ListItem>
                 <ListItem button>
                     <ListItemAvatar>
@@ -139,14 +142,9 @@ const ReservasHoy = () => {
                         <Typography>Patente: LZY450</Typography>
                         <Typography>Vehículo: Volkswagen Gol</Typography>
                         <Typography>Precio: $100</Typography>
-                        <Typography>Hora de ingreso: 19:26</Typography>
+                        <Typography>Hora de ingreso: -</Typography>
                         <Typography>Lugar: 13</Typography>
                         </>}>
-                    </ListItemText>
-                    <ListItemText>
-                    <Button
-                        endIcon={<DoneAllIcon/>}
-                        className= {classes.botonConcluirReserva}>Concluir</Button>
                     </ListItemText>
                 </ListItem>
                 <Divider></Divider>
@@ -161,14 +159,9 @@ const ReservasHoy = () => {
                         <Typography>Patente: KEA512</Typography>
                         <Typography>Vehículo: Ford KA</Typography>
                         <Typography>Precio: $100</Typography>
-                        <Typography>Hora de ingreso: 18:23</Typography>
+                        <Typography>Hora de ingreso: -</Typography>
                         <Typography>Lugar: 17</Typography>
                         </>}>
-                    </ListItemText>
-                    <ListItemText>
-                        <Button
-                        endIcon={<DoneAllIcon/>}
-                        className= {classes.botonConcluirReserva}>Concluir</Button>
                     </ListItemText>
                 </ListItem>
                     <Divider></Divider>
@@ -184,14 +177,9 @@ const ReservasHoy = () => {
                         <Typography>Vehículo: Volkswagen Gol</Typography>
                         <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
-                        <Typography>Hora de ingreso: 16:50</Typography>
+                        <Typography>Hora de ingreso: -</Typography>
                         <Typography>Lugar: 1</Typography>
                         </>}>
-                    </ListItemText>
-                    <ListItemText>
-                        <Button
-                        endIcon={<DoneAllIcon/>}
-                        className= {classes.botonConcluirReserva}>Concluir</Button>
                     </ListItemText>
                 </ListItem>
             </List>
@@ -200,4 +188,4 @@ const ReservasHoy = () => {
     );
 }
  
-export default ReservasHoy;
+export default ReservasCalendario;
