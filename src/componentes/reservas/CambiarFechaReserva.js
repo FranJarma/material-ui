@@ -29,6 +29,15 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Roboto Condensed, sans-serif",
         height:"3rem",
         marginLeft: "1rem",
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#rgba(0, 0, 0, 0.23);"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#4db6ac;"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#4db6ac"
+        }
     },
     cartaReservas: {
         flexGrow: 1,
@@ -43,16 +52,16 @@ const useStyles = makeStyles((theme) => ({
             marginRight: "1rem"
         },
     },
-    botonBuscar: {
-        backgroundColor: "#3f51b5",
+    botonConsultar: {
+        backgroundColor: "#4db6ac",
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
-        width: "9rem",
+        width: "8.5rem",
         height: "3.5rem",
         "&:hover":{
-            backgroundColor: "#3f51b5",
+            backgroundColor: "#4db6ac"
         }
     },
     botonCambiarReserva: {
@@ -89,7 +98,7 @@ const CambiarFechaReserva = () => {
         name="codigo"
         autoFocus
         />
-        <Button className= {classes.botonBuscar}>Consultar</Button>
+        <Button variant="outlined" className= {classes.botonConsultar}>Consultar</Button>
         </form>
         &nbsp;
         <List className={classes.cartaReservas}>
@@ -247,9 +256,9 @@ const CambiarFechaReserva = () => {
             </Grid>
             &nbsp;
             <Button
-        endIcon={<CheckIcon/>}
-        className= {classes.botonCambiarReserva}>Cambiar reserva
-        </Button>
+                endIcon={<CheckIcon/>}
+                className= {classes.botonCambiarReserva}>Cambiar reserva
+            </Button>
         </List>
     </>
      );

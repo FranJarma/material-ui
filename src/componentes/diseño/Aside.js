@@ -17,6 +17,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import TodayIcon from '@material-ui/icons/Today';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import StarIcon from '@material-ui/icons/Star';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
@@ -43,10 +44,11 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: theme.spacing(5),
     },
     botonCerrarSesionNavbar: {
-        backgroundColor: "#4db6ac",
-        color: "#FFFFFF",
+        backgroundColor: "#ffffff",
+        color: "#4db6ac",
+        borderColor:"#4db6ac",
         textAlign:'center',
-        width: '50%',
+        width: '60%',
         marginLeft: 'auto',
         marginRight: 'auto',
         fontFamily: "Roboto Condensed, sans-serif",
@@ -55,6 +57,7 @@ const useStyles = makeStyles(theme => ({
         borderRadius: "1rem",
         "&:hover":{
             backgroundColor: "#4db6ac",
+            color:"#FFFFFF"
         }
     }
 }));
@@ -199,7 +202,9 @@ const Aside = () => {
                 to={'/iniciar-sesion'}
                 style={{textDecoration: 'none', textAlign: 'center'}}
             >
-            <Button className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
+            <Button
+            startIcon={<ExitToAppIcon/>}
+            variant="outlined" className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
             </Link>
         </>
     );

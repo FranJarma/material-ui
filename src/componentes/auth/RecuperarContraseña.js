@@ -26,6 +26,7 @@ const useStyles = makeStyles( theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 15,
         backgroundColor: "#4db6ac",
+        color:'#FFFFFF',
         marginLeft: 20,
         width: "91%",
         "&:hover":{
@@ -46,7 +47,10 @@ const useStyles = makeStyles( theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         marginLeft: 20,
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#4db6ac"
+            borderColor: "#rgba(0, 0, 0, 0.23);"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#4db6ac;"
         },
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#4db6ac"
@@ -106,7 +110,7 @@ const RecuperarContraseña = () => {
                     </Grid>
                     &nbsp;
                     <Grid item>
-                    <Link to={'/iniciar-sesion'}>
+                    <Link to={'/iniciar-sesion'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonVolver}
                     >Volver a Login
