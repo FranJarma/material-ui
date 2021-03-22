@@ -36,6 +36,8 @@ const useStyles = makeStyles(theme => ({
     titulosMenu: {
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 18,
+        textDecoration: "none",
+        color: "#000000"
     },
     nested: {
         paddingLeft: theme.spacing(5),
@@ -86,7 +88,7 @@ const Aside = () => {
                 </ListItem>
                 <Collapse in={subMenu} timeout="auto" unmountOnExit>
                     <List disablePadding>
-                    <Link to={'/reservas-del-dia'}>
+                    <Link to={'/reservas-del-dia'} className={classes.titulosMenu}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
                             <TodayIcon  />
@@ -94,7 +96,7 @@ const Aside = () => {
                             <ListItemText primary="Reservas del día" />
                         </ListItem>
                     </Link>
-                    <Link to={'/reservas-calendario'}>
+                    <Link to={'/reservas-calendario'} className={classes.titulosMenu}>
                     <ListItem button className={classes.nested}>
                         <ListItemIcon>
                         <DateRangeIcon />
@@ -102,7 +104,7 @@ const Aside = () => {
                         <ListItemText primary="Calendario de reservas" />
                     </ListItem>
                     </Link>
-                    <Link to={'/cambiar-fecha'}>
+                    <Link to={'/cambiar-fecha'} className={classes.titulosMenu}>
                     <ListItem button className={classes.nested}>
                         <ListItemIcon>
                         <SwapVertIcon />
@@ -193,7 +195,12 @@ const Aside = () => {
             }
             <Divider></Divider>
             &nbsp;
+            <Link
+                to={'/iniciar-sesion'}
+                style={{textDecoration: 'none', textAlign: 'center'}}
+            >
             <Button className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
+            </Link>
         </>
     );
     return ( menuPrincipal );
