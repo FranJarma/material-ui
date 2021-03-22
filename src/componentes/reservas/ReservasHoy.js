@@ -182,7 +182,6 @@ const ReservasHoy = () => {
                         <>
                         <Typography>Patente: KAV412</Typography>
                         <Typography>Vehículo: Volkswagen Gol</Typography>
-                        <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
                         <Typography>Hora de ingreso: 16:50</Typography>
                         <Typography>Lugar: 1</Typography>
