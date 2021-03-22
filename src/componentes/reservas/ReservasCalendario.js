@@ -74,7 +74,7 @@ const ReservasCalendario = () => {
                 KeyboardButtonProps={{
                     'aria-label': 'change date',
                 }}
-        />
+            />
         <Button className= {classes.botonBuscar}>Consultar</Button>
             </form>
             &nbsp;
