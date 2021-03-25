@@ -6,6 +6,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import CheckIcon from '@material-ui/icons/Check';
+import Footer from '../diseño/Footer.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -16,18 +17,35 @@ const useStyles = makeStyles((theme) => ({
     },
     subtitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 15,
+        fontSize: 16,
+        color:"#424242",
+    },
+    subtitulos2: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        fontSize: 12,
         color:"#424242",
     },
     container: {
         [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem"
+            marginLeft: "20rem",
+            marginRight: "2rem"
+        },
+    },
+    input: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#4db6ac"
+        },
+        "& .MuiInput-underline:after": {
+            borderBottomColor: "#4db6ac"
         },
     },
     inputCodigo: {
         width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
-        marginLeft: "2rem",
+        [theme.breakpoints.down('md')]:{
+            marginLeft: "2rem"
+        },
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#rgba(0, 0, 0, 0.23)",
         },
@@ -42,8 +60,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         [theme.breakpoints.up('lg')]: {
-            marginLeft: "21rem",
+            marginLeft: "20rem",
             marginRight: "1rem"
         },
         [theme.breakpoints.down('md')]: {
@@ -71,13 +90,11 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft:"40rem",
-        },
-        [theme.breakpoints.down('lg')]: {
-            marginLeft:"8rem",
-        },
+        marginTop: "2rem",
         fontSize: 15,
+        [theme.breakpoints.down('md')]:{
+            marginLeft:"8rem"
+        },
         "&:hover":{
             backgroundColor: "#448aff",
         }
@@ -114,20 +131,20 @@ const NuevoCobro = () => {
         <Typography className={classes.subtitulos}>Datos de la persona</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={3} xs={6}>
+                <Grid item sm={3} xs={6} >
                 <TextField
                 label="Nombre Completo"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="Francisco Alfredo Jarma"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6}>
+                <Grid item sm={2} xs={5}>
                 <TextField
                 label="DNI"
                 fullWidth
-                variant="filled"
+                variant="standard"
                 disabled
                 value="40.524.512"
                 />
@@ -135,25 +152,25 @@ const NuevoCobro = () => {
                 <Grid item sm={1} xs={6}>
                 <TextField
                 label="Edad"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6} >
+                <Grid item sm={2} xs={5} >
                 <TextField
                 label="N° de teléfono"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="3874450922"
                 />
                 </Grid>
-                <Grid item sm={4} xs={12} >
+                <Grid item sm={3} xs={11} >
                 <TextField
                 label="Dirección"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="General Paz 157"
@@ -167,25 +184,25 @@ const NuevoCobro = () => {
                 <Grid item sm={4} xs={6}>
                 <TextField
                 label="Patente"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="LZY643"
                 />
                 </Grid>
-                <Grid item sm={4} xs={6}>
+                <Grid item sm={4} xs={5}>
                 <TextField
                 label="Tipo"
                 fullWidth
-                variant="filled"
+                variant="standard"
                 disabled
                 value="Auto"
                 />
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={11}>
                 <TextField
                 label="Marca"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="Volkswagen"
@@ -212,39 +229,31 @@ const NuevoCobro = () => {
                 }}
                 />
                 </Grid>
-                <Grid item sm={1} xs={4}>
+                <Grid item sm={2} xs={3}>
                 <TextField
                 label="Lugar"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={2} xs={4}>
+                <Grid item sm={3} xs={8}>
                 <TextField
-                label="Subtotal"
-                variant="filled"
-                fullWidth
+                className={classes.input}
+                label="Abonado por el cliente"
                 disabled
+                variant="standard"
+                fullWidth
                 value="$100"
                 />
                 </Grid>
-                <Grid item sm={2} xs={4}>
+                <Grid item sm={3} xs={5}>
                 <TextField
-                label="Adicional"
-                variant="filled"
+                className={classes.input}
+                label="Adicional a cobrar"
+                variant="standard"
                 fullWidth
-                disabled
-                value="$30"
-                />
-                </Grid>
-                <Grid item sm={2} xs={12}>
-                <TextField
-                label="Total a cobrar"
-                variant="filled"
-                fullWidth
-                disabled
                 value="$130"
                 />
                 </Grid>
@@ -256,41 +265,41 @@ const NuevoCobro = () => {
             <Grid container spacing={3}>
                 <Grid item sm={3} xs={12}>
                     <FormControl>
-                        <FormLabel className={classes.subtitulos}>Medio de pago</FormLabel>
+                        <FormLabel className={classes.subtitulos2}>Medio de pago</FormLabel>
                         <RadioGroup aria-label="medio de pago" name ="medioDePago" value={valorRadio} onChange={handleChangeRadioMedioPago}>
-                            <FormControlLabel value="Efectivo" control={<Radio/>} label="Efectivo"></FormControlLabel>
                             <FormControlLabel value="Débito" control={<Radio/>} label="Tarjeta de débito"></FormControlLabel>
                             <FormControlLabel value="Crédito" control={<Radio/>} label="Tarjeta de crédito"></FormControlLabel>
+                            <FormControlLabel value="Efectivo" control={<Radio/>} label="Efectivo"></FormControlLabel>
                         </RadioGroup>
                     </FormControl>
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={5} xs={12}>
                 <TextField
                 label="Número de tarjeta"
-                className={classes.inputCodigo}
+                className={classes.input}
                 variant="standard"
                 fullWidth
                 value="2345-1235-4568-1232"
                 />
                 </Grid>
-                <Grid item sm={1} xs={12}>
+                <Grid item sm={3} xs={12}>
                 <TextField
                 label="Código de seguridad"
-                className={classes.inputCodigo}
+                className={classes.input}
                 variant="standard"
                 type="password"
                 fullWidth
                 value="***"
                 />
                 </Grid>
-                &nbsp;
             </Grid>
-            &nbsp;
             <Button
                 endIcon={<CheckIcon/>}
                 className= {classes.botonCambiarReserva}>Confirmar cobro
             </Button>
         </List>
+        &nbsp;
+        <Footer/>
     </>
      );
 }

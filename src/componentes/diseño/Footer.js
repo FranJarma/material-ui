@@ -4,12 +4,11 @@ import React from 'react';
 const useStyles = makeStyles(theme => ({
     copyright: {
         fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 22,
+        fontSize: 15,
         margin: "auto"
     },
     footer: {
-        position: "absolute",
+        position: "relative",
         bottom: 0,
         width: "100%"
     }

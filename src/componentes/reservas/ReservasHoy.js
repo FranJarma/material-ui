@@ -5,6 +5,7 @@ import Buscar from './../diseño/Buscar.js';
 import Paginacion from './../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
+import Footer from '../diseño/Footer.js';
 const useStyles = makeStyles((theme) => ({
     titulo: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -15,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     cartaReservas: {
         flexGrow: 1,
         paddingLeft: 20,
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         backgroundColor: theme.palette.background.paper,
         [theme.breakpoints.up('lg')]: {
             marginLeft: "20rem",
@@ -195,6 +197,7 @@ const ReservasHoy = () => {
                 </ListItem>
             </List>
             <Paginacion/>
+            <Footer/>
         </>
     );
 }

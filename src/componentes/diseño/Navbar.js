@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import logo from "./../../imagenes/logo.png";
 import Aside from "./Aside.js";
+import { Link } from 'react-router-dom';
 
 const anchoNavbarPx = 300;
 
@@ -46,15 +47,18 @@ const useStyles = makeStyles(theme => ({
     logo: {
         [theme.breakpoints.up('xs')]:{
             width: 150,
-            paddingRight: "1rem"
+            paddingRight: "1rem",
+            marginTop:"0.5rem"
 
         },
         [theme.breakpoints.up('sm')]:{
             width: 180,
+            marginTop:"0.5rem"
         },
         [theme.breakpoints.up('lg')]:{
             width: 200,
-            marginLeft: "2.5rem"
+            marginLeft: "2.5rem",
+            marginTop:"0.5rem"
         },
     },
     cerrarMenuBoton: {
@@ -89,7 +93,9 @@ const useStyles = makeStyles(theme => ({
                 >
                     <MenuIcon />
                 </IconButton>
-                <img src={logo} alt="" className={classes.logo} />
+                <Link to="/home">
+                    <img src={logo} alt="" className={classes.logo} />
+                </Link>
                 </Toolbar>
             </AppBar>
             

@@ -7,6 +7,7 @@ import Paginacion from './../diseño/Paginacion.js';
 import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Footer from '../diseño/Footer.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
         width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
         height:"3rem",
-        marginLeft: "2rem",
+        [theme.breakpoints.down('md')]:{
+            marginLeft: "2rem"
+        },
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#4db6ac"
         },
@@ -37,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         [theme.breakpoints.up('lg')]: {
             marginLeft: "20rem",
             marginRight: "1rem"
@@ -190,6 +194,7 @@ const ReservasCalendario = () => {
                 </ListItem>
             </List>
             <Paginacion/>
+            <Footer/>
         </>
     );
 }

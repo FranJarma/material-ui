@@ -127,6 +127,7 @@ const Aside = () => {
                         </ListItemText>
                     </ListItem>
                 </Link>
+                <Link to={'/mi-estacionamiento'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
                         <StoreMallDirectoryIcon/>
@@ -135,6 +136,7 @@ const Aside = () => {
                         Datos del estacionamiento y tarifas
                     </ListItemText>
                 </ListItem>
+                </Link>
                 <ListItem button>
                     <ListItemIcon>
                         <StarIcon/>

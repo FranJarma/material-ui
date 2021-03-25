@@ -6,6 +6,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import CheckIcon from '@material-ui/icons/Check';
+import Footer from '../diseño/Footer.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
     subtitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 15,
+        fontSize: 16,
         color:"#424242",
     },
     container: {
@@ -27,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
     inputCodigo: {
         width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
-        marginLeft: "2rem",
+        [theme.breakpoints.down('md')]:{
+            marginLeft: "2rem"
+        },
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#rgba(0, 0, 0, 0.23)",
         },
@@ -42,8 +45,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         [theme.breakpoints.up('lg')]: {
-            marginLeft: "21rem",
+            marginLeft: "20rem",
             marginRight: "1rem"
         },
         [theme.breakpoints.down('md')]: {
@@ -56,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "0.5rem",
+        marginLeft: "0.3rem",
         fontSize: 15,
         marginTop: "0.7rem",
         "&:hover":{
@@ -68,13 +72,11 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft:"40rem",
-        },
-        [theme.breakpoints.down('lg')]: {
-            marginLeft:"8rem",
-        },
+        marginTop: "2rem",
         fontSize: 15,
+        [theme.breakpoints.down('md')]:{
+            marginLeft:"8rem"
+        },
         "&:hover":{
             backgroundColor: "#448aff",
         }
@@ -108,17 +110,17 @@ const CambiarFechaReserva = () => {
                 <Grid item sm={3} xs={6}>
                 <TextField
                 label="Nombre Completo"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="Francisco Alfredo Jarma"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6}>
+                <Grid item sm={2} xs={5}>
                 <TextField
                 label="DNI"
                 fullWidth
-                variant="filled"
+                variant="standard"
                 disabled
                 value="40.524.512"
                 />
@@ -126,25 +128,25 @@ const CambiarFechaReserva = () => {
                 <Grid item sm={1} xs={6}>
                 <TextField
                 label="Edad"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6} >
+                <Grid item sm={2} xs={5} >
                 <TextField
                 label="N° de teléfono"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="3874450922"
                 />
                 </Grid>
-                <Grid item sm={4} xs={12} >
+                <Grid item sm={3} xs={11} >
                 <TextField
                 label="Dirección"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="General Paz 157"
@@ -158,25 +160,25 @@ const CambiarFechaReserva = () => {
                 <Grid item sm={4} xs={6}>
                 <TextField
                 label="Patente"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="LZY643"
                 />
                 </Grid>
-                <Grid item sm={4} xs={6}>
+                <Grid item sm={4} xs={5}>
                 <TextField
                 label="Tipo"
                 fullWidth
-                variant="filled"
+                variant="standard"
                 disabled
                 value="Auto"
                 />
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={11}>
                 <TextField
                 label="Marca"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="Volkswagen"
@@ -188,7 +190,7 @@ const CambiarFechaReserva = () => {
         <Typography className={classes.subtitulos}>Datos de la reserva</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={3} xs={11}>
                 <KeyboardDatePicker
                 fullWidth
                 disabled
@@ -206,22 +208,22 @@ const CambiarFechaReserva = () => {
                 <Grid item sm={1} xs={4}>
                 <TextField
                 label="Lugar"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={2} xs={4}>
+                <Grid item sm={1} xs={4}>
                 <TextField
                 label="Precio"
-                variant="filled"
+                variant="standard"
                 fullWidth
                 disabled
                 value="$100"
                 />
                 </Grid>
-                <Grid item sm={1} xs={4}>
+                <Grid item sm={1} xs={3}>
                 <TextField
                 label="Diferencia"
                 variant="standard"
@@ -229,7 +231,7 @@ const CambiarFechaReserva = () => {
                 value="$50"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6}>
+                <Grid item sm={2} xs={4}>
                 <TextField
                 label="Nuevo lugar"
                 variant="standard"
@@ -237,7 +239,7 @@ const CambiarFechaReserva = () => {
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={3} xs={6}>
+                <Grid item sm={3} xs={7}>
                 <KeyboardDatePicker
                 fullWidth
                 className={classes.inputFecha}
@@ -253,12 +255,13 @@ const CambiarFechaReserva = () => {
                 </Grid>
                 &nbsp;
             </Grid>
-            &nbsp;
             <Button
                 endIcon={<CheckIcon/>}
                 className= {classes.botonCambiarReserva}>Cambiar reserva
             </Button>
         </List>
+        &nbsp;
+        <Footer/>
     </>
      );
 }
