@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
 import {Link} from 'react-router-dom';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -15,6 +16,10 @@ const useStyles = makeStyles( theme => ({
     },
     cartaEncabezado: {
         backgroundColor: "#4db6ac",
+    },
+    icono: {
+        color: "#ffffff",
+        float:"right",
     },
     tituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
@@ -88,7 +93,8 @@ const Login = () => {
         </div>
         <Card className={classes.cartaLogin}>
             <CardContent className={classes.cartaEncabezado}>
-                <Typography className={classes.tituloCarta}>Login</Typography>
+                <Typography className={classes.tituloCarta}>Bienvenido</Typography>
+                <VerifiedUserIcon className={classes.icono}></VerifiedUserIcon>
                 <Typography className={classes.subtituloCarta}>Ingrese sus datos para continuar</Typography>
             </CardContent>
             <Divider></Divider>

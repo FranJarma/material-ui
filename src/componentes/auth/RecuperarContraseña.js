@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
 import { Link } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
+import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles( theme => ({
     cartaRecuperarContraseña: {
@@ -24,6 +25,10 @@ const useStyles = makeStyles( theme => ({
     },
     cartaEncabezado: {
         backgroundColor: "#4db6ac",
+    },
+    icono: {
+        color: "#ffffff",
+        float:"right",
     },
     tituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
@@ -98,6 +103,7 @@ const RecuperarContraseña = () => {
         <Card className={classes.cartaRecuperarContraseña}>
             <CardContent className={classes.cartaEncabezado}>
                 <Typography className={classes.tituloCarta}>Olvidé mi contraseña</Typography>
+                <LockIcon className={classes.icono}></LockIcon>
                 <Typography className={classes.subtituloCarta}>Ingrese su correo electrónico para continuar</Typography>
             </CardContent>
             <Divider></Divider>
