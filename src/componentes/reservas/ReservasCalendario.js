@@ -25,7 +25,13 @@ const useStyles = makeStyles((theme) => ({
         width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
         height:"3rem",
-        marginLeft: "1rem",
+        marginLeft: "2rem",
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#4db6ac"
+        },
+        "& .MuiInput-underline:after": {
+            borderBottomColor: "#4db6ac"
+        },
     },
     cartaReservas: {
         flexGrow: 1,
@@ -40,16 +46,16 @@ const useStyles = makeStyles((theme) => ({
             marginRight: "1rem"
         },
     },
-    botonBuscar: {
-        backgroundColor: "#3f51b5",
+    botonConsultar: {
+        backgroundColor: "#4db6ac",
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         marginLeft: "0.5rem",
         fontSize: 15,
-        marginTop: "0.5rem",
+        marginTop: "0.7rem",
         "&:hover":{
-            backgroundColor: "#3f51b5",
+            backgroundColor: "#4db6ac",
         }
     },
 }));
@@ -75,7 +81,7 @@ const ReservasCalendario = () => {
                     'aria-label': 'change date',
                 }}
             />
-        <Button className= {classes.botonBuscar}>Consultar</Button>
+        <Button className= {classes.botonConsultar}>Consultar</Button>
             </form>
             &nbsp;
             <List className = {classes.cartaReservas}>

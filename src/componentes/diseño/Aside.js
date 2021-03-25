@@ -100,31 +100,33 @@ const Aside = () => {
                         </ListItem>
                     </Link>
                     <Link to={'/reservas-calendario'} className={classes.titulosMenu}>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                        <DateRangeIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Calendario de reservas" />
-                    </ListItem>
+                        <ListItem button className={classes.nested}>
+                            <ListItemIcon>
+                            <DateRangeIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Calendario de reservas" />
+                        </ListItem>
                     </Link>
                     <Link to={'/cambiar-fecha'} className={classes.titulosMenu}>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                        <SwapVertIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Cambiar fecha de reserva" />
-                    </ListItem>
+                        <ListItem button className={classes.nested}>
+                            <ListItemIcon>
+                            <SwapVertIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Cambiar fecha de reserva" />
+                        </ListItem>
                     </Link>
                     </List>
                 </Collapse>
-                <ListItem button>
-                    <ListItemIcon>
-                        <MonetizationOnIcon/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        Ingresar nuevo pago
-                    </ListItemText>
-                </ListItem>
+                <Link to={'/nuevo-cobro'} className={classes.titulosMenu}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <MonetizationOnIcon/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            Ingresar cobro
+                        </ListItemText>
+                    </ListItem>
+                </Link>
                 <ListItem button>
                     <ListItemIcon>
                         <StoreMallDirectoryIcon/>

@@ -7,19 +7,24 @@ import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
-        height: 450,
+        height: 400,
         width: 450,
         margin: "auto",
-        marginTop: "2rem"
+        marginTop: "2rem",
+        boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+    },
+    cartaEncabezado: {
+        backgroundColor: "#4db6ac",
     },
     tituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
+        color: "#ffffff",
         fontSize: 30
     },
     subtituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
-        color: "#bdbdbd",
+        color: "#ffffff",
         fontSize: 15
     },
     botonIniciarSesion: {
@@ -82,7 +87,7 @@ const Login = () => {
             <img src={logo} alt="" className={classes.logo}></img>
         </div>
         <Card className={classes.cartaLogin}>
-            <CardContent>
+            <CardContent className={classes.cartaEncabezado}>
                 <Typography className={classes.tituloCarta}>Login</Typography>
                 <Typography className={classes.subtituloCarta}>Ingrese sus datos para continuar</Typography>
             </CardContent>

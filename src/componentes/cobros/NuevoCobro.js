@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid } from '@material-ui/core';
+Typography, Button, TextField, Grid, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
             marginRight: "1rem"
         },
     },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+      },
     botonConsultar: {
         backgroundColor: "#4db6ac",
         color: "#ffffff",
@@ -81,13 +84,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CambiarFechaReserva = () => {
+const NuevoCobro = () => {
     const classes = useStyles();
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
+    const [valorRadio, setearValorRadio] = useState('Efectivo');
+
+    const handleChangeRadioMedioPago = (event) => {
+        setearValorRadio(event.target.value);
+    };
+
     return ( 
         <>  
         <Navbar/>
-        <Typography className={classes.titulo}>Cambiar fecha de reservas</Typography>
+        <Typography className={classes.titulo}>Nuevo cobro a clientes</Typography>
         &nbsp;
         <form className={classes.container}>
         <TextField
@@ -214,41 +223,64 @@ const CambiarFechaReserva = () => {
                 </Grid>
                 <Grid item sm={2} xs={4}>
                 <TextField
-                label="Precio"
+                label="Subtotal"
                 variant="filled"
                 fullWidth
                 disabled
                 value="$100"
                 />
                 </Grid>
-                <Grid item sm={1} xs={4}>
+                <Grid item sm={2} xs={4}>
                 <TextField
-                label="Diferencia"
-                variant="standard"
+                label="Adicional"
+                variant="filled"
                 fullWidth
-                value="$50"
+                disabled
+                value="$30"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6}>
+                <Grid item sm={2} xs={12}>
                 <TextField
-                label="Nuevo lugar"
-                variant="standard"
+                label="Total a cobrar"
+                variant="filled"
                 fullWidth
-                value="23"
+                disabled
+                value="$130"
                 />
                 </Grid>
-                <Grid item sm={3} xs={6}>
-                <KeyboardDatePicker
+                &nbsp;
+            </Grid>
+            &nbsp;
+            <Typography className={classes.subtitulos}>Datos del pago</Typography>
+        &nbsp;
+            <Grid container spacing={3}>
+                <Grid item sm={3} xs={12}>
+                    <FormControl>
+                        <FormLabel className={classes.subtitulos}>Medio de pago</FormLabel>
+                        <RadioGroup aria-label="medio de pago" name ="medioDePago" value={valorRadio} onChange={handleChangeRadioMedioPago}>
+                            <FormControlLabel value="Efectivo" control={<Radio/>} label="Efectivo"></FormControlLabel>
+                            <FormControlLabel value="Débito" control={<Radio/>} label="Tarjeta de débito"></FormControlLabel>
+                            <FormControlLabel value="Crédito" control={<Radio/>} label="Tarjeta de crédito"></FormControlLabel>
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                <TextField
+                label="Número de tarjeta"
+                className={classes.inputCodigo}
+                variant="standard"
                 fullWidth
-                className={classes.inputFecha}
-                id="date-picker-dialog"
-                label="Fecha nueva de reserva"
-                format="dd/MM/yyyy"
-                value={fechaSeleccionada}
-                onChange={handleCambiarFecha}
-                KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                }}
+                value="2345-1235-4568-1232"
+                />
+                </Grid>
+                <Grid item sm={1} xs={12}>
+                <TextField
+                label="Código de seguridad"
+                className={classes.inputCodigo}
+                variant="standard"
+                type="password"
+                fullWidth
+                value="***"
                 />
                 </Grid>
                 &nbsp;
@@ -256,11 +288,11 @@ const CambiarFechaReserva = () => {
             &nbsp;
             <Button
                 endIcon={<CheckIcon/>}
-                className= {classes.botonCambiarReserva}>Cambiar reserva
+                className= {classes.botonCambiarReserva}>Confirmar cobro
             </Button>
         </List>
     </>
      );
 }
  
-export default CambiarFechaReserva;
+export default NuevoCobro;

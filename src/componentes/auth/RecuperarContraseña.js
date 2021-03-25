@@ -4,22 +4,36 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
 import { Link } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles( theme => ({
     cartaRecuperarContraseña: {
-        height: 450,
+        height: 320,
         width: 450,
         margin: "auto",
-        marginTop: "2rem"
+        marginTop: "2rem",
+        boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
+    },
+    alerta:{
+        position: "absolute",
+        bottom: 0,
+        width: "100%",
+        color:"#ffffff",
+        backgroundColor: "#795548",
+        borderRadius: 0
+    },
+    cartaEncabezado: {
+        backgroundColor: "#4db6ac",
     },
     tituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
+        color: "#ffffff",
         fontSize: 30
     },
     subtituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
-        color: "#bdbdbd",
+        color: "#ffffff",
         fontSize: 15
     },
     botonRecuperarContraseña: {
@@ -82,7 +96,7 @@ const RecuperarContraseña = () => {
             <img src={logo} alt="" className={classes.logo}></img>
         </div>
         <Card className={classes.cartaRecuperarContraseña}>
-            <CardContent>
+            <CardContent className={classes.cartaEncabezado}>
                 <Typography className={classes.tituloCarta}>Olvidé mi contraseña</Typography>
                 <Typography className={classes.subtituloCarta}>Ingrese su correo electrónico para continuar</Typography>
             </CardContent>
@@ -119,11 +133,9 @@ const RecuperarContraseña = () => {
                     </Grid>
                 </Grid>
             </form>
-            <CardContent>
-                <Typography className={classes.subtituloCarta}>Le enviaremos información a su correo electrónico
-                para que pueda recuperar su contraseña</Typography>
-            </CardContent>
         </Card>
+        <Alert className={classes.alerta} severity="info" variant="filled">Le enviaremos información a su correo electrónico
+        para que pueda recuperar su contraseña</Alert>
     </>
         );
 }

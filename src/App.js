@@ -7,12 +7,14 @@ import Spinner from './componentes/diseño/Spinner.js';
 import ReservasHoy from './componentes/reservas/ReservasHoy.js';
 import ReservasCalendario from './componentes/reservas/ReservasCalendario.js';
 import CambiarFechaReserva from './componentes/reservas/CambiarFechaReserva.js';
+import NuevoCobro from './componentes/cobros/NuevoCobro.js';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from "date-fns/locale/es";
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 
 
 function App() {
@@ -38,6 +40,9 @@ function App() {
         </Route>
         <Route path="/reservas-del-dia">
           <ReservasHoy/>
+        </Route>
+        <Route path="/nuevo-cobro">
+          <NuevoCobro/>
         </Route>
         <Route path="/reservas-calendario">
           <ReservasCalendario/>
