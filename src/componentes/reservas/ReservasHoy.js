@@ -2,10 +2,12 @@ import React from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, ListItemAvatar, ListItemText, Divider, makeStyles, Typography, ListItem, Avatar, Button } from '@material-ui/core';
 import Buscar from './../diseño/Buscar.js';
+import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Footer from '../diseño/Footer.js';
+
 const useStyles = makeStyles((theme) => ({
     titulo: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -22,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: "20rem",
             marginRight: "1rem"
         },
-        [theme.breakpoints.up('md')]: {
-            marginLeft: "20rem",
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
             marginRight: "1rem"
         },
     },
@@ -53,15 +55,36 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#43a047",
         }
     },
+    alerta:{
+        position: "relative",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "20rem",
+            marginRight: "1rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem"
+        },
+        borderRadius: 0
+    },
 }));
 
 const ReservasHoy = () => {
     const classes = useStyles();
     return (
-        <>  
+        <>
+
             <Navbar/>
             <Typography className={classes.titulo}>Reservas del día de hoy</Typography>
             &nbsp;
+            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá ver todas aquellas reservas hechas en el día de la fecha
+            por usuarios registrados. Además podrá:
+             <ul>
+                 <li>Validar una reserva para registrar el horario de ingreso del cliente al establecimiento.</li>
+                 <li>Concluir una reserva para registrar el horario de egreso del cliente del establecimiento.</li>
+            </ul>
+            </Alert>
+             &nbsp;
             <List className = {classes.cartaReservas}>
             <Buscar/>
                 <ListItem button>
@@ -76,6 +99,7 @@ const ReservasHoy = () => {
                         <Typography>Vehículo: Volkswagen Gol</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Hora de ingreso: -</Typography>
+                        <Typography>Hora de salida: -</Typography>
                         <Typography>Lugar: 11</Typography>
                         </>}>
                     </ListItemText>
@@ -98,6 +122,7 @@ const ReservasHoy = () => {
                         <Typography>Vehículo: Ford KA</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Hora de ingreso: -</Typography>
+                        <Typography>Hora de salida: -</Typography>
                         <Typography>Lugar: 16</Typography>
                         </>}>
                     </ListItemText>
@@ -121,6 +146,7 @@ const ReservasHoy = () => {
                         <Typography>Horario: 16-18</Typography>
                         <Typography>Precio: $200</Typography>
                         <Typography>Hora de ingreso: -</Typography>
+                        <Typography>Hora de salida: -</Typography>
                         <Typography>Lugar: 14</Typography>
                         </>}>
                     </ListItemText>
@@ -142,6 +168,7 @@ const ReservasHoy = () => {
                         <Typography>Vehículo: Volkswagen Gol</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Hora de ingreso: 19:26</Typography>
+                        <Typography>Hora de salida: -</Typography>
                         <Typography>Lugar: 13</Typography>
                         </>}>
                     </ListItemText>
@@ -164,6 +191,7 @@ const ReservasHoy = () => {
                         <Typography>Vehículo: Ford KA</Typography>
                         <Typography>Precio: $100</Typography>
                         <Typography>Hora de ingreso: 18:23</Typography>
+                        <Typography>Hora de salida: -</Typography>
                         <Typography>Lugar: 17</Typography>
                         </>}>
                     </ListItemText>
@@ -186,6 +214,7 @@ const ReservasHoy = () => {
                         <Typography>Vehículo: Volkswagen Gol</Typography>
                         <Typography>Precio: $200</Typography>
                         <Typography>Hora de ingreso: 16:50</Typography>
+                        <Typography>Hora de salida: -</Typography>
                         <Typography>Lugar: 1</Typography>
                         </>}>
                     </ListItemText>

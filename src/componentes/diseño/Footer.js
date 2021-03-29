@@ -8,6 +8,9 @@ const useStyles = makeStyles(theme => ({
         margin: "auto"
     },
     footer: {
+        [theme.breakpoints.up('lg')]: {
+            marginTop: "14rem"
+        },
         position: "relative",
         bottom: 0,
         width: "100%"

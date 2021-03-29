@@ -1,14 +1,24 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid, Select } from '@material-ui/core';
+Typography, Button, TextField, Grid, Select, Checkbox } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
+import {
+    KeyboardTimePicker,
+  } from '@material-ui/pickers';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import Chip from '@material-ui/core/Chip';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import MotorcycleIcon from '@material-ui/icons/Motorcycle';
+import Alert from '@material-ui/lab/Alert';
+
 const useStyles = makeStyles((theme) => ({
     titulo: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -18,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     subtitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 16,
+        fontSize: 18,
         color:"#424242",
     },
     container: {
@@ -42,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         fontFamily: "Roboto Condensed, sans-serif",
+        paddingRight: "1rem",
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#4db6ac"
         },
@@ -63,21 +74,91 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    chips: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        margin: 2,
+    },
+    labelSelectMultiple: {
+        paddingTop:"1rem",
+        fontSize: "0.8rem"
+    },
+    labelCheckbox: {
+        fontSize: "0.8rem"
+    },
+    alerta:{
+        position: "relative",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "20rem",
+            marginRight: "1rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem"
+        },
+        borderRadius: 0
+    },
 }));
 
 const Estacionamiento = () => {
+    //states para los campos de fechas y horas
+    const [horaApertura, setearHoraIngreso] = useState(new Date());
+    const handleCambiarHoraApertura = (hora) => {
+        setearHoraIngreso(hora);
+    };
+    const [horaCierre, setearHoraCierre] = useState(new Date());
+    const handleCambiarHoraCierre = (hora) => {
+        setearHoraCierre(hora);
+    };
+
+    const [dia, setearDia] = useState([]);
+
+    const handleChangeDia = (event) => {
+        setearDia(event.target.value);
+    };
+    //states para los checkbox
+    const [checkHorarioCorrido, setCheckHorarioCorrido] = useState(false);
+    const handleChangeHorarioCorrido = () => {
+        setCheckHorarioCorrido(true);
+    };
+    const [checkTodosLosDias, setCheckTodosLosDias] = useState(false);
+    const handleChangeTodosLosDias = () => {
+        setCheckTodosLosDias(true);
+    };
+
+    const dias = [
+        'Lunes',
+        'Martes',
+        'Miercoles',
+        'Jueves',
+        'Viernes',
+        'Sábado',
+        'Domingo',
+    ];
+
     const classes = useStyles();
     return ( 
         <>  
         <Navbar/>
         <Typography className={classes.titulo}>Mi Estacionamiento</Typography>
         &nbsp;
+            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá ver y modificar los datos de su playa de estacionamiento. Es decir:
+             <ul>
+                 <li>Datos propios del establecimiento (nombre, dirección, n° de teléfono, etc).</li>
+                 <li>Horarios de apertura y cierre y días de atención.</li>
+                 <li>Tarifas para todos los vehículos aceptados por la playa de estacionamiento.</li>
+                 <li>Ubicación georeferenciada.</li>
+            </ul>
+            </Alert>
+        &nbsp;
         <List className={classes.cartaReservas}>
         &nbsp;
-        <Typography className={classes.subtitulos}>Datos del estacionamiento</Typography>
+        <Typography className={classes.subtitulos}>Datos de la playa de estacionamiento</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={5} xs={11}>
+                <Grid item sm={6} xs={12}>
                 <TextField
                 className={classes.input}
                 label="Nombre Completo"
@@ -87,7 +168,7 @@ const Estacionamiento = () => {
                 value="Playa de estacionamiento del convento"
                 />
                 </Grid>
-                <Grid item sm={6} xs={11} >
+                <Grid item sm={6} xs={12} >
                 <TextField
                 className={classes.input}
                 label="País"
@@ -96,7 +177,7 @@ const Estacionamiento = () => {
                 fullWidth
                 />
                 </Grid>
-                <Grid item sm={3} xs={5}>
+                <Grid item sm={3} xs={6}>
                 <TextField
                 className={classes.input}
                 label="Provincia"
@@ -105,7 +186,7 @@ const Estacionamiento = () => {
                 value="Salta"
                 />
                 </Grid>
-                <Grid item sm={2} xs={6} >
+                <Grid item sm={3} xs={6} >
                 <TextField
                 className={classes.input}
                 label="N° de teléfono"
@@ -114,7 +195,7 @@ const Estacionamiento = () => {
                 fullWidth
                 />
                 </Grid>
-                <Grid item sm={2} xs={5} >
+                <Grid item sm={2} xs={6} >
                 <TextField
                 className={classes.input}
                 label="CUIT"
@@ -126,15 +207,6 @@ const Estacionamiento = () => {
                 <Grid item sm={4} xs={6} >
                 <TextField
                 className={classes.input}
-                label="Sucursal"
-                variant="standard"
-                value="Salta"
-                fullWidth
-                />
-                </Grid>
-                <Grid item sm={11} xs={11} >
-                <TextField
-                className={classes.input}
                 label="Cantidad de lugares para estacionar"
                 type="number"
                 variant="standard"
@@ -143,17 +215,96 @@ const Estacionamiento = () => {
                 />
                 </Grid>
             </Grid>
+            &nbsp;
+        <Typography className={classes.subtitulos}>Horarios y fechas</Typography>
+        &nbsp;
+            <Grid container spacing={3}>
+                <Grid item sm={5} xs={4} >
+                <KeyboardTimePicker
+                className={classes.input}
+                fullWidth
+                disabled={checkHorarioCorrido ? true: false}
+                id="time-picker"
+                label="Horario de Apertura"
+                value={horaApertura}
+                onChange={handleCambiarHoraApertura}
+                KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                }}
+                />
+                </Grid>
+                <Grid item sm={5} xs={4} >
+                <KeyboardTimePicker
+                className={classes.input}
+                fullWidth
+                disabled={checkHorarioCorrido ? true: false}
+                id="time-picker"
+                label="Horario de Cierre"
+                value={horaCierre}
+                onChange={handleCambiarHoraCierre}
+                KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                }}
+                />
+                </Grid>
+                <Grid item sm={2} xs={4}>
+                    <InputLabel className={classes.labelCheckbox}>Horario corrido</InputLabel>
+                    <Checkbox
+                    color="primary"
+                    value={checkHorarioCorrido}
+                    onChange={handleChangeHorarioCorrido}
+                    />
+                </Grid>
+                <Grid item sm={10} xs={8}>
+                <InputLabel className={classes.labelSelectMultiple}>Días de apertura (Seleccione uno o varios)</InputLabel>
+                <Select
+                labelId="demo-mutiple-chip-label"
+                fullWidth
+                className={classes.input}
+                id="demo-mutiple-chip"
+                displayEmpty
+                multiple
+                value={dia}
+                onChange={handleChangeDia}
+                input={<Input id="select-multiple-chip" />}
+                renderValue={(selected) => (
+                    <div className={classes.chips}>
+                    {selected.map((value) => (
+                        <Chip key={value} label={value} className={classes.chip} />
+                    ))}
+                    </div>
+                )}
+                >
+                <MenuItem value="" disabled>Seleccione uno o varios</MenuItem>
+                {dias.map((dia) => (
+                    <MenuItem key={dia} value={dia}>
+                    {dia}
+                    </MenuItem>
+                    
+                ))}
+                </Select>
+                </Grid>
+                <Grid item sm={2} xs={4}>
+                    <InputLabel className={classes.labelCheckbox}>Todos los días</InputLabel>
+                    <Checkbox
+                    color="primary"
+                    value={checkTodosLosDias}
+                    onChange={handleChangeTodosLosDias}
+                    />
+                </Grid>
+            </Grid>
         &nbsp;
         <Typography className={classes.subtitulos}>Ubicación</Typography>
             <Grid container spacing={3}>
-                <Grid item sm={11} xs={11}>
+                <Grid item sm={12} xs={12}>
                 <Select
                 fullWidth
                 className={classes.input}
                 />
                 </Grid>
-                <Grid item sm={2} xs={5}>
+                <Grid item sm={2} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Latitud"
                 variant="standard"
                 fullWidth
@@ -163,6 +314,7 @@ const Estacionamiento = () => {
                 </Grid>
                 <Grid item sm={2} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Longitud"
                 variant="standard"
                 fullWidth
@@ -170,8 +322,9 @@ const Estacionamiento = () => {
                 value="-35.1656"
                 />
                 </Grid>
-                <Grid item sm={7} xs={11}>
+                <Grid item sm={8} xs={12}>
                 <TextField
+                className={classes.input}
                 label="Dirección completa"
                 variant="standard"
                 fullWidth
@@ -201,7 +354,7 @@ const Estacionamiento = () => {
                   }}
                 />
                 </Grid>
-                <Grid item sm={3} xs={5}>
+                <Grid item sm={3} xs={6}>
                 <TextField
                 className={classes.input}
                 label="Camioneta"
@@ -217,7 +370,7 @@ const Estacionamiento = () => {
                   }}
                 />
                 </Grid>
-                <Grid item sm={2} xs={6}>
+                <Grid item sm={3} xs={6}>
                 <TextField
                 className={classes.input}
                 label="Bicicleta"
@@ -233,7 +386,7 @@ const Estacionamiento = () => {
                   }}
                 />
                 </Grid>
-                <Grid item sm={3} xs={5}>
+                <Grid item sm={3} xs={6}>
                 <TextField
                 className={classes.input}
                 label="Motocicleta"

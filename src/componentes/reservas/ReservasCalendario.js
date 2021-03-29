@@ -3,6 +3,7 @@ import Navbar from './../diseño/Navbar.js';
 import { List, ListItemAvatar, ListItemText, Divider, makeStyles,
 Typography, ListItem, Avatar, Button } from '@material-ui/core';
 import Buscar from './../diseño/Buscar.js';
+import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import {
   KeyboardDatePicker,
@@ -62,6 +63,18 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#4db6ac",
         }
     },
+    alerta:{
+        position: "relative",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "20rem",
+            marginRight: "1rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem"
+        },
+        borderRadius: 0
+    },
 }));
 
 const ReservasCalendario = () => {
@@ -71,6 +84,10 @@ const ReservasCalendario = () => {
         <>  
             <Navbar/>
             <Typography className={classes.titulo}>Calendario de reservas</Typography>
+            &nbsp;
+            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá ver todas aquellas reservas hechas en una fecha determinada
+            por usuarios registrados.
+            </Alert>
             &nbsp;
             <form className={classes.container}>
             <KeyboardDatePicker

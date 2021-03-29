@@ -7,6 +7,7 @@ import {
 } from '@material-ui/pickers';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -17,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
     },
     subtitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 16,
+        fontSize: 18,
         color:"#424242",
     },
     subtitulos2: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 12,
+        fontSize: 15,
         color:"#424242",
     },
     container: {
@@ -99,6 +100,18 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    alerta:{
+        position: "relative",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "20rem",
+            marginRight: "1rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem"
+        },
+        borderRadius: 0
+    },
 }));
 
 const NuevoCobro = () => {
@@ -114,6 +127,10 @@ const NuevoCobro = () => {
         <>  
         <Navbar/>
         <Typography className={classes.titulo}>Nuevo cobro a clientes</Typography>
+        &nbsp;
+        <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá realizar un cobro a algún cliente que lo requiera en caso de que haya superado
+        el tiempo de reserva establecido.
+            </Alert>
         &nbsp;
         <form className={classes.container}>
         <TextField

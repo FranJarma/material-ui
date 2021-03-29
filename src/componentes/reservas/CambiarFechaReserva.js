@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
 Typography, Button, TextField, Grid } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
@@ -81,6 +82,18 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    alerta:{
+        position: "relative",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "20rem",
+            marginRight: "1rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem",
+            marginRight: "1rem"
+        },
+        borderRadius: 0
+    },
 }));
 
 const CambiarFechaReserva = () => {
@@ -90,6 +103,14 @@ const CambiarFechaReserva = () => {
         <>  
         <Navbar/>
         <Typography className={classes.titulo}>Cambiar fecha de reservas</Typography>
+        &nbsp;
+            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá cambiar la fecha de una reserva según su código en caso de 
+            que el cliente no pueda utlizarla. Además podrá:
+                <ul>
+                    <li>Imprimir un ticket o constancia para que el cliente pueda presentarlo en el establecimiento.</li>
+                    <li>Liberar el lugar asignado al cliente para que otra persona pueda utilizarlo.</li>
+                </ul>
+            </Alert>
         &nbsp;
         <form className={classes.container}>
         <TextField
