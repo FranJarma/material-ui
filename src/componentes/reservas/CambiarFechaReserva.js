@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid } from '@material-ui/core';
+Typography, Button, TextField, Grid, Select, MenuItem, InputLabel } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {
   KeyboardDatePicker,
@@ -82,6 +82,27 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    label: {
+        fontSize: "0.8rem",
+        paddingBottom: "0.25rem"
+    },
+    select: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        paddingRight: "1rem",
+        '&:after': {
+            borderColor: "#4db6ac",
+        }
+    },
+    input: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        paddingRight: "1rem",
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#4db6ac"
+        },
+        "& .MuiInput-underline:after": {
+            borderBottomColor: "#4db6ac"
+        },
+    },
     alerta:{
         position: "relative",
         [theme.breakpoints.up('lg')]: {
@@ -99,6 +120,28 @@ const useStyles = makeStyles((theme) => ({
 const CambiarFechaReserva = () => {
     const classes = useStyles();
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
+    const [nuevoLugar, setNuevoLugar] = useState([]);
+
+    const handleChangeNuevoLugar = (event) => {
+        setNuevoLugar(event.target.value);
+    }
+    const lugares = [
+        'Lugar 1',
+        'Lugar 2',
+        'Lugar 3',
+        'Lugar 4',
+        'Lugar 5',
+        'Lugar 6',
+        'Lugar 7',
+        'Lugar 8',
+        'Lugar 9',
+        'Lugar 10',
+        'Lugar 11',
+        'Lugar 12',
+        'Lugar 13',
+        'Lugar 14',
+        'Lugar 15',
+    ]
     return ( 
         <>  
         <Navbar/>
@@ -130,6 +173,7 @@ const CambiarFechaReserva = () => {
             <Grid container spacing={3}>
                 <Grid item sm={3} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Nombre Completo"
                 variant="standard"
                 fullWidth
@@ -137,8 +181,9 @@ const CambiarFechaReserva = () => {
                 value="Francisco Alfredo Jarma"
                 />
                 </Grid>
-                <Grid item sm={2} xs={5}>
+                <Grid item sm={3} xs={6}>
                 <TextField
+                className={classes.input}
                 label="DNI"
                 fullWidth
                 variant="standard"
@@ -146,8 +191,9 @@ const CambiarFechaReserva = () => {
                 value="40.524.512"
                 />
                 </Grid>
-                <Grid item sm={1} xs={6}>
+                <Grid item sm={3} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Edad"
                 variant="standard"
                 fullWidth
@@ -155,8 +201,9 @@ const CambiarFechaReserva = () => {
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={2} xs={5} >
+                <Grid item sm={3} xs={6} >
                 <TextField
+                className={classes.input}
                 label="N° de teléfono"
                 variant="standard"
                 fullWidth
@@ -164,8 +211,9 @@ const CambiarFechaReserva = () => {
                 value="3874450922"
                 />
                 </Grid>
-                <Grid item sm={3} xs={11} >
+                <Grid item sm={12} xs={12} >
                 <TextField
+                className={classes.input}
                 label="Dirección"
                 variant="standard"
                 fullWidth
@@ -180,6 +228,7 @@ const CambiarFechaReserva = () => {
             <Grid container spacing={3}>
                 <Grid item sm={4} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Patente"
                 variant="standard"
                 fullWidth
@@ -187,8 +236,9 @@ const CambiarFechaReserva = () => {
                 value="LZY643"
                 />
                 </Grid>
-                <Grid item sm={4} xs={5}>
+                <Grid item sm={4} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Tipo"
                 fullWidth
                 variant="standard"
@@ -196,8 +246,9 @@ const CambiarFechaReserva = () => {
                 value="Auto"
                 />
                 </Grid>
-                <Grid item sm={3} xs={11}>
+                <Grid item sm={4} xs={12}>
                 <TextField
+                className={classes.input}
                 label="Marca"
                 variant="standard"
                 fullWidth
@@ -211,11 +262,11 @@ const CambiarFechaReserva = () => {
         <Typography className={classes.subtitulos}>Datos de la reserva</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={3} xs={11}>
+                <Grid item sm={4} xs={6}>
                 <KeyboardDatePicker
                 fullWidth
                 disabled
-                className={classes.inputFecha}
+                className={classes.input}
                 id="date-picker-dialog"
                 label="Fecha de reserva"
                 format="dd/MM/yyyy"
@@ -226,8 +277,9 @@ const CambiarFechaReserva = () => {
                 }}
                 />
                 </Grid>
-                <Grid item sm={1} xs={4}>
+                <Grid item sm={4} xs={3}>
                 <TextField
+                className={classes.input}
                 label="Lugar"
                 variant="standard"
                 fullWidth
@@ -235,8 +287,9 @@ const CambiarFechaReserva = () => {
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={1} xs={4}>
+                <Grid item sm={4} xs={3}>
                 <TextField
+                className={classes.input}
                 label="Precio"
                 variant="standard"
                 fullWidth
@@ -244,26 +297,11 @@ const CambiarFechaReserva = () => {
                 value="$100"
                 />
                 </Grid>
-                <Grid item sm={1} xs={3}>
-                <TextField
-                label="Diferencia"
-                variant="standard"
-                fullWidth
-                value="$50"
-                />
-                </Grid>
-                <Grid item sm={2} xs={4}>
-                <TextField
-                label="Nuevo lugar"
-                variant="standard"
-                fullWidth
-                value="23"
-                />
-                </Grid>
-                <Grid item sm={3} xs={7}>
+                <Grid item sm={4} xs={6}>
                 <KeyboardDatePicker
                 fullWidth
-                className={classes.inputFecha}
+                disablePast
+                className={classes.input}
                 id="date-picker-dialog"
                 label="Fecha nueva de reserva"
                 format="dd/MM/yyyy"
@@ -273,6 +311,33 @@ const CambiarFechaReserva = () => {
                     'aria-label': 'change date',
                 }}
                 />
+                </Grid>
+                <Grid item sm={4} xs={6}>
+                <TextField
+                className={classes.input}
+                label="Diferencia"
+                variant="standard"
+                fullWidth
+                value="$50"
+                />
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                <InputLabel className={classes.label}>Nuevo Lugar</InputLabel>
+                <Select
+                fullWidth
+                className={classes.select}
+                displayEmpty
+                value={nuevoLugar}
+                onChange={handleChangeNuevoLugar}
+                >
+                <MenuItem value="" disabled>Seleccione uno</MenuItem>
+                {lugares.map((lugar) => (
+                    <MenuItem key={lugar} value={lugar}>
+                    {lugar}
+                    </MenuItem>
+                    
+                ))}
+                </Select>
                 </Grid>
                 &nbsp;
             </Grid>

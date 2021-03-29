@@ -137,6 +137,7 @@ const Aside = () => {
                     </ListItemText>
                 </ListItem>
                 </Link>
+                <Link to={'/valoraciones'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
                         <StarIcon/>
@@ -145,6 +146,7 @@ const Aside = () => {
                         Comentarios y valoraciones
                     </ListItemText>
                 </ListItem>
+                </Link>
                 <ListItem button>
                     <ListItemIcon>
                         <EqualizerIcon/>

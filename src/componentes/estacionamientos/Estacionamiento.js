@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid, Select, Checkbox } from '@material-ui/core';
+Typography, Button, TextField, Grid, Select } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 import {
@@ -60,6 +60,13 @@ const useStyles = makeStyles((theme) => ({
             borderBottomColor: "#4db6ac"
         },
     },
+    select: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        paddingRight: "1rem",
+        '&:after': {
+            borderColor: "#4db6ac",
+        }
+    },
     botonModificarDatos: {
         backgroundColor: "#448aff",
         color: "#ffffff",
@@ -105,27 +112,18 @@ const useStyles = makeStyles((theme) => ({
 const Estacionamiento = () => {
     //states para los campos de fechas y horas
     const [horaApertura, setearHoraIngreso] = useState(new Date());
-    const handleCambiarHoraApertura = (hora) => {
-        setearHoraIngreso(hora);
+    const handleCambiarHoraApertura = (horaApertura) => {
+        setearHoraIngreso(horaApertura);
     };
     const [horaCierre, setearHoraCierre] = useState(new Date());
-    const handleCambiarHoraCierre = (hora) => {
-        setearHoraCierre(hora);
+    const handleCambiarHoraCierre = (horaCierre) => {
+        setearHoraCierre(horaCierre);
     };
 
     const [dia, setearDia] = useState([]);
 
     const handleChangeDia = (event) => {
         setearDia(event.target.value);
-    };
-    //states para los checkbox
-    const [checkHorarioCorrido, setCheckHorarioCorrido] = useState(false);
-    const handleChangeHorarioCorrido = () => {
-        setCheckHorarioCorrido(true);
-    };
-    const [checkTodosLosDias, setCheckTodosLosDias] = useState(false);
-    const handleChangeTodosLosDias = () => {
-        setCheckTodosLosDias(true);
     };
 
     const dias = [
@@ -207,7 +205,7 @@ const Estacionamiento = () => {
                 <Grid item sm={4} xs={6} >
                 <TextField
                 className={classes.input}
-                label="Cantidad de lugares para estacionar"
+                label="Cantidad de lugares"
                 type="number"
                 variant="standard"
                 value="30"
@@ -219,13 +217,11 @@ const Estacionamiento = () => {
         <Typography className={classes.subtitulos}>Horarios y fechas</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={5} xs={4} >
+                <Grid item sm={6} xs={6} >
                 <KeyboardTimePicker
                 className={classes.input}
                 fullWidth
-                disabled={checkHorarioCorrido ? true: false}
-                id="time-picker"
-                label="Horario de Apertura"
+                label="Apertura"
                 value={horaApertura}
                 onChange={handleCambiarHoraApertura}
                 KeyboardButtonProps={{
@@ -233,13 +229,11 @@ const Estacionamiento = () => {
                 }}
                 />
                 </Grid>
-                <Grid item sm={5} xs={4} >
+                <Grid item sm={6} xs={6} >
                 <KeyboardTimePicker
                 className={classes.input}
                 fullWidth
-                disabled={checkHorarioCorrido ? true: false}
-                id="time-picker"
-                label="Horario de Cierre"
+                label="Cierre"
                 value={horaCierre}
                 onChange={handleCambiarHoraCierre}
                 KeyboardButtonProps={{
@@ -247,26 +241,16 @@ const Estacionamiento = () => {
                 }}
                 />
                 </Grid>
-                <Grid item sm={2} xs={4}>
-                    <InputLabel className={classes.labelCheckbox}>Horario corrido</InputLabel>
-                    <Checkbox
-                    color="primary"
-                    value={checkHorarioCorrido}
-                    onChange={handleChangeHorarioCorrido}
-                    />
-                </Grid>
-                <Grid item sm={10} xs={8}>
+                <Grid item sm={11} xs={11}>
                 <InputLabel className={classes.labelSelectMultiple}>Días de apertura (Seleccione uno o varios)</InputLabel>
                 <Select
-                labelId="demo-mutiple-chip-label"
                 fullWidth
-                className={classes.input}
-                id="demo-mutiple-chip"
+                className={classes.select}
                 displayEmpty
                 multiple
                 value={dia}
                 onChange={handleChangeDia}
-                input={<Input id="select-multiple-chip" />}
+                input={<Input/>}
                 renderValue={(selected) => (
                     <div className={classes.chips}>
                     {selected.map((value) => (
@@ -284,22 +268,14 @@ const Estacionamiento = () => {
                 ))}
                 </Select>
                 </Grid>
-                <Grid item sm={2} xs={4}>
-                    <InputLabel className={classes.labelCheckbox}>Todos los días</InputLabel>
-                    <Checkbox
-                    color="primary"
-                    value={checkTodosLosDias}
-                    onChange={handleChangeTodosLosDias}
-                    />
-                </Grid>
             </Grid>
         &nbsp;
         <Typography className={classes.subtitulos}>Ubicación</Typography>
             <Grid container spacing={3}>
-                <Grid item sm={12} xs={12}>
+                <Grid item sm={11} xs={11}>
                 <Select
                 fullWidth
-                className={classes.input}
+                className={classes.select}
                 />
                 </Grid>
                 <Grid item sm={2} xs={6}>

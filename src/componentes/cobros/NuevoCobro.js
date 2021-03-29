@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+Typography, Button, TextField, Grid, FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
@@ -20,11 +20,12 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 18,
         color:"#424242",
+        
     },
     subtitulos2: {
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 15,
-        color:"#424242",
+        color:"#424242"
     },
     container: {
         [theme.breakpoints.up('lg')]: {
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         fontFamily: "Roboto Condensed, sans-serif",
+        paddingRight: "1rem",
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#4db6ac"
         },
@@ -100,6 +102,11 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    radio: {
+        "&.MuiRadio-colorSecondary.Mui-checked":{
+            color:"#4db6ac"
+        }
+    },
     alerta:{
         position: "relative",
         [theme.breakpoints.up('lg')]: {
@@ -117,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
 const NuevoCobro = () => {
     const classes = useStyles();
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
-    const [valorRadio, setearValorRadio] = useState('Efectivo');
+    const [valorRadio, setearValorRadio] = useState('Debito');
 
     const handleChangeRadioMedioPago = (event) => {
         setearValorRadio(event.target.value);
@@ -150,6 +157,7 @@ const NuevoCobro = () => {
             <Grid container spacing={3}>
                 <Grid item sm={3} xs={6} >
                 <TextField
+                className={classes.input}
                 label="Nombre Completo"
                 variant="standard"
                 fullWidth
@@ -157,8 +165,9 @@ const NuevoCobro = () => {
                 value="Francisco Alfredo Jarma"
                 />
                 </Grid>
-                <Grid item sm={2} xs={5}>
+                <Grid item sm={3} xs={6}>
                 <TextField
+                className={classes.input}
                 label="DNI"
                 fullWidth
                 variant="standard"
@@ -166,8 +175,9 @@ const NuevoCobro = () => {
                 value="40.524.512"
                 />
                 </Grid>
-                <Grid item sm={1} xs={6}>
+                <Grid item sm={3} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Edad"
                 variant="standard"
                 fullWidth
@@ -175,8 +185,9 @@ const NuevoCobro = () => {
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={2} xs={5} >
+                <Grid item sm={3} xs={6} >
                 <TextField
+                className={classes.input}
                 label="N° de teléfono"
                 variant="standard"
                 fullWidth
@@ -184,8 +195,9 @@ const NuevoCobro = () => {
                 value="3874450922"
                 />
                 </Grid>
-                <Grid item sm={3} xs={11} >
+                <Grid item sm={12} xs={12} >
                 <TextField
+                className={classes.input}
                 label="Dirección"
                 variant="standard"
                 fullWidth
@@ -200,6 +212,7 @@ const NuevoCobro = () => {
             <Grid container spacing={3}>
                 <Grid item sm={4} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Patente"
                 variant="standard"
                 fullWidth
@@ -207,8 +220,9 @@ const NuevoCobro = () => {
                 value="LZY643"
                 />
                 </Grid>
-                <Grid item sm={4} xs={5}>
+                <Grid item sm={4} xs={6}>
                 <TextField
+                className={classes.input}
                 label="Tipo"
                 fullWidth
                 variant="standard"
@@ -216,8 +230,9 @@ const NuevoCobro = () => {
                 value="Auto"
                 />
                 </Grid>
-                <Grid item sm={3} xs={11}>
+                <Grid item sm={4} xs={12}>
                 <TextField
+                className={classes.input}
                 label="Marca"
                 variant="standard"
                 fullWidth
@@ -246,8 +261,9 @@ const NuevoCobro = () => {
                 }}
                 />
                 </Grid>
-                <Grid item sm={2} xs={3}>
+                <Grid item sm={3} xs={3}>
                 <TextField
+                className={classes.input}
                 label="Lugar"
                 variant="standard"
                 fullWidth
@@ -255,7 +271,7 @@ const NuevoCobro = () => {
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={3} xs={8}>
+                <Grid item sm={3} xs={9}>
                 <TextField
                 className={classes.input}
                 label="Abonado por el cliente"
@@ -265,7 +281,7 @@ const NuevoCobro = () => {
                 value="$100"
                 />
                 </Grid>
-                <Grid item sm={3} xs={5}>
+                <Grid item sm={3} xs={12}>
                 <TextField
                 className={classes.input}
                 label="Adicional a cobrar"
@@ -282,32 +298,32 @@ const NuevoCobro = () => {
             <Grid container spacing={3}>
                 <Grid item sm={3} xs={12}>
                     <FormControl>
-                        <FormLabel className={classes.subtitulos2}>Medio de pago</FormLabel>
-                        <RadioGroup aria-label="medio de pago" name ="medioDePago" value={valorRadio} onChange={handleChangeRadioMedioPago}>
-                            <FormControlLabel value="Débito" control={<Radio/>} label="Tarjeta de débito"></FormControlLabel>
-                            <FormControlLabel value="Crédito" control={<Radio/>} label="Tarjeta de crédito"></FormControlLabel>
-                            <FormControlLabel value="Efectivo" control={<Radio/>} label="Efectivo"></FormControlLabel>
+                        <Typography className={classes.subtitulos2}>Medio de pago</Typography>
+                        <RadioGroup  aria-label="medio de pago" name ="medioDePago" value={valorRadio} onChange={handleChangeRadioMedioPago}>
+                            <FormControlLabel value="Debito" control={<Radio className={classes.radio}/>} label="Tarjeta de débito"></FormControlLabel>
+                            <FormControlLabel value="Credito" control={<Radio className={classes.radio}/>} label="Tarjeta de crédito"></FormControlLabel>
+                            <FormControlLabel value="Efectivo" control={<Radio className={classes.radio}/>} label="Efectivo"></FormControlLabel>
                         </RadioGroup>
                     </FormControl>
                 </Grid>
                 <Grid item sm={5} xs={12}>
-                <TextField
-                label="Número de tarjeta"
-                className={classes.input}
-                variant="standard"
-                fullWidth
-                value="2345-1235-4568-1232"
-                />
-                </Grid>
-                <Grid item sm={3} xs={12}>
-                <TextField
-                label="Código de seguridad"
-                className={classes.input}
-                variant="standard"
-                type="password"
-                fullWidth
-                value="***"
-                />
+                    <TextField
+                    label="Número de tarjeta"
+                    className={classes.input}
+                    variant="standard"
+                    fullWidth
+                    value="2345-1235-4568-1232"
+                    />
+                    </Grid>
+                    <Grid item sm={3} xs={12}>
+                    <TextField
+                    label="Código de seguridad"
+                    className={classes.input}
+                    variant="standard"
+                    type="password"
+                    fullWidth
+                    value="***"
+                    />
                 </Grid>
             </Grid>
             <Button

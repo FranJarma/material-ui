@@ -80,6 +80,32 @@ const useStyles = makeStyles((theme) => ({
 const ReservasCalendario = () => {
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
     const classes = useStyles();
+    const reservas = [
+        {
+            id: 0,
+            avatar: "FJ",
+            nombreCompleto: "Francisco Jarma",
+            patente: "LZY450",
+            marca: "Volkswagen",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:52",
+            horaSalida: "20:55",
+            lugar: "11"
+        },
+        {
+            id: 1,
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "21:25",
+            lugar: "1"
+        },
+    ];
     return (
         <>  
             <Navbar/>
@@ -107,108 +133,28 @@ const ReservasCalendario = () => {
             &nbsp;
             <List className = {classes.cartaReservas}>
             <Buscar/>
-                <ListItem button>
-                    <ListItemAvatar>
-                        <Avatar>
-                            F
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Francisco Jarma" className={classes.tituloReserva} secondary ={
-                        <>
-                        <Typography>Patente: LZY450</Typography>
-                        <Typography>Vehículo: Volkswagen Gol</Typography>
-                        <Typography>Precio: $100</Typography>
-                        <Typography>Hora de ingreso: -</Typography>
-                        <Typography>Lugar: 11</Typography>
-                        </>}>
-                    </ListItemText>
-                </ListItem>
+                    {reservas.map(reserva =>(
+                    <>
+                    <ListItem key={reserva.id}>
+                        <ListItemAvatar>
+                            <Avatar>{reserva.avatar}</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={reserva.nombreCompleto} secondary={
+                            <>
+                            <Typography>Lugar: {reserva.lugar}</Typography>
+                            <Typography>Marca del vehículo: {reserva.marca}</Typography>
+                            <Typography>Patente del vehículo: {reserva.patente}</Typography>
+                            <Typography>Tipo de vehículo: {reserva.tipo}</Typography>
+                            <Typography>Precio: {reserva.precio}</Typography>
+                            <Typography>Hora de Ingreso: {reserva.horaIngreso}</Typography>
+                            <Typography>Hora de Salida: {reserva.horaSalida}</Typography>
+                            </>
+                        }>
+                        </ListItemText>
+                    </ListItem>
                 <Divider></Divider>
-                <ListItem button>
-                    <ListItemAvatar>
-                        <Avatar>
-                            E
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Estanislao Gonzáles Pérez" secondary ={
-                        <>
-                        <Typography>Patente: KEA512</Typography>
-                        <Typography>Vehículo: Ford KA</Typography>
-                        <Typography>Precio: $100</Typography>
-                        <Typography>Hora de ingreso: -</Typography>
-                        <Typography>Lugar: 16</Typography>
-                        </>}>
-                    </ListItemText>
-                </ListItem>
-                    <Divider></Divider>
-                <ListItem button>
-                    <ListItemAvatar>
-                        <Avatar>
-                            R
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Roberto Gomez" secondary ={
-                        <>
-                        <Typography>Patente: KAV412</Typography>
-                        <Typography>Vehículo: Volkswagen Gol</Typography>
-                        <Typography>Horario: 16-18</Typography>
-                        <Typography>Precio: $200</Typography>
-                        <Typography>Hora de ingreso: -</Typography>
-                        <Typography>Lugar: 14</Typography>
-                        </>}>
-                    </ListItemText>
-                </ListItem>
-                <ListItem button>
-                    <ListItemAvatar>
-                        <Avatar>
-                            F
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Francisco Jarma" className={classes.tituloReserva} secondary ={
-                        <>
-                        <Typography>Patente: LZY450</Typography>
-                        <Typography>Vehículo: Volkswagen Gol</Typography>
-                        <Typography>Precio: $100</Typography>
-                        <Typography>Hora de ingreso: -</Typography>
-                        <Typography>Lugar: 13</Typography>
-                        </>}>
-                    </ListItemText>
-                </ListItem>
-                <Divider></Divider>
-                <ListItem button>
-                    <ListItemAvatar>
-                        <Avatar>
-                            E
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Estanislao Gonzáles Pérez" secondary ={
-                        <>
-                        <Typography>Patente: KEA512</Typography>
-                        <Typography>Vehículo: Ford KA</Typography>
-                        <Typography>Precio: $100</Typography>
-                        <Typography>Hora de ingreso: -</Typography>
-                        <Typography>Lugar: 17</Typography>
-                        </>}>
-                    </ListItemText>
-                </ListItem>
-                    <Divider></Divider>
-                <ListItem button>
-                    <ListItemAvatar>
-                        <Avatar>
-                            R
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Roberto Gomez" secondary ={
-                        <>
-                        <Typography>Patente: KAV412</Typography>
-                        <Typography>Vehículo: Volkswagen Gol</Typography>
-                        <Typography>Horario: 16-18</Typography>
-                        <Typography>Precio: $200</Typography>
-                        <Typography>Hora de ingreso: -</Typography>
-                        <Typography>Lugar: 1</Typography>
-                        </>}>
-                    </ListItemText>
-                </ListItem>
+                    </>
+                    ))};
             </List>
             <Paginacion/>
             <Footer/>
