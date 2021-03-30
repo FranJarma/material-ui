@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from './../diseño/Navbar.js';
+import Navbar from '../diseño/Navbar.js';
 import { List, makeStyles,
 Typography, Button, TextField, Grid, Select } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Estacionamiento = () => {
+const Estacionamientos = () => {
     //states para los campos de fechas y horas
     const [horaApertura, setearHoraIngreso] = useState(new Date());
     const handleCambiarHoraApertura = (horaApertura) => {
@@ -391,4 +391,4 @@ const Estacionamiento = () => {
      );
 }
  
-export default Estacionamiento;
+export default Estacionamientos;

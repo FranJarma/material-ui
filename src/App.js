@@ -8,8 +8,10 @@ import ReservasHoy from './componentes/reservas/ReservasHoy.js';
 import ReservasCalendario from './componentes/reservas/ReservasCalendario.js';
 import CambiarFechaReserva from './componentes/reservas/CambiarFechaReserva.js';
 import NuevoCobro from './componentes/cobros/NuevoCobro.js';
-import Estacionamiento from './componentes/estacionamientos/Estacionamiento.js';
+import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
 import Comentario from './componentes/estacionamientos/Comentario.js';
+import DatosPersonales from './componentes/estacionamientos/DatosPersonales.js';
+import Reportes from './componentes/reportes/Reportes.js';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -53,10 +55,16 @@ function App() {
           <CambiarFechaReserva/>
         </Route>
         <Route path="/mi-estacionamiento">
-          <Estacionamiento/>
+          <Estacionamientos/>
         </Route>
         <Route path="/valoraciones">
           <Comentario/>
+        </Route>
+        <Route path="/datos-personales">
+          <DatosPersonales/>
+        </Route>
+        <Route path="/reportes">
+          <Reportes/>
         </Route>
       </Router>
     </MuiPickersUtilsProvider>

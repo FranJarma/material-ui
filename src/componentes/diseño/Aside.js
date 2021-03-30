@@ -147,6 +147,7 @@ const Aside = () => {
                     </ListItemText>
                 </ListItem>
                 </Link>
+                <Link to={'/reportes'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
                         <EqualizerIcon/>
@@ -155,8 +156,10 @@ const Aside = () => {
                         Reportes
                     </ListItemText>
                 </ListItem>
+                </Link>
                 &nbsp;
                 <Divider></Divider>
+                <Link to={'/datos-personales'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
                         <PersonIcon/>
@@ -165,6 +168,7 @@ const Aside = () => {
                         Datos del encargado
                     </ListItemText>
                 </ListItem>
+                </Link>
                 <ListItem button>
                     <ListItemIcon>
                         <InfoIcon/>
