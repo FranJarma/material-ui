@@ -8,7 +8,7 @@ import {
 import Footer from '../diseño/Footer.js';
 
 import { LineChart, Line, CartesianGrid, XAxis, YAxis,
-PieChart, Pie, Tooltip, BarChart, Legend, Bar, ResponsiveContainer } from 'recharts';
+PieChart, Pie, Tooltip, BarChart, Legend, Bar, ResponsiveContainer, Cell } from 'recharts';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -75,19 +75,106 @@ const useStyles = makeStyles((theme) => ({
         },
         borderRadius: 0
     },
+    botonAutomovil: {
+        borderRadius: "1rem",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color:"#FFFFFF",
+        fontSize: "0.8rem",
+        height: "1.5rem",
+        backgroundColor: "#0088FE",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "18rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem"
+        },
+        "&:hover":{
+            backgroundColor: "#0088FE",
+        }
+    },
+    botonCamioneta: {
+        borderRadius: "1rem",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color:"#FFFFFF",
+        fontSize: "0.8rem",
+        height: "1.5rem",
+        backgroundColor: "#00C49F",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "2rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem"
+        },
+        "&:hover":{
+            backgroundColor: "#00C49F",
+        }
+    },
+    botonMoto: {
+        borderRadius: "1rem",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color:"#FFFFFF",
+        fontSize: "0.8rem",
+        height: "1.5rem",
+        backgroundColor: "#FFBB28",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "2rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem"
+        },
+        "&:hover":{
+            backgroundColor: "#FFBB28",
+        }
+    },
+    botonBicicleta: {
+        borderRadius: "1rem",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color:"#FFFFFF",
+        fontSize: "0.8rem",
+        height: "1.5rem",
+        backgroundColor: "#FF8042",
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "2rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "1rem"
+        },
+        "&:hover":{
+            backgroundColor: "#FF8042",
+        }
+    }
 }));
 
 const Reportes = () => {
     const classes = useStyles();
     const [fechaSeleccionadaIngresos, handleCambiarFechaIngresos] = useState(new Date());
     const [fechaSeleccionadaReservas, handleCambiarFechaReservas] = useState(new Date());
-    const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}];
-    const data01 = [
-        { name: 'Automóvil', value: 80 },
-        { name: 'Camioneta', value: 10 },
-        { name: 'Motocicleta', value: 8 },
-        { name: 'Bicicleta', value: 2 },
+    const datosIngresosPorMes = [
+        {mes: 'Enero', ingresos: 48.452},
+        {mes: 'Febrero', ingresos: 45.112},
+        {mes: 'Marzo', ingresos: 52.541},
+        {mes: 'Abril', ingresos: 50.151},
+        {mes: 'Mayo', ingresos: 41.445},
+        {mes: 'Junio', ingresos: 51.445},
+        {mes: 'Julio', ingresos: 42.120},
+        {mes: 'Agosto', ingresos: 43.128},
+        {mes: 'Septiembre', ingresos: 38.453},
+        {mes: 'Octubre', ingresos: 37.451},
+        {mes: 'Noviembre', ingresos: 40.451},
+        {mes: 'Diciembre', ingresos: 53.123},
+    ];
+    const datosPorcentajesVehiculos = [
+        { tipo: 'Automóvil', porcentaje: 80 },
+        { tipo: 'Camioneta', porcentaje: 10 },
+        { tipo: 'Motocicleta', porcentaje: 8 },
+        { tipo: 'Bicicleta', porcentaje: 2 },
       ];
+    const datosReservasPorSemana = [
+        { semana: '1', cantidad: 52 },
+        { semana: '2', cantidad: 42 },
+        { semana: '3', cantidad: 33 },
+        { semana: '4', cantidad: 58 },
+    ];
       
       const data03 = [
         {
@@ -111,6 +198,20 @@ const Reportes = () => {
             total: 10
         }
       ];
+    const radianes = Math.PI / 180;
+    const colores = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const labelPorcentaje = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * radianes);
+        const y = cy + radius * Math.sin(-midAngle * radianes);
+      
+        return (
+          <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            {`${(percent * 100).toFixed(0)}%`}
+          </text>
+        );
+      };
+      
     return (
         <>
             <Navbar/>
@@ -118,7 +219,7 @@ const Reportes = () => {
             &nbsp;
             <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá realizar diferentes tipos de reportes para analizar la situación de su playa de estacionamiento. Entre los cuales puede elegir:
              <ul>
-                 <li>Reporte de ingresos por mes.</li>
+                 <li>Reporte de ingresos por año.</li>
                  <li>Cantidad de reservas realizadas por mes.</li>
                  <li>Horarios más concurridos.</li>
                  <li>Porcentaje de vehículos.</li>
@@ -129,15 +230,15 @@ const Reportes = () => {
                     <Card className = {classes.cartaReportes}>
                         <CardContent>
                             <Typography className={classes.tituloCarta}>
-                                Ingresos por mes
+                                Ingresos por año
                             </Typography>
                             <Divider className={classes.divider}></Divider>
                             <DatePicker
                             className={classes.inputFecha}
                             disableFuture
-                            views={["year", "month"]}
-                            format="MM/yyyy"
-                            label="Seleccione mes y año"
+                            views={["year"]}
+                            format="yyyy"
+                            label="Seleccione año"
                             value={fechaSeleccionadaIngresos}
                             onChange={handleCambiarFechaIngresos}
                             />
@@ -147,17 +248,19 @@ const Reportes = () => {
                                     <LineChart
                                     width={400}
                                     height={300}
-                                    data={data}
+                                    data={datosIngresosPorMes}
                                     margin={{
                                         top: 50,
                                         right: 30,
                                         left: 20,
                                         bottom: 5,
                                     }}>
-                                        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                                        <Line type="monotone" dataKey="ingresos" stroke="#8884d8" />
                                         <CartesianGrid stroke="#ccc" />
-                                        <XAxis dataKey="name" />
+                                        <XAxis dataKey="mes" />
                                         <YAxis />
+                                        <Tooltip />
+                                        <Legend />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </div>
@@ -185,17 +288,19 @@ const Reportes = () => {
                                 <ResponsiveContainer>
                                     <LineChart width={400}
                                     height={300}
-                                    data={data}
+                                    data={datosReservasPorSemana}
                                     margin={{
                                         top: 50,
                                         right: 30,
                                         left: 20,
                                         bottom: 5,
                                     }}>
-                                    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                                    <Line type="monotone" dataKey="cantidad" stroke="#8884d8" />
                                     <CartesianGrid stroke="#ccc" />
-                                    <XAxis dataKey="name" />
+                                    <XAxis dataKey="semana" />
                                     <YAxis />
+                                    <Tooltip />
+                                    <Legend />
                                 </LineChart>
                             </ResponsiveContainer>
                             </div>
@@ -244,20 +349,40 @@ const Reportes = () => {
                             <Divider className={classes.divider}></Divider>
                             <div style={{ width: '100%', height: 300 }}>
                                 <ResponsiveContainer>
-                                    <PieChart width={300} height={300}>
-                                        <Pie
-                                            dataKey="value"
-                                            isAnimationActive={false}
-                                            data={data01}
-                                            cx="50%"
-                                            cy="50%"
-                                            outerRadius={80}
-                                            fill="#8884d8"
-                                            label
-                                        />
-                                    <Tooltip />
+                                    <PieChart width={500} height={400}>
+                                    <Pie
+                                    data={datosPorcentajesVehiculos}
+                                    cx="50%"
+                                    cy="50%"
+                                    label={labelPorcentaje}
+                                    outerRadius={100}
+                                    fill="#8884d8"
+                                    dataKey="porcentaje"
+                                    >
+                                    {datosPorcentajesVehiculos.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={colores[index % colores.length]} />
+                                    ))}
+                                    </Pie>
                                     </PieChart>
                                 </ResponsiveContainer>
+                            </div>
+                            <div>
+                                <Button
+                                className={classes.botonAutomovil}
+                                >Automóvil
+                                </Button>
+                                <Button
+                                className={classes.botonCamioneta}
+                                >Camioneta
+                                </Button>
+                                <Button
+                                className={classes.botonMoto}
+                                >Motocicleta
+                                </Button>
+                                <Button
+                                className={classes.botonBicicleta}
+                                >Bicicleta
+                                </Button>
                             </div>
                         </CardContent>
                     </Card>

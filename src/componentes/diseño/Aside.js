@@ -169,14 +169,6 @@ const Aside = () => {
                     </ListItemText>
                 </ListItem>
                 </Link>
-                <ListItem button>
-                    <ListItemIcon>
-                        <InfoIcon/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        Acerca
-                    </ListItemText>
-                </ListItem>
             </List>
             :<List>
                 <ListItem button onClick={handleClickSubMenu}>
@@ -194,15 +186,6 @@ const Aside = () => {
                     </ListItemText>
                 </ListItem>
                 <Divider></Divider>
-                <ListItem button>
-                    <ListItemIcon>
-                        <InfoIcon/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        Acerca
-                    </ListItemText>
-                </ListItem>
-
             </List>
 
             }

@@ -121,7 +121,7 @@ const Login = () => {
                     </Grid>
                     &nbsp;
                     <Grid item>
-                    <Link to={'/home'} style={{textDecoration: 'none'}}>
+                    <Link to={'/reservas-del-dia'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonIniciarSesion}
                         variant="contained"
