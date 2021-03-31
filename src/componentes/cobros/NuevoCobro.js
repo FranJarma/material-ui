@@ -133,7 +133,7 @@ const NuevoCobro = () => {
         <Typography className={classes.subtitulos}>Datos de la persona</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={3} xs={12} >
+                <Grid item sm={6} xs={12} >
                 <TextField
                 className={classes.input}
                 label="Nombre Completo"
@@ -143,7 +143,7 @@ const NuevoCobro = () => {
                 value="Francisco Alfredo Jarma"
                 />
                 </Grid>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={6} xs={12}>
                 <TextField
                 className={classes.input}
                 label="DNI"
@@ -153,7 +153,7 @@ const NuevoCobro = () => {
                 value="40.524.512"
                 />
                 </Grid>
-                <Grid item sm={3} xs={4}>
+                <Grid item sm={6} xs={4}>
                 <TextField
                 className={classes.input}
                 label="Edad"
@@ -163,7 +163,7 @@ const NuevoCobro = () => {
                 value="23"
                 />
                 </Grid>
-                <Grid item sm={3} xs={8} >
+                <Grid item sm={6} xs={8} >
                 <TextField
                 className={classes.input}
                 label="N° de teléfono"
