@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/"
+  to = "https:/parking-app-front.netlify.app/iniciar-sesion"
+  status = 200
