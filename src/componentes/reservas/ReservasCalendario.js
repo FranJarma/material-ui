@@ -56,7 +56,9 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "0.5rem",
+        [theme.breakpoints.down('md')]:{
+            marginLeft: "8rem"
+        },
         fontSize: 15,
         marginTop: "0.7rem",
         "&:hover":{
@@ -154,7 +156,7 @@ const ReservasCalendario = () => {
                     </ListItem>
                 <Divider></Divider>
                     </>
-                    ))};
+                    ))}
             </List>
             <Paginacion/>
             <Footer/>

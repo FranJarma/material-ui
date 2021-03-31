@@ -246,7 +246,7 @@ const ReservasHoy = () => {
                     </ListItem>
                 <Divider></Divider>
                     </>
-                    ))};
+                    ))}
             </List>
             <Paginacion/>
             <Footer/>
