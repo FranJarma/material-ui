@@ -32,9 +32,6 @@ const useStyles = makeStyles(theme => ({
     },
     menuBoton: {
         marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-        display: 'none',
-        },
         color: "#ffffff"
     },
     contenidoMenu: {
@@ -122,9 +119,12 @@ const useStyles = makeStyles(theme => ({
                 <Hidden xsDown implementation="css">
                 <Drawer
                     className={classes.menu}
-                    variant="permanent"
+                    variant="temporary"
                     classes={{
                     paper: classes.contenidoMenu,
+                    }}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
                     }}
                 >
                     <div className={classes.toolbar} />

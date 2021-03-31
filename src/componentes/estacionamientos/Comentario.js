@@ -14,40 +14,23 @@ const useStyles = makeStyles((theme) => ({
     },
     valoracion: {
         fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 25,
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        fontSize: 22,
+        marginLeft: "1rem",
+        marginRight: "1rem",
+        marginTop: "2rem"
     },
     cartaComentarios: {
         flexGrow: 1,
         paddingLeft: 20,
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         backgroundColor: theme.palette.background.paper,
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem"
     },
     alerta:{
         position: "relative",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem",
         borderRadius: 0
     },
 }));

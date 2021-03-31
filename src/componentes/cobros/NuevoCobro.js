@@ -28,10 +28,7 @@ const useStyles = makeStyles((theme) => ({
         color:"#424242"
     },
     container: {
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "2rem"
-        },
+        marginLeft: "1rem"
     },
     input: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -44,11 +41,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     inputCodigo: {
+        width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
-        [theme.breakpoints.down('md')]:{
-            marginLeft: "2rem",
-            width: "80%",
-        },
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#rgba(0, 0, 0, 0.23)",
         },
@@ -64,14 +58,8 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem"
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -81,9 +69,6 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        [theme.breakpoints.down('md')]:{
-            marginLeft: "8rem"
-        },
         fontSize: 15,
         marginTop: "0.7rem",
         "&:hover":{
@@ -108,14 +93,8 @@ const useStyles = makeStyles((theme) => ({
     },
     alerta:{
         position: "relative",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem",
         borderRadius: 0
     },
 }));

@@ -27,14 +27,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         marginTop: "1rem",
         flexGrow: 1,
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem",
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem"
     },
     inputFecha: {
         marginTop: "2rem",
@@ -65,84 +59,62 @@ const useStyles = makeStyles((theme) => ({
     },
     alerta:{
         position: "relative",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem",
         borderRadius: 0
     },
     botonAutomovil: {
         borderRadius: "1rem",
+        marginRight: "2rem",
+        marginTop: "1rem",
         fontFamily: "Roboto Condensed, sans-serif",
         color:"#FFFFFF",
         fontSize: "0.8rem",
         height: "1.5rem",
         backgroundColor: "#0088FE",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "18rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem"
-        },
         "&:hover":{
             backgroundColor: "#0088FE",
         }
     },
     botonCamioneta: {
         borderRadius: "1rem",
+        marginRight: "2rem",
+        marginTop: "1rem",
         fontFamily: "Roboto Condensed, sans-serif",
         color:"#FFFFFF",
         fontSize: "0.8rem",
         height: "1.5rem",
         backgroundColor: "#00C49F",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "2rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem"
-        },
         "&:hover":{
             backgroundColor: "#00C49F",
         }
     },
     botonMoto: {
         borderRadius: "1rem",
+        marginRight: "2rem",
+        marginTop: "1rem",
         fontFamily: "Roboto Condensed, sans-serif",
         color:"#FFFFFF",
         fontSize: "0.8rem",
         height: "1.5rem",
         backgroundColor: "#FFBB28",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "2rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem"
-        },
         "&:hover":{
             backgroundColor: "#FFBB28",
         }
     },
     botonBicicleta: {
         borderRadius: "1rem",
+        marginRight: "2rem",
+        marginTop: "1rem",
         fontFamily: "Roboto Condensed, sans-serif",
         color:"#FFFFFF",
         fontSize: "0.8rem",
         height: "1.5rem",
         backgroundColor: "#FF8042",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "2rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem"
-        },
         "&:hover":{
             backgroundColor: "#FF8042",
         }
-    }
+    },
 }));
 
 const Reportes = () => {
@@ -366,7 +338,7 @@ const Reportes = () => {
                                     </PieChart>
                                 </ResponsiveContainer>
                             </div>
-                            <div>
+                            <div style={{textAlign: "center"}}>
                                 <Button
                                 className={classes.botonAutomovil}
                                 >Automóvil

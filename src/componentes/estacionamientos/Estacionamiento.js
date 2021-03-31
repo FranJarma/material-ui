@@ -32,23 +32,15 @@ const useStyles = makeStyles((theme) => ({
         color:"#424242",
     },
     container: {
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem"
-        },
+        marginLeft: "1rem"
     },
     cartaReservas: {
         flexGrow: 1,
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem"
     },
     input: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -94,14 +86,8 @@ const useStyles = makeStyles((theme) => ({
     },
     alerta:{
         position: "relative",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem",
         borderRadius: 0
     },
 }));

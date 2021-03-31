@@ -28,14 +28,8 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 20,
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         backgroundColor: theme.palette.background.paper,
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem"
     },
     inputHoraIngreso: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -90,14 +84,8 @@ const useStyles = makeStyles((theme) => ({
     },
     alerta:{
         position: "relative",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem",
         borderRadius: 0
     },
 }));

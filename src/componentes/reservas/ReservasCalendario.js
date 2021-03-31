@@ -19,17 +19,12 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center"
     },
     container: {
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem"
-        },
+        marginLeft: "1rem"
     },
     inputFecha: {
         width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
         height:"3rem",
-        [theme.breakpoints.down('md')]:{
-            marginLeft: "2rem"
-        },
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#4db6ac"
         },
@@ -41,24 +36,15 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
+        marginLeft: "1rem",
+        marginRight: "1rem",
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.up('md')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
     },
     botonConsultar: {
         backgroundColor: "#4db6ac",
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        [theme.breakpoints.down('md')]:{
-            marginLeft: "8rem"
-        },
         fontSize: 15,
         marginTop: "0.7rem",
         "&:hover":{
@@ -67,14 +53,8 @@ const useStyles = makeStyles((theme) => ({
     },
     alerta:{
         position: "relative",
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "20rem",
-            marginRight: "1rem"
-        },
-        [theme.breakpoints.down('md')]: {
-            marginLeft: "1rem",
-            marginRight: "1rem"
-        },
+        marginLeft: "1rem",
+        marginRight: "1rem",
         borderRadius: 0
     },
 }));
