@@ -53,9 +53,6 @@ const useStyles = makeStyles((theme) => ({
         textTransform: "uppercase",
         marginTop: "2rem",
         fontSize: 15,
-        [theme.breakpoints.down('md')]:{
-            marginLeft:"8rem"
-        },
         "&:hover":{
             backgroundColor: "#448aff",
         }
@@ -132,7 +129,7 @@ const DatosPersonales = () => {
                 <Grid item sm={12} xs={12} >
                 <TextField
                 className={classes.input}
-                label="Repetir conraseña"
+                label="Repetir contraseña"
                 variant="standard"
                 type="password"
                 value= "123456"
