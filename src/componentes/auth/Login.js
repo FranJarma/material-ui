@@ -8,10 +8,18 @@ import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
-        height: 400,
-        width: 450,
-        margin: "auto",
-        marginTop: "2rem",
+        [theme.breakpoints.up('lg')]:{
+            margin:"auto",
+            height: 400,
+            width: 450,
+            marginTop: "2rem",
+        },
+        [theme.breakpoints.down('md')]:{
+            margin: "auto",
+            height: 400,
+            width: 300,
+            marginTop: "3rem",
+        },
         boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
     },
     cartaEncabezado: {
@@ -38,7 +46,7 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: "#4db6ac",
         color:'#FFFFFF',
         marginLeft: 20,
-        width: "91%",
+        width: "90%",
         "&:hover":{
             backgroundColor: "#4db6ac"
         }
@@ -47,13 +55,13 @@ const useStyles = makeStyles( theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 15,
         marginLeft: 20,
-        width: "91%",
+        width: "90%",
         "&:hover":{
             backgroundColor: "#f5f5f5"
         }
     },
     inputCarta: {
-        width: "91%",
+        width: "90%",
         fontFamily: "Roboto Condensed, sans-serif",
         marginLeft: 20,
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {

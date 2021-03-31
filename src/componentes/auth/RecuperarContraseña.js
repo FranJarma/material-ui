@@ -9,10 +9,18 @@ import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles( theme => ({
     cartaRecuperarContraseña: {
-        height: 320,
-        width: 450,
-        margin: "auto",
-        marginTop: "2rem",
+        [theme.breakpoints.up('lg')]:{
+            margin:"auto",
+            height: 300,
+            width: 450,
+            marginTop: "2rem",
+        },
+        [theme.breakpoints.down('md')]:{
+            margin: "auto",
+            height: 300,
+            width: 300,
+            marginTop: "3rem",
+        },
         boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
     },
     alerta:{
@@ -34,12 +42,12 @@ const useStyles = makeStyles( theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         color: "#ffffff",
-        fontSize: 30
+        fontSize: 25
     },
     subtituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#ffffff",
-        fontSize: 15
+        fontSize: 13
     },
     botonRecuperarContraseña: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -47,7 +55,7 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: "#4db6ac",
         color:'#FFFFFF',
         marginLeft: 20,
-        width: "91%",
+        width: "90%",
         "&:hover":{
             backgroundColor: "#4db6ac"
         }
@@ -56,13 +64,13 @@ const useStyles = makeStyles( theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         fontSize: 15,
         marginLeft: 20,
-        width: "91%",
+        width: "90%",
         "&:hover":{
             backgroundColor: "#f5f5f5"
         }
     },
     inputCarta: {
-        width: "91%",
+        width: "90%",
         fontFamily: "Roboto Condensed, sans-serif",
         marginLeft: 20,
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {

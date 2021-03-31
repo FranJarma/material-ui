@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     inputCodigo: {
-        width: "20rem",
         fontFamily: "Roboto Condensed, sans-serif",
         [theme.breakpoints.down('md')]:{
             marginLeft: "2rem"
@@ -61,7 +60,9 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "0.3rem",
+        [theme.breakpoints.down('md')]:{
+            marginLeft: "8rem"
+        },
         fontSize: 15,
         marginTop: "0.7rem",
         "&:hover":{
@@ -75,9 +76,6 @@ const useStyles = makeStyles((theme) => ({
         textTransform: "uppercase",
         marginTop: "2rem",
         fontSize: 15,
-        [theme.breakpoints.down('md')]:{
-            marginLeft:"8rem"
-        },
         "&:hover":{
             backgroundColor: "#448aff",
         }
