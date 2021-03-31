@@ -1,5 +1,4 @@
-import Footer from './componentes/diseño/Footer.js';
-import Navbar from './componentes/diseño/Navbar.js';
+
 import Login from './componentes/auth/Login.js';
 import Registrar from './componentes/auth/Registrar.js';
 import RecuperarContraseña from './componentes/auth/RecuperarContraseña.js';
@@ -26,11 +25,7 @@ function App() {
     <>
     <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
       <Router>
-        <Route path="/home">
-          <Navbar/>
-          <Footer/>
-        </Route>
-        <Route path="/iniciar-sesion">
+        <Route path="/">
           <Login/>
         </Route>
         <Route path="/nueva-cuenta">

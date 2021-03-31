@@ -191,7 +191,7 @@ const Aside = () => {
             <Divider></Divider>
             &nbsp;
             <Link
-                to={'/iniciar-sesion'}
+                to={'/'}
                 style={{textDecoration: 'none', textAlign: 'center'}}
             >
             <Button

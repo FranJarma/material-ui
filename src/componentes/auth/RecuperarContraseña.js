@@ -130,7 +130,7 @@ const RecuperarContraseña = () => {
                     </Grid>
                     &nbsp;
                     <Grid item>
-                    <Link to={'/iniciar-sesion'} style={{textDecoration: 'none'}}>
+                    <Link to={'/'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonVolver}
                     >Volver a Login
