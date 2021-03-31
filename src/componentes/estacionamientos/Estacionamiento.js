@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Estacionamientos = () => {
+const Estacionamiento = () => {
     //states para los campos de fechas y horas
     const [horaApertura, setearHoraIngreso] = useState(new Date());
     const handleCambiarHoraApertura = (horaApertura) => {
@@ -391,4 +391,4 @@ const Estacionamientos = () => {
      );
 }
  
-export default Estacionamientos;
+export default Estacionamiento;

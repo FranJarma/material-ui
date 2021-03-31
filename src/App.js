@@ -7,7 +7,7 @@ import ReservasHoy from './componentes/reservas/ReservasHoy.js';
 import ReservasCalendario from './componentes/reservas/ReservasCalendario.js';
 import CambiarFechaReserva from './componentes/reservas/CambiarFechaReserva.js';
 import NuevoCobro from './componentes/cobros/NuevoCobro.js';
-import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
+import Estacionamiento from './componentes/estacionamientos/Estacionamiento.js';
 import Comentario from './componentes/estacionamientos/Comentario.js';
 import DatosPersonales from './componentes/estacionamientos/DatosPersonales.js';
 import Reportes from './componentes/reportes/Reportes.js';
@@ -16,7 +16,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from "date-fns/locale/es";
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
 
@@ -25,42 +25,32 @@ function App() {
     <>
     <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
       <Router>
-        <Route path="/">
-          <Login/>
-        </Route>
-        <Route path="/nueva-cuenta">
-          <Registrar/>
-        </Route>
-        <Route path="/recuperar-contraseña">
-          <RecuperarContraseña/>
-        </Route>
-        <Route path="/spinner">
-          <Spinner/>
-        </Route>
-        <Route path="/reservas-del-dia">
-          <ReservasHoy/>
-        </Route>
-        <Route path="/nuevo-cobro">
-          <NuevoCobro/>
-        </Route>
-        <Route path="/reservas-calendario">
-          <ReservasCalendario/>
-        </Route>
-        <Route path="/cambiar-fecha">
-          <CambiarFechaReserva/>
-        </Route>
-        <Route path="/mi-estacionamiento">
-          <Estacionamientos/>
-        </Route>
-        <Route path="/valoraciones">
-          <Comentario/>
-        </Route>
-        <Route path="/datos-personales">
-          <DatosPersonales/>
-        </Route>
-        <Route path="/reportes">
-          <Reportes/>
-        </Route>
+        <Switch>
+          <Route exact path="/" component={Login}>
+          </Route>
+          <Route exact path="/nueva-cuenta" component={Registrar}>
+          </Route>
+          <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
+          </Route>
+          <Route exact path="/spinner">
+          </Route>
+          <Route exact path="/reservas-del-dia" component={ReservasHoy}>
+          </Route>
+          <Route exact path="/nuevo-cobro" component={NuevoCobro}>
+          </Route>
+          <Route exact path="/reservas-calendario" component={ReservasCalendario}>
+          </Route>
+          <Route exact path="/cambiar-fecha" component={CambiarFechaReserva}>
+          </Route>
+          <Route exact path="/mi-estacionamiento" component={Estacionamiento}>
+          </Route>
+          <Route exact path="/valoraciones" component={Comentario}>
+          </Route>
+          <Route exact path="/datos-personales" component={DatosPersonales}>
+          </Route>
+          <Route exact path="/reportes" component={Reportes}>
+          </Route>
+        </Switch>
       </Router>
     </MuiPickersUtilsProvider>
     </>
