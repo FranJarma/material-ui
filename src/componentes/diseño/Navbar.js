@@ -54,7 +54,6 @@ const useStyles = makeStyles(theme => ({
         },
         [theme.breakpoints.up('lg')]:{
             width: 200,
-            marginLeft: "2.5rem",
             marginTop:"0.5rem"
         },
     },

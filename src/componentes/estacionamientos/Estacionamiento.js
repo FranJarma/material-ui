@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid, Select } from '@material-ui/core';
+Typography, Button, TextField, Grid, Select, Checkbox } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 import {
     KeyboardTimePicker,
   } from '@material-ui/pickers';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import Chip from '@material-ui/core/Chip';
-import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
-import MotorcycleIcon from '@material-ui/icons/Motorcycle';
 import Alert from '@material-ui/lab/Alert';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -43,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "1rem"
     },
     input: {
-        fontFamily: "Roboto Condensed, sans-serif",
         paddingRight: "1rem",
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#4db6ac"
@@ -53,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     select: {
-        fontFamily: "Roboto Condensed, sans-serif",
         paddingRight: "1rem",
         '&:after': {
             borderColor: "#4db6ac",
@@ -77,8 +70,7 @@ const useStyles = makeStyles((theme) => ({
     chip: {
         margin: 2,
     },
-    labelSelectMultiple: {
-        paddingTop:"1rem",
+    labelSelect: {
         fontSize: "0.8rem"
     },
     labelCheckbox: {
@@ -93,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Estacionamiento = () => {
-    //states para los campos de fechas y horas
+    //states para los campos de fechas y horas y para los días de la semana y para las provincias
     const [horaApertura, setearHoraIngreso] = useState(new Date());
     const handleCambiarHoraApertura = (horaApertura) => {
         setearHoraIngreso(horaApertura);
@@ -108,7 +100,8 @@ const Estacionamiento = () => {
     const handleChangeDia = (event) => {
         setearDia(event.target.value);
     };
-
+    
+    const [provincias, setearProvincias] = useState([]);
     const dias = [
         'Lunes',
         'Martes',
@@ -118,6 +111,35 @@ const Estacionamiento = () => {
         'Sábado',
         'Domingo',
     ];
+    //state para manejar la provincia seleccionada al cambiar el elemento del select
+    const [provinciaSeleccionada, setearProvinciaSeleccionada] = useState([]);
+    const handleChangeSelectProvincia = (event) => {
+        setearProvinciaSeleccionada(event.target.value);
+    };
+    //state para manejar los checkbox
+    var [state, setState] = useState({
+        todosLosDias: false,
+        horarioCorrido: false
+    });
+    const handleChangeCheckBox = (event) => {
+        setState({
+            ...state,
+            [event.target.name]: event.target.checked
+        });
+    }
+    const {
+        todosLosDias,
+        horarioCorrido
+    } = state;
+    //función para consultar a la api de provincias y traer los datos
+    useEffect(()=>{
+        axios.get(`https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.2/download/provincias.json`)
+        .then(res => {
+            const resultado = res.data;
+            setearProvincias(resultado.provincias);
+            console.log(resultado);
+        });
+    },[setearProvincias]);
 
     const classes = useStyles();
     return ( 
@@ -129,7 +151,6 @@ const Estacionamiento = () => {
              <ul>
                  <li>Datos propios del establecimiento (nombre, dirección, n° de teléfono, etc).</li>
                  <li>Horarios de apertura y cierre y días de atención.</li>
-                 <li>Tarifas para todos los vehículos aceptados por la playa de estacionamiento.</li>
                  <li>Ubicación georeferenciada.</li>
             </ul>
             </Alert>
@@ -139,7 +160,7 @@ const Estacionamiento = () => {
         <Typography className={classes.subtitulos}>Datos de la playa de estacionamiento</Typography>
         &nbsp;
             <Grid container spacing={3}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={12} xs={12}>
                 <TextField
                 className={classes.input}
                 label="Nombre Completo"
@@ -149,25 +170,25 @@ const Estacionamiento = () => {
                 value="Playa de estacionamiento del convento"
                 />
                 </Grid>
-                <Grid item sm={6} xs={12} >
-                <TextField
-                className={classes.input}
-                label="País"
+                <Grid item sm={11} xs={11}>
+                <InputLabel className={classes.labelSelect}>Provincia</InputLabel>
+                <Select
+                className={classes.select}
+                value={provinciaSeleccionada}
+                displayEmpty
+                onChange={handleChangeSelectProvincia}
                 variant="standard"
-                value="Argentina"
                 fullWidth
-                />
+                >
+                <MenuItem value="" disabled>Seleccione</MenuItem>
+                {provincias.map((provincia) => (
+                    <MenuItem key={provincia.id} value={provincia.nombre}>
+                        {provincia.nombre}
+                    </MenuItem>
+                ))}
+                </Select>
                 </Grid>
-                <Grid item sm={3} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Provincia"
-                fullWidth
-                variant="standard"
-                value="Salta"
-                />
-                </Grid>
-                <Grid item sm={3} xs={6} >
+                <Grid item sm={4} xs={6} >
                 <TextField
                 className={classes.input}
                 label="N° de teléfono"
@@ -176,7 +197,7 @@ const Estacionamiento = () => {
                 fullWidth
                 />
                 </Grid>
-                <Grid item sm={2} xs={6} >
+                <Grid item sm={4} xs={6} >
                 <TextField
                 className={classes.input}
                 label="CUIT"
@@ -185,7 +206,7 @@ const Estacionamiento = () => {
                 fullWidth
                 />
                 </Grid>
-                <Grid item sm={4} xs={6} >
+                <Grid item sm={4} xs={12} >
                 <TextField
                 className={classes.input}
                 label="Cantidad de lugares"
@@ -200,6 +221,8 @@ const Estacionamiento = () => {
         <Typography className={classes.subtitulos}>Horarios y fechas</Typography>
         &nbsp;
             <Grid container spacing={3}>
+                { !horarioCorrido ?
+                <>
                 <Grid item sm={6} xs={6} >
                 <KeyboardTimePicker
                 className={classes.input}
@@ -210,7 +233,7 @@ const Estacionamiento = () => {
                 KeyboardButtonProps={{
                     'aria-label': 'change time',
                 }}
-                />
+                />  
                 </Grid>
                 <Grid item sm={6} xs={6} >
                 <KeyboardTimePicker
@@ -224,8 +247,16 @@ const Estacionamiento = () => {
                 }}
                 />
                 </Grid>
+                </>
+                : ""}
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <Checkbox color="primary" name="horarioCorrido" onChange={handleChangeCheckBox}></Checkbox>
+                    <Typography className={classes.subtitulos}>Horario corrido</Typography>
+                </div>
+                { !todosLosDias ?
+                <>
                 <Grid item sm={11} xs={11}>
-                <InputLabel className={classes.labelSelectMultiple}>Días de apertura (Seleccione uno o varios)</InputLabel>
+                <InputLabel className={classes.labelSelect}>Días de apertura (Seleccione uno o varios)</InputLabel>
                 <Select
                 fullWidth
                 className={classes.select}
@@ -249,8 +280,14 @@ const Estacionamiento = () => {
                     </MenuItem>
                     
                 ))}
-                </Select>
+                </Select>    
                 </Grid>
+                </>
+                : ""}
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <Checkbox color="primary" name="todosLosDias" onChange={handleChangeCheckBox}></Checkbox>
+                    <Typography className={classes.subtitulos}>Todos los días</Typography>
+                </div>  
             </Grid>
         &nbsp;
         <Typography className={classes.subtitulos}>Ubicación</Typography>
@@ -292,75 +329,6 @@ const Estacionamiento = () => {
                 />
                 </Grid>
                 &nbsp;
-            </Grid>
-            &nbsp;
-            <Typography className={classes.subtitulos}>Tarifas</Typography>
-        &nbsp;
-            <Grid container spacing={3}>
-                <Grid item sm={3} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Automóvil"
-                variant="standard"
-                fullWidth
-                value="$100"
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <DriveEtaIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                </Grid>
-                <Grid item sm={3} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Camioneta"
-                fullWidth
-                variant="standard"
-                value="$150"
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalShippingIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                </Grid>
-                <Grid item sm={3} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Bicicleta"
-                variant="standard"
-                fullWidth
-                value="$80"
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <DirectionsBikeIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                </Grid>
-                <Grid item sm={3} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Motocicleta"
-                variant="standard"
-                fullWidth
-                value="$90"
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <MotorcycleIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                </Grid>
             </Grid>
             &nbsp;
             <Button

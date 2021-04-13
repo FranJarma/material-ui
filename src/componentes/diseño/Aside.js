@@ -17,6 +17,7 @@ import TodayIcon from '@material-ui/icons/Today';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import StarIcon from '@material-ui/icons/Star';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
@@ -41,6 +42,9 @@ const useStyles = makeStyles(theme => ({
     },
     nested: {
         paddingLeft: theme.spacing(5),
+    },
+    iconos: {
+        color: "#4db6ac",
     },
     botonCerrarSesionNavbar: {
         backgroundColor: "#ffffff",
@@ -82,7 +86,7 @@ const Aside = () => {
             <List>
                 <ListItem button onClick= { handleClickSubMenu }>
                     <ListItemIcon>
-                        <CommuteIcon/>
+                        <CommuteIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText primary="Reservas">
                     </ListItemText>
@@ -93,7 +97,7 @@ const Aside = () => {
                     <Link to={'/reservas-del-dia'} className={classes.titulosMenu}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                            <TodayIcon  />
+                            <TodayIcon className={classes.iconos} />
                             </ListItemIcon>
                             <ListItemText primary="Reservas del día" />
                         </ListItem>
@@ -101,7 +105,7 @@ const Aside = () => {
                     <Link to={'/reservas-calendario'} className={classes.titulosMenu}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                            <DateRangeIcon />
+                            <DateRangeIcon className={classes.iconos}/>
                             </ListItemIcon>
                             <ListItemText primary="Calendario de reservas" />
                         </ListItem>
@@ -109,37 +113,48 @@ const Aside = () => {
                     <Link to={'/cambiar-fecha'} className={classes.titulosMenu}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                            <SwapVertIcon />
+                            <SwapVertIcon className={classes.iconos}/>
                             </ListItemIcon>
                             <ListItemText primary="Cambiar fecha de reserva" />
                         </ListItem>
                     </Link>
-                    </List>
-                </Collapse>
-                <Link to={'/nuevo-cobro'} className={classes.titulosMenu}>
-                    <ListItem button>
+                    <Link to={'/nuevo-cobro'} className={classes.titulosMenu}>
+                        <ListItem button className={classes.nested}>
                         <ListItemIcon>
-                            <MonetizationOnIcon/>
+                            <MonetizationOnIcon className={classes.iconos}/>
                         </ListItemIcon>
                         <ListItemText>
-                            Ingresar cobro
+                            Ingresar cobro de reservas
                         </ListItemText>
-                    </ListItem>
-                </Link>
+                        </ListItem>
+                    </Link>
+                    </List>
+                </Collapse>
+
                 <Link to={'/mi-estacionamiento'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
-                        <StoreMallDirectoryIcon/>
+                        <StoreMallDirectoryIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText>
-                        Datos del estacionamiento y tarifas
+                        Datos del estacionamiento
+                    </ListItemText>
+                </ListItem>
+                </Link>
+                <Link to={'/tarifas'} className={classes.titulosMenu}>
+                <ListItem button>
+                    <ListItemIcon>
+                        <AttachMoneyIcon className={classes.iconos}/>
+                    </ListItemIcon>
+                    <ListItemText>
+                       Vehículos y tarifas
                     </ListItemText>
                 </ListItem>
                 </Link>
                 <Link to={'/valoraciones'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
-                        <StarIcon/>
+                        <StarIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText>
                         Comentarios y valoraciones
@@ -149,7 +164,7 @@ const Aside = () => {
                 <Link to={'/reportes'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
-                        <EqualizerIcon/>
+                        <EqualizerIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText>
                         Reportes
@@ -161,7 +176,7 @@ const Aside = () => {
                 <Link to={'/datos-personales'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
-                        <PersonIcon/>
+                        <PersonIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText>
                         Datos del encargado
@@ -172,14 +187,14 @@ const Aside = () => {
             :<List>
                 <ListItem button onClick={handleClickSubMenu}>
                     <ListItemIcon>
-                        <PersonIcon/>
+                        <PersonIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText primary="Administración de usuarios">
                     </ListItemText>
                 </ListItem>
                 <ListItem button onClick={handleClickSubMenu}>
                     <ListItemIcon>
-                        <StoreMallDirectoryIcon/>
+                        <StoreMallDirectoryIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText primary="Administración de playas de estacionamiento">
                     </ListItemText>

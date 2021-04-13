@@ -6,11 +6,12 @@ import Spinner from './componentes/diseño/Spinner.js';
 import ReservasHoy from './componentes/reservas/ReservasHoy.js';
 import ReservasCalendario from './componentes/reservas/ReservasCalendario.js';
 import CambiarFechaReserva from './componentes/reservas/CambiarFechaReserva.js';
-import NuevoCobro from './componentes/cobros/NuevoCobro.js';
+import NuevoCobro from './componentes/reservas/NuevoCobro.js';
 import Estacionamiento from './componentes/estacionamientos/Estacionamiento.js';
-import Comentario from './componentes/estacionamientos/Comentario.js';
+import Comentarios from './componentes/estacionamientos/Comentarios.js';
 import DatosPersonales from './componentes/estacionamientos/DatosPersonales.js';
 import Reportes from './componentes/reportes/Reportes.js';
+import Tarifas from './componentes/estacionamientos/Tarifas.js';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -44,11 +45,13 @@ function App() {
           </Route>
           <Route exact path="/mi-estacionamiento" component={Estacionamiento}>
           </Route>
-          <Route exact path="/valoraciones" component={Comentario}>
+          <Route exact path="/valoraciones" component={Comentarios}>
           </Route>
           <Route exact path="/datos-personales" component={DatosPersonales}>
           </Route>
           <Route exact path="/reportes" component={Reportes}>
+          </Route>
+          <Route exact path="/tarifas" component={Tarifas}>
           </Route>
         </Switch>
       </Router>

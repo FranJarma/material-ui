@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
-import { List, ListItemAvatar, ListItemText, Divider, makeStyles, Typography, ListItem, Avatar, Button } from '@material-ui/core';
+import { makeStyles, Typography, Avatar, Button, Card, CardContent } from '@material-ui/core';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import Buscar from './../diseño/Buscar.js';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cartaReservas: {
         flexGrow: 1,
-        paddingLeft: 20,
+        marginBottom: "1rem",
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         backgroundColor: theme.palette.background.paper,
         marginLeft: "1rem",
@@ -52,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
     botonValidarReserva: {
         backgroundColor: "#448aff",
         color: "#ffffff",
-        float: "right",
+        marginLeft: "5rem",
+        marginTop: "1rem",
+        textAlign: "center",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "auto",
-        alignContent: "auto",
         fontSize: 15,
         "&:hover":{
             backgroundColor: "#448aff",
@@ -66,17 +67,17 @@ const useStyles = makeStyles((theme) => ({
         color: "#000000",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
+        marginTop: "1rem",
         marginLeft: "auto",
         alignContent: "auto"
     },
     botonConcluirReserva: {
         backgroundColor: "#43a047",
         color: "#ffffff",
-        float: "right",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "auto",
-        alignContent: "auto",
+        marginLeft: "5rem",
+        marginTop: "1rem",
         fontSize: 15,
         "&:hover":{
             backgroundColor: "#43a047",
@@ -88,6 +89,40 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "1rem",
         borderRadius: 0
     },
+    nombreCompleto: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#448aff",
+        fontSize: 18,
+        textTransform: "uppercase",
+        fontWeight: "bold",
+        marginLeft: "1rem"
+    },
+    camposTitulos: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#9e9e9e",
+        marginLeft: "5rem",
+        fontWeight: "bold",
+        padding: "0.1rem",
+        fontSize: 16,
+    },
+    campos: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#9e9e9e",
+        marginLeft: "0.5rem",
+        fontSize: 15,
+        display: "flex",
+        flexWrap: "wrap"
+    },
+    avatar: {
+        width: "4rem",
+        height: "4rem"
+    },
+    icono: {
+        color: "#9e9e9e",
+        marginLeft: "5rem",
+        width: "1rem",
+        height: "1rem"
+    }
 }));
 
 const ReservasHoy = () => {
@@ -119,26 +154,32 @@ const ReservasHoy = () => {
     const reservas = [
         {
             id: 0,
+            codigo: "A156-125Q-X123-WQAS2",
             avatar: "FJ",
             nombreCompleto: "Francisco Jarma",
             patente: "LZY450",
             marca: "Volkswagen",
+            horaReserva: "10:48",
             tipo: "Auto",
             precio: "$100",
             horaIngreso: "",
             horaSalida: "",
+            observaciones: "Llegaré 5 minutos tarde",
             lugar: "11"
         },
         {
             id: 1,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
             avatar: "JL",
             nombreCompleto: "Juan Lopez",
             patente: "ASD123",
+            horaReserva: "10:52",
             marca: "Peugeot",
             tipo: "Auto",
             precio: "$100",
             horaIngreso: "19:20",
             horaSalida: "",
+            observaciones: "Automóvil color azul",
             lugar: "1"
         },
     ];
@@ -155,87 +196,111 @@ const ReservasHoy = () => {
             </ul>
             </Alert>
              &nbsp;
-            <List className = {classes.cartaReservas}>
             <Buscar/>
                     {reservas.map(reserva =>(
                     <>
-                    <ListItem key={reserva.id}>
-                        <ListItemAvatar>
-                            <Avatar>{reserva.avatar}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={reserva.nombreCompleto} secondary={
-                            <>
-                            <Typography>Lugar: {reserva.lugar}</Typography>
-                            <Typography>Marca del vehículo: {reserva.marca}</Typography>
-                            <Typography>Patente del vehículo: {reserva.patente}</Typography>
-                            <Typography>Tipo de vehículo: {reserva.tipo}</Typography>
-                            <Typography>Precio: {reserva.precio}</Typography>
-                            <Typography>Hora de Ingreso: {reserva.horaIngreso}</Typography>
-                            <Typography>Hora de Salida: {reserva.horaSalida}</Typography>
-                            </>
-                        }>
-                        </ListItemText>
-                        <ListItemText>
-                            {reserva.horaIngreso === "" ?
-                            <>
-                            <Button
-                            endIcon={<CheckIcon/>}
-                            className= {classes.botonValidarReserva} onClick={handleClickAbrirModalValidar}>
-                            Validar
-                            </Button>
-                            <Dialog open={abrirModalValidar} onClose={handleClickCerrarModalValidar} aria-labelledby="form-dialog-title">
-                                <DialogTitle id="form-dialog-title">Validar reserva</DialogTitle>
-                                <DialogContent>
-                                <DialogContentText> Para validar la reserva por favor ingrese la hora exacta de ingreso del cliente</DialogContentText>
-                                <KeyboardTimePicker
-                                    className={classes.inputHoraIngreso}
-                                    autoFocus
-                                    value={horaIngreso}
-                                    fullWidth
-                                    label="Hora de ingreso"
-                                    onChange={handleCambiarHoraIngreso}
-                                    margin="dense"
-                                />
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>Validar reserva</Button>
-                                    <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>Cancelar</Button>
-                                </DialogActions>
-                            </Dialog>
-                            </>
-                            :
-                            <>
-                            <Button
-                            endIcon={<DoneAllIcon/>}
-                            className= {classes.botonConcluirReserva}
-                            onClick={handleClickAbrirModalConcluir}>Concluir</Button>
-                            <Dialog open={abrirModalConcluir} onClose={handleClickCerrarModalConcluir} aria-labelledby="form-dialog-title">
-                                <DialogTitle id="form-dialog-title">Concluir reserva</DialogTitle>
-                                <DialogContent>
-                                <DialogContentText>Para concluir la reserva por favor ingrese la hora exacta de salida del cliente</DialogContentText>
-                                <KeyboardTimePicker
-                                    className={classes.inputHoraSalida}
-                                    autoFocus
-                                    value={horaSalida}
-                                    fullWidth
-                                    label="Hora de salida"
-                                    onChange={handleCambiarHoraSalida}
-                                    margin="dense"
-                                />
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleClickCerrarModalConcluir} endIcon={<DoneAllIcon/>} className={classes.botonConcluirReserva}>Concluir reserva</Button>
-                                    <Button onClick={handleClickCerrarModalConcluir} className={classes.botonCancelar}>Cancelar</Button>
-                                </DialogActions>
-                            </Dialog>
-                            </>
-                            }
-                        </ListItemText>
-                    </ListItem>
-                <Divider></Divider>
+                    <Card className = {classes.cartaReservas}>
+                        <CardActionArea>
+                            <CardContent key={reserva.id}>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Avatar className={classes.avatar}>{reserva.avatar}</Avatar>
+                                    <Typography className={classes.nombreCompleto}>{reserva.nombreCompleto}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Codigo: </Typography>
+                                    <Typography className={classes.campos}>{reserva.codigo}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Lugar: </Typography>
+                                    <Typography className={classes.campos}>{reserva.lugar}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Marca del vehículo: </Typography>
+                                    <Typography className={classes.campos}>{reserva.marca}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Patente del vehículo:</Typography>
+                                    <Typography className={classes.campos}>{reserva.patente}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Tipo de vehículo:</Typography>
+                                    <Typography className={classes.campos}>{reserva.tipo}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Precio:</Typography>
+                                    <Typography className={classes.campos}>{reserva.precio}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Hora de Ingreso: </Typography>
+                                    <Typography className={classes.campos}>{reserva.horaIngreso}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Hora de Salida: </Typography>
+                                    <Typography className={classes.campos}>{reserva.horaSalida}</Typography>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                    <Typography className={classes.camposTitulos}>Observaciones: </Typography>
+                                    <Typography className={classes.campos}>{reserva.observaciones}</Typography>
+                                </div>
+                                    {reserva.horaIngreso === "" ?
+                                    <>
+                                    <Button
+                                    endIcon={<CheckIcon/>}
+                                    className= {classes.botonValidarReserva} onClick={handleClickAbrirModalValidar}>
+                                    Validar
+                                    </Button>
+                                    <Dialog open={abrirModalValidar} onClose={handleClickCerrarModalValidar} aria-labelledby="form-dialog-title">
+                                        <DialogTitle id="form-dialog-title">Validar reserva</DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText> Para validar la reserva por favor ingrese la hora exacta de ingreso del cliente</DialogContentText>
+                                        <KeyboardTimePicker
+                                            className={classes.inputHoraIngreso}
+                                            autoFocus
+                                            value={horaIngreso}
+                                            fullWidth
+                                            label="Hora de ingreso"
+                                            onChange={handleCambiarHoraIngreso}
+                                            margin="dense"
+                                        />
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>Validar reserva</Button>
+                                            <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>Cancelar</Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                    </>
+                                    :
+                                    <>
+                                    <Button
+                                    endIcon={<DoneAllIcon/>}
+                                    className= {classes.botonConcluirReserva}
+                                    onClick={handleClickAbrirModalConcluir}>Concluir</Button>
+                                    <Dialog open={abrirModalConcluir} onClose={handleClickCerrarModalConcluir} aria-labelledby="form-dialog-title">
+                                        <DialogTitle id="form-dialog-title">Concluir reserva</DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText>Para concluir la reserva por favor ingrese la hora exacta de salida del cliente</DialogContentText>
+                                        <KeyboardTimePicker
+                                            className={classes.inputHoraSalida}
+                                            autoFocus
+                                            value={horaSalida}
+                                            fullWidth
+                                            label="Hora de salida"
+                                            onChange={handleCambiarHoraSalida}
+                                            margin="dense"
+                                        />
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button onClick={handleClickCerrarModalConcluir} endIcon={<DoneAllIcon/>} className={classes.botonConcluirReserva}>Concluir reserva</Button>
+                                            <Button onClick={handleClickCerrarModalConcluir} className={classes.botonCancelar}>Cancelar</Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                    </>
+                                    }
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
                     </>
                     ))}
-            </List>
             <Paginacion/>
             <Footer/>
         </>

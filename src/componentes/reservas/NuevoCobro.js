@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Navbar from './../diseño/Navbar.js';
+import Navbar from '../diseño/Navbar.js';
 import { List, makeStyles,
 Typography, Button, TextField, Grid, FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import {
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 const NuevoCobro = () => {
     const classes = useStyles();
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
-    const [valorRadio, setearValorRadio] = useState('Debito');
+    var [valorRadio, setearValorRadio] = useState('Debito');
 
     const handleChangeRadioMedioPago = (event) => {
         setearValorRadio(event.target.value);
@@ -273,6 +273,7 @@ const NuevoCobro = () => {
             &nbsp;
             <Typography className={classes.subtitulos}>Datos del pago</Typography>
         &nbsp;
+
             <Grid container spacing={3}>
                 <Grid item sm={3} xs={12}>
                     <FormControl>
@@ -284,6 +285,8 @@ const NuevoCobro = () => {
                         </RadioGroup>
                     </FormControl>
                 </Grid>
+                { valorRadio !== 'Efectivo' ?
+                <>
                 <Grid item sm={5} xs={12}>
                     <TextField
                     label="Número de tarjeta"
@@ -303,6 +306,9 @@ const NuevoCobro = () => {
                     value="***"
                     />
                 </Grid>
+                </>
+                : ""
+                }
             </Grid>
             <Button
                 endIcon={<CheckIcon/>}
