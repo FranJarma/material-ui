@@ -272,7 +272,7 @@ const Estacionamiento = () => {
                     ))}
                     </div>
                 )}
-                >
+                />
                 <MenuItem value="" disabled>Seleccione uno o varios</MenuItem>
                 {dias.map((dia) => (
                     <MenuItem key={dia} value={dia}>
@@ -280,7 +280,6 @@ const Estacionamiento = () => {
                     </MenuItem>
                     
                 ))}
-                </Select>    
                 </Grid>
                 </>
                 : ""}

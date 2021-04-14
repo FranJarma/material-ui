@@ -47,7 +47,7 @@ const Buscar = () => {
             </div>
         <InputBase
           autoFocus
-          placeholder="Buscar reservas..."
+          placeholder="Buscar..."
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,

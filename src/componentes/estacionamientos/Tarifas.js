@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Tarifas = () => {
-    var [state, setState] = useState({
+    let [state, setState] = useState({
         automovil: false,
         camioneta: false,
         camion: false,

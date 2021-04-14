@@ -18,6 +18,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import esLocale from "date-fns/locale/es";
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Lugares from './componentes/estacionamientos/Lugares.js';
+import Encargados from './componentes/encargados/Encargados.js';
 
 
 
@@ -52,6 +54,10 @@ function App() {
           <Route exact path="/reportes" component={Reportes}>
           </Route>
           <Route exact path="/tarifas" component={Tarifas}>
+          </Route>
+          <Route exact path="/lugares" component={Lugares}>
+          </Route>
+          <Route exact path="/encargados" component={Encargados}>
           </Route>
         </Switch>
       </Router>

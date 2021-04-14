@@ -18,6 +18,7 @@ import SwapVertIcon from '@material-ui/icons/SwapVert';
 import StarIcon from '@material-ui/icons/Star';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import GridOnIcon from '@material-ui/icons/GridOn';
 import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
         textDecoration: "none",
         color: "#000000"
     },
-    nested: {
+    subMenu: {
         paddingLeft: theme.spacing(5),
     },
     iconos: {
@@ -68,11 +69,19 @@ const useStyles = makeStyles(theme => ({
 const Aside = () => {
     const classes = useStyles();
     //state para controlar los submenús
-    const [subMenu, abrirSubMenu ] = useState(false);
+    const [subMenuReservas, abrirSubMenuReservas ] = useState(false);
 
-    const handleClickSubMenu = () => {
-        abrirSubMenu(!subMenu);
+    const handleClickAbrirSubMenuReservas = () => {
+        abrirSubMenuReservas(!subMenuReservas);
     }
+
+    const [subMenuMiEstacionamiento, abrirSubMenuMiEstacionamiento ] = useState(false);
+
+    const handleClickAbrirSubMenuMiEstacionamiento = () => {
+        abrirSubMenuMiEstacionamiento(!subMenuMiEstacionamiento);
+    }
+
+    
     
     const menuPrincipal = (
         <>
@@ -82,20 +91,20 @@ const Aside = () => {
             </Typography>
             &nbsp;
             <Divider></Divider>
-            {!esAdmin ?
+            {esAdmin ?
             <List>
-                <ListItem button onClick= { handleClickSubMenu }>
+                <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>
                         <CommuteIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText primary="Reservas">
                     </ListItemText>
-                    {subMenu ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+                    {subMenuReservas ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
                 </ListItem>
-                <Collapse in={subMenu} timeout="auto" unmountOnExit>
+                <Collapse in={subMenuReservas} timeout="auto" unmountOnExit>
                     <List disablePadding>
                     <Link to={'/reservas-del-dia'} className={classes.titulosMenu}>
-                        <ListItem button className={classes.nested}>
+                        <ListItem button className={classes.subMenu}>
                             <ListItemIcon>
                             <TodayIcon className={classes.iconos} />
                             </ListItemIcon>
@@ -103,7 +112,7 @@ const Aside = () => {
                         </ListItem>
                     </Link>
                     <Link to={'/reservas-calendario'} className={classes.titulosMenu}>
-                        <ListItem button className={classes.nested}>
+                        <ListItem button className={classes.subMenu}>
                             <ListItemIcon>
                             <DateRangeIcon className={classes.iconos}/>
                             </ListItemIcon>
@@ -111,7 +120,7 @@ const Aside = () => {
                         </ListItem>
                     </Link>
                     <Link to={'/cambiar-fecha'} className={classes.titulosMenu}>
-                        <ListItem button className={classes.nested}>
+                        <ListItem button className={classes.subMenu}>
                             <ListItemIcon>
                             <SwapVertIcon className={classes.iconos}/>
                             </ListItemIcon>
@@ -119,7 +128,7 @@ const Aside = () => {
                         </ListItem>
                     </Link>
                     <Link to={'/nuevo-cobro'} className={classes.titulosMenu}>
-                        <ListItem button className={classes.nested}>
+                        <ListItem button className={classes.subMenu}>
                         <ListItemIcon>
                             <MonetizationOnIcon className={classes.iconos}/>
                         </ListItemIcon>
@@ -130,37 +139,58 @@ const Aside = () => {
                     </Link>
                     </List>
                 </Collapse>
-
-                <Link to={'/mi-estacionamiento'} className={classes.titulosMenu}>
-                <ListItem button>
+                <ListItem button onClick= { handleClickAbrirSubMenuMiEstacionamiento }>
                     <ListItemIcon>
                         <StoreMallDirectoryIcon className={classes.iconos}/>
                     </ListItemIcon>
-                    <ListItemText>
-                        Datos del estacionamiento
+                    <ListItemText primary="Mi estacionamiento">
                     </ListItemText>
+                    {subMenuMiEstacionamiento ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
                 </ListItem>
-                </Link>
-                <Link to={'/tarifas'} className={classes.titulosMenu}>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AttachMoneyIcon className={classes.iconos}/>
-                    </ListItemIcon>
-                    <ListItemText>
-                       Vehículos y tarifas
-                    </ListItemText>
-                </ListItem>
-                </Link>
-                <Link to={'/valoraciones'} className={classes.titulosMenu}>
-                <ListItem button>
-                    <ListItemIcon>
-                        <StarIcon className={classes.iconos}/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        Comentarios y valoraciones
-                    </ListItemText>
-                </ListItem>
-                </Link>
+                <Collapse in={subMenuMiEstacionamiento} timeout="auto" unmountOnExit>
+                    <List disablePadding>
+                    <Link to={'/mi-estacionamiento'} className={classes.titulosMenu}>
+                    <ListItem button className={classes.subMenu}>
+                        <ListItemIcon>
+                            <StoreMallDirectoryIcon className={classes.iconos}/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            Datos del estacionamiento
+                        </ListItemText>
+                    </ListItem>
+                    </Link>
+                    <Link to={'/tarifas'} className={classes.titulosMenu}>
+                    <ListItem button className={classes.subMenu}>
+                        <ListItemIcon>
+                            <AttachMoneyIcon className={classes.iconos}/>
+                        </ListItemIcon>
+                        <ListItemText>
+                        Vehículos y tarifas
+                        </ListItemText>
+                    </ListItem>
+                    </Link>
+                    <Link to={'/valoraciones'} className={classes.titulosMenu}>
+                    <ListItem button className={classes.subMenu}>
+                        <ListItemIcon>
+                            <StarIcon className={classes.iconos}/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            Comentarios y valoraciones
+                        </ListItemText>
+                    </ListItem>
+                    </Link>
+                    <Link to={'/lugares'} className={classes.titulosMenu}>
+                    <ListItem button className={classes.subMenu}>
+                        <ListItemIcon>
+                            <GridOnIcon className={classes.iconos}/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            Administrar lugares
+                        </ListItemText>
+                    </ListItem>
+                    </Link>
+                    </List>
+                </Collapse>
                 <Link to={'/reportes'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
@@ -185,21 +215,24 @@ const Aside = () => {
                 </Link>
             </List>
             :<List>
-                <ListItem button onClick={handleClickSubMenu}>
+                <Link to={'/encargados'} className={classes.titulosMenu}>
+                <ListItem button>
                     <ListItemIcon>
                         <PersonIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText primary="Administración de usuarios">
                     </ListItemText>
                 </ListItem>
-                <ListItem button onClick={handleClickSubMenu}>
-                    <ListItemIcon>
-                        <StoreMallDirectoryIcon className={classes.iconos}/>
-                    </ListItemIcon>
-                    <ListItemText primary="Administración de playas de estacionamiento">
-                    </ListItemText>
-                </ListItem>
-                <Divider></Divider>
+                </Link>
+                <Link to={'/estacionamientos'} className={classes.titulosMenu}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <StoreMallDirectoryIcon className={classes.iconos}/>
+                        </ListItemIcon>
+                        <ListItemText primary="Administración de playas de estacionamiento">
+                        </ListItemText>
+                    </ListItem>
+                </Link>
             </List>
 
             }

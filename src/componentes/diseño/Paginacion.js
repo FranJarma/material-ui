@@ -19,10 +19,10 @@ const Paginacion = () => {
         component="div"
         count={100}
         page={page}
-        labelRowsPerPage="Reservas por página"
+        labelRowsPerPage="Registros por página"
         labelDisplayedRows={
           ({ from, to, count }) => {
-            return from + '-' + to + ' de ' + count + ' reservas'
+            return from + '-' + to + ' de ' + count + ' registros'
           }
         }
         onChangePage={handleChangePage}
