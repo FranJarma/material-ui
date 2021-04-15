@@ -264,7 +264,7 @@ const ReservasHoy = () => {
                                         />
                                         </DialogContent>
                                         <DialogActions>
-                                            <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>Validar reserva</Button>
+                                            <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>Validar</Button>
                                             <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>Cancelar</Button>
                                         </DialogActions>
                                     </Dialog>
@@ -290,7 +290,7 @@ const ReservasHoy = () => {
                                         />
                                         </DialogContent>
                                         <DialogActions>
-                                            <Button onClick={handleClickCerrarModalConcluir} endIcon={<DoneAllIcon/>} className={classes.botonConcluirReserva}>Concluir reserva</Button>
+                                            <Button onClick={handleClickCerrarModalConcluir} endIcon={<DoneAllIcon/>} className={classes.botonConcluirReserva}>Concluir</Button>
                                             <Button onClick={handleClickCerrarModalConcluir} className={classes.botonCancelar}>Cancelar</Button>
                                         </DialogActions>
                                     </Dialog>
