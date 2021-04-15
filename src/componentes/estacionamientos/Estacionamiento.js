@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     container: {
         marginLeft: "1rem"
     },
-    cartaReservas: {
+    cartaMiEstacionamiento: {
         flexGrow: 1,
         paddingLeft: 20,
         backgroundColor: theme.palette.background.paper,
@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     select: {
-        paddingRight: "1rem",
         '&:after': {
             borderColor: "#4db6ac",
         }
@@ -155,7 +154,7 @@ const Estacionamiento = () => {
             </ul>
             </Alert>
         &nbsp;
-        <List className={classes.cartaReservas}>
+        <List className={classes.cartaMiEstacionamiento}>
         &nbsp;
         <Typography className={classes.subtitulos}>Datos de la playa de estacionamiento</Typography>
         &nbsp;
@@ -188,7 +187,7 @@ const Estacionamiento = () => {
                 ))}
                 </Select>
                 </Grid>
-                <Grid item sm={4} xs={6} >
+                <Grid item sm={6} xs={6} >
                 <TextField
                 className={classes.input}
                 label="N° de teléfono"
@@ -197,22 +196,12 @@ const Estacionamiento = () => {
                 fullWidth
                 />
                 </Grid>
-                <Grid item sm={4} xs={6} >
+                <Grid item sm={6} xs={6} >
                 <TextField
                 className={classes.input}
                 label="CUIT"
                 variant="standard"
                 value="25405245125"
-                fullWidth
-                />
-                </Grid>
-                <Grid item sm={4} xs={12} >
-                <TextField
-                className={classes.input}
-                label="Cantidad de lugares"
-                type="number"
-                variant="standard"
-                value="30"
                 fullWidth
                 />
                 </Grid>
@@ -272,7 +261,7 @@ const Estacionamiento = () => {
                     ))}
                     </div>
                 )}
-                />
+                >
                 <MenuItem value="" disabled>Seleccione uno o varios</MenuItem>
                 {dias.map((dia) => (
                     <MenuItem key={dia} value={dia}>
@@ -280,6 +269,7 @@ const Estacionamiento = () => {
                     </MenuItem>
                     
                 ))}
+                </Select>
                 </Grid>
                 </>
                 : ""}
@@ -297,37 +287,6 @@ const Estacionamiento = () => {
                 className={classes.select}
                 />
                 </Grid>
-                <Grid item sm={2} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Latitud"
-                variant="standard"
-                fullWidth
-                disabled
-                value="47.15"
-                />
-                </Grid>
-                <Grid item sm={2} xs={6}>
-                <TextField
-                className={classes.input}
-                label="Longitud"
-                variant="standard"
-                fullWidth
-                disabled
-                value="-35.1656"
-                />
-                </Grid>
-                <Grid item sm={8} xs={12}>
-                <TextField
-                className={classes.input}
-                label="Dirección completa"
-                variant="standard"
-                fullWidth
-                disabled
-                value="General Paz 157"
-                />
-                </Grid>
-                &nbsp;
             </Grid>
             &nbsp;
             <Button

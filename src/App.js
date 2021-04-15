@@ -20,6 +20,7 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Lugares from './componentes/estacionamientos/Lugares.js';
 import Encargados from './componentes/encargados/Encargados.js';
+import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
 
 
 
@@ -58,6 +59,8 @@ function App() {
           <Route exact path="/lugares" component={Lugares}>
           </Route>
           <Route exact path="/encargados" component={Encargados}>
+          </Route>
+          <Route exact path="/estacionamientos" component={Estacionamientos}>
           </Route>
         </Switch>
       </Router>

@@ -113,6 +113,7 @@ const Tarifas = () => {
                 label="Ingrese tarifa"
                 variant="standard"
                 fullWidth
+                autoFocus
                 name="automovil"
                 InputProps={{
                     startAdornment: (
@@ -135,6 +136,7 @@ const Tarifas = () => {
                 label="Ingrese tarifa"
                 variant="standard"
                 fullWidth
+                autoFocus
                 name="camioneta"
                 InputProps={{
                     startAdornment: (
@@ -157,6 +159,7 @@ const Tarifas = () => {
                 label="Ingrese tarifa"
                 variant="standard"
                 fullWidth
+                autoFocus
                 name="camion"
                 InputProps={{
                     startAdornment: (
@@ -179,6 +182,7 @@ const Tarifas = () => {
                 label="Ingrese tarifa"
                 variant="standard"
                 fullWidth
+                autoFocus
                 name="bicicleta"
                 InputProps={{
                     startAdornment: (
@@ -201,6 +205,7 @@ const Tarifas = () => {
                 label="Ingrese tarifa"
                 variant="standard"
                 fullWidth
+                autoFocus
                 name="motocicleta"
                 InputProps={{
                     startAdornment: (

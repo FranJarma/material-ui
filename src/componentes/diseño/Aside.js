@@ -19,6 +19,7 @@ import StarIcon from '@material-ui/icons/Star';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import GridOnIcon from '@material-ui/icons/GridOn';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link }  from 'react-router-dom';
 
 const esAdmin = false;
@@ -91,7 +92,7 @@ const Aside = () => {
             </Typography>
             &nbsp;
             <Divider></Divider>
-            {esAdmin ?
+            {!esAdmin ?
             <List>
                 <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>
@@ -152,7 +153,7 @@ const Aside = () => {
                     <Link to={'/mi-estacionamiento'} className={classes.titulosMenu}>
                     <ListItem button className={classes.subMenu}>
                         <ListItemIcon>
-                            <StoreMallDirectoryIcon className={classes.iconos}/>
+                            <AssignmentIcon className={classes.iconos}/>
                         </ListItemIcon>
                         <ListItemText>
                             Datos del estacionamiento

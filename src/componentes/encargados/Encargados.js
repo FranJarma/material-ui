@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import Navbar from '../diseño/Navbar.js';
-import { List, ListItemText, Divider, makeStyles, Typography, ListItem, Button, Select, Avatar, MenuItem, Grid, TextField, Fab } from '@material-ui/core';
+import { makeStyles, Typography, Button, Select, Avatar, MenuItem, Grid, TextField, Fab, Card, CardActionArea, CardContent } from '@material-ui/core';
 import Buscar from '../diseño/Buscar.js';
 import Paginacion from '../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import LocalParkingIcon from '@material-ui/icons/LocalParking';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import Footer from '../diseño/Footer.js';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -23,14 +23,13 @@ const useStyles = makeStyles((theme) => ({
     },
     cartaEncargados: {
         flexGrow: 1,
-        paddingLeft: 20,
+        marginBottom: "1rem",
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
         backgroundColor: theme.palette.background.paper,
         marginLeft: "1rem",
         marginRight: "1rem"
     },
     select: {
-        paddingRight: "1rem",
         '&:after': {
             borderColor: "#4db6ac",
         }
@@ -41,13 +40,9 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
-        marginBottom: "1rem",
-        [theme.breakpoints.up('xs')]:{
-            marginLeft: "6rem"
-        },
+        marginTop: "1rem",
         [theme.breakpoints.down('xs')]:{
-            width: "95%",
-            marginLeft: 0
+            width: "100%"
         },
         "&:hover":{
             backgroundColor: "#448aff",
@@ -59,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
-        marginBottom: "1rem",
+        marginTop: "1rem",
         [theme.breakpoints.up('xs')]:{
             marginLeft: "1rem"
         },
         [theme.breakpoints.down('xs')]:{
-            width: "95%",
+            width: "100%",
             marginLeft: 0
         },
         "&:hover":{
@@ -72,21 +67,12 @@ const useStyles = makeStyles((theme) => ({
         }
 
     },
-    botonConfirmar: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
     botonCancelar: {
         color: "#000000",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         marginLeft: "auto",
+        marginTop: "1rem",
         fontSize: 15,
         alignContent: "auto"
     },
@@ -101,7 +87,9 @@ const useStyles = makeStyles((theme) => ({
     camposTitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#9e9e9e",
-        marginLeft: "5rem",
+        [theme.breakpoints.up('md')]:{
+            marginLeft: "5rem"
+        },
         fontWeight: "bold",
         padding: "0.1rem",
         fontSize: 16,
@@ -109,7 +97,9 @@ const useStyles = makeStyles((theme) => ({
     campos: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#9e9e9e",
-        marginLeft: "0.5rem",
+        [theme.breakpoints.up('md')]:{
+            marginLeft: "0.5rem",
+        },
         fontSize: 15,
         display: "flex",
         flexWrap: "wrap"
@@ -120,6 +110,14 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .MuiInput-underline:after": {
             borderBottomColor: "#448aff"
+        },
+    },
+    inputDarDeBaja: {
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#ff1744"
+        },
+        "& .MuiInput-underline:after": {
+            borderBottomColor: "#ff1744"
         },
     },
     avatar: {
@@ -136,6 +134,15 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             backgroundColor: "#43a047"
         }
+    },
+    cantidad: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#448aff",
+        fontSize: 18,
+        textTransform: "uppercase",
+        marginLeft: "1rem",
+        fontWeight: "bold",
+        marginBottom: "2rem"
     },
 }));
 
@@ -218,17 +225,16 @@ const Encargados = () => {
             <Navbar/>
             <Typography className={classes.titulo}>Administración de encargados de estacionamientos</Typography>
              &nbsp;
-
-            <List className = {classes.cartaEncargados}>
-            <Fab className={classes.botonAgregarEstacionamiento} onClick={handleClickAbrirModalNuevoEncargado} aria-label="add">
-                <AddIcon /> 
-            </Fab>
-            <Buscar/>
+                <Fab className={classes.botonAgregarEstacionamiento} onClick={handleClickAbrirModalNuevoEncargado} aria-label="add">
+                    <AddIcon /> 
+                </Fab>
+                &nbsp;
+                <Typography className={classes.cantidad}>Total de encargados: {encargados.length}</Typography>
                     {encargados.map(encargado =>(
                     <>
-                    <ListItem key={encargado.id}>
-                        <ListItemText secondary={
-                            <>
+                    <Card className = {classes.cartaEncargados}>
+                        <CardActionArea>
+                            <CardContent key={encargado.id}>
                                 <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                                     <Avatar className={classes.avatar}>{encargado.avatar}</Avatar>
                                     <Typography className={classes.nombreCompleto}>{encargado.nombreCompleto}</Typography>
@@ -249,24 +255,23 @@ const Encargados = () => {
                                     <Typography className={classes.camposTitulos}>Playa de estacionamiento:</Typography>
                                     <Typography className={classes.campos}>{encargado.playa}</Typography>
                                 </div>
-                            </>
-                        }>
-                        </ListItemText>
-                        <ListItemText>
-                        </ListItemText>
-                    </ListItem>
-                    <Button
-                        endIcon={<LocalParkingIcon/>}
-                        className= {classes.botonAsignarEstacionamiento}
-                        onClick={handleClickAbrirModalValidar}>
-                        Asignar estacionamiento
-                    </Button>
-                    <Button
-                        endIcon={<DeleteIcon/>}
-                        className= {classes.botonDarDeBaja}
-                        onClick={handleClickAbrirModalDarDeBaja}>
-                        Dar de baja
-                    </Button>
+                                <Button
+                                endIcon={<AssignmentTurnedInIcon/>}
+                                className= {classes.botonAsignarEstacionamiento}
+                                onClick={handleClickAbrirModalValidar}>
+                                Asignar estacionamiento
+                                </Button>
+                                <Button
+                                endIcon={<DeleteIcon/>}
+                                className= {classes.botonDarDeBaja}
+                                onClick={handleClickAbrirModalDarDeBaja}>
+                                Dar de baja
+                                </Button>
+                            </CardContent>
+                        </CardActionArea>
+                        </Card>
+                    </>
+                    ))}
                     <Dialog open={abrirModalValidar} onClose={handleClickCerrarModalValidar} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Asignar estacionamiento</DialogTitle>
                         <DialogContent>
@@ -287,7 +292,7 @@ const Encargados = () => {
                         </Select>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonConfirmar}>Confirmar</Button>
+                            <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonAsignarEstacionamiento}>Asignar</Button>
                             <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>Cancelar</Button>
                         </DialogActions>
                     </Dialog>
@@ -296,47 +301,43 @@ const Encargados = () => {
                         <DialogContent>
                         <DialogContentText> Para dar de baja el estacionamiento, escriba el nombre completo en el siguiente cuadro de texto:</DialogContentText>
                         <Grid container spacing={1}>
-                            <Grid item lg={12}>
-                                <TextField autoFocus className={classes.input} fullWidth label="Nombre"></TextField>
+                            <Grid item xs={12} lg={12}>
+                                <TextField autoFocus className={classes.inputDarDeBaja} fullWidth label="Nombre"></TextField>
                             </Grid>
                         </Grid>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClickCerrarModalDarDeBaja} endIcon={<CheckIcon/>} className={classes.botonConfirmar}>Confirmar</Button>
+                            <Button onClick={handleClickCerrarModalDarDeBaja} disabled endIcon={<DeleteIcon/>} className={classes.botonDarDeBaja}>Dar de baja</Button>
                             <Button onClick={handleClickCerrarModalDarDeBaja} className={classes.botonCancelar}>Cancelar</Button>
                         </DialogActions>
                     </Dialog>
-                    <Dialog maxWidth="md" fullwidth open={abrirModalNuevoEncargado} onClose={handleClickAbrirModalNuevoEncargado} aria-labelledby="form-dialog-title">
+                    <Dialog open={abrirModalNuevoEncargado} onClose={handleClickAbrirModalNuevoEncargado} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Agregar nuevo encargado</DialogTitle>
                         <DialogContent>
                         <DialogContentText> Ingrese datos. Una vez ingresados se enviará un email al correo ingresado con los datos del nuevo encargado.</DialogContentText>
                         <Grid container spacing={1}>
-                            <Grid item lg={12}>
+                            <Grid item xs={12} lg={12}>
                                 <TextField autoFocus className={classes.input} fullWidth label="Nombre"></TextField>
                             </Grid>
-                            <Grid item lg={12}>
+                            <Grid item xs={12} lg={12}>
                                 <TextField className={classes.input} fullWidth label="DNI"></TextField>
                             </Grid>
-                            <Grid item lg={12}>
+                            <Grid item xs={12} lg={12}>
                                 <TextField className={classes.input} fullWidth label="Email"></TextField>
                             </Grid>
-                            <Grid item lg={12}>
+                            <Grid item xs={12} lg={12}>
                                 <TextField className={classes.input} fullWidth label="Usuario"></TextField>
                             </Grid>
-                            <Grid item lg={12}>
+                            <Grid item xs={12} lg={12}>
                                 <TextField className={classes.input} fullWidth label="Contraseña"></TextField>
                             </Grid>
                         </Grid>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClickCerrarModalNuevoEncargado} endIcon={<CheckIcon/>} className={classes.botonConfirmar}>Confirmar</Button>
+                            <Button onClick={handleClickCerrarModalNuevoEncargado} endIcon={<CheckIcon/>} className={classes.botonAsignarEstacionamiento}>Agregar</Button>
                             <Button onClick={handleClickCerrarModalNuevoEncargado} className={classes.botonCancelar}>Cancelar</Button>
                         </DialogActions>
                     </Dialog>
-                <Divider></Divider>
-                    </>
-                    ))}
-            </List>
             <Paginacion/>
             <Footer/>
         </>

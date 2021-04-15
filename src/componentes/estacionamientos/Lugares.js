@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
+import ForwardIcon from '@material-ui/icons/Forward';
 import Footer from '../diseño/Footer.js';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -42,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
         color: "#000000",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginTop: "1rem",
         marginLeft: "auto",
         alignContent: "auto"
     },
@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         "& .MuiFormLabel-root.Mui-focused": {
-            color: "#43a047"
+            color: "#448aff"
         },
         "& .MuiInput-underline:after": {
-            borderBottomColor: "#43a047"
+            borderBottomColor: "#448aff"
         },
     },
     camposTitulos: {
@@ -83,6 +83,39 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         marginBottom: "2rem"
     },
+    ocupado: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#ff3d00",
+        fontSize: 18,
+        float: "right",
+        textTransform: "uppercase",
+        fontWeight: "bold"
+    },
+    botonConfirmar: {
+        backgroundColor: "#448aff",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
+    botonLiberarLugar: {
+        backgroundColor: "#448aff",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        marginTop: "1rem",
+        marginLeft: 0,
+        [theme.breakpoints.down('xs')]:{
+            width: "100%",
+        },
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
 }));
 
 const Lugares = () => {
@@ -100,31 +133,36 @@ const Lugares = () => {
             id: 0,
             codigo: "A2B2-SDZX-661S-1ASA",
             nombre: "Lugar 1",
-            descripcion: "Se encuentra junto a la entrada, del lado izquierdo"
+            descripcion: "Se encuentra junto a la entrada, del lado izquierdo",
+            ocupado: 0
         },
         {
             id: 1,
             codigo: "1235-W846-ZXC2-F111",
             nombre: "Lugar 2",
-            descripcion: ""
+            descripcion: "",
+            ocupado: 1
         },
         {
             id: 2,
             codigo: "AASD-B241-ZXC5-6123",
             nombre: "Lugar 3",
-            descripcion: ""
+            descripcion: "",
+            ocupado: 1
         },
         {
             id: 3,
             codigo: "829A-LPS1-ZXC2-5462",
             nombre: "Lugar 4",
-            descripcion: ""
+            descripcion: "",
+            ocupado: 0
         },
         {
             id: 4,
             codigo: "123Z-1235-ZCAS-ÑPOA",
             nombre: "Lugar 5",
-            descripcion: ""
+            descripcion: "",
+            ocupado: 0
         },
     ];
     return (
@@ -132,7 +170,7 @@ const Lugares = () => {
             <Navbar/>
             <Typography className={classes.titulo}>Administrar lugares de mi estacionamiento</Typography>
             &nbsp;
-            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá administrar todos los lugares disponibles dentro de su playa de estacionamiento.
+            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá administrar todos los lugares disponibles dentro de su playa de estacionamiento. Además podrá liberar aquellos lugares que se encuentren ocupados en caso de necesitarlo.
             </Alert>
             <Fab className={classes.botonAgregarLugar} onClick={handleClickAbrirModalNuevoLugar} aria-label="add">
                 <AddIcon /> 
@@ -158,6 +196,17 @@ const Lugares = () => {
                                     <Typography className={classes.campos}>{lugar.descripcion}</Typography>
                                 </div>
                                 : ""}
+                                { lugar.ocupado ?
+                                <>
+                                <Button className={classes.ocupado}>Ocupado</Button>
+                                <Button
+                                endIcon={<ForwardIcon/>}
+                                className= {classes.botonLiberarLugar}
+                                >
+                                Liberar lugar
+                                </Button>
+                                </>
+                                : ""}
                             </CardContent>
                         </CardActionArea>
                     </Card>
@@ -169,16 +218,16 @@ const Lugares = () => {
                 <DialogContent>
                 <DialogContentText> Ingrese nombre y descripción</DialogContentText>
                 <Grid container spacing={1}>
-                    <Grid item lg={12}>
+                    <Grid item xs={12} lg={12}>
                         <TextField autoFocus className={classes.input} fullWidth label="Nombre"></TextField>
                     </Grid>
-                    <Grid item lg={12}>
+                    <Grid item xs={12} lg={12}>
                         <TextField className={classes.input} fullWidth label="Descripción"></TextField>
                     </Grid>
                 </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClickCerrarModalNuevoLugar} endIcon={<CheckIcon/>} className={classes.botonAgregarLugar}>Agregar</Button>
+                    <Button onClick={handleClickCerrarModalNuevoLugar} endIcon={<CheckIcon/>} className={classes.botonConfirmar}>Agregar</Button>
                     <Button onClick={handleClickCerrarModalNuevoLugar} className={classes.botonCancelar}>Cancelar</Button>
                 </DialogActions>
             </Dialog>
