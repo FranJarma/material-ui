@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles, Typography, Fab, Button, Card, CardContent, TextField, Grid } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -13,6 +13,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PaginacionContext from './../../context/paginacion/paginacionContext';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -165,6 +166,10 @@ const Lugares = () => {
             ocupado: 0
         },
     ];
+    //context de paginación
+    const paginacionContext = useContext(PaginacionContext);
+    const { pagina, itemsPorPagina } = paginacionContext;
+    console.log(lugares)
     return (
         <>
             <Navbar/>
@@ -177,7 +182,7 @@ const Lugares = () => {
             </Fab>
              &nbsp;
              <Typography className={classes.cantidad}>Total de lugares: {lugares.length}</Typography>
-                    {lugares.map(lugar =>(
+                {lugares.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(lugar =>(
                     <>
                     <Card className = {classes.cartaLugares}>
                         <CardActionArea>
@@ -212,7 +217,6 @@ const Lugares = () => {
                     </Card>
                     </>
                     ))}
-            <Paginacion/>
             <Dialog open={abrirModalNuevoLugar} onClose={handleClickCerrarModalNuevoLugar} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Agregar nuevo lugar</DialogTitle>
                 <DialogContent>
@@ -231,6 +235,7 @@ const Lugares = () => {
                     <Button onClick={handleClickCerrarModalNuevoLugar} className={classes.botonCancelar}>Cancelar</Button>
                 </DialogActions>
             </Dialog>
+            <Paginacion lista={lugares}/>
             <Footer/>
         </>
     );
