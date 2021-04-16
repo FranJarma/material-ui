@@ -3,20 +3,20 @@ import Pagination from "@material-ui/lab/Pagination";
 import React, {useState, useContext} from 'react';
 import PaginacionContext from '../../context/paginacion/paginacionContext';
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles(theme=>({
   paginacion: {
-    [theme.breakpoints.up('md')]:{
-      marginLeft: "30rem",
-      marginTop: "2rem"
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    "& .MuiPaginationItem-root": {
+      fontFamily: "Roboto Condensed, sans-serif"
     },
-    [theme.breakpoints.down('md')]:{
-      marginLeft: "6rem",
-      marginTop: "2rem",
-      marginBottom: "2rem"
+    "& .MuiPaginationItem-page.Mui-selected": {
+      backgroundColor:"#4db6ac",
+      color:"#FFFFFF",
+      fontFamily: "Roboto Condensed, sans-serif"
     }
   }
 }));
-
 const Paginacion = (lista) => {
   const classes = useStyles();
   const paginacionContext = useContext(PaginacionContext);
@@ -28,19 +28,16 @@ const Paginacion = (lista) => {
   return (
     <>
     <Divider/>
-    <Box>
-      <div style={{justifyContent:"center"}}>
+    <Box display="flex" justifyContent="center">
         <Pagination
           className={classes.paginacion}
           onChange={handleChange}
           count={numeroDePaginas}
           page={pagina}
           defaultPage={1}
-          size="large"
-          color="primary"
+          size="medium"
           showFirstButton
           showLastButton/>
-      </div>
     </Box>
     </>
   );
