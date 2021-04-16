@@ -1,0 +1,1 @@
+export const SETEAR_PAGINA = 'SETEAR_PAGINA';

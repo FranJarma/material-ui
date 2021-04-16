@@ -1,35 +1,48 @@
-import React, {useState} from 'react';
-import TablePagination from '@material-ui/core/TablePagination';
+import { Divider, Box, makeStyles } from '@material-ui/core';
+import Pagination from "@material-ui/lab/Pagination";
+import React, {useState, useContext} from 'react';
+import PaginacionContext from '../../context/paginacion/paginacionContext';
 
-const Paginacion = () => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-    };
+const useStyles = makeStyles((theme)=>({
+  paginacion: {
+    [theme.breakpoints.up('md')]:{
+      marginLeft: "30rem",
+      marginTop: "2rem"
+    },
+    [theme.breakpoints.down('md')]:{
+      marginLeft: "6rem",
+      marginTop: "2rem",
+      marginBottom: "2rem"
+    }
+  }
+}));
 
-    return ( 
-        <TablePagination
-        component="div"
-        count={100}
-        page={page}
-        labelRowsPerPage="Registros por página"
-        labelDisplayedRows={
-          ({ from, to, count }) => {
-            return from + '-' + to + ' de ' + count + ' registros'
-          }
-        }
-        onChangePage={handleChangePage}
-        rowsPerPage={rowsPerPage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-     );
+const Paginacion = (lista) => {
+  const classes = useStyles();
+  const paginacionContext = useContext(PaginacionContext);
+  const { pagina, itemsPorPagina, setearPagina } = paginacionContext;
+  const [numeroDePaginas] = useState(Math.ceil(lista.lista.length / itemsPorPagina));
+  const handleChange = (event, value) => {
+    setearPagina(value);
+  }
+  return (
+    <>
+    <Divider/>
+    <Box>
+      <div style={{justifyContent:"center"}}>
+        <Pagination
+          className={classes.paginacion}
+          onChange={handleChange}
+          count={numeroDePaginas}
+          page={pagina}
+          defaultPage={1}
+          size="large"
+          color="primary"
+          showFirstButton
+          showLastButton/>
+      </div>
+    </Box>
+    </>
+  );
 }
- 
 export default Paginacion;

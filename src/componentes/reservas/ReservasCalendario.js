@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles,
 Typography, Card, CardActionArea, CardContent, Avatar, Button } from '@material-ui/core';
@@ -9,7 +9,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Footer from '../diseño/Footer.js';
-
+import PaginacionContext from './../../context/paginacion/paginacionContext';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -85,6 +85,15 @@ const useStyles = makeStyles((theme) => ({
         width: "4rem",
         height: "4rem"
     },
+    cantidad: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#448aff",
+        fontSize: 18,
+        textTransform: "uppercase",
+        marginLeft: "1rem",
+        fontWeight: "bold",
+        marginBottom: "2rem"
+    }
 }));
 
 const ReservasCalendario = () => {
@@ -120,6 +129,9 @@ const ReservasCalendario = () => {
             lugar: "1"
         },
     ];
+    //context de paginación
+    const paginacionContext = useContext(PaginacionContext);
+    const { pagina, itemsPorPagina } = paginacionContext;
     return (
         <>  
             <Navbar/>
@@ -147,7 +159,8 @@ const ReservasCalendario = () => {
             &nbsp;
             &nbsp;
             <Buscar/>
-                    {reservas.map(reserva =>(
+                <Typography className={classes.cantidad}>Total de reservas registradas: {reservas.length}</Typography>
+                    {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
                     <Card className = {classes.cartaReservas}>
                         <CardActionArea>
@@ -197,7 +210,7 @@ const ReservasCalendario = () => {
                     </Card>
                     </>
                     ))}
-            <Paginacion/>
+                <Paginacion lista={reservas}/>
             <Footer/>
         </>
     );

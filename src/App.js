@@ -21,50 +21,52 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Lugares from './componentes/estacionamientos/Lugares.js';
 import Encargados from './componentes/encargados/Encargados.js';
 import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
-
+import PaginacionState from './context/paginacion/paginacionState';
 
 
 function App() {
   return (
     <>
-    <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login}>
-          </Route>
-          <Route exact path="/nueva-cuenta" component={Registrar}>
-          </Route>
-          <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
-          </Route>
-          <Route exact path="/spinner">
-          </Route>
-          <Route exact path="/reservas-del-dia" component={ReservasHoy}>
-          </Route>
-          <Route exact path="/nuevo-cobro" component={NuevoCobro}>
-          </Route>
-          <Route exact path="/reservas-calendario" component={ReservasCalendario}>
-          </Route>
-          <Route exact path="/cambiar-fecha" component={CambiarFechaReserva}>
-          </Route>
-          <Route exact path="/mi-estacionamiento" component={Estacionamiento}>
-          </Route>
-          <Route exact path="/valoraciones" component={Comentarios}>
-          </Route>
-          <Route exact path="/datos-personales" component={DatosPersonales}>
-          </Route>
-          <Route exact path="/reportes" component={Reportes}>
-          </Route>
-          <Route exact path="/tarifas" component={Tarifas}>
-          </Route>
-          <Route exact path="/lugares" component={Lugares}>
-          </Route>
-          <Route exact path="/encargados" component={Encargados}>
-          </Route>
-          <Route exact path="/estacionamientos" component={Estacionamientos}>
-          </Route>
-        </Switch>
-      </Router>
-    </MuiPickersUtilsProvider>
+    <PaginacionState>
+      <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login}>
+            </Route>
+            <Route exact path="/nueva-cuenta" component={Registrar}>
+            </Route>
+            <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
+            </Route>
+            <Route exact path="/spinner">
+            </Route>
+            <Route exact path="/reservas-del-dia" component={ReservasHoy}>
+            </Route>
+            <Route exact path="/nuevo-cobro" component={NuevoCobro}>
+            </Route>
+            <Route exact path="/reservas-calendario" component={ReservasCalendario}>
+            </Route>
+            <Route exact path="/cambiar-fecha" component={CambiarFechaReserva}>
+            </Route>
+            <Route exact path="/mi-estacionamiento" component={Estacionamiento}>
+            </Route>
+            <Route exact path="/valoraciones" component={Comentarios}>
+            </Route>
+            <Route exact path="/datos-personales" component={DatosPersonales}>
+            </Route>
+            <Route exact path="/reportes" component={Reportes}>
+            </Route>
+            <Route exact path="/tarifas" component={Tarifas}>
+            </Route>
+            <Route exact path="/lugares" component={Lugares}>
+            </Route>
+            <Route exact path="/encargados" component={Encargados}>
+            </Route>
+            <Route exact path="/estacionamientos" component={Estacionamientos}>
+            </Route>
+          </Switch>
+        </Router>
+      </MuiPickersUtilsProvider>
+    </PaginacionState>
     </>
   );
 }

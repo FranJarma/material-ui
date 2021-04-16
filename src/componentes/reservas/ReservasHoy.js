@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles, Typography, Avatar, Button, Card, CardContent } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -16,6 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PaginacionContext from './../../context/paginacion/paginacionContext';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -122,7 +123,16 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "5rem",
         width: "1rem",
         height: "1rem"
-    }
+    },
+    cantidad: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#448aff",
+        fontSize: 18,
+        textTransform: "uppercase",
+        marginLeft: "1rem",
+        fontWeight: "bold",
+        marginBottom: "2rem"
+    },
 }));
 
 const ReservasHoy = () => {
@@ -182,7 +192,445 @@ const ReservasHoy = () => {
             observaciones: "Automóvil color azul",
             lugar: "1"
         },
+        {
+            id: 2,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 3,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 4,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 5,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 6,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 7,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "Juan Lopez",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 8,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "v65vzx4",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 9,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "654zcx",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 10,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxc654",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 11,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "964asd98daszx",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 12,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "2132zx1c",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 13,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "asd854asdzxc",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 14,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "asd56das4",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 15,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxcczx654",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 16,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "123126354",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 17,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxc564as",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 18,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxcczx64asd",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 19,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxczx1cx6asd4",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 20,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "asdsda510",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 21,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxczcx23132zxc",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 22,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "984132349-",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 23,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "z123*//*",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 24,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxczx65",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 25,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "1z36xc1zcx",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 26,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "12332asdczx",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 27,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "jllkjjkqewa1",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 28,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "zxczxzcx",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 29,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "3231232",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        },
+        {
+            id: 30,
+            codigo: "B1S5-A53ZW-DJ65-Q286",
+            avatar: "JL",
+            nombreCompleto: "asddasddaa",
+            patente: "ASD123",
+            horaReserva: "10:52",
+            marca: "Peugeot",
+            tipo: "Auto",
+            precio: "$100",
+            horaIngreso: "19:20",
+            horaSalida: "",
+            observaciones: "Automóvil color azul",
+            lugar: "1"
+        }
     ];
+    //context de paginación
+    const paginacionContext = useContext(PaginacionContext);
+    const { pagina, itemsPorPagina } = paginacionContext;
     return (
         <>
             <Navbar/>
@@ -197,9 +645,10 @@ const ReservasHoy = () => {
             </Alert>
              &nbsp;
             <Buscar/>
-                    {reservas.map(reserva =>(
+            <Typography className={classes.cantidad}>Total de reservas registradas: {reservas.length}</Typography>
+                {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
-                    <Card className = {classes.cartaReservas}>
+                    <Card id="lista" className = {classes.cartaReservas}>
                         <CardActionArea>
                             <CardContent key={reserva.id}>
                                 <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
@@ -301,7 +750,7 @@ const ReservasHoy = () => {
                     </Card>
                     </>
                     ))}
-            <Paginacion/>
+                <Paginacion lista={reservas}/>
             <Footer/>
         </>
     );

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Navbar from '../diseño/Navbar.js';
 import { makeStyles, Typography, Button, Select, InputLabel, Input, Chip, Checkbox,
 MenuItem, Grid, TextField, Fab, Card, CardActionArea, CardContent, InputAdornment } from '@material-ui/core';
@@ -21,6 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PaginacionContext from './../../context/paginacion/paginacionContext';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -255,6 +256,9 @@ const Estacionamientos = () => {
             nombre: "Playa de estacionamiento el Solar Grande"
         },
     ];
+    //context de paginación
+    const paginacionContext = useContext(PaginacionContext);
+    const { pagina, itemsPorPagina } = paginacionContext;
     return (
         <>
             <Navbar/>
@@ -265,7 +269,7 @@ const Estacionamientos = () => {
                 </Fab>
                 &nbsp;
                 <Typography className={classes.cantidad}>Total de playas: {playas.length}</Typography>
-                    {playas.map(playa =>(
+                    {playas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(playa =>(
                     <>
                     <Card className = {classes.cartaEncargados}>
                         <CardActionArea>
@@ -558,7 +562,7 @@ const Estacionamientos = () => {
                             <Button onClick={handleClickCerrarModalNuevoEncargado} className={classes.botonCancelar}>Cancelar</Button>
                         </DialogActions>
                     </Dialog>
-            <Paginacion/>
+            <Paginacion lista={playas}/>
             <Footer/>
         </>
     );

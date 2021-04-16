@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Navbar from '../diseño/Navbar.js';
-import { Card, CardContent, makeStyles, Typography, Avatar, Button } from '@material-ui/core';
+import { Card, CardContent, makeStyles, Typography, Button } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Footer from '../diseño/Footer.js';
 import { Rating } from '@material-ui/lab';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import Paginacion from './../diseño/Paginacion.js';
+import PaginacionContext from './../../context/paginacion/paginacionContext';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -111,10 +113,34 @@ const Comentarios = () => {
             votosPositivos: 21,
             votosNegativos: 8
         },
+        {
+            id: 5,
+            comentario: "Malo",
+            estrellas: 1,
+            votosPositivos: 11,
+            votosNegativos: 18
+        },
+        {
+            id: 6,
+            comentario: "Regular",
+            estrellas: 2,
+            votosPositivos: 11,
+            votosNegativos: 18
+        },
+        {
+            id: 7,
+            comentario: "Muy malo",
+            estrellas: 1,
+            votosPositivos: 3,
+            votosNegativos: 18
+        },
     ];
     const sum = comentarios
     .map(item => item.estrellas)
     .reduce((prev, curr) => prev + curr, 0);
+    //context de paginación
+    const paginacionContext = useContext(PaginacionContext);
+    const { pagina, itemsPorPagina } = paginacionContext;
     return (
         <>
             <Navbar/>
@@ -137,7 +163,7 @@ const Comentarios = () => {
 
             <Typography className={classes.cantidad}>de un total de: {comentarios.length} comentarios</Typography>
              &nbsp;
-                {comentarios.map(comentario =>(
+                {comentarios.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(comentario =>(
                 <>
                 <Card className = {classes.cartaComentarios}>
                     <CardContent  key={comentario.id}>
@@ -159,7 +185,7 @@ const Comentarios = () => {
                 </>
                 ))}
             &nbsp;
-            <Button className={classes.mostrarTodas}>Mostrar todas las valoraciones</Button>
+            <Paginacion lista={comentarios}/>
             <Footer/>
         </>
     );
