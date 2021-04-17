@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputBase } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@material-ui/icons/Search';
+
 const useStyles = makeStyles((theme)=>({
     search: {
         position: 'relative',
@@ -38,7 +39,22 @@ const useStyles = makeStyles((theme)=>({
     },
 }));
 
-const Buscar = () => {
+const Buscar = (lista) => {
+    //state para guardar la búsqueda
+    const [busqueda, guardarBusqueda] = useState('');
+    const buscarItem = (e) => {
+      e.preventDefault();
+      if(busqueda.trim() === '') return;
+    };
+    useEffect(() => {
+      const parametroBusqueda = busqueda.toLowerCase();
+      const filtro = lista.lista.filter(item => {
+        return (
+          item.nombreCompleto.toLowerCase().includes(parametroBusqueda)
+        )
+      })
+      console.log(filtro);
+    },[busqueda])
     const classes = useStyles();
     return (
         <div className={classes.search}>
@@ -48,6 +64,8 @@ const Buscar = () => {
         <InputBase
           autoFocus
           placeholder="Buscar..."
+          value={busqueda}
+          onChange={e => guardarBusqueda(e.target.value)}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,

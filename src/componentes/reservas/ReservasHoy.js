@@ -644,7 +644,7 @@ const ReservasHoy = () => {
             </ul>
             </Alert>
              &nbsp;
-            <Buscar/>
+            <Buscar lista={reservas}/>
             <Typography className={classes.cantidad}>Total de reservas registradas: {reservas.length}</Typography>
                 {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
