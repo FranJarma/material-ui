@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Typography } from '@material-ui/core';
@@ -39,30 +39,13 @@ const useStyles = makeStyles( theme => ({
 const Spinner = () => {
 
     const classes = useStyles();
-
-    const [ progreso, setearProgreso ] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setearProgreso((oldProgress) => {
-                if (oldProgress === 100) {
-                  return 0;
-                }
-                const diff = Math.random() * 10;
-                return Math.min(oldProgress + diff, 100);
-              });
-            }, 500);
-    return () => {
-        clearInterval(timer);
-        };
-    }, []);
           
     return ( 
         <div className={classes.root}>
             <img src={logo} alt="" className={classes.logo}></img>
             &nbsp;
             <Typography className={classes.subtituloCarta}>Cargando... Espere por favor</Typography>
-            <LinearProgress variant="determinate" value={progreso} />
+            <LinearProgress variant="indeterminate"/>
         </div>
      );
 }

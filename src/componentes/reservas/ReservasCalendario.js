@@ -2,7 +2,6 @@ import React, {useState, useContext} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles,
 Typography, Card, CardActionArea, CardContent, Avatar, Button } from '@material-ui/core';
-import Buscar from './../diseño/Buscar.js';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import {
@@ -10,6 +9,9 @@ import {
 } from '@material-ui/pickers';
 import Footer from '../diseño/Footer.js';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
+
+import SpinnerContext from '../../context/spinner/spinnerContext.js';
+import Spinner from '../diseño/Spinner.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -129,10 +131,13 @@ const ReservasCalendario = () => {
             lugar: "1"
         },
     ];
-    //context de paginación
+    //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
+    const spinnerContext = useContext(SpinnerContext);
+    const { cargando } = spinnerContext;
     return (
+        (!cargando ? 
         <>  
             <Navbar/>
             <Typography className={classes.titulo}>Calendario de reservas</Typography>
@@ -158,7 +163,6 @@ const ReservasCalendario = () => {
             </form>
             &nbsp;
             &nbsp;
-            <Buscar/>
                 <Typography className={classes.cantidad}>Total de reservas registradas: {reservas.length}</Typography>
                     {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
@@ -213,6 +217,7 @@ const ReservasCalendario = () => {
                 <Paginacion lista={reservas}/>
             <Footer/>
         </>
+    : <Spinner></Spinner>)
     );
 }
  

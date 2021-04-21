@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react';
 import Navbar from '../diseño/Navbar.js';
 import { makeStyles, Typography, Button, Select, Avatar, MenuItem, Grid, TextField, Fab, Card, CardActionArea, CardContent } from '@material-ui/core';
-import Buscar from '../diseño/Buscar.js';
 import Paginacion from '../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -14,6 +13,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
+
+import SpinnerContext from '../../context/spinner/spinnerContext.js';
+import Spinner from '../diseño/Spinner.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -221,11 +223,14 @@ const Encargados = () => {
             nombre: "Playa de estacionamiento el Solar Grande"
         },
     ];
-    //context de paginación
+    //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
+    const spinnerContext = useContext(SpinnerContext);
+    const { cargando } = spinnerContext;
 
     return (
+        (!cargando ? 
         <>
             <Navbar/>
             <Typography className={classes.titulo}>Administración de encargados de estacionamientos</Typography>
@@ -346,6 +351,7 @@ const Encargados = () => {
             <Paginacion lista={encargados}/>
             <Footer/>
         </>
+    : <Spinner></Spinner>)
     );
 }
  

@@ -12,6 +12,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import logo from "./../../imagenes/logo.png";
 import Aside from "./Aside.js";
 import { Link } from 'react-router-dom';
+import Buscar from './Buscar';
 
 const anchoNavbarPx = 300;
 
@@ -61,20 +62,50 @@ const useStyles = makeStyles(theme => ({
         marginRight: 'auto',
         color: "#000000"
     },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        flexGrow: 1,
+        paddingLeft: 20,
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: "auto",
+            maxWidth: "35%"
+        },
+      },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'inherit',
+        fontSize: 20,
+        fontFamily: "Roboto Condensed, sans-serif",
+      },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('xs')]: {
+            width: '20ch',
+        },
+    },
 }));
 
     const Navbar = () => {
         const classes = useStyles();
         const theme = useTheme();
-
         //state para controlar cuando se abre y cierra el navbar
         const [abierto, guardarAbierto] = useState(false);
-
         //para que la pantalla sea responsiva
         const handleAbrirNavbar = () => {
             guardarAbierto(!abierto)
         }
-
         return (
             <div className={classes.root}>
             <CssBaseline />
@@ -89,9 +120,10 @@ const useStyles = makeStyles(theme => ({
                 >
                     <MenuIcon />
                 </IconButton>
-                <Link to="/home">
+                <Link to="/reservas-del-dia">
                     <img src={logo} alt="" className={classes.logo} />
                 </Link>
+                <Buscar/>
                 </Toolbar>
             </AppBar>
             

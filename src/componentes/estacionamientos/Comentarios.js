@@ -8,6 +8,8 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import Paginacion from './../diseño/Paginacion.js';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
+import Spinner from '../diseño/Spinner.js';
+import SpinnerContext from '../../context/spinner/spinnerContext.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -138,10 +140,13 @@ const Comentarios = () => {
     const sum = comentarios
     .map(item => item.estrellas)
     .reduce((prev, curr) => prev + curr, 0);
-    //context de paginación
+    //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
+    const spinnerContext = useContext(SpinnerContext);
+    const { cargando } = spinnerContext;
     return (
+        (!cargando ? 
         <>
             <Navbar/>
             <Typography className={classes.titulo}>Comentarios y valoraciones</Typography>
@@ -188,6 +193,7 @@ const Comentarios = () => {
             <Paginacion lista={comentarios}/>
             <Footer/>
         </>
+    : <Spinner></Spinner>)
     );
 }
  

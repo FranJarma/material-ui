@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react';
-import Navbar from './../diseño/Navbar.js';
+import React, {useContext, useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
+import Navbar from '../diseño/Navbar.js';
 import { makeStyles, Typography, Avatar, Button, Card, CardContent } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Alert from '@material-ui/lab/Alert';
-import Paginacion from './../diseño/Paginacion.js';
+import Paginacion from '../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Footer from '../diseño/Footer.js';
@@ -15,8 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-import PaginacionContext from './../../context/paginacion/paginacionContext';
+import PaginacionContext from '../../context/paginacion/paginacionContext';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
 import Spinner from '../diseño/Spinner.js';
 
@@ -137,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ReservasHoy = () => {
+const Buscar = () => {
     const classes = useStyles();
     //state para la hora de ingreso y salida
     const [horaIngreso, setearHoraIngreso] = useState(new Date());
@@ -163,6 +163,7 @@ const ReservasHoy = () => {
     const handleClickCerrarModalConcluir = () => {
         setAbrirModalConcluir(false);
     };
+
     const reservas = [
         {
             id: 0,
@@ -630,11 +631,26 @@ const ReservasHoy = () => {
             lugar: "1"
         }
     ];
+    //state para guardar los registros filtrados
+    const [resultado, guardarResultado] = useState([]);
     //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
+    const history = useHistory();
+    const search = history.location.search;
+    const parametroBusqueda = search.split('=')[1];
+
+    useEffect(()=>{
+        const reservasFiltradas = reservas.filter(reserva => {
+            return (
+                reserva.nombreCompleto.toLowerCase().includes(parametroBusqueda) ||
+                reserva.patente.toLowerCase().includes(parametroBusqueda)
+            )
+        })
+        guardarResultado(reservasFiltradas);
+    },[guardarResultado]);
     return (
         (!cargando ? 
         <>
@@ -649,8 +665,8 @@ const ReservasHoy = () => {
             </ul>
             </Alert>
              &nbsp;
-            <Typography className={classes.cantidad}>Total de reservas registradas: {reservas.length}</Typography>
-                {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
+            <Typography className={classes.cantidad}>Total de reservas encontradas: {resultado.length}</Typography>
+                {resultado.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
                     <Card id="lista" className = {classes.cartaReservas}>
                         <CardActionArea>
@@ -754,11 +770,10 @@ const ReservasHoy = () => {
                     </Card>
                     </>
                     ))}
-                <Paginacion lista={reservas}/>
+                {resultado.length > 0 ? <Paginacion lista={resultado}/>: ""}
             <Footer/>
         </>
-        : <Spinner></Spinner>)
+    : <Spinner></Spinner>)
     );
 }
- 
-export default ReservasHoy;
+export default Buscar;

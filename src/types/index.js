@@ -1,1 +1,5 @@
 export const SETEAR_PAGINA = 'SETEAR_PAGINA';
+
+export const MOSTRAR_SPINNER = 'MOSTRAR_SPINNER';
+
+export const OCULTAR_SPINNER = 'OCULTAR_SPINNER';

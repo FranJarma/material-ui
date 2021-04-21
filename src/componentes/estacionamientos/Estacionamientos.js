@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import Navbar from '../diseño/Navbar.js';
 import { makeStyles, Typography, Button, Select, InputLabel, Input, Chip, Checkbox,
 MenuItem, Grid, TextField, Fab, Card, CardActionArea, CardContent, InputAdornment } from '@material-ui/core';
-import Buscar from '../diseño/Buscar.js';
 import Paginacion from '../diseño/Paginacion.js';
 import CheckIcon from '@material-ui/icons/Check';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
@@ -22,6 +21,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
+import SpinnerContext from '../../context/spinner/spinnerContext.js';
+import Spinner from '../diseño/Spinner.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -256,10 +257,14 @@ const Estacionamientos = () => {
             nombre: "Playa de estacionamiento el Solar Grande"
         },
     ];
-    //context de paginación
+    //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
+    const spinnerContext = useContext(SpinnerContext);
+    const { cargando } = spinnerContext;
+
     return (
+        (!cargando ? 
         <>
             <Navbar/>
             <Typography className={classes.titulo}>Administración de playas de estacionamientos</Typography>
@@ -565,6 +570,7 @@ const Estacionamientos = () => {
             <Paginacion lista={playas}/>
             <Footer/>
         </>
+    : <Spinner></Spinner>)
     );
 }
  

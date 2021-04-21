@@ -14,6 +14,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
+import SpinnerContext from '../../context/spinner/spinnerContext.js';
+import Spinner from '../diseño/Spinner.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -166,11 +168,13 @@ const Lugares = () => {
             ocupado: 0
         },
     ];
-    //context de paginación
+    //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
-    console.log(lugares)
+    const spinnerContext = useContext(SpinnerContext);
+    const { cargando } = spinnerContext;
     return (
+        (!cargando ? 
         <>
             <Navbar/>
             <Typography className={classes.titulo}>Administrar lugares de mi estacionamiento</Typography>
@@ -238,6 +242,7 @@ const Lugares = () => {
             <Paginacion lista={lugares}/>
             <Footer/>
         </>
+    : <Spinner></Spinner>)
     );
 }
  

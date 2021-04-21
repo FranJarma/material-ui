@@ -2,7 +2,6 @@
 import Login from './componentes/auth/Login.js';
 import Registrar from './componentes/auth/Registrar.js';
 import RecuperarContraseña from './componentes/auth/RecuperarContraseña.js';
-import Spinner from './componentes/diseño/Spinner.js';
 import ReservasHoy from './componentes/reservas/ReservasHoy.js';
 import ReservasCalendario from './componentes/reservas/ReservasCalendario.js';
 import CambiarFechaReserva from './componentes/reservas/CambiarFechaReserva.js';
@@ -22,12 +21,15 @@ import Lugares from './componentes/estacionamientos/Lugares.js';
 import Encargados from './componentes/encargados/Encargados.js';
 import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
 import PaginacionState from './context/paginacion/paginacionState';
+import Buscar from './componentes/busqueda/Buscar.js';
+import SpinnerState from './context/spinner/spinnerState.js';
 
 
 function App() {
   return (
     <>
     <PaginacionState>
+      <SpinnerState>
       <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
         <Router>
           <Switch>
@@ -36,8 +38,6 @@ function App() {
             <Route exact path="/nueva-cuenta" component={Registrar}>
             </Route>
             <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
-            </Route>
-            <Route exact path="/spinner">
             </Route>
             <Route exact path="/reservas-del-dia" component={ReservasHoy}>
             </Route>
@@ -63,9 +63,12 @@ function App() {
             </Route>
             <Route exact path="/estacionamientos" component={Estacionamientos}>
             </Route>
+            <Route exact path="/buscar" component={Buscar}>
+            </Route>
           </Switch>
         </Router>
       </MuiPickersUtilsProvider>
+      </SpinnerState>
     </PaginacionState>
     </>
   );
