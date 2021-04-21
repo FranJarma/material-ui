@@ -6,7 +6,7 @@ import { SETEAR_PAGINA } from './../../types/index';
 const PaginacionState = (props) => {
     const initialState = {
         pagina: 1,
-        itemsPorPagina: 5
+        itemsPorPagina: 6
     };
 
 const [state, dispatch] = useReducer(PaginacionReducer, initialState);

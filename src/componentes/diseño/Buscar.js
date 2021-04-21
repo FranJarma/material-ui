@@ -1,41 +1,25 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { makeStyles, InputBase } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles(theme => ({
-  search: {
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      flexGrow: 1,
-      paddingLeft: 20,
-      [theme.breakpoints.up('lg')]: {
-          marginLeft: "auto",
-          maxWidth: "35%"
-      },
-    },
-  searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+  root: {
+    marginLeft: "auto",
+    display: 'block',
+    alignItems: 'center',
   },
-  inputRoot: {
-      color: 'inherit',
-      fontSize: 20,
-      fontFamily: "Roboto Condensed, sans-serif",
-    },
-  inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('xs')]: {
-          width: '20ch',
-      },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+    fontFamily: "Roboto Condensed, sans-serif",
+    fontSize: 18
+  },
+  iconButton: {
+    padding: 10,
   },
 }));
 
@@ -54,23 +38,17 @@ const Buscar = () => {
   }
     return (
       <>
-      <form onSubmit={buscarReservas}>
-          <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                  <SearchIcon />
-              </div>
-              <InputBase
-              autoFocus
-              placeholder="Buscar reservas..."
-              onChange={e => guardarBusqueda(e.target.value)}
-              classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              />
-          </div>
-        </form>
+        <Paper component="form" onSubmit={buscarReservas} className={classes.root}>
+        <InputBase
+          autoFocus
+          className={classes.input}
+          placeholder="Buscar reservas..."
+          onChange={e => guardarBusqueda(e.target.value)}
+        />
+        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+          <SearchIcon />
+        </IconButton>
+      </Paper>
       </>
     )
 }

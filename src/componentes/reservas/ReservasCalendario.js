@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles,
-Typography, Card, CardActionArea, CardContent, Avatar, Button } from '@material-ui/core';
+Typography, Card, CardActionArea, CardContent, Avatar, Button, Grid } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import {
@@ -164,56 +164,60 @@ const ReservasCalendario = () => {
             &nbsp;
             &nbsp;
                 <Typography className={classes.cantidad}>Total de reservas registradas: {reservas.length}</Typography>
+                    <Grid container>
                     {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
-                    <Card className = {classes.cartaReservas}>
-                        <CardActionArea>
-                            <CardContent key={reserva.id}>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Avatar className={classes.avatar}>{reserva.avatar}</Avatar>
-                                    <Typography className={classes.nombreCompleto}>{reserva.nombreCompleto}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Codigo: </Typography>
-                                    <Typography className={classes.campos}>{reserva.codigo}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Lugar: </Typography>
-                                    <Typography className={classes.campos}>{reserva.lugar}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Marca del vehículo: </Typography>
-                                    <Typography className={classes.campos}>{reserva.marca}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Patente del vehículo:</Typography>
-                                    <Typography className={classes.campos}>{reserva.patente}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Tipo de vehículo:</Typography>
-                                    <Typography className={classes.campos}>{reserva.tipo}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Precio:</Typography>
-                                    <Typography className={classes.campos}>{reserva.precio}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Hora de Ingreso: </Typography>
-                                    <Typography className={classes.campos}>{reserva.horaIngreso}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Hora de Salida: </Typography>
-                                    <Typography className={classes.campos}>{reserva.horaSalida}</Typography>
-                                </div>
-                                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                    <Typography className={classes.camposTitulos}>Observaciones: </Typography>
-                                    <Typography className={classes.campos}>{reserva.observaciones}</Typography>
-                                </div>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
+                    <Grid item xs={12} lg={4}>
+                        <Card className = {classes.cartaReservas}>
+                            <CardActionArea>
+                                <CardContent key={reserva.id}>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Avatar className={classes.avatar}>{reserva.avatar}</Avatar>
+                                        <Typography className={classes.nombreCompleto}>{reserva.nombreCompleto}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Codigo: </Typography>
+                                        <Typography className={classes.campos}>{reserva.codigo}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Lugar: </Typography>
+                                        <Typography className={classes.campos}>{reserva.lugar}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Marca del vehículo: </Typography>
+                                        <Typography className={classes.campos}>{reserva.marca}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Patente del vehículo:</Typography>
+                                        <Typography className={classes.campos}>{reserva.patente}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Tipo de vehículo:</Typography>
+                                        <Typography className={classes.campos}>{reserva.tipo}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Precio:</Typography>
+                                        <Typography className={classes.campos}>{reserva.precio}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Hora de Ingreso: </Typography>
+                                        <Typography className={classes.campos}>{reserva.horaIngreso}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Hora de Salida: </Typography>
+                                        <Typography className={classes.campos}>{reserva.horaSalida}</Typography>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <Typography className={classes.camposTitulos}>Observaciones: </Typography>
+                                        <Typography className={classes.campos}>{reserva.observaciones}</Typography>
+                                    </div>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
                     </>
                     ))}
+                </Grid>
                 <Paginacion lista={reservas}/>
             <Footer/>
         </>

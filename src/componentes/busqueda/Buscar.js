@@ -639,16 +639,16 @@ const Buscar = () => {
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
     const history = useHistory();
-    const search = history.location.search;
-    const parametroBusqueda = search.split('=')[1];
 
     useEffect(()=>{
+        const search = history.location.search;
+        const parametroBusqueda = search.split('=')[1];
         const reservasFiltradas = reservas.filter(reserva => {
             return (
                 reserva.nombreCompleto.toLowerCase().includes(parametroBusqueda) ||
                 reserva.patente.toLowerCase().includes(parametroBusqueda)
             )
-        })
+        });
         guardarResultado(reservasFiltradas);
     },[guardarResultado]);
     return (
@@ -770,7 +770,7 @@ const Buscar = () => {
                     </Card>
                     </>
                     ))}
-                {resultado.length > 0 ? <Paginacion lista={resultado}/>: ""}
+                {resultado.length > 0 ? <Paginacion lista={resultado}/>: <div style={{paddingTop: "9rem"}}></div>}
             <Footer/>
         </>
     : <Spinner></Spinner>)

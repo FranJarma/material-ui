@@ -32,7 +32,6 @@ const Paginacion = (lista) => {
   }
   return (
       <>
-      <Divider/>
       <Box display="flex" justifyContent="center">
           <Pagination
             className={classes.paginacion}
@@ -40,7 +39,7 @@ const Paginacion = (lista) => {
             count={numeroDePaginas}
             page={pagina}
             defaultPage={1}
-            size="medium"
+            size="large"
             showFirstButton
             showLastButton/>
       </Box>

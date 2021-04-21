@@ -43,15 +43,13 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3),
     },
     logo: {
-        [theme.breakpoints.up('xs')]:{
-            width: 150,
-            paddingRight: "1rem",
-            marginTop:"0.5rem"
-
+        [theme.breakpoints.down('xs')]:{
+            display: "none"
         },
         [theme.breakpoints.up('sm')]:{
             width: 180,
-            marginTop:"0.5rem"
+            marginTop:"0.5rem",
+            paddingRight: "1.5rem",
         },
         [theme.breakpoints.up('lg')]:{
             width: 200,
@@ -61,40 +59,7 @@ const useStyles = makeStyles(theme => ({
     cerrarMenuBoton: {
         marginRight: 'auto',
         color: "#000000"
-    },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        flexGrow: 1,
-        paddingLeft: 20,
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: "auto",
-            maxWidth: "35%"
-        },
-      },
-    searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputRoot: {
-        color: 'inherit',
-        fontSize: 20,
-        fontFamily: "Roboto Condensed, sans-serif",
-      },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('xs')]: {
-            width: '20ch',
-        },
-    },
+    }
 }));
 
     const Navbar = () => {
