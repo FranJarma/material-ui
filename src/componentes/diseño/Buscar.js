@@ -10,7 +10,13 @@ import Spinner from './Spinner';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginLeft: "auto",
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: "auto",
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: 0,
+      width: "100%"
+    },
     display: 'block',
     alignItems: 'center',
   },
@@ -21,7 +27,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: 18
   },
   iconButton: {
-    padding: 10,
+    padding: 5,
+    float:"right"
   },
 }));
 
@@ -38,7 +45,7 @@ const Buscar = () => {
       if(busqueda.trim() === '')  return ;
       history.push({
           pathname: "/buscar",
-          search: `?q=${busqueda}`
+          search: `?q=${busqueda.toLowerCase()}`
       });
   }
     return (
@@ -49,8 +56,7 @@ const Buscar = () => {
           autoFocus
           className={classes.input}
           placeholder="Buscar reservas..."
-          inputProps={{style: {textTransform: 'lowercase'}}}
-          onChange={e => guardarBusqueda(e.target.value.toLowerCase())}
+          onChange={e => guardarBusqueda(e.target.value)}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
           <SearchIcon />
