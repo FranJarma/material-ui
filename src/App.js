@@ -21,7 +21,7 @@ import Lugares from './componentes/estacionamientos/Lugares.js';
 import Encargados from './componentes/encargados/Encargados.js';
 import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
 import PaginacionState from './context/paginacion/paginacionState';
-import Buscar from './componentes/busqueda/Buscar.js';
+import BuscarReserva from './componentes/reservas/BuscarReserva.js';
 import SpinnerState from './context/spinner/spinnerState.js';
 
 
@@ -63,7 +63,7 @@ function App() {
             </Route>
             <Route exact path="/estacionamientos" component={Estacionamientos}>
             </Route>
-            <Route exact path="/buscar" component={Buscar}>
+            <Route exact path="/buscar" component={BuscarReserva}>
             </Route>
           </Switch>
         </Router>
