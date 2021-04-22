@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
 import {Link} from 'react-router-dom';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import SpinnerContext from '../../context/spinner/spinnerContext';
+import Spinner from '../diseño/Spinner';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -94,7 +96,10 @@ const useStyles = makeStyles( theme => ({
 
 const Login = () => {
     const classes = useStyles();
+    const spinnerContext = useContext(SpinnerContext);
+    const { cargando, mostrarSpinner } = spinnerContext;
     return ( 
+    (!cargando ? 
     <>
         <div>
             <img src={logo} alt="" className={classes.logo}></img>
@@ -133,6 +138,7 @@ const Login = () => {
                     <Button
                         className={classes.botonIniciarSesion}
                         variant="contained"
+                        onClick={mostrarSpinner}
                     >Iniciar sesión
                     </Button>
                     </Link>
@@ -150,7 +156,8 @@ const Login = () => {
             </form>
         </Card>
     </>
-        );
+    : <Spinner></Spinner>)
+    );
 }
  
 export default Login;

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
+import SpinnerContext from './../../context/spinner/spinnerContext';
+import Spinner from './Spinner';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,9 +28,12 @@ const useStyles = makeStyles(theme => ({
 const Buscar = () => {
   const classes = useStyles();
   const history = useHistory();
+  const spinnerContext = useContext(SpinnerContext);
+  const { cargando, mostrarSpinner } = spinnerContext;
   //state para la búsqueda
   const [busqueda, guardarBusqueda] = useState('');
   const buscarReservas = e => {
+      mostrarSpinner();
       e.preventDefault();
       if(busqueda.trim() === '')  return ;
       history.push({
@@ -37,6 +42,7 @@ const Buscar = () => {
       });
   }
     return (
+      (!cargando ? 
       <>
         <Paper component="form" onSubmit={buscarReservas} className={classes.root}>
         <InputBase
@@ -50,6 +56,7 @@ const Buscar = () => {
         </IconButton>
       </Paper>
       </>
+      : <Spinner></Spinner>)
     )
 }
  

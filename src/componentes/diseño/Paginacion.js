@@ -1,4 +1,4 @@
-import { Divider, Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import Pagination from "@material-ui/lab/Pagination";
 import React, {useState, useContext} from 'react';
 import PaginacionContext from '../../context/paginacion/paginacionContext';

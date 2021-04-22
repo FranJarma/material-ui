@@ -641,6 +641,7 @@ const Buscar = () => {
     const history = useHistory();
 
     useEffect(()=>{
+        guardarResultado(reservas);
         const search = history.location.search;
         const parametroBusqueda = search.split('=')[1];
         const reservasFiltradas = reservas.filter(reserva => {
@@ -650,7 +651,7 @@ const Buscar = () => {
             )
         });
         guardarResultado(reservasFiltradas);
-    },[guardarResultado]);
+    },[guardarResultado, history.location.search]);
     return (
         (!cargando ? 
         <>
@@ -770,7 +771,7 @@ const Buscar = () => {
                     </Card>
                     </>
                     ))}
-                {resultado.length > 0 ? <Paginacion lista={resultado}/>: <div style={{paddingTop: "9rem"}}></div>}
+                {resultado.length > 0 ? <Paginacion lista={resultado}/>: ""}
             <Footer/>
         </>
     : <Spinner></Spinner>)
