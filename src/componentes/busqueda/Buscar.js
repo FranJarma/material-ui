@@ -666,7 +666,7 @@ const Buscar = () => {
             </ul>
             </Alert>
              &nbsp;
-            <Typography className={classes.cantidad}>Total de reservas encontradas: {resultado.length}</Typography>
+            <Typography className={classes.cantidad}>{resultado.length > 0 ? `Total de reservas encontradas: ${resultado.length}` : "No se encontraron reservas" }</Typography>
                 {resultado.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                     <>
                     <Card id="lista" className = {classes.cartaReservas}>
