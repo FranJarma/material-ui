@@ -49,7 +49,8 @@ const Buscar = () => {
           autoFocus
           className={classes.input}
           placeholder="Buscar reservas..."
-          onChange={e => guardarBusqueda(e.target.value)}
+          inputProps={{style: {textTransform: 'lowercase'}}}
+          onChange={e => guardarBusqueda(e.target.value.toLowerCase())}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
           <SearchIcon />
