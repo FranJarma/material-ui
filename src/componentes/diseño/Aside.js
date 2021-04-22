@@ -73,17 +73,17 @@ const Aside = () => {
     const [subMenuReservas, abrirSubMenuReservas ] = useState(false);
 
     const handleClickAbrirSubMenuReservas = () => {
+        abrirSubMenuMiEstacionamiento(false);
         abrirSubMenuReservas(!subMenuReservas);
     }
 
     const [subMenuMiEstacionamiento, abrirSubMenuMiEstacionamiento ] = useState(false);
 
     const handleClickAbrirSubMenuMiEstacionamiento = () => {
+        abrirSubMenuReservas(false);
         abrirSubMenuMiEstacionamiento(!subMenuMiEstacionamiento);
     }
 
-    
-    
     const menuPrincipal = (
         <>
             &nbsp;
