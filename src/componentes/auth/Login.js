@@ -113,7 +113,7 @@ const Login = () => {
     const history = useHistory();
     const spinnerContext = useContext(SpinnerContext);
     const alertaContext = useContext(AlertaContext);
-    const { cargando } = spinnerContext;
+    const { cargando, mostrarSpinner } = spinnerContext;
     const { alerta, mensaje, mostrarAlerta } = alertaContext;
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
@@ -133,6 +133,7 @@ const Login = () => {
     async function iniciarSesion() {
         try {
             await firebase.login(email, contraseña);
+            mostrarSpinner();
             history.push('/reservas-del-dia')
         }
         catch (error) {
@@ -154,7 +155,7 @@ const Login = () => {
             </CardContent>
             <Divider></Divider>
             &nbsp;
-            <form >
+            <form>
                 <Grid>
                     <Grid item>
                         <TextField
