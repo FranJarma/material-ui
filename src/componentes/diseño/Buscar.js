@@ -10,8 +10,14 @@ import Spinner from './Spinner';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: "auto",
+    color: '#FFFFFF',
+    [theme.breakpoints.only('lg')]: {
+      width: '30%',
+      marginLeft: '2rem'
+    },
+    [theme.breakpoints.only('sm')]: {
+      width: '50%',
+      marginLeft: '1rem'
     },
     [theme.breakpoints.down('xs')]: {
       marginLeft: 0,
@@ -22,12 +28,13 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     marginLeft: theme.spacing(1),
+    paddingTop: 5,
     flex: 1,
     fontFamily: "Roboto Condensed, sans-serif",
     fontSize: 18
   },
   iconButton: {
-    padding: 5,
+    padding: 10,
     float:"right"
   },
 }));
@@ -53,9 +60,8 @@ const Buscar = () => {
       <>
         <Paper component="form" onSubmit={buscarReservas} className={classes.root}>
         <InputBase
-          autoFocus
           className={classes.input}
-          placeholder="Buscar reservas..."
+          placeholder="Buscar reservas"
           onChange={e => guardarBusqueda(e.target.value)}
         />
         <IconButton type="submit" className={classes.iconButton} aria-label="search">
