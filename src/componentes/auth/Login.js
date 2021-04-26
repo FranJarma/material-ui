@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
-import { Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
+import { Button, Divider, Grid, makeStyles, Slide, TextField, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
-import {Link} from 'react-router-dom';
+import {Link, useHistory } from 'react-router-dom';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import Spinner from './../diseño/Spinner';
+
 import SpinnerContext from '../../context/spinner/spinnerContext';
-import Spinner from '../diseño/Spinner';
+import AlertaContext from '../../context/alerta/alertaContext';
+import firebase from './../../firebase';
+import traducirError from './../../firebase/errores';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -36,6 +41,19 @@ const useStyles = makeStyles( theme => ({
         textTransform: "uppercase",
         color: "#ffffff",
         fontSize: 30
+    },
+    alerta:{
+        position: "relative",
+        [theme.breakpoints.up('lg')]:{
+            margin:"auto",
+            width: 420,
+            marginTop: "1.5rem",
+        },
+        [theme.breakpoints.down('md')]:{
+            width: "100%",
+            marginTop: "2rem",
+        },
+        borderRadius: 5
     },
     subtituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
@@ -81,11 +99,7 @@ const useStyles = makeStyles( theme => ({
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
-        [theme.breakpoints.up('xs')]:{
-            width: 200,
-
-        },
-        [theme.breakpoints.up('sm')]:{
+        [theme.breakpoints.down('lg')]:{
             width: 200,
         },
         [theme.breakpoints.up('lg')]:{
@@ -96,8 +110,36 @@ const useStyles = makeStyles( theme => ({
 
 const Login = () => {
     const classes = useStyles();
+    const history = useHistory();
     const spinnerContext = useContext(SpinnerContext);
-    const { cargando, mostrarSpinner } = spinnerContext;
+    const alertaContext = useContext(AlertaContext);
+    const { cargando } = spinnerContext;
+    const { alerta, mensaje, mostrarAlerta } = alertaContext;
+    //state para manejar el contenido de los inputs
+    const [usuario, guardarUsuario] = useState({
+        email: '',
+        contraseña: ''
+    })
+    //guardamos el contenido del state en los inputs
+    const { email, contraseña } = usuario;
+    //evento onChange
+    const onChange = (e) => {
+        guardarUsuario({
+            ...usuario,
+            [e.target.name] : e.target.value
+        });
+    }
+    //función para iniciar sesión
+    async function iniciarSesion() {
+        try {
+            await firebase.login(email, contraseña);
+            history.push('/reservas-del-dia')
+        }
+        catch (error) {
+            console.log(error);
+            mostrarAlerta(traducirError(error.code));
+        }
+    }
     return ( 
     (!cargando ? 
     <>
@@ -112,15 +154,18 @@ const Login = () => {
             </CardContent>
             <Divider></Divider>
             &nbsp;
-            <form>
+            <form >
                 <Grid>
                     <Grid item>
                         <TextField
                             className = {classes.inputCarta}
                             type="text"
-                            variant="outlined"
-                            label="Usuario"
                             autoFocus
+                            value={email}
+                            name="email"
+                            variant="outlined"
+                            label="Email"
+                            onChange={onChange}
                         ></TextField>
                     </Grid>
                     &nbsp;
@@ -128,20 +173,21 @@ const Login = () => {
                         <TextField
                             className = {classes.inputCarta}
                             type="password"
+                            value={contraseña}
+                            name="contraseña"
                             variant="outlined"
                             label="Contraseña"
+                            onChange={onChange}
                         ></TextField>
                     </Grid>
                     &nbsp;
                     <Grid item>
-                    <Link to={'/reservas-del-dia'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonIniciarSesion}
                         variant="contained"
-                        onClick={mostrarSpinner}
+                        onClick={iniciarSesion}
                     >Iniciar sesión
                     </Button>
-                    </Link>
                     </Grid>
                     &nbsp;
                     <Grid item>
@@ -155,8 +201,15 @@ const Login = () => {
                 </Grid>
             </form>
         </Card>
+        {alerta ?
+        <>
+        <Slide direction="up" in={alerta} mountOnEnter unmountOnExit>
+            <Alert className={classes.alerta} severity="warning" variant="filled">{mensaje}</Alert>
+        </Slide>
+        </>
+        : ""}
     </>
-    : <Spinner></Spinner>)
+    :<Spinner></Spinner>)
     );
 }
  
