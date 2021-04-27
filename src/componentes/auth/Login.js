@@ -8,10 +8,10 @@ import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Spinner from './../diseño/Spinner';
 
 import SpinnerContext from '../../context/spinner/spinnerContext';
-import AlertaContext from '../../context/alerta/alertaContext';
 import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
 import swal from 'sweetalert2';
+import Footer from '../diseño/Footer';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -120,9 +120,28 @@ const Login = () => {
     //función para iniciar sesión
     async function iniciarSesion() {
         try {
-            await firebase.login(email, contraseña);
-            mostrarSpinner();
-            history.push('/reservas-del-dia')
+            if(email === '' || contraseña === '') {
+                const Toast = swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', swal.stopTimer)
+                      toast.addEventListener('mouseleave', swal.resumeTimer)
+                    }
+                  })
+                  Toast.fire({
+                    icon: 'warning',
+                    title: '<a style="font-family: Roboto Condensed">Complete todos los campos</a>'
+                  })
+            }
+            else {
+                await firebase.login(email, contraseña);
+                mostrarSpinner();
+                history.push('/reservas-del-dia')
+            }
         }
         catch (error) {
             console.log(error);
@@ -204,6 +223,7 @@ const Login = () => {
                 </Grid>
             </form>
         </Card>
+    <Footer></Footer>
     </>
     :<Spinner></Spinner>)
     );

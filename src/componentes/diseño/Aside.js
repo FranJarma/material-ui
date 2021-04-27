@@ -22,6 +22,8 @@ import GridOnIcon from '@material-ui/icons/GridOn';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link }  from 'react-router-dom';
 
+import firebase from './../../firebase';
+
 const esAdmin = false;
 
 const useStyles = makeStyles(theme => ({
@@ -88,7 +90,7 @@ const Aside = () => {
         <>
             &nbsp;
             <Typography className={classes.tituloAside}>
-                {!esAdmin ? "Playa de Estacionamiento del Convento" : "Administrador"}
+                {firebase.auth.currentUser.displayName}
             </Typography>
             &nbsp;
             <Divider></Divider>

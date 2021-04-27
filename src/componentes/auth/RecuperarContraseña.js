@@ -4,42 +4,42 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
 import { Link, useHistory } from 'react-router-dom';
-import Alert from '@material-ui/lab/Alert';
 import LockIcon from '@material-ui/icons/Lock';
 
 import firebase from './../../firebase';
-import AlertaContext from '../../context/alerta/alertaContext';
 import traducirError from './../../firebase/errores';
 import swal from 'sweetalert2';
+import Footer from '../diseño/Footer';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles( theme => ({
     cartaRecuperarContraseña: {
         [theme.breakpoints.up('lg')]:{
             margin:"auto",
             height: 300,
-            width: 450,
+            width: 600,
             marginTop: "2rem",
         },
         [theme.breakpoints.down('md')]:{
             margin: "auto",
             height: 300,
             width: 300,
-            marginTop: "3rem",
+            marginTop: "2.5rem",
         },
         boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
     },
     alerta:{
-        position: "relative",
+        borderRadius: 5,
         [theme.breakpoints.up('lg')]:{
-            width: 350,
-            marginLeft: "1rem",
-            marginTop: "14rem",
+            margin:"auto",
+            width: 600,
+            marginTop: "1rem",
         },
         [theme.breakpoints.down('md')]:{
+            margin: "auto",
             width: 300,
-            marginTop: "4rem",
+            marginTop: "2.5rem",
         },
-        borderRadius: 5
     },
     cartaEncabezado: {
         backgroundColor: "#4db6ac",
@@ -100,7 +100,6 @@ const useStyles = makeStyles( theme => ({
         display: "block",
         [theme.breakpoints.up('xs')]:{
             width: 200,
-
         },
         [theme.breakpoints.up('sm')]:{
             width: 200,
@@ -114,8 +113,6 @@ const useStyles = makeStyles( theme => ({
 const RecuperarContraseña = () => {
     const classes = useStyles();
     const history = useHistory();
-    const alertaContext = useContext(AlertaContext);
-    const { alerta, mensaje, mostrarAlerta } = alertaContext;
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
         email: '',
@@ -132,13 +129,32 @@ const RecuperarContraseña = () => {
     //función para recuperar contraseña
     async function recuperarContraseña () {
         try {
-            await firebase.recuperarContraseña(email);
-            swal.fire({
-                title: '<a style="font-family: Roboto Condensed">Operación completada</a>',
-                icon: 'success',
-                html: '<p style="font-family: Roboto Condensed">Se ha enviado un correo electrónico a la dirección ingresada. Por favor, siga los pasos para poder recuperar su contraseña.</p>'
-            })
-            history.push("/");
+            if(email === '') {
+                const Toast = swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', swal.stopTimer)
+                      toast.addEventListener('mouseleave', swal.resumeTimer)
+                    }
+                  })
+                  Toast.fire({
+                    icon: 'warning',
+                    title: '<a style="font-family: Roboto Condensed">Introduzca el correo electrónico</a>'
+                  })
+            }
+            else {
+                await firebase.recuperarContraseña(email);
+                swal.fire({
+                    title: '<a style="font-family: Roboto Condensed">Operación completada</a>',
+                    icon: 'success',
+                    html: '<p style="font-family: Roboto Condensed">Se ha enviado un correo electrónico a la dirección ingresada. Por favor, siga los pasos para poder recuperar su contraseña.</p>'
+                })
+                history.push("/");
+            }
         } catch (error) {
             const Toast = swal.mixin({
                 toast: true,
@@ -173,18 +189,18 @@ const RecuperarContraseña = () => {
             <form>
                 <Grid>
                     <>
-                        <Grid item>
-                            <TextField
-                                className = {classes.inputCarta}
-                                type="text"
-                                name="email"
-                                value={email}
-                                variant="outlined"
-                                label="Correo electrónico"
-                                onChange={onChange}
-                                autoFocus
-                            ></TextField>
-                        </Grid>
+                    <Grid item>
+                        <TextField
+                            className = {classes.inputCarta}
+                            type="text"
+                            name="email"
+                            value={email}
+                            variant="outlined"
+                            label="Correo electrónico"
+                            onChange={onChange}
+                            autoFocus
+                        ></TextField>
+                    </Grid>
                     &nbsp;
                     &nbsp;
                     <Grid item>
@@ -208,13 +224,10 @@ const RecuperarContraseña = () => {
                 </Grid>
             </form>
         </Card>
-        {alerta ?
-        <>
-        <Slide direction="right" in={alerta} mountOnEnter unmountOnExit>
-            <Alert className={classes.alerta} severity="warning" variant="filled">{mensaje}</Alert>
-        </Slide>
-        </>
-        : ""}
+        <Alert className={classes.alerta}>
+            Le enviaremos un email al correo electrónico ingresado con los pasos a seguir. Dicho email contiene un link de recuperación para que pueda modificar su contraseña.
+        </Alert>
+        <Footer></Footer>
     </>
         );
 }

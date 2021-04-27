@@ -13,6 +13,12 @@ const traducirError = (codigo) => {
         case 'auth/too-many-requests':
             mensaje = 'La cuenta ha sido deshabilitada temporalmente debido a varios intentos fallidos. Por favor, intente nuevamente en 5 minutos o reinicie su contraseña para continuar.'
             return mensaje;
+        case 'auth/weak-password':
+            mensaje = 'La contraseña es muy débil. Tiene que tener 6 caracteres como mínimo.'
+            return mensaje;
+        case 'auth/network-request-failed':
+            mensaje = 'Ha ocurrido un problema en la red.'
+            return mensaje;
         default: 
             return null;
     }
