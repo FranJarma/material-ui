@@ -15,6 +15,10 @@ class Firebase {
     async login(email, contraseña){
         return this.auth.signInWithEmailAndPassword(email, contraseña);
     }
+    //método para recuperar contraseña
+    async recuperarContraseña(email){
+        return this.auth.sendPasswordResetEmail(email);
+    }
 }
 const firebase = new Firebase();
 export default firebase;

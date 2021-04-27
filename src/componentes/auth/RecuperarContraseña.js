@@ -1,11 +1,16 @@
-import React from 'react';
-import { Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
+import { Button, Divider, Grid, makeStyles, Slide, TextField, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import LockIcon from '@material-ui/icons/Lock';
+
+import firebase from './../../firebase';
+import AlertaContext from '../../context/alerta/alertaContext';
+import traducirError from './../../firebase/errores';
+import swal from 'sweetalert2';
 
 const useStyles = makeStyles( theme => ({
     cartaRecuperarContraseña: {
@@ -24,12 +29,17 @@ const useStyles = makeStyles( theme => ({
         boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
     },
     alerta:{
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
-        color:"#ffffff",
-        backgroundColor: "#795548",
-        borderRadius: 0
+        position: "relative",
+        [theme.breakpoints.up('lg')]:{
+            width: 350,
+            marginLeft: "1rem",
+            marginTop: "14rem",
+        },
+        [theme.breakpoints.down('md')]:{
+            width: 300,
+            marginTop: "4rem",
+        },
+        borderRadius: 5
     },
     cartaEncabezado: {
         backgroundColor: "#4db6ac",
@@ -103,6 +113,50 @@ const useStyles = makeStyles( theme => ({
 
 const RecuperarContraseña = () => {
     const classes = useStyles();
+    const history = useHistory();
+    const alertaContext = useContext(AlertaContext);
+    const { alerta, mensaje, mostrarAlerta } = alertaContext;
+    //state para manejar el contenido de los inputs
+    const [usuario, guardarUsuario] = useState({
+        email: '',
+    })
+    //guardamos el contenido del state en los inputs
+    const { email } = usuario;
+    //evento onChange
+    const onChange = (e) => {
+        guardarUsuario({
+            ...usuario,
+            [e.target.name] : e.target.value
+        });
+    }
+    //función para recuperar contraseña
+    async function recuperarContraseña () {
+        try {
+            await firebase.recuperarContraseña(email);
+            swal.fire({
+                title: '<a style="font-family: Roboto Condensed">Operación completada</a>',
+                icon: 'success',
+                html: '<p style="font-family: Roboto Condensed">Se ha enviado un correo electrónico a la dirección ingresada. Por favor, siga los pasos para poder recuperar su contraseña.</p>'
+            })
+            history.push("/");
+        } catch (error) {
+            const Toast = swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', swal.stopTimer)
+                  toast.addEventListener('mouseleave', swal.resumeTimer)
+                }
+              })
+              Toast.fire({
+                icon: 'warning',
+                title: `<a style="font-family: Roboto Condensed">${traducirError(error.code)}</a>`
+              })
+        }
+    }
     return ( 
     <>
         <div>
@@ -118,25 +172,31 @@ const RecuperarContraseña = () => {
             &nbsp;
             <form>
                 <Grid>
-                    <Grid item>
-                        <TextField
-                            className = {classes.inputCarta}
-                            type="text"
-                            variant="outlined"
-                            label="Correo electrónico"
-                            autoFocus
-                        ></TextField>
-                    </Grid>
+                    <>
+                        <Grid item>
+                            <TextField
+                                className = {classes.inputCarta}
+                                type="text"
+                                name="email"
+                                value={email}
+                                variant="outlined"
+                                label="Correo electrónico"
+                                onChange={onChange}
+                                autoFocus
+                            ></TextField>
+                        </Grid>
                     &nbsp;
                     &nbsp;
                     <Grid item>
                     <Button
                         className={classes.botonRecuperarContraseña}
                         variant="contained"
+                        onClick={recuperarContraseña}
                     >Recuperar contraseña
                     </Button>
                     </Grid>
                     &nbsp;
+                    </>
                     <Grid item>
                     <Link to={'/'} style={{textDecoration: 'none'}}>
                     <Button
@@ -148,8 +208,13 @@ const RecuperarContraseña = () => {
                 </Grid>
             </form>
         </Card>
-        <Alert className={classes.alerta} severity="info" variant="filled">Le enviaremos información a su correo electrónico
-        para que pueda recuperar su contraseña</Alert>
+        {alerta ?
+        <>
+        <Slide direction="right" in={alerta} mountOnEnter unmountOnExit>
+            <Alert className={classes.alerta} severity="warning" variant="filled">{mensaje}</Alert>
+        </Slide>
+        </>
+        : ""}
     </>
         );
 }

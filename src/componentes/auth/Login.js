@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Divider, Grid, makeStyles, Slide, TextField, Typography } from '@material-ui/core';
+import { Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
@@ -11,7 +11,7 @@ import SpinnerContext from '../../context/spinner/spinnerContext';
 import AlertaContext from '../../context/alerta/alertaContext';
 import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
-import Alert from '@material-ui/lab/Alert';
+import swal from 'sweetalert2';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -41,19 +41,6 @@ const useStyles = makeStyles( theme => ({
         textTransform: "uppercase",
         color: "#ffffff",
         fontSize: 30
-    },
-    alerta:{
-        position: "relative",
-        [theme.breakpoints.up('lg')]:{
-            margin:"auto",
-            width: 420,
-            marginTop: "1.5rem",
-        },
-        [theme.breakpoints.down('md')]:{
-            width: "100%",
-            marginTop: "2rem",
-        },
-        borderRadius: 5
     },
     subtituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
@@ -106,15 +93,16 @@ const useStyles = makeStyles( theme => ({
             width: 250,
         },
     },
+    tituloSwal: {
+        fontFamily: "Roboto Condensed, sans-serif",
+    }
 }));
 
 const Login = () => {
     const classes = useStyles();
     const history = useHistory();
     const spinnerContext = useContext(SpinnerContext);
-    const alertaContext = useContext(AlertaContext);
     const { cargando, mostrarSpinner } = spinnerContext;
-    const { alerta, mensaje, mostrarAlerta } = alertaContext;
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
         email: '',
@@ -138,7 +126,21 @@ const Login = () => {
         }
         catch (error) {
             console.log(error);
-            mostrarAlerta(traducirError(error.code));
+            const Toast = swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', swal.stopTimer)
+                  toast.addEventListener('mouseleave', swal.resumeTimer)
+                }
+              })
+              Toast.fire({
+                icon: 'warning',
+                title: `<a style="font-family: Roboto Condensed">${traducirError(error.code)}</a>`
+              })
         }
     }
     return ( 
@@ -202,13 +204,6 @@ const Login = () => {
                 </Grid>
             </form>
         </Card>
-        {alerta ?
-        <>
-        <Slide direction="up" in={alerta} mountOnEnter unmountOnExit>
-            <Alert className={classes.alerta} severity="warning" variant="filled">{mensaje}</Alert>
-        </Slide>
-        </>
-        : ""}
     </>
     :<Spinner></Spinner>)
     );
