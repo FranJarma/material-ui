@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Typography } from '@material-ui/core';
 import logo from './../../imagenes/logo.png';
+import SpinnerContext from '../../context/spinner/spinnerContext';
 
 const useStyles = makeStyles( theme => ({
     root: {
@@ -39,12 +40,14 @@ const useStyles = makeStyles( theme => ({
 const Spinner = () => {
 
     const classes = useStyles();
-          
+    const spinnerContext = useContext(SpinnerContext);
+    const { mensaje } = spinnerContext;
+
     return ( 
         <div className={classes.root}>
             <img src={logo} alt="" className={classes.logo}></img>
             &nbsp;
-            <Typography className={classes.subtituloCarta}>Cargando... Espere por favor</Typography>
+            <Typography className={classes.subtituloCarta}>{mensaje}</Typography>
             <LinearProgress variant="indeterminate"/>
         </div>
      );

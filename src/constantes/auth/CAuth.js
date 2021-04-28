@@ -13,3 +13,7 @@ export const SE_HA_ENVIADO_CORREO = 'Se ha enviado un correo electrónico a la d
 
 //mensajes de alerts
 export const ENVIAREMOS_MAIL = 'Le enviaremos un email al correo electrónico ingresado con los pasos a seguir. Dicho email contiene un link de recuperación para que pueda modificar su contraseña.';
+
+//mensajes de spinners
+export const INICIANDO_SESION = 'Iniciando sesión...'
+export const CERRANDO_SESION = 'Cerrando sesión...'

@@ -10,7 +10,7 @@ class Firebase {
         }
         this.auth = app.auth();
     }
-
+// MÉTODOS PARA ADMINISTRACIÓN DE USUARIOS
     //método para registrar usuario
     async registrarUsuario(nombreCompleto, email, contraseña){
         const nuevoUsuario = await this.auth.createUserWithEmailAndPassword(email, contraseña);
@@ -30,6 +30,7 @@ class Firebase {
     async recuperarContraseña(email){
         return this.auth.sendPasswordResetEmail(email);
     }
+//MÉTODOS PARA ADMINISTRACIÓN DE RESERVAS
 }
 const firebase = new Firebase();
 export default firebase;

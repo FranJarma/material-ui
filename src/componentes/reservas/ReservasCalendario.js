@@ -218,7 +218,7 @@ const ReservasCalendario = () => {
                     </>
                     ))}
                 </Grid>
-                <Paginacion lista={reservas}/>
+                {reservas.length > 0 ? <Paginacion lista={reservas}/> : ""}
             <Footer/>
         </>
     : <Spinner></Spinner>)

@@ -11,4 +11,7 @@ export const NOMBRE_COMPLETO = 'Nombre completo';
 //mensajes de sweet alert y toast
 export const OPERACION_COMPLETADA = 'Operacion completada';
 
+//mensajes de spinner
+export const BUSCANDO = 'Buscando...';
+
 

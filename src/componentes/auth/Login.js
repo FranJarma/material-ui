@@ -128,7 +128,7 @@ const Login = () => {
             }
             else {
                 await firebase.login(email, contraseña);
-                mostrarSpinner();
+                mostrarSpinner(CAuth.INICIANDO_SESION);
                 history.push('/reservas-del-dia')
             }
         }

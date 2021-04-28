@@ -5,12 +5,14 @@ export default (state, action) => {
         case MOSTRAR_SPINNER:
             return {
                 ...state,
-                cargando: true
+                cargando: true,
+                mensaje: action.payload
             }
         case OCULTAR_SPINNER:
             return {
                 ...state,
-                cargando: false
+                cargando: false,
+                mensaje: ''
             }
         default:
             return state;

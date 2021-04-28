@@ -348,7 +348,7 @@ const Encargados = () => {
                             <Button onClick={handleClickCerrarModalNuevoEncargado} className={classes.botonCancelar}>Cancelar</Button>
                         </DialogActions>
                     </Dialog>
-            <Paginacion lista={encargados}/>
+                {encargados.length > 0 ? <Paginacion lista={encargados}/> : ""}
             <Footer/>
         </>
     : <Spinner></Spinner>)

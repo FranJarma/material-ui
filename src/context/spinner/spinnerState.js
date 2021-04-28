@@ -5,13 +5,15 @@ import { MOSTRAR_SPINNER, OCULTAR_SPINNER } from '../../constantes/context/conte
 
 const SpinnerState = (props) => {
     const initialState = {
-        cargando: false
+        cargando: false,
+        mensaje: ''
     };
 
 const [state, dispatch] = useReducer(SpinnerReducer, initialState);
-const mostrarSpinner = () => {
+const mostrarSpinner = (mensaje) => {
     dispatch({
         type: MOSTRAR_SPINNER,
+        payload: mensaje
     });
     setTimeout(()=>{
         dispatch({
@@ -23,6 +25,7 @@ return (
     <SpinnerContext.Provider
         value={{
             cargando: state.cargando,
+            mensaje: state.mensaje,
             mostrarSpinner
         }}
     >

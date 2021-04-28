@@ -27,6 +27,7 @@ import Toast from './Toast';
 import traducirError from './../../firebase/errores';
 
 import * as CAuth from './../../constantes/auth/CAuth';
+import SpinnerContext from '../../context/spinner/spinnerContext';
 
 const esAdmin = false;
 
@@ -94,10 +95,14 @@ const Aside = () => {
 
     const {usuario, firebase} = useContext(FirebaseContext);
 
+    const spinnerContext = useContext(SpinnerContext);
+    const { mostrarSpinner } = spinnerContext;
+
     //función para cerrar sesión
     async function cerrarSesion(){
         try {
             await firebase.cerrarSesion();
+            mostrarSpinner(CAuth.CERRANDO_SESION);
             history.push('/');
         }
         catch (error) {

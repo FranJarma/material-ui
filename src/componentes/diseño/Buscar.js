@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SpinnerContext from './../../context/spinner/spinnerContext';
 import Spinner from './Spinner';
 
+import * as CGeneral from './../../constantes/general/CGeneral';
+
 const useStyles = makeStyles(theme => ({
   root: {
     color: '#FFFFFF',
@@ -47,7 +49,7 @@ const Buscar = () => {
   //state para la búsqueda
   const [busqueda, guardarBusqueda] = useState('');
   const buscarReservas = e => {
-      mostrarSpinner();
+      mostrarSpinner(CGeneral.BUSCANDO);
       e.preventDefault();
       if(busqueda.trim() === '')  return ;
       history.push({

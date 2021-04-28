@@ -239,7 +239,7 @@ const Lugares = () => {
                     <Button onClick={handleClickCerrarModalNuevoLugar} className={classes.botonCancelar}>Cancelar</Button>
                 </DialogActions>
             </Dialog>
-            <Paginacion lista={lugares}/>
+            {lugares.length > 0 ? <Paginacion lista={lugares}/> : ""}
             <Footer/>
         </>
     : <Spinner></Spinner>)
