@@ -20,11 +20,13 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { Link }  from 'react-router-dom';
+import { Link, useHistory }  from 'react-router-dom';
 
-import firebase from './../../firebase';
 import {FirebaseContext} from './../../firebase';
-import useAutenticado from '../../hooks/useAutenticado';
+import Toast from './Toast';
+import traducirError from './../../firebase/errores';
+
+import * as CAuth from './../../constantes/auth/CAuth';
 
 const esAdmin = false;
 
@@ -73,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 
 const Aside = () => {
     const classes = useStyles();
-    //state para controlar los submenús
+    //states para controlar los submenús
     const [subMenuReservas, abrirSubMenuReservas ] = useState(false);
 
     const handleClickAbrirSubMenuReservas = () => {
@@ -88,8 +90,20 @@ const Aside = () => {
         abrirSubMenuMiEstacionamiento(!subMenuMiEstacionamiento);
     }
 
+    const history = useHistory();
+
     const {usuario, firebase} = useContext(FirebaseContext);
 
+    //función para cerrar sesión
+    async function cerrarSesion(){
+        try {
+            await firebase.cerrarSesion();
+            history.push('/');
+        }
+        catch (error) {
+            Toast(traducirError(error.code))
+        }
+    }
     const menuPrincipal = (
         <>
             &nbsp;
@@ -247,14 +261,11 @@ const Aside = () => {
             }
             <Divider></Divider>
             &nbsp;
-            <Link
-                to={'/'}
-                style={{textDecoration: 'none', textAlign: 'center'}}
-            >
             <Button
             startIcon={<ExitToAppIcon/>}
-            variant="outlined" className={classes.botonCerrarSesionNavbar}>Cerrar Sesión</Button>
-            </Link>
+            onClick={cerrarSesion}
+            variant="outlined" className={classes.botonCerrarSesionNavbar}>{CAuth.CERRAR_SESION}
+            </Button>
         </>
     );
     return ( menuPrincipal );

@@ -22,6 +22,10 @@ class Firebase {
     async login(email, contraseña){
         return this.auth.signInWithEmailAndPassword(email, contraseña);
     }
+    //método para cerrar sesión
+    async cerrarSesion(){
+        return this.auth.signOut();
+    }
     //método para recuperar contraseña
     async recuperarContraseña(email){
         return this.auth.sendPasswordResetEmail(email);

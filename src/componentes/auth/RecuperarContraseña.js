@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Button, Divider, Grid, makeStyles, Slide, TextField, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
@@ -8,7 +8,6 @@ import LockIcon from '@material-ui/icons/Lock';
 
 import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
-import swal from 'sweetalert2';
 import Footer from '../diseño/Footer';
 import Alert from '@material-ui/lab/Alert';
 

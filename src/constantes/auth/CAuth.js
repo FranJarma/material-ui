@@ -5,6 +5,7 @@ export const REGISTRAR_USUARIO = 'Registrar usuario';
 export const NUEVO_USUARIO = 'Nuevo usuario';
 export const DATOS_USUARIO = 'Ingrese datos del usuario';
 export const RECUPERAR_CONTRASEÑA = 'Recuperar contraseña';
+export const CERRAR_SESION = 'Cerrar Sesión';
 
 //mensajes de sweet alert y toast
 export const REGISTRO_EXITOSO = 'Se ha registrado el usuario correctamente';

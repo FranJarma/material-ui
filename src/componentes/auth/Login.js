@@ -6,7 +6,6 @@ import logo from './../../imagenes/logo.png';
 import {Link, useHistory } from 'react-router-dom';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Spinner from './../diseño/Spinner';
-import Swal from './../diseño/Swal';
 import Toast from './../diseño/Toast';
 import Footer from '../diseño/Footer';
 
@@ -137,6 +136,7 @@ const Login = () => {
             Toast(traducirError(error.code))
         }
     }
+    
     return ( 
     (!cargando ? 
     <>
