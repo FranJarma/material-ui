@@ -1,4 +1,4 @@
-import { MOSTRAR_SPINNER, OCULTAR_SPINNER } from "../../types";
+import { MOSTRAR_SPINNER, OCULTAR_SPINNER } from '../../constantes/context/context.js';
 
 export default (state, action) => {
     switch (action.type) {

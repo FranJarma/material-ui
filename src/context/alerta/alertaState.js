@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import AlertaContext from './alertaContext';
 import AlertaReducer from './alertaReducer';
-import { MOSTRAR_ALERTA, OCULTAR_ALERTA } from './../../types/index';
+import { MOSTRAR_ALERTA, OCULTAR_ALERTA } from '../../constantes/context/context.js';
 
 const SpinnerState = (props) => {
     const initialState = {

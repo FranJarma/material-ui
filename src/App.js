@@ -26,14 +26,20 @@ import SpinnerState from './context/spinner/spinnerState.js';
 import AlertaState from './context/alerta/alertaState.js';
 
 import firebase, {FirebaseContext} from '../src/firebase';
+import useAutenticado from './hooks/useAutenticado';
 
 function App() {
+  const usuario = useAutenticado();
+  console.log(usuario);
+
   return (
     <>
     <FirebaseContext.Provider
-    value={{
-      firebase
-    }}>
+      value={{
+        firebase,
+        usuario
+      }}
+    >
       <PaginacionState>
         <AlertaState>
           <SpinnerState>

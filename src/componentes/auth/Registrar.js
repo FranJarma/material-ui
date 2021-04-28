@@ -6,12 +6,15 @@ import logo from './../../imagenes/logo.png';
 import {Link, useHistory } from 'react-router-dom';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Spinner from './../diseño/Spinner';
+import Swal from '../diseño/Swal';
+import Footer from '../diseño/Footer';
+import Toast from '../diseño/Toast';
 
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
-import swal from 'sweetalert2';
-import Footer from '../diseño/Footer';
+import * as CGeneral from '../../constantes/general/CGeneral';
+import * as CAuth from '../../constantes/auth/CAuth';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -122,49 +125,16 @@ const Registrar = () => {
     async function registrarUsuario() {
         try {
             if(nombreCompleto === '' || email === '' || contraseña === ''){
-                const Toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', swal.stopTimer)
-                      toast.addEventListener('mouseleave', swal.resumeTimer)
-                    }
-                  })
-                  Toast.fire({
-                    icon: 'warning',
-                    title: '<a style="font-family: Roboto Condensed">Complete todos los campos</a>'
-                  })
+                Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
             else{
                 await firebase.registrarUsuario(nombreCompleto, email, contraseña);
-                swal.fire({
-                    title: '<a style="font-family: Roboto Condensed">Operación completada</a>',
-                    icon: 'success',
-                    html: '<p style="font-family: Roboto Condensed">Se ha registrado el usuario. Ahora puede iniciar sesión.</p>'
-                })
+                Swal(CGeneral.OPERACION_COMPLETADA, CAuth.REGISTRO_EXITOSO);
                 history.push('/')
             }
         }
         catch (error) {
-            console.log(error);
-            const Toast = swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', swal.stopTimer)
-                  toast.addEventListener('mouseleave', swal.resumeTimer)
-                }
-              })
-              Toast.fire({
-                icon: 'warning',
-                title: `<a style="font-family: Roboto Condensed">${traducirError(error.code)}</a>`
-              })
+            Toast(traducirError(error.code))
         }
     }
     return ( 
@@ -175,9 +145,9 @@ const Registrar = () => {
         </div>
         <Card className={classes.cartaLogin}>
             <CardContent className={classes.cartaEncabezado}>
-                <Typography className={classes.tituloCarta}>Nuevo usuario</Typography>
+                <Typography className={classes.tituloCarta}>{CAuth.NUEVO_USUARIO}</Typography>
                 <PersonAddIcon className={classes.icono}></PersonAddIcon>
-                <Typography className={classes.subtituloCarta}>Ingrese datos</Typography>
+                <Typography className={classes.subtituloCarta}>{CAuth.DATOS_USUARIO}</Typography>
             </CardContent>
             <Divider></Divider>
             &nbsp;
@@ -191,7 +161,7 @@ const Registrar = () => {
                             value={nombreCompleto}
                             name="nombreCompleto"
                             variant="outlined"
-                            label="Nombre completo"
+                            label={CGeneral.NOMBRE_COMPLETO}
                             onChange={onChange}
                         ></TextField>
                     </Grid>
@@ -203,7 +173,7 @@ const Registrar = () => {
                             value={email}
                             name="email"
                             variant="outlined"
-                            label="Email"
+                            label={CGeneral.EMAIL}
                             onChange={onChange}
                         ></TextField>
                     </Grid>
@@ -215,7 +185,7 @@ const Registrar = () => {
                             value={contraseña}
                             name="contraseña"
                             variant="outlined"
-                            label="Contraseña"
+                            label={CGeneral.CONTRASEÑA}
                             onChange={onChange}
                         ></TextField>
                     </Grid>
@@ -225,7 +195,7 @@ const Registrar = () => {
                         className={classes.botonRegistrarUsuario}
                         variant="contained"
                         onClick={registrarUsuario}
-                    >Registrar usuario
+                    >{CAuth.REGISTRAR_USUARIO}
                     </Button>
                     </Grid>
                     &nbsp;
@@ -233,7 +203,7 @@ const Registrar = () => {
                     <Link to={'/'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonVolver}
-                    >Volver
+                    >{CGeneral.VOLVER}
                     </Button>
                     </Link>
                     </Grid>

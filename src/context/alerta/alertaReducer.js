@@ -1,4 +1,4 @@
-import { MOSTRAR_ALERTA, OCULTAR_ALERTA } from "../../types";
+import { MOSTRAR_ALERTA, OCULTAR_ALERTA } from '../../constantes/context/context.js';
 
 export default (state, action) => {
     switch (action.type) {

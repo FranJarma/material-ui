@@ -1,4 +1,4 @@
-import { SETEAR_PAGINA } from "../../types";
+import { SETEAR_PAGINA } from '../../constantes/context/context.js';
 
 export default (state, action) => {
     switch (action.type) {

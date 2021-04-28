@@ -6,12 +6,16 @@ import logo from './../../imagenes/logo.png';
 import {Link, useHistory } from 'react-router-dom';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Spinner from './../diseño/Spinner';
+import Swal from './../diseño/Swal';
+import Toast from './../diseño/Toast';
+import Footer from '../diseño/Footer';
 
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
-import swal from 'sweetalert2';
-import Footer from '../diseño/Footer';
+
+import * as CGeneral from './../../constantes/general/CGeneral';
+import * as CAuth from './../../constantes/auth/CAuth';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -121,21 +125,7 @@ const Login = () => {
     async function iniciarSesion() {
         try {
             if(email === '' || contraseña === '') {
-                const Toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', swal.stopTimer)
-                      toast.addEventListener('mouseleave', swal.resumeTimer)
-                    }
-                  })
-                  Toast.fire({
-                    icon: 'warning',
-                    title: '<a style="font-family: Roboto Condensed">Complete todos los campos</a>'
-                  })
+                Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
             else {
                 await firebase.login(email, contraseña);
@@ -144,22 +134,7 @@ const Login = () => {
             }
         }
         catch (error) {
-            console.log(error);
-            const Toast = swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', swal.stopTimer)
-                  toast.addEventListener('mouseleave', swal.resumeTimer)
-                }
-              })
-              Toast.fire({
-                icon: 'warning',
-                title: `<a style="font-family: Roboto Condensed">${traducirError(error.code)}</a>`
-              })
+            Toast(traducirError(error.code))
         }
     }
     return ( 
@@ -170,9 +145,9 @@ const Login = () => {
         </div>
         <Card className={classes.cartaLogin}>
             <CardContent className={classes.cartaEncabezado}>
-                <Typography className={classes.tituloCarta}>Bienvenido</Typography>
+                <Typography className={classes.tituloCarta}>{CGeneral.BIENVENIDO}</Typography>
                 <VerifiedUserIcon className={classes.icono}></VerifiedUserIcon>
-                <Typography className={classes.subtituloCarta}>Ingrese sus datos para continuar</Typography>
+                <Typography className={classes.subtituloCarta}>{CGeneral.INGRESE_SUS_DATOS_PARA_CONTINUAR}</Typography>
             </CardContent>
             <Divider></Divider>
             &nbsp;
@@ -186,7 +161,7 @@ const Login = () => {
                             value={email}
                             name="email"
                             variant="outlined"
-                            label="Email"
+                            label={CGeneral.EMAIL}
                             onChange={onChange}
                         ></TextField>
                     </Grid>
@@ -198,7 +173,7 @@ const Login = () => {
                             value={contraseña}
                             name="contraseña"
                             variant="outlined"
-                            label="Contraseña"
+                            label={CGeneral.CONTRASEÑA}
                             onChange={onChange}
                         ></TextField>
                     </Grid>
@@ -208,7 +183,7 @@ const Login = () => {
                         className={classes.botonIniciarSesion}
                         variant="contained"
                         onClick={iniciarSesion}
-                    >Iniciar sesión
+                    >{CAuth.INICIAR_SESION}
                     </Button>
                     </Grid>
                     &nbsp;
@@ -216,7 +191,7 @@ const Login = () => {
                     <Link to={'/recuperar-contraseña'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonOlvideContraseña}
-                    >Olvidé mi contraseña
+                    >{CAuth.OLVIDE_MI_CONTRASEÑA}
                     </Button>
                     </Link>
                     </Grid>

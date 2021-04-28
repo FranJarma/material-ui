@@ -12,6 +12,11 @@ import swal from 'sweetalert2';
 import Footer from '../diseño/Footer';
 import Alert from '@material-ui/lab/Alert';
 
+import * as CGeneral from '../../constantes/general/CGeneral';
+import * as CAuth from '../../constantes/auth/CAuth';
+import Toast from '../diseño/Toast';
+import Swal from '../diseño/Swal';
+
 const useStyles = makeStyles( theme => ({
     cartaRecuperarContraseña: {
         [theme.breakpoints.up('lg')]:{
@@ -130,47 +135,15 @@ const RecuperarContraseña = () => {
     async function recuperarContraseña () {
         try {
             if(email === '') {
-                const Toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', swal.stopTimer)
-                      toast.addEventListener('mouseleave', swal.resumeTimer)
-                    }
-                  })
-                  Toast.fire({
-                    icon: 'warning',
-                    title: '<a style="font-family: Roboto Condensed">Introduzca el correo electrónico</a>'
-                  })
+                Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS)
             }
             else {
                 await firebase.recuperarContraseña(email);
-                swal.fire({
-                    title: '<a style="font-family: Roboto Condensed">Operación completada</a>',
-                    icon: 'success',
-                    html: '<p style="font-family: Roboto Condensed">Se ha enviado un correo electrónico a la dirección ingresada. Por favor, siga los pasos para poder recuperar su contraseña.</p>'
-                })
+                Swal(CGeneral.OPERACION_COMPLETADA, CAuth.SE_HA_ENVIADO_CORREO);
                 history.push("/");
             }
         } catch (error) {
-            const Toast = swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', swal.stopTimer)
-                  toast.addEventListener('mouseleave', swal.resumeTimer)
-                }
-              })
-              Toast.fire({
-                icon: 'warning',
-                title: `<a style="font-family: Roboto Condensed">${traducirError(error.code)}</a>`
-              })
+            Toast(traducirError(error.code));
         }
     }
     return ( 
@@ -180,9 +153,9 @@ const RecuperarContraseña = () => {
         </div>
         <Card className={classes.cartaRecuperarContraseña}>
             <CardContent className={classes.cartaEncabezado}>
-                <Typography className={classes.tituloCarta}>Olvidé mi contraseña</Typography>
+                <Typography className={classes.tituloCarta}>{CAuth.OLVIDE_MI_CONTRASEÑA}</Typography>
                 <LockIcon className={classes.icono}></LockIcon>
-                <Typography className={classes.subtituloCarta}>Ingrese su correo electrónico para continuar</Typography>
+                <Typography className={classes.subtituloCarta}>{CGeneral.INGRESE_EMAIL}</Typography>
             </CardContent>
             <Divider></Divider>
             &nbsp;
@@ -196,7 +169,7 @@ const RecuperarContraseña = () => {
                             name="email"
                             value={email}
                             variant="outlined"
-                            label="Correo electrónico"
+                            label={CGeneral.EMAIL}
                             onChange={onChange}
                             autoFocus
                         ></TextField>
@@ -208,7 +181,7 @@ const RecuperarContraseña = () => {
                         className={classes.botonRecuperarContraseña}
                         variant="contained"
                         onClick={recuperarContraseña}
-                    >Recuperar contraseña
+                    >{CAuth.RECUPERAR_CONTRASEÑA}
                     </Button>
                     </Grid>
                     &nbsp;
@@ -217,7 +190,7 @@ const RecuperarContraseña = () => {
                     <Link to={'/'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonVolver}
-                    >Volver a Login
+                    >{CGeneral.VOLVER}
                     </Button>
                     </Link>
                     </Grid>
@@ -225,7 +198,7 @@ const RecuperarContraseña = () => {
             </form>
         </Card>
         <Alert className={classes.alerta}>
-            Le enviaremos un email al correo electrónico ingresado con los pasos a seguir. Dicho email contiene un link de recuperación para que pueda modificar su contraseña.
+            {CAuth.ENVIAREMOS_MAIL}
         </Alert>
         <Footer></Footer>
     </>

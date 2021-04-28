@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CommuteIcon from '@material-ui/icons/Commute';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -23,6 +23,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link }  from 'react-router-dom';
 
 import firebase from './../../firebase';
+import {FirebaseContext} from './../../firebase';
+import useAutenticado from '../../hooks/useAutenticado';
 
 const esAdmin = false;
 
@@ -86,12 +88,16 @@ const Aside = () => {
         abrirSubMenuMiEstacionamiento(!subMenuMiEstacionamiento);
     }
 
+    const {usuario, firebase} = useContext(FirebaseContext);
+
     const menuPrincipal = (
         <>
             &nbsp;
+            {usuario ? 
             <Typography className={classes.tituloAside}>
-                {firebase.auth.currentUser.displayName}
+                {usuario.displayName}
             </Typography>
+            : ''}
             &nbsp;
             <Divider></Divider>
             {!esAdmin ?

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import PaginacionContext from './paginacionContext';
 import PaginacionReducer from './paginacionReducer';
-import { SETEAR_PAGINA } from './../../types/index';
+import { SETEAR_PAGINA } from '../../constantes/context/context.js';
 
 const PaginacionState = (props) => {
     const initialState = {

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import SpinnerContext from './spinnerContext';
 import SpinnerReducer from './spinnerReducer';
-import { MOSTRAR_SPINNER, OCULTAR_SPINNER } from './../../types/index';
+import { MOSTRAR_SPINNER, OCULTAR_SPINNER } from '../../constantes/context/context.js';
 
 const SpinnerState = (props) => {
     const initialState = {
