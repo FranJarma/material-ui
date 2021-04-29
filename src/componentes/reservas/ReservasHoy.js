@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles, Typography, Grid } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -7,8 +7,11 @@ import Footer from '../diseño/Footer.js';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
 import Spinner from '../diseño/Spinner.js';
+import { FirebaseContext } from '../../firebase';
+
 import * as CReservas from './../../constantes/reservas/CReservas';
 import Reserva from './Reserva';
+import Toast from './../diseño/Toast';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -36,36 +39,35 @@ const useStyles = makeStyles((theme) => ({
 
 const ReservasHoy = () => {
     const classes = useStyles();
-    const reservas = [
-        {
-            id: 0,
-            codigo: "A156-125Q-X123-WQAS2",
-            avatar: "FJ",
-            nombreCompleto: "Francisco Jarma",
-            patente: "LZY450",
-            marca: "Volkswagen",
-            tipo: "Auto",
-            precio: "$100",
-            horaIngreso: "",
-            horaSalida: "",
-            observaciones: "",
-            lugar: "11"
-        },
-        {
-            id: 1,
-            codigo: "B1S5-A53ZW-DJ65-Q286",
-            avatar: "JL",
-            nombreCompleto: "Juan Lopez",
-            patente: "ASD123",
-            marca: "Peugeot",
-            tipo: "Auto",
-            precio: "$100",
-            horaIngreso: "19:20",
-            horaSalida: "21:25",
-            observaciones: "",
-            lugar: "1"
-        },
-    ];
+    const fechaCompleta = new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear();
+    //state para guardar reservas
+    const [reservasDelDia, guardarReservasDelDia] = useState([]);
+    const {firebase} = useContext(FirebaseContext);
+    //use effect para que constantemente traiga las reservas
+    useEffect (() => {
+        //las reservas que se tienen que traer son las del día de hoy y filtradas por el usuario logueado
+        const obtenerReservasDelDia = () => {
+            try {
+                firebase.db.collection('reservas').orderBy('horaIngreso', 'desc')
+                .where('fechaCreacion','==',fechaCompleta)
+                .where('horaSalida', '==', "")
+                .onSnapshot(manejarSnapshot); 
+            } catch (error) {
+                Toast(error);
+            }
+        }
+        obtenerReservasDelDia();
+    },[])
+    function manejarSnapshot(snapshot){
+        if (!snapshot) return;
+        const reservasDelDia = snapshot.docs.map(doc => {
+            return {
+                id: doc.id,
+                ...doc.data()
+            }
+        });
+        guardarReservasDelDia(reservasDelDia);
+    }
     //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
     const { pagina, itemsPorPagina } = paginacionContext;
@@ -84,15 +86,15 @@ const ReservasHoy = () => {
             </ul>
             </Alert>
              &nbsp;
-            <Typography className={classes.cantidad}>{reservas.length > 0 ?
-            `${CReservas.TOTAL_RESERVAS} ${reservas.length}` : `${CReservas.NO_SE_ENCONTRARON_RESERVAS}`
+            <Typography className={classes.cantidad}>{reservasDelDia.length > 0 ?
+            `${CReservas.TOTAL_RESERVAS} ${reservasDelDia.length}` : `${CReservas.NO_SE_ENCONTRARON_RESERVAS}`
             }</Typography>
                 <Grid container>
-                    {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
-                        <Reserva key={reserva.id} reserva={reserva}/>
+                    {reservasDelDia.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reservaDelDia =>(
+                        <Reserva key={reservaDelDia.id} reserva={reservaDelDia}/>
                     ))}
                 </Grid>
-                {reservas.length > 0 ? <Paginacion lista={reservas}/> : ""}
+                {reservasDelDia.length > 0 ? <Paginacion lista={reservasDelDia}/> : ""}
             <Footer/>
         </>
         : <Spinner></Spinner>)

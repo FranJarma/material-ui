@@ -7,11 +7,12 @@ export const NO_SE_ENCONTRARON_RESERVAS ='No se encontraron reservas';
 export const VALIDAR = 'Validar';
 export const VALIDAR_RESERVA = 'Validar reserva';
 export const PARA_VALIDAR_RESERVA = 'Para validar la reserva por favor ingrese la hora exacta de ingreso del cliente al establecimiento.'
-export const CONCLUIR_RESERVA = 'Concluir reserva';
+export const LA_RESERVA_HA_SIDO_VALIDADA = 'La reserva ha sido validada correctamente.'; 
+export const CONCLUIR_RESERVA = 'Concluir reserva.';
 export const CONCLUIR = 'Concluir';
 export const PARA_CONCLUIR_RESERVA = 'Para concluir o finalizar la reserva por favor ingrese la hora exacta de salida del cliente al establecimiento. Esto liberará el lugar que estaba ocupado anteriormente.'
 export const CONCLUIDA = 'Concluida';
-
+export const LA_RESERVA_HA_SIDO_CONCLUIDA = 'La reserva ha sido concluida correctamente. El lugar queda nuevamente disponible para otra reserva.'; 
 //mensaje de alertas
 export const ALERTA_PRINCIPAL = 'En esta pantalla usted podrá ver todas aquellas reservas hechas en el día de la fecha por usuarios registrados. Además podrá:';
 export const SUB_ALERTA1 = 'Validar una reserva para registrar el horario de ingreso del cliente al establecimiento.';

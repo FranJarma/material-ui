@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles, Typography, Avatar, Button, Card, CardContent, Grid } from '@material-ui/core';
 import {
-    KeyboardTimePicker,
+    TimePicker,
   } from '@material-ui/pickers';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,6 +13,8 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import * as CGeneral from './../../constantes/general/CGeneral';
 import * as CReservas from './../../constantes/reservas/CReservas';
+import { FirebaseContext } from '../../firebase';
+import swal from './../diseño/Swal';
 
 const useStyles = makeStyles((theme) => ({
     cartaReservas: {
@@ -112,30 +114,55 @@ const useStyles = makeStyles((theme) => ({
 
 const Reserva = ({reserva}) => {
     const classes = useStyles();
-        //state para la hora de ingreso y salida
-        const [horaIngreso, setearHoraIngreso] = useState(new Date());
-        const handleCambiarHoraIngreso = (horaIngreso) => {
-            setearHoraIngreso(horaIngreso);
-        };
-        const [horaSalida, setearHoraSalida] = useState(new Date());
-        const handleCambiarHoraSalida = (horaSalida) => {
-            setearHoraSalida(horaSalida);
-        };
-        //states para validar y concluir reservas
-        const [abrirModalValidar, setAbrirModalValidar] = useState(false);
-        const handleClickAbrirModalValidar = () => {
-            setAbrirModalValidar(true);
-        };
-        const handleClickCerrarModalValidar = () => {
-            setAbrirModalValidar(false);
-        };
-        const [abrirModalConcluir, setAbrirModalConcluir] = useState(false);
-        const handleClickAbrirModalConcluir = () => {
-            setAbrirModalConcluir(true);
-        };
-        const handleClickCerrarModalConcluir = () => {
-            setAbrirModalConcluir(false);
-        };
+    //state para la hora de ingreso y salida
+    const [horaIngreso, setearHoraIngreso] = useState(new Date().toLocaleTimeString().substr(0,5));
+    console.log(horaIngreso)
+    const handleCambiarHoraIngreso = (horaIngreso) => {
+        setearHoraIngreso(horaIngreso);
+    };
+    const [horaSalida, setearHoraSalida] = useState(new Date());
+    const handleCambiarHoraSalida = (horaSalida) => {
+        setearHoraSalida(horaSalida);
+    };
+    //states para validar y concluir reservas
+    const [abrirModalValidar, setAbrirModalValidar] = useState(false);
+    const handleClickAbrirModalValidar = () => {
+        setAbrirModalValidar(true);
+    };
+    const handleClickCerrarModalValidar = () => {
+        setAbrirModalValidar(false);
+    };
+    const [abrirModalConcluir, setAbrirModalConcluir] = useState(false);
+    const handleClickAbrirModalConcluir = () => {
+        setAbrirModalConcluir(true);
+    };
+    const handleClickCerrarModalConcluir = () => {
+        setAbrirModalConcluir(false);
+    };
+    const {firebase} = useContext(FirebaseContext);
+    //funciones de firebase
+    const validarReserva = (id) => {
+        try {
+            firebase.db.collection('reservas').doc(id).update({
+                horaIngreso: horaIngreso.toLocaleTimeString().substr(0,5)
+            });
+            swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_VALIDADA);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const concluirReserva = (id) => {
+        try {
+            firebase.db.collection('reservas').doc(id).update({
+                horaSalida: horaSalida.toLocaleTimeString().substr(0,5)
+            //CUANDO EXISTE LA COLECCIÓN LUGARES, HABRÍA QUE DESOCUPARLO
+            });
+            swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_CONCLUIDA);
+        } catch(error){
+            console.log(error);
+        }
+    }
     return ( 
         <Grid item xs={12} lg={4}>
             <Card id="lista" className = {classes.cartaReservas}>
@@ -146,28 +173,24 @@ const Reserva = ({reserva}) => {
                             <Typography className={classes.nombreCompleto}>{reserva.nombreCompleto}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Codigo: </Typography>
-                            <Typography className={classes.campos}>{reserva.codigo}</Typography>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Lugar: </Typography>
                             <Typography className={classes.campos}>{reserva.lugar}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Marca del vehículo: </Typography>
-                            <Typography className={classes.campos}>{reserva.marca}</Typography>
+                            <Typography className={classes.campos}>{reserva.marcaVehiculo}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Patente del vehículo:</Typography>
-                            <Typography className={classes.campos}>{reserva.patente}</Typography>
+                            <Typography className={classes.campos}>{reserva.patenteVehiculo}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Tipo de vehículo:</Typography>
-                            <Typography className={classes.campos}>{reserva.tipo}</Typography>
+                            <Typography className={classes.campos}>{reserva.tipoVehiculo}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Precio:</Typography>
-                            <Typography className={classes.campos}>{reserva.precio}</Typography>
+                            <Typography className={classes.campos}>${reserva.precio}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Hora de Ingreso: </Typography>
@@ -192,9 +215,10 @@ const Reserva = ({reserva}) => {
                                 <DialogTitle id="form-dialog-title">{CReservas.VALIDAR_RESERVA}</DialogTitle>
                                 <DialogContent>
                                 <DialogContentText>{CReservas.PARA_VALIDAR_RESERVA}</DialogContentText>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     className={classes.inputHoraIngreso}
                                     autoFocus
+                                    ampm={false}
                                     value={horaIngreso}
                                     fullWidth
                                     label="Hora de ingreso"
@@ -203,7 +227,7 @@ const Reserva = ({reserva}) => {
                                 />
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>{CReservas.VALIDAR}</Button>
+                                    <Button onClick={()=> validarReserva(reserva.id)} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>{CReservas.VALIDAR}</Button>
                                     <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>{CGeneral.CANCELAR}</Button>
                                 </DialogActions>
                             </Dialog>
@@ -220,9 +244,10 @@ const Reserva = ({reserva}) => {
                                 <DialogTitle id="form-dialog-title">{CReservas.CONCLUIR_RESERVA}</DialogTitle>
                                 <DialogContent>
                                 <DialogContentText>{CReservas.PARA_CONCLUIR_RESERVA}</DialogContentText>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     className={classes.inputHoraSalida}
                                     autoFocus
+                                    ampm={false}
                                     value={horaSalida}
                                     fullWidth
                                     label="Hora de salida"
@@ -231,8 +256,8 @@ const Reserva = ({reserva}) => {
                                 />
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={handleClickCerrarModalConcluir} endIcon={<DoneAllIcon/>} className={classes.botonConcluirReserva}>{CReservas.CONCLUIR}</Button>
-                                    <Button onClick={handleClickCerrarModalConcluir} className={classes.botonCancelar}>CGeneral.CANCELAR</Button>
+                                    <Button onClick={() => concluirReserva(reserva.id)} endIcon={<DoneAllIcon/>} className={classes.botonConcluirReserva}>{CReservas.CONCLUIR}</Button>
+                                    <Button onClick={handleClickCerrarModalConcluir} className={classes.botonCancelar}>{CGeneral.CANCELAR}</Button>
                                 </DialogActions>
                             </Dialog>
                             </>

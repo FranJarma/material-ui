@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import firebaseConfig from './config';
 
 //se realiza una clase para que cada vez que se la llame, se inicializa la app
@@ -9,6 +10,7 @@ class Firebase {
             app.initializeApp(firebaseConfig);
         }
         this.auth = app.auth();
+        this.db = app.firestore();
     }
 // MÉTODOS PARA ADMINISTRACIÓN DE USUARIOS
     //método para registrar usuario
@@ -30,7 +32,6 @@ class Firebase {
     async recuperarContraseña(email){
         return this.auth.sendPasswordResetEmail(email);
     }
-//MÉTODOS PARA ADMINISTRACIÓN DE RESERVAS
 }
 const firebase = new Firebase();
 export default firebase;

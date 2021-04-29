@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { makeStyles,
-Typography, Card, CardActionArea, CardContent, Avatar, Button, Grid } from '@material-ui/core';
+Typography, Button, Grid } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import {
