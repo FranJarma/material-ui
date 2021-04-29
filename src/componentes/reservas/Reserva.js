@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
 const Reserva = ({reserva}) => {
     const classes = useStyles();
     //state para la hora de ingreso y salida
-    const [horaIngreso, setearHoraIngreso] = useState(new Date().toLocaleTimeString().substr(0,5));
+    const [horaIngreso, setearHoraIngreso] = useState(new Date());
     console.log(horaIngreso)
     const handleCambiarHoraIngreso = (horaIngreso) => {
         setearHoraIngreso(horaIngreso);
