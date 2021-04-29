@@ -7,6 +7,8 @@ export const INGRESE_EMAIL = 'Ingrese su email para continuar';
 export const EMAIL = 'Email';
 export const CONTRASEÑA = 'Contraseña';
 export const NOMBRE_COMPLETO = 'Nombre completo';
+export const CANCELAR = 'Cancelar';
+export const CONSULTAR = 'Consultar';
 
 //mensajes de sweet alert y toast
 export const OPERACION_COMPLETADA = 'Operacion completada';

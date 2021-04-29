@@ -70,12 +70,12 @@ function App() {
                     </RutaPrivada>
                     <RutaPrivada exact path="/tarifas" component={Tarifas}>
                     </RutaPrivada>
-                    <RutaPrivada exact path="/lugares" component={Lugares}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/encargados" component={Encargados}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/estacionamientos" component={Estacionamientos}>
-                    </RutaPrivada>
+                    <Route exact path="/lugares" component={Lugares}>
+                    </Route>
+                    <Route exact path="/encargados" component={Encargados}>
+                    </Route>
+                    <Route exact path="/estacionamientos" component={Estacionamientos}>
+                    </Route>
                     <RutaPrivada exact path="/buscar" component={BuscarReserva}>
                     </RutaPrivada>
                   </Switch>
