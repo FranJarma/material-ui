@@ -116,7 +116,7 @@ const Reserva = ({reserva}) => {
     const classes = useStyles();
     //state para la hora de ingreso y salida
     const [horaIngreso, setearHoraIngreso] = useState(new Date());
-    console.log(horaIngreso)
+    console.log(horaIngreso.toTimeString())
     const handleCambiarHoraIngreso = (horaIngreso) => {
         setearHoraIngreso(horaIngreso);
     };
@@ -144,7 +144,7 @@ const Reserva = ({reserva}) => {
     const validarReserva = (id) => {
         try {
             firebase.db.collection('reservas').doc(id).update({
-                horaIngreso: horaIngreso.toLocaleTimeString().substr(0,5)
+                horaIngreso: horaIngreso.toTimeString().substr(0,5)
             });
             swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_VALIDADA);
         } catch (error) {
@@ -155,7 +155,7 @@ const Reserva = ({reserva}) => {
     const concluirReserva = (id) => {
         try {
             firebase.db.collection('reservas').doc(id).update({
-                horaSalida: horaSalida.toLocaleTimeString().substr(0,5)
+                horaSalida: horaSalida.toTimeString().substr(0,5)
             //CUANDO EXISTE LA COLECCIÓN LUGARES, HABRÍA QUE DESOCUPARLO
             });
             swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_CONCLUIDA);
