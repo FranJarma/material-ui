@@ -9,6 +9,7 @@ export const CONTRASEÑA = 'Contraseña';
 export const NOMBRE_COMPLETO = 'Nombre completo';
 export const CANCELAR = 'Cancelar';
 export const CONSULTAR = 'Consultar';
+export const MODIFICAR = 'Modificar';
 
 //mensajes de sweet alert y toast
 export const OPERACION_COMPLETADA = 'Operacion completada';

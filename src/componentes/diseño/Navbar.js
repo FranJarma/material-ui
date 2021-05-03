@@ -13,6 +13,7 @@ import logo from "./../../imagenes/logo.png";
 import Aside from "./Aside.js";
 import { Link } from 'react-router-dom';
 import Buscar from './Buscar';
+import MenuUsuario from './MenuUsuario';
 
 const anchoNavbarPx = 300;
 
@@ -89,6 +90,7 @@ const useStyles = makeStyles(theme => ({
                     <img src={logo} alt="" className={classes.logo} />
                 </Link>
                 <Buscar/>
+                <MenuUsuario/>
                 </Toolbar>
             </AppBar>
             

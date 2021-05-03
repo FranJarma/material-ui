@@ -9,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CheckIcon from '@material-ui/icons/Check';
+import UpdateIcon from '@material-ui/icons/Update';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import * as CGeneral from './../../constantes/general/CGeneral';
@@ -116,7 +117,6 @@ const Reserva = ({reserva}) => {
     const classes = useStyles();
     //state para la hora de ingreso y salida
     const [horaIngreso, setearHoraIngreso] = useState(new Date());
-    console.log(horaIngreso.toTimeString())
     const handleCambiarHoraIngreso = (horaIngreso) => {
         setearHoraIngreso(horaIngreso);
     };
@@ -144,9 +144,11 @@ const Reserva = ({reserva}) => {
     const validarReserva = (id) => {
         try {
             firebase.db.collection('reservas').doc(id).update({
-                horaIngreso: horaIngreso.toTimeString().substr(0,5)
+                horaIngreso: horaIngreso.toTimeString().substr(0,5),
+                estado: `${CReservas.VALIDADA}`
             });
             swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_VALIDADA);
+            setAbrirModalValidar(false);
         } catch (error) {
             console.log(error);
         }
@@ -155,10 +157,12 @@ const Reserva = ({reserva}) => {
     const concluirReserva = (id) => {
         try {
             firebase.db.collection('reservas').doc(id).update({
-                horaSalida: horaSalida.toTimeString().substr(0,5)
+                horaSalida: horaSalida.toTimeString().substr(0,5),
+                estado: `${CReservas.CONCLUIDA}`
             //CUANDO EXISTE LA COLECCIÓN LUGARES, HABRÍA QUE DESOCUPARLO
             });
             swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_CONCLUIDA);
+            setAbrirModalConcluir(false);
         } catch(error){
             console.log(error);
         }
@@ -204,15 +208,16 @@ const Reserva = ({reserva}) => {
                             <Typography className={classes.camposTitulos}>Observaciones: </Typography>
                             <Typography className={classes.campos}>{reserva.observaciones}</Typography>
                         </div>
-                            {reserva.horaIngreso === "" ?
+                            {reserva.estado !== `${CReservas.CONCLUIDA}` ?
                             <>
                             <Button
-                            endIcon={<CheckIcon/>}
+                            endIcon={reserva.estado !== CReservas.VALIDADA ?<CheckIcon/>:<UpdateIcon/>}
                             className= {classes.botonValidarReserva} onClick={handleClickAbrirModalValidar}>
-                            {CReservas.VALIDAR}
+                            {reserva.estado !== CReservas.VALIDADA ?`${CReservas.VALIDAR}`:`${CGeneral.MODIFICAR}`}
                             </Button>
                             <Dialog open={abrirModalValidar} onClose={handleClickCerrarModalValidar} aria-labelledby="form-dialog-title">
-                                <DialogTitle id="form-dialog-title">{CReservas.VALIDAR_RESERVA}</DialogTitle>
+                                <DialogTitle id="form-dialog-title">{reserva.estado !== CReservas.VALIDADA
+                                ?`${CReservas.VALIDAR_RESERVA}`:`${CReservas.MODIFICAR_HORA_INGRESO}`}</DialogTitle>
                                 <DialogContent>
                                 <DialogContentText>{CReservas.PARA_VALIDAR_RESERVA}</DialogContentText>
                                 <TimePicker
@@ -231,15 +236,14 @@ const Reserva = ({reserva}) => {
                                     <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>{CGeneral.CANCELAR}</Button>
                                 </DialogActions>
                             </Dialog>
-                            </>
-                            : reserva.horaSalida === "" ?
-                            <>
+                            : { reserva.estado === CReservas.VALIDADA ?
                             <Button
                                 endIcon={<DoneAllIcon/>}
                                 className= {classes.botonConcluirReserva}
                                 onClick={handleClickAbrirModalConcluir}>
                                 {CReservas.CONCLUIR}
                             </Button>
+                            : ""}
                             <Dialog open={abrirModalConcluir} onClose={handleClickCerrarModalConcluir} aria-labelledby="form-dialog-title">
                                 <DialogTitle id="form-dialog-title">{CReservas.CONCLUIR_RESERVA}</DialogTitle>
                                 <DialogContent>

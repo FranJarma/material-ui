@@ -96,9 +96,6 @@ const useStyles = makeStyles( theme => ({
             width: 250,
         },
     },
-    tituloSwal: {
-        fontFamily: "Roboto Condensed, sans-serif",
-    }
 }));
 
 const Login = () => {

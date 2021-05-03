@@ -31,7 +31,6 @@ import RutaPrivada from './componentes/rutas/RutaPrivada';
 
 function App() {
   const usuario = useAutenticado();
-
   return (
     <>
     <FirebaseContext.Provider
@@ -48,10 +47,10 @@ function App() {
                   <Switch>
                     <Route exact path="/" component={Login}>
                     </Route>
-                    <Route exact path="/nueva-cuenta" component={Registrar}>
-                    </Route>
-                    <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
-                    </Route>
+                    <RutaPrivada exact path="/nueva-cuenta" component={Registrar}>
+                    </RutaPrivada>
+                    <RutaPrivada exact path="/recuperar-contraseña" component={RecuperarContraseña}>
+                    </RutaPrivada>
                     <RutaPrivada exact path="/reservas-del-dia" component={ReservasHoy}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/nuevo-cobro" component={NuevoCobro}>
@@ -70,12 +69,12 @@ function App() {
                     </RutaPrivada>
                     <RutaPrivada exact path="/tarifas" component={Tarifas}>
                     </RutaPrivada>
-                    <Route exact path="/lugares" component={Lugares}>
-                    </Route>
-                    <Route exact path="/encargados" component={Encargados}>
-                    </Route>
-                    <Route exact path="/estacionamientos" component={Estacionamientos}>
-                    </Route>
+                    <RutaPrivada exact path="/lugares" component={Lugares}>
+                    </RutaPrivada>
+                    <RutaPrivada exact path="/encargados" component={Encargados}>
+                    </RutaPrivada>
+                    <RutaPrivada exact path="/estacionamientos" component={Estacionamientos}>
+                    </RutaPrivada>
                     <RutaPrivada exact path="/buscar" component={BuscarReserva}>
                     </RutaPrivada>
                   </Switch>

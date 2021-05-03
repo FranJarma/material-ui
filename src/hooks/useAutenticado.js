@@ -16,7 +16,7 @@ function useAutenticado () {
             }
         });
         return () => unsuscribe();
-    });
+    },[]);
     return usuarioAutenticado;
 }
 

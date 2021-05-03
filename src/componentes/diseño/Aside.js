@@ -4,7 +4,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
 import PersonIcon from '@material-ui/icons/Person';
-import {Button, Divider, ListItemIcon, makeStyles} from '@material-ui/core';
+import {Avatar, Button, Divider, ListItemIcon, makeStyles} from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -35,13 +35,16 @@ const useStyles = makeStyles(theme => ({
     tituloAside: {
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        fontSize: 15,
+        fontSize: 18,
         textAlign: "center",
     },
     imagenPerfil: {
         margin: "auto",
-        width: 120,
-        height: 120
+        width: 80,
+        height: 80,
+        display: 'flex',
+        borderRadius: 50,
+        marginTop: 10
     },
     titulosMenu: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -55,7 +58,15 @@ const useStyles = makeStyles(theme => ({
     iconos: {
         color: "#4db6ac",
     },
+    datosPersonales: {
+        [theme.breakpoints.up('md')]:{
+            display: 'none'
+        },
+    },
     botonCerrarSesionNavbar: {
+        [theme.breakpoints.up('md')]:{
+            display: 'none'
+        },
         backgroundColor: "#ffffff",
         color: "#4db6ac",
         borderColor:"#4db6ac",
@@ -112,10 +123,13 @@ const Aside = () => {
     const menuPrincipal = (
         <>
             &nbsp;
-            {usuario ? 
+            {usuario ?
+            <div className={classes.datosPersonales}>
             <Typography className={classes.tituloAside}>
                 {usuario.displayName}
             </Typography>
+            <Avatar className={classes.imagenPerfil} />
+            </div>
             : ''}
             &nbsp;
             <Divider></Divider>
@@ -230,6 +244,7 @@ const Aside = () => {
                 </ListItem>
                 </Link>
                 &nbsp;
+                <div className={classes.datosPersonales}>
                 <Divider></Divider>
                 <Link to={'/datos-personales'} className={classes.titulosMenu}>
                 <ListItem button>
@@ -241,6 +256,7 @@ const Aside = () => {
                     </ListItemText>
                 </ListItem>
                 </Link>
+                </div>
             </List>
             :<List>
                 <Link to={'/encargados'} className={classes.titulosMenu}>
