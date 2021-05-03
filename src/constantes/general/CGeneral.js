@@ -1,5 +1,6 @@
 //labels de botones e inputs
 export const COMPLETE_TODOS_LOS_CAMPOS = 'Complete todos los campos';
+export const SELECCIONE_FECHA = 'Seleccione una fecha';
 export const BIENVENIDO = 'Bienvenido';
 export const VOLVER = 'Volver';
 export const INGRESE_SUS_DATOS_PARA_CONTINUAR = 'Ingrese sus datos para continuar';

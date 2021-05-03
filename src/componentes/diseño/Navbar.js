@@ -19,7 +19,7 @@ const anchoNavbarPx = 300;
 
 const useStyles = makeStyles(theme => ({
     appBar: {
-        zIndex: theme.zIndex.drawer + 1,
+        zIndex: 1,
         backgroundColor: "#4db6ac"
         },
     toolbar: theme.mixins.toolbar,

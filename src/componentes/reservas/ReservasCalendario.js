@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ReservasCalendario = () => {
-    const [fecha, setFecha] = useState(new Date());
+    const [fecha, setFecha] = useState(null);
     const classes = useStyles();
         //state para guardar reservas
         const [reservasDeUnDia, guardarReservasDeUnDia] = useState([]);
@@ -80,11 +80,16 @@ const ReservasCalendario = () => {
         //las reservas que se tienen que traer son las de un día determinado
         const obtenerReservasDeUnDia = () => {
             try {
-                mostrarSpinner(CGeneral.BUSCANDO);
-                firebase.db.collection('reservas').orderBy('horaIngreso', 'desc')
-                .where('fechaCreacion','==',fecha.toLocaleDateString())
-                .where('estado', '!=', CReservas.REGISTRADA)
-                .onSnapshot(manejarSnapshot); 
+                if (fecha === null) {
+                    Toast(CGeneral.SELECCIONE_FECHA);
+                }
+                else {
+                    mostrarSpinner(CGeneral.BUSCANDO);
+                    firebase.db.collection('reservas')
+                    .where('fechaCreacion','==',fecha.toLocaleDateString())
+                    .where('estado', '!=', CReservas.REGISTRADA)
+                    .onSnapshot(manejarSnapshot); 
+                }
             } catch (error) {
                 Toast(error);
             }
