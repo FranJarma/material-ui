@@ -46,7 +46,7 @@ const ReservasHoy = () => {
     //use effect para que constantemente traiga las reservas
     useEffect (() => {
         //las reservas que se tienen que traer son las del día de hoy y filtradas por el usuario logueado
-        const obtenerReservasDelDia = () => {
+        const obtenerReservasDeHoy = () => {
             try {
                 firebase.db.collection('reservas').orderBy('horaIngreso', 'desc')
                 .where('fechaCreacion','==',fechaCompleta)
@@ -56,7 +56,7 @@ const ReservasHoy = () => {
                 Toast(error);
             }
         }
-        obtenerReservasDelDia();
+        obtenerReservasDeHoy();
     },[])
     function manejarSnapshot(snapshot){
         if (!snapshot) return;

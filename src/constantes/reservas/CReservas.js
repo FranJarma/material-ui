@@ -14,6 +14,8 @@ export const CONCLUIR_RESERVA = 'Concluir reserva.';
 export const CONCLUIR = 'Concluir';
 export const PARA_CONCLUIR_RESERVA = 'Para concluir o finalizar la reserva ingrese la hora exacta de salida del cliente al establecimiento. Esto liberará el lugar que estaba ocupado anteriormente.'
 export const CONCLUIDA = 'Concluida';
+export const REGISTRADA = 'Registrada';
+
 export const LA_RESERVA_HA_SIDO_CONCLUIDA = 'La reserva ha sido concluida correctamente. El lugar queda nuevamente disponible para otra reserva.'; 
 //mensaje de alertas
 export const ALERTA_PRINCIPAL = 'En esta pantalla usted podrá ver todas aquellas reservas hechas en el día de la fecha por usuarios registrados. Además podrá:';

@@ -14,6 +14,8 @@ import Spinner from '../diseño/Spinner.js';
 import Reserva from './Reserva';
 import * as CGeneral from './../../constantes/general/CGeneral';
 import * as CReservas from './../../constantes/reservas/CReservas';
+import { FirebaseContext } from '../../firebase';
+import Toast from './../diseño/Toast';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -65,45 +67,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ReservasCalendario = () => {
-    const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
+    const [fecha, setFecha] = useState(new Date());
     const classes = useStyles();
-    const reservas = [
-        {
-            id: 0,
-            codigo: "A156-125Q-X123-WQAS2",
-            avatar: "FJ",
-            estado: "Concluida",
-            nombreCompleto: "Francisco Jarma",
-            patente: "LZY450",
-            marca: "Volkswagen",
-            tipo: "Auto",
-            precio: "100",
-            horaIngreso: "19:52",
-            horaSalida: "20:55",
-            observaciones: "",
-            lugar: "11"
-        },
-        {
-            id: 1,
-            codigo: "B1S5-A53ZW-DJ65-Q286",
-            avatar: "JL",
-            estado: "Concluida",
-            nombreCompleto: "Juan Lopez",
-            patente: "ASD123",
-            marca: "Peugeot",
-            tipo: "Auto",
-            precio: "100",
-            horaIngreso: "19:20",
-            horaSalida: "21:25",
-            observaciones: "",
-            lugar: "1"
-        },
-    ];
-    //context de paginación y spinner
-    const paginacionContext = useContext(PaginacionContext);
-    const { pagina, itemsPorPagina } = paginacionContext;
-    const spinnerContext = useContext(SpinnerContext);
-    const { cargando } = spinnerContext;
+        //state para guardar reservas
+        const [reservasDeUnDia, guardarReservasDeUnDia] = useState([]);
+        const {firebase} = useContext(FirebaseContext);
+        //context de paginación y spinner
+        const paginacionContext = useContext(PaginacionContext);
+        const { pagina, itemsPorPagina } = paginacionContext;
+        const spinnerContext = useContext(SpinnerContext);
+        const { cargando, mostrarSpinner } = spinnerContext;
+        //las reservas que se tienen que traer son las de un día determinado
+        const obtenerReservasDeUnDia = () => {
+            try {
+                mostrarSpinner(CGeneral.BUSCANDO);
+                firebase.db.collection('reservas').orderBy('horaIngreso', 'desc')
+                .where('fechaCreacion','==',fecha.toLocaleDateString())
+                .where('estado', '!=', CReservas.REGISTRADA)
+                .onSnapshot(manejarSnapshot); 
+            } catch (error) {
+                Toast(error);
+            }
+        };
+        function manejarSnapshot(snapshot){
+            if (!snapshot) return;
+            const reservasDeUnDia = snapshot.docs.map(doc => {
+                return {
+                    id: doc.id,
+                    ...doc.data()
+                }
+            });
+            guardarReservasDeUnDia(reservasDeUnDia);
+        }
     return (
         (!cargando ? 
         <>  
@@ -120,25 +115,25 @@ const ReservasCalendario = () => {
                 label="Por favor seleccione una fecha"
                 format="dd/MM/yyyy"
                 disableFuture
-                value={fechaSeleccionada}
-                onChange={handleCambiarFecha}
+                value={fecha}
+                onChange={setFecha}
                 KeyboardButtonProps={{
                     'aria-label': 'change date',
                 }}
             />
-            <Button className= {classes.botonConsultar}>{CGeneral.CONSULTAR}</Button>
+            <Button onClick={obtenerReservasDeUnDia} className= {classes.botonConsultar}>{CGeneral.CONSULTAR}</Button>
             </form>
             &nbsp;
             &nbsp;
-            <Typography className={classes.cantidad}>{reservas.length > 0 ?
-            `${CReservas.TOTAL_RESERVAS_ENCONTRADAS} ${reservas.length}` : `${CReservas.NO_SE_ENCONTRARON_RESERVAS}`
+            <Typography className={classes.cantidad}>{reservasDeUnDia.length > 0 ?
+            `${CReservas.TOTAL_RESERVAS_ENCONTRADAS} ${reservasDeUnDia.length}` : `${CReservas.NO_SE_ENCONTRARON_RESERVAS}`
             }</Typography>
                 <Grid container>
-                    {reservas.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
+                    {reservasDeUnDia.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reserva =>(
                         <Reserva key={reserva.id} reserva={reserva}/>
                     ))}
                 </Grid>
-                {reservas.length > 0 ? <Paginacion lista={reservas}/> : ""}
+                {reservasDeUnDia.length > 0 ? <Paginacion lista={reservasDeUnDia}/> : ""}
             <Footer/>
         </>
     : <Spinner></Spinner>)

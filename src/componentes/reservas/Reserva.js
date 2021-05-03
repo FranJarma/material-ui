@@ -177,6 +177,10 @@ const Reserva = ({reserva}) => {
                             <Typography className={classes.nombreCompleto}>{reserva.nombreCompleto}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Código: </Typography>
+                            <Typography className={classes.campos}>{reserva.codigo}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Lugar: </Typography>
                             <Typography className={classes.campos}>{reserva.lugar}</Typography>
                         </div>
