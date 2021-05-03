@@ -87,7 +87,7 @@ const ReservasCalendario = () => {
                     mostrarSpinner(CGeneral.BUSCANDO);
                     firebase.db.collection('reservas')
                     .where('fechaCreacion','==',fecha.toLocaleDateString())
-                    .where('estado', '!=', CReservas.REGISTRADA)
+                    .where('estado', '==', CReservas.CONCLUIDA)
                     .onSnapshot(manejarSnapshot); 
                 }
             } catch (error) {
