@@ -15,6 +15,7 @@ import traducirError from './../../firebase/errores';
 
 import * as CGeneral from './../../constantes/general/CGeneral';
 import * as CAuth from './../../constantes/auth/CAuth';
+import useInfoUsuario from '../../hooks/useInfoUsuario';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {

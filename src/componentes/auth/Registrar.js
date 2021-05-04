@@ -16,19 +16,19 @@ import traducirError from './../../firebase/errores';
 import * as CGeneral from '../../constantes/general/CGeneral';
 import * as CAuth from '../../constantes/auth/CAuth';
 import * as bcryptjs from 'bcryptjs';
-
+import InputMask from 'react-input-mask';
 const useStyles = makeStyles( theme => ({
-    cartaLogin: {
+    cartaRegistrar: {
         [theme.breakpoints.up('lg')]:{
             margin:"auto",
-            height: 480,
+            height: 700,
             width: 600,
             marginTop: "2rem",
         },
         [theme.breakpoints.down('md')]:{
             margin: "auto",
-            height: 480,
-            width: 350,
+            height: 700,
+            width: 450,
             marginTop: "3rem",
         },
         boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
@@ -112,9 +112,12 @@ const Registrar = () => {
         nombreCompleto: '',
         email: '',
         contraseña: '',
+        rcontraseña: '',
+        telefono: '',
+        dni: ''
     })
     //guardamos el contenido del state en los inputs
-    const { nombreCompleto, email, contraseña } = usuario;
+    const { nombreCompleto, email, contraseña, rcontraseña, telefono, dni } = usuario;
     //evento onChange
     const onChange = (e) => {
         guardarUsuario({
@@ -128,12 +131,13 @@ const Registrar = () => {
             if(nombreCompleto === '' || email === '' || contraseña === ''){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
+            else if(contraseña !== rcontraseña) {
+                Toast(CGeneral.LAS_CONTRASEÑAS_NO_COINCIDEN);
+            }
             else{
-                const salt = await bcryptjs.genSalt(10);
-                const contraseñaH = await bcryptjs.hash(contraseña, salt);
-                await firebase.registrarUsuario(nombreCompleto, email, contraseñaH, true,
+                await firebase.registrarUsuario(nombreCompleto, email, contraseña, true,
                     new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear(),
-                '');
+                telefono, dni);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.REGISTRO_EXITOSO);
                 history.push('/')
             }
@@ -148,7 +152,7 @@ const Registrar = () => {
         <div>
             <img src={logo} alt="" className={classes.logo}></img>
         </div>
-        <Card className={classes.cartaLogin}>
+        <Card className={classes.cartaRegistrar}>
             <CardContent className={classes.cartaEncabezado}>
                 <Typography className={classes.tituloCarta}>{CAuth.NUEVO_USUARIO}</Typography>
                 <PersonAddIcon className={classes.icono}></PersonAddIcon>
@@ -172,6 +176,42 @@ const Registrar = () => {
                     </Grid>
                     &nbsp;
                     <Grid item>
+                        <InputMask
+                        mask="99.999.999"
+                        value={dni}
+                        onChange={onChange}
+                        className={classes.inputCarta}
+                        >
+                            {() => <TextField
+                                className = {classes.inputCarta}
+                                type="text"
+                                name="dni"
+                                variant="outlined"
+                                label={CGeneral.DNI}
+                            />
+                            }
+                        </InputMask>
+                    </Grid>
+                    &nbsp;
+                    <Grid item>
+                        <InputMask
+                        mask="(+54) 9999999999"
+                        value={telefono}
+                        className = {classes.inputCarta}
+                        onChange={onChange}
+                        >
+                            {() => <TextField
+                                className = {classes.inputCarta}
+                                type="text"
+                                name="telefono"
+                                variant="outlined"
+                                label={CGeneral.TELEFONO}
+                            />
+                            }
+                        </InputMask>
+                    </Grid>
+                    &nbsp;
+                    <Grid item>
                         <TextField
                             className = {classes.inputCarta}
                             type="text"
@@ -191,6 +231,18 @@ const Registrar = () => {
                             name="contraseña"
                             variant="outlined"
                             label={CGeneral.CONTRASEÑA}
+                            onChange={onChange}
+                        ></TextField>
+                    </Grid>
+                    &nbsp;
+                    <Grid item>
+                        <TextField
+                            className = {classes.inputCarta}
+                            type="password"
+                            value={rcontraseña}
+                            name="rcontraseña"
+                            variant="outlined"
+                            label={CGeneral.REPITA_CONTRASEÑA}
                             onChange={onChange}
                         ></TextField>
                     </Grid>

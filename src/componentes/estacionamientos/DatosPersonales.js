@@ -5,6 +5,8 @@ Typography, Button, TextField, Grid } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 import useInfoUsuario from '../../hooks/useInfoUsuario.js';
+import InputMask from 'react-input-mask';
+import * as CGeneral from '../../constantes/general/CGeneral';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -73,32 +75,39 @@ const DatosPersonales = () => {
                 value={usuarioInfo.nombreCompleto}
                 />
                 </Grid>
-                <Grid item sm={12} xs={12} >
-                <TextField
-                className={classes.input}
-                label="N° de teléfono"
-                variant="standard"
-                value={usuarioInfo.telefono}
-                fullWidth
-                />
+                <Grid item sm={6} xs={12} >
+                <InputMask 
+                        mask="(+54) 9999999999"
+                        value={usuarioInfo.telefono}
+                        className = {classes.input}
+                        >
+                            {() => <TextField
+                                className = {classes.input}
+                                type="text"
+                                fullWidth
+                                name="telefono"
+                                variant="standard"
+                                label={CGeneral.TELEFONO}
+                            />
+                            }
+                        </InputMask>
                 </Grid>
-                <Grid item sm={12} xs={12} >
-                <TextField
-                className={classes.input}
-                label="DNI"
-                variant="standard"
-                value={usuarioInfo.dni}
-                fullWidth
-                />
-                </Grid>
-                <Grid item sm={12} xs={12} >
-                <TextField
-                className={classes.input}
-                label="Nombre de usuario"
-                variant="standard"
-                value={usuarioInfo.usuario}
-                fullWidth
-                />
+                <Grid item sm={6} xs={12} >
+                <InputMask
+                        mask="99.999.999"
+                        value={usuarioInfo.dni}
+                        className={classes.input}
+                        >
+                            {() => <TextField
+                                className = {classes.input}
+                                type="text"
+                                fullWidth
+                                name="dni"
+                                variant="standard"
+                                label={CGeneral.DNI}
+                            />
+                            }
+                        </InputMask>
                 </Grid>
                 <Grid item sm={12} xs={12} >
                 <TextField
