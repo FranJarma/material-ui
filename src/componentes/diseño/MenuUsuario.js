@@ -1,16 +1,17 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { makeStyles, Button, Typography, Popover, ListItemIcon } from '@material-ui/core';
+import { makeStyles, Button, Typography, Popover } from '@material-ui/core';
 import {FirebaseContext} from './../../firebase';
 import * as CAuth from './../../constantes/auth/CAuth';
 import { Link, useHistory } from 'react-router-dom';
 import Toast from './Toast';
 import traducirError from './../../firebase/errores';
 import SpinnerContext from '../../context/spinner/spinnerContext';
+import useInfoUsuario from '../../hooks/useInfoUsuario';
 
 const useStyles = makeStyles(theme => ({
   menuPrincipal: {
@@ -53,9 +54,11 @@ const useStyles = makeStyles(theme => ({
 }));
 const MenuUsuario = () => {
   const [posicion, setearPosicion] = useState(null);
+  const open = Boolean(posicion);
   const classes = useStyles();
   const history = useHistory();
-  const {usuario, firebase} = useContext(FirebaseContext);
+  const usuarioInfo = useInfoUsuario();
+  const {firebase} = useContext(FirebaseContext);
   const spinnerContext = useContext(SpinnerContext);
   const { mostrarSpinner } = spinnerContext;
   const handleMenu = e => {
@@ -75,6 +78,7 @@ const MenuUsuario = () => {
         Toast(traducirError(error.code))
     }
   }
+
     return ( 
         <div className={classes.menuPrincipal}>
         <Button
@@ -83,7 +87,7 @@ const MenuUsuario = () => {
           color='inherit'
         >
           <AccountCircle className={classes.iconoUsuario}/>
-          <Typography className={classes.usuario}>{usuario.displayName}</Typography>
+          <Typography className={classes.usuario}>{usuarioInfo.nombreCompleto}</Typography>
         </Button>
         <Popover
           id="menu-usuario"
@@ -98,7 +102,7 @@ const MenuUsuario = () => {
           }}
           anchorEl={posicion}
           keepMounted
-          open={posicion}
+          open={open}
           onClose={handleCerrar}
         >
           <Link to={'/datos-personales'} className={classes.titulosMenu}>

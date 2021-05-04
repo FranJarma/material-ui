@@ -47,10 +47,10 @@ function App() {
                   <Switch>
                     <Route exact path="/" component={Login}>
                     </Route>
-                    <RutaPrivada exact path="/nueva-cuenta" component={Registrar}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/recuperar-contraseña" component={RecuperarContraseña}>
-                    </RutaPrivada>
+                    <Route exact path="/nueva-cuenta" component={Registrar}>
+                    </Route>
+                    <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
+                    </Route>
                     <RutaPrivada exact path="/reservas-del-dia" component={ReservasHoy}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/nuevo-cobro" component={NuevoCobro}>

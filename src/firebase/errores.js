@@ -4,6 +4,9 @@ const traducirError = (codigo) => {
         case 'auth/invalid-email':
             mensaje = 'Ingrese un correo electrónico válido';
             return mensaje;
+        case 'auth/email-already-in-use':
+            mensaje = 'El correo electrónico ya se encuentra registrado.';
+            return mensaje;
         case 'auth/user-not-found':
             mensaje = 'El correo electrónico ingresado no se encuentra registrado.';
             return mensaje;

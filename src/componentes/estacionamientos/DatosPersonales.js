@@ -4,6 +4,7 @@ import { List, makeStyles,
 Typography, Button, TextField, Grid } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
+import useInfoUsuario from '../../hooks/useInfoUsuario.js';
 
 const useStyles = makeStyles((theme) => ({
     titulo: {
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DatosPersonales = () => {
-
+    const usuarioInfo = useInfoUsuario();
     const classes = useStyles();
     return ( 
         <>  
@@ -69,7 +70,7 @@ const DatosPersonales = () => {
                 variant="standard"
                 fullWidth
                 autoFocus
-                value="Franco Rodriguez"
+                value={usuarioInfo.nombreCompleto}
                 />
                 </Grid>
                 <Grid item sm={12} xs={12} >
@@ -77,7 +78,7 @@ const DatosPersonales = () => {
                 className={classes.input}
                 label="N° de teléfono"
                 variant="standard"
-                value="3874450922"
+                value={usuarioInfo.telefono}
                 fullWidth
                 />
                 </Grid>
@@ -86,7 +87,7 @@ const DatosPersonales = () => {
                 className={classes.input}
                 label="DNI"
                 variant="standard"
-                value="40524512"
+                value={usuarioInfo.dni}
                 fullWidth
                 />
                 </Grid>
@@ -95,7 +96,7 @@ const DatosPersonales = () => {
                 className={classes.input}
                 label="Nombre de usuario"
                 variant="standard"
-                value="frodriguez23"
+                value={usuarioInfo.usuario}
                 fullWidth
                 />
                 </Grid>
@@ -104,7 +105,7 @@ const DatosPersonales = () => {
                 className={classes.input}
                 label="Correo electrónico"
                 variant="standard"
-                value="frodriguez@gmail.com"
+                value={usuarioInfo.email}
                 fullWidth
                 />
                 </Grid>
@@ -114,7 +115,6 @@ const DatosPersonales = () => {
                 label="Contraseña"
                 variant="standard"
                 type="password"
-                value= "123456"
                 fullWidth
                 />
                 </Grid>
@@ -124,7 +124,6 @@ const DatosPersonales = () => {
                 label="Repetir contraseña"
                 variant="standard"
                 type="password"
-                value= "123456"
                 fullWidth
                 />
                 </Grid>

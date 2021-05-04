@@ -15,6 +15,7 @@ import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
 import * as CGeneral from '../../constantes/general/CGeneral';
 import * as CAuth from '../../constantes/auth/CAuth';
+import * as bcryptjs from 'bcryptjs';
 
 const useStyles = makeStyles( theme => ({
     cartaLogin: {
@@ -128,7 +129,11 @@ const Registrar = () => {
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
             else{
-                await firebase.registrarUsuario(nombreCompleto, email, contraseña);
+                const salt = await bcryptjs.genSalt(10);
+                const contraseñaH = await bcryptjs.hash(contraseña, salt);
+                await firebase.registrarUsuario(nombreCompleto, email, contraseñaH, true,
+                    new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear(),
+                '');
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.REGISTRO_EXITOSO);
                 history.push('/')
             }

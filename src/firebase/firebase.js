@@ -14,11 +14,24 @@ class Firebase {
     }
 // MÉTODOS PARA ADMINISTRACIÓN DE USUARIOS
     //método para registrar usuario
-    async registrarUsuario(nombreCompleto, email, contraseña){
-        const nuevoUsuario = await this.auth.createUserWithEmailAndPassword(email, contraseña);
-        return await nuevoUsuario.user.updateProfile({
-            displayName: nombreCompleto
+    async registrarUsuario(nombreCompleto, email, contraseña, esEncargado, fechaCreacion, telefono){
+        const nuevoUsuario = this.auth.createUserWithEmailAndPassword(email, contraseña).
+        then(nuevoUsuario => {
+            this.db.collection('usuarios').add({
+                uid: nuevoUsuario.user.uid,
+                nombreCompleto: nombreCompleto,
+                email: email,
+                contraseña: contraseña,
+                esEncargado: esEncargado,
+                fechaCreacion: fechaCreacion,
+                telefono: telefono,
+            })
         })
+        return await nuevoUsuario;
+    }
+    //método para traer usuario por uid
+    async traerUsuario(uid){
+        return this.db.collection('usuarios').where('uid', '==', uid);
     }
     //método para iniciar sesión
     async login(email, contraseña){

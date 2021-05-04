@@ -28,6 +28,7 @@ import traducirError from './../../firebase/errores';
 
 import * as CAuth from './../../constantes/auth/CAuth';
 import SpinnerContext from '../../context/spinner/spinnerContext';
+import useInfoUsuario from '../../hooks/useInfoUsuario';
 
 const esAdmin = false;
 
@@ -87,6 +88,7 @@ const useStyles = makeStyles(theme => ({
 
 const Aside = () => {
     const classes = useStyles();
+    const usuarioInfo = useInfoUsuario();
     //states para controlar los submenús
     const [subMenuReservas, abrirSubMenuReservas ] = useState(false);
 
@@ -126,7 +128,7 @@ const Aside = () => {
             {usuario ?
             <div className={classes.datosPersonales}>
             <Typography className={classes.tituloAside}>
-                {usuario.displayName}
+                {usuarioInfo.nombreCompleto}
             </Typography>
             <Avatar className={classes.imagenPerfil} />
             </div>
@@ -135,6 +137,16 @@ const Aside = () => {
             <Divider></Divider>
             {!esAdmin ?
             <List>
+                <Link to={'/nueva-cuenta'} className={classes.titulosMenu}>
+                <ListItem button>
+                    <ListItemIcon>
+                        <EqualizerIcon className={classes.iconos}/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Agregar nueva cuenta
+                    </ListItemText>
+                </ListItem>
+                </Link>
                 <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>
                         <CommuteIcon className={classes.iconos}/>
