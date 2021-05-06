@@ -135,7 +135,6 @@ const Aside = () => {
             : ''}
             &nbsp;
             <Divider></Divider>
-            {!esAdmin ?
             <List>
                 <Link to={'/nueva-cuenta'} className={classes.titulosMenu}>
                 <ListItem button>
@@ -193,6 +192,8 @@ const Aside = () => {
                     </Link>
                     </List>
                 </Collapse>
+                {!usuarioInfo.esAdmin ?
+                <>
                 <ListItem button onClick= { handleClickAbrirSubMenuMiEstacionamiento }>
                     <ListItemIcon>
                         <StoreMallDirectoryIcon className={classes.iconos}/>
@@ -255,23 +256,26 @@ const Aside = () => {
                     </ListItemText>
                 </ListItem>
                 </Link>
-                &nbsp;
+                </>
+            : ""}
                 <div className={classes.datosPersonales}>
-                <Divider></Divider>
                 <Link to={'/datos-personales'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
                         <PersonIcon className={classes.iconos}/>
                     </ListItemIcon>
                     <ListItemText>
-                        Datos del encargado
+                        Datos personales
                     </ListItemText>
                 </ListItem>
                 </Link>
                 </div>
+
             </List>
-            :<List>
-                <Link to={'/encargados'} className={classes.titulosMenu}>
+            <Divider></Divider>
+            {usuarioInfo.esAdmin ?
+            <List>
+                <Link to={'/usuarios'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
                         <PersonIcon className={classes.iconos}/>
@@ -290,8 +294,7 @@ const Aside = () => {
                     </ListItem>
                 </Link>
             </List>
-
-            }
+            : ""}
             <Divider></Divider>
             &nbsp;
             <Button

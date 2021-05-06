@@ -3,7 +3,6 @@ import firebase from '../firebase';
 
 //este custom hook sirve para mantener la sesión activa del usuario por más que recargue la página
 function useAutenticado () {
-
     //state para manejar si está autenticado o no, al principio no está 
     const [usuarioAutenticado, guardarUsuarioAutenticado] = useState(null);
     useEffect(()=>{
@@ -17,6 +16,7 @@ function useAutenticado () {
         });
         return () => unsuscribe();
     },[]);
+    console.log(usuarioAutenticado)
     return usuarioAutenticado;
 }
 

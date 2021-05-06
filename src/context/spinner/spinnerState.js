@@ -19,7 +19,7 @@ const mostrarSpinner = (mensaje) => {
         dispatch({
             type: OCULTAR_SPINNER,
         });
-    },1000)
+    },2000)
 };
 return (
     <SpinnerContext.Provider

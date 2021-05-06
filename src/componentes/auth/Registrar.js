@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, Checkbox, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent'
 import logo from './../../imagenes/logo.png';
@@ -15,19 +15,19 @@ import firebase from './../../firebase';
 import traducirError from './../../firebase/errores';
 import * as CGeneral from '../../constantes/general/CGeneral';
 import * as CAuth from '../../constantes/auth/CAuth';
-import * as bcryptjs from 'bcryptjs';
 import InputMask from 'react-input-mask';
+
 const useStyles = makeStyles( theme => ({
     cartaRegistrar: {
         [theme.breakpoints.up('lg')]:{
             margin:"auto",
-            height: 700,
+            height: 750,
             width: 600,
             marginTop: "2rem",
         },
         [theme.breakpoints.down('md')]:{
             margin: "auto",
-            height: 700,
+            height: 750,
             width: 450,
             marginTop: "3rem",
         },
@@ -125,19 +125,31 @@ const Registrar = () => {
             [e.target.name] : e.target.value
         });
     }
+        //state para manejar los checkbox
+        const [checkAdmin, setcheckAdmin] = useState(false);
+        const handleChangeCheckBox = (event) => {
+            setcheckAdmin(event.target.checked);
+        }
     //función para iniciar sesión
     async function registrarUsuario() {
         try {
-            if(nombreCompleto === '' || email === '' || contraseña === ''){
+            if(nombreCompleto === '' || email === '' || contraseña === '' || dni === '' || telefono === ''){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
             else if(contraseña !== rcontraseña) {
                 Toast(CGeneral.LAS_CONTRASEÑAS_NO_COINCIDEN);
             }
+            //se utiliza la función includes para verificar si alguno de los dos campos tiene espacio en blanco
+            else if(dni.includes('_')){
+                Toast(CGeneral.VALIDACION_DNI)
+            }
+            else if(telefono.includes('_')){
+                Toast(CGeneral.VALIDACION_TELEFONO)
+            }
             else{
-                await firebase.registrarUsuario(nombreCompleto, email, contraseña, true,
+                await firebase.registrarUsuario(nombreCompleto, email, contraseña, !checkAdmin,
                     new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear(),
-                telefono, dni);
+                telefono, dni, checkAdmin);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.REGISTRO_EXITOSO);
                 history.push('/')
             }
@@ -246,6 +258,13 @@ const Registrar = () => {
                             onChange={onChange}
                         ></TextField>
                     </Grid>
+                    <Grid item>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap',
+                        marginTop: '1rem', marginLeft: '0.5rem'}}>
+                            <Checkbox color="primary" name="esAdmin" onChange={handleChangeCheckBox}></Checkbox>
+                            <Typography className={classes.subtitulos}>Es admin</Typography>
+                        </div>
+                    </Grid>
                     &nbsp;
                     <Grid item>
                     <Button
@@ -257,7 +276,7 @@ const Registrar = () => {
                     </Grid>
                     &nbsp;
                     <Grid item>
-                    <Link to={'/'} style={{textDecoration: 'none'}}>
+                    <Link to={'/home'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonVolver}
                     >{CGeneral.VOLVER}
