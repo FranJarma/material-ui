@@ -7,19 +7,20 @@ import * as CGeneral from '../../constantes/general/CGeneral';
 import * as CAuth from '../../constantes/auth/CAuth';
 import InputMask from 'react-input-mask';
 import {useStyles} from './Styles';
-import Toast from './../diseño/Toast';
-import Swal from './../diseño/Swal';
-import firebase from './../../firebase';
-import traducirError from './../../firebase/errores';
+import Toast from '../diseño/Toast';
+import Swal from '../diseño/Swal';
+import firebase from '../../firebase';
+import traducirError from '../../firebase/errores';
 
 //le pasamos como props la info del usuario seleccionado con el botón, la acción (registrar / modificar) y la función para cerrar el modal
-const NuevoUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
+const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
     const classes = useStyles();
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
         nombreCompleto: '',
+        nombreUsuarioDarDeBaja: '',
         email: '',
         nombreUsuario: '',
         contraseña: '',
@@ -28,19 +29,31 @@ const NuevoUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
         dni: ''
     })
     //guardamos el contenido del state en los inputs
-    const { nombreCompleto, email, nombreUsuario, contraseña, rcontraseña, telefono, dni } = usuario;
+    const { nombreCompleto, email, nombreUsuario, nombreUsuarioDarDeBaja,
+    contraseña, rcontraseña, telefono, dni } = usuario;
     //evento onChange
     const onChange = (e) => {
         guardarUsuario({
             ...usuario,
             [e.target.name] : e.target.value
         });
+        // usuarioCompleto solamente se trae desde props para eliminar o modificarlo
+        if(usuarioCompleto) {
+            if (e.target.value === usuarioCompleto.nombreUsuario){
+                setearDeshabilitado(false);
+            }
+            else {
+                setearDeshabilitado(true);
+            }
+        }
     }
     //state para manejar los checkbox
     const [checkAdmin, setcheckAdmin] = useState(false);
     const handleChangeCheckBox = (event) => {
         setcheckAdmin(event.target.checked);
     }
+    //state para manejar el botón de dar de baja
+    const [deshabilitado, setearDeshabilitado] = useState(true);
     // use effect para cargar los campos al querer modificar un usuario
     useEffect(()=>{
         if (usuarioCompleto){
@@ -115,13 +128,24 @@ const NuevoUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
             Toast(traducirError(error.code))
         }
     }
+    //función para eliminar el usuario seleccionado
+    async function eliminarUsuario() {
+        try {
+            await firebase.eliminarUsuario(usuarioCompleto.id);
+            cerrarModal();
+            Swal(CGeneral.OPERACION_COMPLETADA, CAuth.USUARIO_ELIMINADO);
+        } catch (error) {
+            console.log(error);
+            Toast(traducirError(error.code))
+        }
+    }
     return ( 
-    (!cargando ? 
+    ((!cargando && accion === "Registrar") || (!cargando && accion === "Modificar")? 
     <>
         &nbsp;
         <form>
             <Grid container spacing={3}>
-                <Grid item md={6} sm={5} xs={12}>
+                <Grid item md={6} sm={5} xs={12}> 
                     <TextField
                         className = {classes.inputNuevoUsuario}
                         fullWidth
@@ -238,9 +262,25 @@ const NuevoUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
                 className={classes.botonAgregar}>{accion === "Registrar" ? "Agregar" : "Modificar"}</Button>
         </form>
     </>
-    : "")
+    :
+    <Grid item lg={12}>
+        <TextField
+            className={classes.inputDarDeBaja}
+            type="text"
+            fullWidth
+            autoFocus
+            value={nombreUsuarioDarDeBaja}
+            name="nombreUsuarioDarDeBaja"
+            variant="outlined"
+            label={CGeneral.NOMBRE_USUARIO}
+            onChange={onChange}
+        ></TextField>
+        <Button onClick={eliminarUsuario}
+        fullWidth
+        disabled = {deshabilitado ? true : false}
+        endIcon={<CheckIcon/>}
+        className={classes.botonDarDeBajaModal}>Dar de baja</Button>
+    </Grid>)
 );
-
 }
-
-export default NuevoUsuario;
+export default AdministrarUsuario;

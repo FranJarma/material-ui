@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
-import {Typography, Button, Avatar, Grid, TextField, Card, CardActionArea, CardContent } from '@material-ui/core';
+import {Typography, Button, Avatar, Grid, Card, CardActionArea, CardContent } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import {useStyles} from './Styles';
-import NuevoUsuario from './NuevoUsuario';
+import AdministrarUsuario from './AdministrarUsuario';
 
 const Usuario = ({usuario}) => {
     const classes = useStyles();
     //states para los modals
-    const [abrirModalDarDeBaja, setAbrirModalDarDeBaja] = useState(false);
+    const [modalDarDeBaja, setAbrirModalDarDeBaja] = useState(false);
     const handleClickAbrirModalDarDeBaja = () => {
         setAbrirModalDarDeBaja(true);
     };
@@ -27,7 +25,6 @@ const Usuario = ({usuario}) => {
     const handleClickCerrarModalModificar = () => {
         setAbrirModalModificar(false);
     };
-
 
     return ( 
     <>
@@ -87,26 +84,31 @@ const Usuario = ({usuario}) => {
                             <DialogContent>
                             &nbsp;
                             <DialogContentText> Ingrese los datos que desea modificar</DialogContentText>
-                            <NuevoUsuario usuarioCompleto={usuario} accion="Modificar"
+                            <AdministrarUsuario usuarioCompleto={usuario} accion="Modificar"
                             cerrarModal={handleClickCerrarModalModificar}
                             />
                             </DialogContent>
                         </Dialog>
-                        <Dialog open={abrirModalDarDeBaja} onClose={handleClickCerrarModalDarDeBaja}
+                        <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalDarDeBaja}
+                        onClose={handleClickCerrarModalDarDeBaja}
                         aria-labelledby="form-dialog-title">
-                            <DialogTitle id="form-dialog-title">Dar de baja</DialogTitle>
+                            <div style={{backgroundColor: '#ef5350'}}>
+                                <Typography className={classes.tituloModal} id="form-dialog-title"
+                                >Eliminar usuario
+                                <Typography onClick={handleClickCerrarModalDarDeBaja}
+                                className={classes.botonCerrarModal}
+                                >X</Typography>
+                                </Typography>
+                            </div>
                             <DialogContent>
-                            <DialogContentText> Para dar de baja el estacionamiento, escriba el nombre completo en el siguiente cuadro de texto:</DialogContentText>
-                            <Grid container spacing={1}>
-                                <Grid item xs={12} lg={12}>
-                                    <TextField autoFocus className={classes.inputDarDeBaja} fullWidth label="Nombre"></TextField>
-                                </Grid>
-                            </Grid>
+                            &nbsp;
+                            <DialogContentText> Para eliminar el usuario, por favor ingrese el nombre de usuario:
+                                <p style={{fontWeight: 'bold', textAlign: 'center'}}>{usuario.nombreUsuario}</p>
+                            </DialogContentText>
+                            <AdministrarUsuario usuarioCompleto={usuario} accion="Eliminar"
+                            cerrarModal={handleClickCerrarModalDarDeBaja}
+                            />
                             </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleClickCerrarModalDarDeBaja} disabled endIcon={<DeleteIcon/>} className={classes.botonDarDeBaja}>Dar de baja</Button>
-                                <Button onClick={handleClickCerrarModalDarDeBaja} className={classes.botonCancelar}>Cancelar</Button>
-                            </DialogActions>
                         </Dialog>
                         </CardContent>
                     </CardActionArea>
@@ -115,5 +117,4 @@ const Usuario = ({usuario}) => {
         </>
      );
 }
- 
 export default Usuario;

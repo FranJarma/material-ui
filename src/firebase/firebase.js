@@ -44,6 +44,10 @@ class Firebase {
             esAdmin: esAdmin
         })
     }
+    //método para eliminar un usuario por su id
+    async eliminarUsuario(id){
+        this.db.collection('usuarios').doc(id).delete();
+    }
     //método para traer usuario por uid
     async traerUsuario(uid){
         return await this.db.collection('usuarios').where('uid', '==', uid);

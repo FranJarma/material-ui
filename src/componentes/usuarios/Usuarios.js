@@ -14,7 +14,8 @@ import { FirebaseContext } from '../../firebase';
 import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
 import Usuario from './Usuario.js';
-import NuevoUsuario from './NuevoUsuario.js';
+import AdministrarUsuario from './AdministrarUsuario.js';
+import * as CAuth from './../../constantes/auth/CAuth';
 
 const Usuarios = () => {
     const classes = useStyles();
@@ -61,7 +62,7 @@ const Usuarios = () => {
         (!cargando ? 
         <>
             <Navbar/>
-            <Typography className={classes.titulo}>Administración de usuarios</Typography>
+            <Typography className={classes.titulo}>{CAuth.ADMINISTRACION_DE_USUARIOS}</Typography>
                 &nbsp;
                 <Fab className={classes.botonAgregar} onClick={handleClickAbrirModalNuevoUsuario} aria-label="add">
                     <PersonAddIcon/> 
@@ -79,7 +80,7 @@ const Usuarios = () => {
                     aria-labelledby="form-dialog-title">
                     <div style={{backgroundColor: '#43a047'}}>
                         <Typography className={classes.tituloModal} id="form-dialog-title"
-                        >Agregar nuevo usuario
+                        >{CAuth.NUEVO_USUARIO}
                         <Typography onClick={handleClickCerrarModalNuevoUsuario}
                         className={classes.botonCerrarModal}
                         >X</Typography>
@@ -87,8 +88,8 @@ const Usuarios = () => {
                     </div>
                     <DialogContent>
                     &nbsp;
-                    <DialogContentText> Ingrese datos. Una vez ingresados se enviará un email al correo ingresado con los datos del nuevo usuario.</DialogContentText>
-                        <NuevoUsuario usuarioId="" accion="Registrar" cerrarModal={handleClickCerrarModalNuevoUsuario}/>
+                    <DialogContentText> {CAuth.NUEVO_USUARIO_MODAL}</DialogContentText>
+                        <AdministrarUsuario usuarioId="" accion="Registrar" cerrarModal={handleClickCerrarModalNuevoUsuario}/>
                     </DialogContent>
                 </Dialog>
                 {usuarios.length > 0 ? <Paginacion lista={usuarios}/> : ""}

@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
     botonDarDeBaja: {
-        backgroundColor: "#ff1744",
+        backgroundColor: "#ef5350",
         color: "#FFFFFF",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
@@ -49,9 +49,19 @@ export const useStyles = makeStyles((theme) => ({
             marginLeft: 0
         },
         "&:hover":{
-            backgroundColor: "#ff1744",
+            backgroundColor: "#ef5350",
         }
-
+    },
+    botonDarDeBajaModal: {
+        backgroundColor: "#ef5350",
+        color: "#FFFFFF",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        marginTop: "1rem",
+        "&:hover":{
+            backgroundColor: "#ef5350",
+        }
     },
     botonCerrarModal: {
         color: '#FFFFFF',
@@ -122,12 +132,12 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     inputDarDeBaja: {
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ef5350;"
+        },
         "& .MuiFormLabel-root.Mui-focused": {
-            color: "#ff1744"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#ff1744"
-        },
+            color: "#ef5350"
+        }
     },
     avatar: {
         width: "4rem",
