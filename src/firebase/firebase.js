@@ -32,6 +32,18 @@ class Firebase {
         })
         return await nuevoUsuario;
     }
+    //metodo para modificar datos del usuario por id
+    async modificarUsuario(id, nombreCompleto, nombreUsuario, email, telefono, dni, esEncargado, esAdmin){
+        this.db.collection('usuarios').doc(id).update({
+            nombreCompleto: nombreCompleto,
+            nombreUsuario: nombreUsuario,
+            email: email,
+            telefono: telefono,
+            dni: dni,
+            esEncargado: esEncargado,
+            esAdmin: esAdmin
+        })
+    }
     //método para traer usuario por uid
     async traerUsuario(uid){
         return await this.db.collection('usuarios').where('uid', '==', uid);

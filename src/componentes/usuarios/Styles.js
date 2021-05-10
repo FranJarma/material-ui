@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 25,
         textAlign: "center"
     },
-    cartausuarios: {
+    cartaUsuarios: {
         flexGrow: 1,
         marginBottom: "1rem",
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",

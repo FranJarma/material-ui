@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {Typography, Button, Select, Avatar, MenuItem, Grid, TextField, Fab, Card, CardActionArea, CardContent } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+import {Typography, Button, Avatar, Grid, TextField, Card, CardActionArea, CardContent } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,17 +8,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {useStyles} from './Styles';
+import NuevoUsuario from './NuevoUsuario';
 
 const Usuario = ({usuario}) => {
     const classes = useStyles();
-    //states para validar y concluir reservas y para el select de las playas de setacionamiento
-    const [abrirModalValidar, setAbrirModalValidar] = useState(false);
-    const handleClickAbrirModalModificar = () => {
-        setAbrirModalValidar(true);
-    };
-    const handleClickCerrarModalValidar = () => {
-        setAbrirModalValidar(false);
-    };
+    //states para los modals
     const [abrirModalDarDeBaja, setAbrirModalDarDeBaja] = useState(false);
     const handleClickAbrirModalDarDeBaja = () => {
         setAbrirModalDarDeBaja(true);
@@ -27,19 +20,21 @@ const Usuario = ({usuario}) => {
     const handleClickCerrarModalDarDeBaja = () => {
         setAbrirModalDarDeBaja(false);
     };
-
-    const [playa, setearPlaya] = useState([]);
-    const playas =[]
-    const handleChangePlaya = (event) => {
-        setearPlaya(event.target.value);
+    const [modalModificar, setAbrirModalModificar] = useState(false);
+    const handleClickAbrirModalModificar= () => {
+        setAbrirModalModificar(true);
+    };
+    const handleClickCerrarModalModificar = () => {
+        setAbrirModalModificar(false);
     };
 
+
     return ( 
-        <>
-            &nbsp;
-            <Card className = {classes.cartausuarios}>
+    <>
+        <Grid item xs={12} lg={4}>
+            <Card className = {classes.cartaUsuarios}>
                 <CardActionArea>
-                    <CardContent>
+                    <CardContent key={usuario.uid}>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Avatar className={classes.avatar}>{usuario.avatar}</Avatar>
                             <Typography className={classes.nombreCompleto}>{usuario.nombreCompleto}</Typography>
@@ -66,9 +61,10 @@ const Usuario = ({usuario}) => {
                             </div>
                         : "" }
                         <Button
+                        onClick={handleClickAbrirModalModificar}
                         endIcon={<AssignmentTurnedInIcon/>}
                         className= {classes.botonModificarDatos}
-                        onClick={handleClickAbrirModalModificar}>
+                        >
                         Modificar Datos
                         </Button>
                         <Button
@@ -77,48 +73,45 @@ const Usuario = ({usuario}) => {
                         onClick={handleClickAbrirModalDarDeBaja}>
                         Dar de baja
                         </Button>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        <Dialog open={abrirModalValidar} onClose={handleClickCerrarModalValidar} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Asignar estacionamiento</DialogTitle>
-            <DialogContent>
-            <DialogContentText> Para asignar una playa de estacionamiento, seleccione una de la lista:</DialogContentText>
-            <Select
-            fullWidth
-            displayEmpty
-            value={playa}
-            onChange={handleChangePlaya}
-            className={classes.select}
-            >
-            <MenuItem value="" disabled>Seleccione</MenuItem>
-            {playas.map((playa) => (
-                <MenuItem key={playa.id} value={playa.nombre}>
-                {playa.nombre}
-                </MenuItem>
-            ))}
-            </Select>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClickCerrarModalValidar} endIcon={<CheckIcon/>} className={classes.botonModificarDatos}>Asignar</Button>
-                <Button onClick={handleClickCerrarModalValidar} className={classes.botonCancelar}>Cancelar</Button>
-            </DialogActions>
-        </Dialog>
-        <Dialog open={abrirModalDarDeBaja} onClose={handleClickCerrarModalDarDeBaja} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Dar de baja</DialogTitle>
-            <DialogContent>
-            <DialogContentText> Para dar de baja el estacionamiento, escriba el nombre completo en el siguiente cuadro de texto:</DialogContentText>
-            <Grid container spacing={1}>
-                <Grid item xs={12} lg={12}>
-                    <TextField autoFocus className={classes.inputDarDeBaja} fullWidth label="Nombre"></TextField>
-                </Grid>
+                        <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalModificar}
+                        onClose={handleClickCerrarModalModificar}
+                        aria-labelledby="form-dialog-title">
+                            <div style={{backgroundColor: '#43a047'}}>
+                                <Typography className={classes.tituloModal} id="form-dialog-title"
+                                >Modificar usuario
+                                <Typography onClick={handleClickCerrarModalModificar}
+                                className={classes.botonCerrarModal}
+                                >X</Typography>
+                                </Typography>
+                            </div>
+                            <DialogContent>
+                            &nbsp;
+                            <DialogContentText> Ingrese los datos que desea modificar</DialogContentText>
+                            <NuevoUsuario usuarioCompleto={usuario} accion="Modificar"
+                            cerrarModal={handleClickCerrarModalModificar}
+                            />
+                            </DialogContent>
+                        </Dialog>
+                        <Dialog open={abrirModalDarDeBaja} onClose={handleClickCerrarModalDarDeBaja}
+                        aria-labelledby="form-dialog-title">
+                            <DialogTitle id="form-dialog-title">Dar de baja</DialogTitle>
+                            <DialogContent>
+                            <DialogContentText> Para dar de baja el estacionamiento, escriba el nombre completo en el siguiente cuadro de texto:</DialogContentText>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} lg={12}>
+                                    <TextField autoFocus className={classes.inputDarDeBaja} fullWidth label="Nombre"></TextField>
+                                </Grid>
+                            </Grid>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClickCerrarModalDarDeBaja} disabled endIcon={<DeleteIcon/>} className={classes.botonDarDeBaja}>Dar de baja</Button>
+                                <Button onClick={handleClickCerrarModalDarDeBaja} className={classes.botonCancelar}>Cancelar</Button>
+                            </DialogActions>
+                        </Dialog>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
             </Grid>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClickCerrarModalDarDeBaja} disabled endIcon={<DeleteIcon/>} className={classes.botonDarDeBaja}>Dar de baja</Button>
-                <Button onClick={handleClickCerrarModalDarDeBaja} className={classes.botonCancelar}>Cancelar</Button>
-            </DialogActions>
-        </Dialog>
         </>
      );
 }

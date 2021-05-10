@@ -1,8 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import Navbar from '../diseño/Navbar.js';
-import { Typography, Fab} from '@material-ui/core';
+import { Typography, Fab, Grid} from '@material-ui/core';
 import Paginacion from '../diseño/Paginacion.js';
-import AddIcon from '@material-ui/icons/Add';
 import Footer from '../diseño/Footer.js';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -68,25 +67,28 @@ const Usuarios = () => {
                     <PersonAddIcon/> 
                 </Fab>
                 <Typography className={classes.cantidad}>Total de usuarios: {usuarios.length}</Typography>
-                    {usuarios.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(usuario =>(
-                    <>
-                        <Usuario key={usuario.id} usuario={usuario}/>
-                    </>
-                    ))}
+                    <Grid container>
+                        {usuarios.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(usuario =>(
+                        <>
+                            <Usuario key={usuario.uid} usuario={usuario}/>
+                        </>
+                        ))}
+                    </Grid>
                 <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalNuevoUsuario}
                     onClose={handleClickCerrarModalNuevoUsuario}
                     aria-labelledby="form-dialog-title">
                     <div style={{backgroundColor: '#43a047'}}>
                         <Typography className={classes.tituloModal} id="form-dialog-title"
                         >Agregar nuevo usuario
-                        <Typography onClick={handleClickCerrarModalNuevoUsuario} className={classes.botonCerrarModal}
+                        <Typography onClick={handleClickCerrarModalNuevoUsuario}
+                        className={classes.botonCerrarModal}
                         >X</Typography>
                         </Typography>
                     </div>
                     <DialogContent>
                     &nbsp;
                     <DialogContentText> Ingrese datos. Una vez ingresados se enviará un email al correo ingresado con los datos del nuevo usuario.</DialogContentText>
-                        <NuevoUsuario cerrarModal={handleClickCerrarModalNuevoUsuario}/>
+                        <NuevoUsuario usuarioId="" accion="Registrar" cerrarModal={handleClickCerrarModalNuevoUsuario}/>
                     </DialogContent>
                 </Dialog>
                 {usuarios.length > 0 ? <Paginacion lista={usuarios}/> : ""}

@@ -10,6 +10,7 @@ export const CERRAR_SESION = 'Cerrar Sesión';
 
 //mensajes de sweet alert y toast
 export const REGISTRO_EXITOSO = 'Se ha registrado el usuario correctamente';
+export const USUARIO_MODIFICADO = 'Los datos del usuario han sido modificados correctamente';
 export const SE_HA_ENVIADO_CORREO = 'Se ha enviado un correo electrónico a la dirección ingresada. Por favor, siga los pasos para poder recuperar su contraseña';
 
 //mensajes de alerts
