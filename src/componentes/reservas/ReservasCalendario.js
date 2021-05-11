@@ -16,55 +16,7 @@ import * as CGeneral from './../../constantes/general/CGeneral';
 import * as CReservas from './../../constantes/reservas/CReservas';
 import { FirebaseContext } from '../../firebase';
 import Toast from './../diseño/Toast';
-
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    inputFecha: {
-        width: "20rem",
-        fontFamily: "Roboto Condensed, sans-serif",
-        height:"3rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    botonConsultar: {
-        backgroundColor: "#4db6ac",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 15,
-        marginTop: "0.7rem",
-        "&:hover":{
-            backgroundColor: "#4db6ac",
-        }
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    cantidad: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 18,
-        textTransform: "uppercase",
-        marginLeft: "1rem",
-        fontWeight: "bold",
-        marginBottom: "2rem"
-    }
-}));
+import {useStyles} from './Styles';
 
 const ReservasCalendario = () => {
     const [fecha, setFecha] = useState(null);

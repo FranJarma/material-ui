@@ -13,75 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
-
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18,
-        color:"#424242",
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    cartaMiEstacionamiento: {
-        flexGrow: 1,
-        paddingLeft: 20,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    input: {
-        paddingRight: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    select: {
-        '&:after': {
-            borderColor: "#4db6ac",
-        }
-    },
-    botonModificarDatos: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        marginTop: "2rem",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    chips: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    chip: {
-        margin: 2,
-    },
-    labelSelect: {
-        fontSize: "0.8rem"
-    },
-    labelCheckbox: {
-        fontSize: "0.8rem"
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-}));
+import {useStyles} from './Styles';
 
 const Estacionamiento = () => {
     //states para los campos de fechas y horas y para los días de la semana y para las provincias

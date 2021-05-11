@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import {useStyles} from './Styles';
 import AdministrarUsuario from './AdministrarUsuario';
+import * as CAuth from './../../constantes/auth/CAuth';
 
 const Usuario = ({usuario}) => {
     const classes = useStyles();
@@ -83,7 +84,7 @@ const Usuario = ({usuario}) => {
                             </div>
                             <DialogContent>
                             &nbsp;
-                            <DialogContentText> Ingrese los datos que desea modificar</DialogContentText>
+                            <DialogContentText>{CAuth.MODIFICAR_USUARIO_MODAL} </DialogContentText>
                             <AdministrarUsuario usuarioCompleto={usuario} accion="Modificar"
                             cerrarModal={handleClickCerrarModalModificar}
                             />
@@ -102,7 +103,7 @@ const Usuario = ({usuario}) => {
                             </div>
                             <DialogContent>
                             &nbsp;
-                            <DialogContentText> Para eliminar el usuario, por favor ingrese el nombre de usuario:
+                            <DialogContentText> {CAuth.ELIMINAR_USUARIO_MODAL}
                                 <p style={{fontWeight: 'bold', textAlign: 'center'}}>{usuario.nombreUsuario}</p>
                             </DialogContentText>
                             <AdministrarUsuario usuarioCompleto={usuario} accion="Eliminar"

@@ -7,52 +7,7 @@ import Footer from '../diseño/Footer.js';
 import useInfoUsuario from '../../hooks/useInfoUsuario.js';
 import InputMask from 'react-input-mask';
 import * as CGeneral from '../../constantes/general/CGeneral';
-
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18,
-        color:"#424242",
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    cartaReservas: {
-        flexGrow: 1,
-        paddingLeft: 20,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    input: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        paddingRight: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    botonModificarDatos: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        marginTop: "2rem",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-}));
+import {useStyles} from './Styles';
 
 const DatosPersonales = () => {
     const usuarioInfo = useInfoUsuario();

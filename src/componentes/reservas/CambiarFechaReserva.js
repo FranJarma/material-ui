@@ -8,93 +8,8 @@ import {
 } from '@material-ui/pickers';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
-
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 16,
-        color:"#424242",
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    inputCodigo: {
-        width: "20rem",
-        fontFamily: "Roboto Condensed, sans-serif",
-        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#rgba(0, 0, 0, 0.23)",
-        },
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    cartaReservas: {
-        flexGrow: 1,
-        paddingLeft: 20,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    botonConsultar: {
-        backgroundColor: "#4db6ac",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 15,
-        marginTop: "0.7rem",
-        "&:hover":{
-            backgroundColor: "#4db6ac",
-        }
-    },
-    botonCambiarReserva: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        marginTop: "2rem",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    label: {
-        fontSize: "0.8rem",
-        paddingBottom: "0.25rem"
-    },
-    select: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        paddingRight: "1rem",
-        '&:after': {
-            borderColor: "#4db6ac",
-        }
-    },
-    input: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        paddingRight: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-}));
+import {useStyles} from './Styles';
+import * as CReservas from './../../constantes/reservas/CReservas';
 
 const CambiarFechaReserva = () => {
     const classes = useStyles();
@@ -124,14 +39,9 @@ const CambiarFechaReserva = () => {
     return ( 
         <>  
         <Navbar/>
-        <Typography className={classes.titulo}>Cambiar fecha de reservas</Typography>
+        <Typography className={classes.titulo}>{CReservas.CAMBIAR_FECHA_RESERVAS}</Typography>
         &nbsp;
-            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá cambiar la fecha de una reserva según su código en caso de 
-            que el cliente no pueda utlizarla. Además podrá:
-                <ul>
-                    <li>Imprimir un ticket o constancia para que el cliente pueda presentarlo en el establecimiento.</li>
-                    <li>Liberar el lugar asignado al cliente para que otra persona pueda utilizarlo.</li>
-                </ul>
+            <Alert className={classes.alerta} severity="info" variant="filled">{CReservas.ALERTA_CAMBIAR_FECHA}
             </Alert>
         &nbsp;
         <form className={classes.container}>

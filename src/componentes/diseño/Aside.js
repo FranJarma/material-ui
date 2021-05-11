@@ -136,16 +136,6 @@ const Aside = () => {
             &nbsp;
             <Divider></Divider>
             <List>
-                <Link to={'/nueva-cuenta'} className={classes.titulosMenu}>
-                <ListItem button>
-                    <ListItemIcon>
-                        <EqualizerIcon className={classes.iconos}/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        Agregar nueva cuenta
-                    </ListItemText>
-                </ListItem>
-                </Link>
                 <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>
                         <CommuteIcon className={classes.iconos}/>

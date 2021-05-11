@@ -16,10 +16,12 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: "1rem"
     },
     select: {
-        '&:after': {
-            borderColor: "#4db6ac",
-        }
+        marginBottom: '1rem',
+        marginTop: '1rem'
     },
+    formControl: {
+        minWidth: '100%',
+      },
     botonModificarDatos: {
         backgroundColor: "#448aff",
         color: "#ffffff",

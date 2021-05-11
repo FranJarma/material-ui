@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, Checkbox, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Checkbox, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import CheckIcon from '@material-ui/icons/Check';
+import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import * as CGeneral from '../../constantes/general/CGeneral';
 import * as CAuth from '../../constantes/auth/CAuth';
@@ -48,10 +49,14 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
         }
     }
     //state para manejar los checkbox
-    const [checkAdmin, setcheckAdmin] = useState(false);
+    const [check, setCheck] = useState({
+        esAdmin: false,
+        esEncargado: false
+    });
     const handleChangeCheckBox = (event) => {
-        setcheckAdmin(event.target.checked);
+        setCheck({...check, [event.target.name] : event.target.checked})
     }
+    const {esAdmin, esEncargado} = check;
     //state para manejar el botón de dar de baja
     const [deshabilitado, setearDeshabilitado] = useState(true);
     // use effect para cargar los campos al querer modificar un usuario
@@ -65,7 +70,10 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
                 telefono: usuarioCompleto.telefono,
                 dni: usuarioCompleto.dni
             })
-            setcheckAdmin(usuarioCompleto.esAdmin)
+            setCheck({
+                esAdmin: usuarioCompleto.esAdmin,
+                esEncargado: usuarioCompleto.esEncargado
+            })
         }
     }, [guardarUsuario])
     //función para registrar usuario
@@ -86,9 +94,9 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
                 Toast(CGeneral.VALIDACION_TELEFONO)
             }
             else{
-                await firebase.registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña, !checkAdmin,
+                await firebase.registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña, esEncargado,
                 new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear(),
-                telefono, dni, checkAdmin);
+                telefono, dni, esAdmin);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.REGISTRO_EXITOSO);
                 cerrarModal();
             }
@@ -118,9 +126,9 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
             else{
                 //hay que pasarle el id del documento
                 await firebase.modificarUsuario(usuarioCompleto.id, nombreCompleto,
-                nombreUsuario, email, telefono, dni, !checkAdmin, checkAdmin);
-                cerrarModal();
+                nombreUsuario, email, telefono, dni, esEncargado, esAdmin);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.USUARIO_MODIFICADO);
+                cerrarModal();
             }
         }
         catch (error) {
@@ -253,8 +261,16 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
                     <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap',
                     marginTop: '1rem'}}>
                         <Checkbox
-                        color="primary" checked={checkAdmin} name="esAdmin" onChange={handleChangeCheckBox}></Checkbox>
+                        color="primary" checked={esAdmin} name="esAdmin" onChange={handleChangeCheckBox}></Checkbox>
                         <Typography className={classes.subtitulos}>Es admin</Typography>
+                    </div>
+                </Grid>
+                <Grid item >
+                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap',
+                    marginTop: '0.5rem', marginBottom: '1rem'}}>
+                        <Checkbox
+                        color="primary" checked={esEncargado} name="esEncargado" onChange={handleChangeCheckBox}></Checkbox>
+                        <Typography className={classes.subtitulos}>Es encargado</Typography>
                     </div>
                 </Grid>
                 <Button onClick={accion === "Registrar" ? registrarUsuario : modificarUsuario}
@@ -278,7 +294,7 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
         <Button onClick={eliminarUsuario}
         fullWidth
         disabled = {deshabilitado ? true : false}
-        endIcon={<CheckIcon/>}
+        endIcon={<DeleteIcon/>}
         className={classes.botonDarDeBajaModal}>Dar de baja</Button>
     </Grid>)
 );

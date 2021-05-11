@@ -10,67 +10,7 @@ import Paginacion from './../diseño/Paginacion.js';
 import PaginacionContext from './../../context/paginacion/paginacionContext';
 import Spinner from '../diseño/Spinner.js';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
-
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    valoracion: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 20,
-        textTransform: "uppercase",
-        marginLeft: "1rem",
-        fontWeight: "bold"
-    },
-    mostrarTodas: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 12,
-        marginLeft: "1rem",
-        fontWeight: "bold"
-    },
-    cartaComentarios: {
-        flexGrow: 1,
-        marginBottom: "1rem",
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        backgroundColor: theme.palette.background.paper,
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    comentario: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        marginLeft: "0.5rem",
-        fontSize: 16
-    },
-    observaciones: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#9e9e9e",
-        marginLeft: "0.5rem",
-        fontSize: 16
-    },
-    cantidad: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#9e9e9e",
-        marginLeft: "1rem",
-        fontSize: 14
-    },
-    votosPositivos: {
-        color: "#4db6ac"
-    },
-    votosNegativos: {
-        color: "#ff1744"
-    }
-}));
+import {useStyles} from './Styles';
 
 const Comentarios = () => {
     const classes = useStyles();

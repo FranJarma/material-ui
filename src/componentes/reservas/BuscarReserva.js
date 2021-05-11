@@ -10,32 +10,9 @@ import SpinnerContext from '../../context/spinner/spinnerContext.js';
 import Spinner from '../diseño/Spinner.js';
 import * as CReservas from './../../constantes/reservas/CReservas';
 import Reserva from './Reserva.js';
+import {useStyles} from './Styles';
 
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    cantidad: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 18,
-        textTransform: "uppercase",
-        marginLeft: "1rem",
-        fontWeight: "bold",
-        marginBottom: "2rem"
-    },
-}));
-
-const Buscar = () => {
+const BuscarReserva = () => {
     const classes = useStyles();
     const reservas = [
         {
@@ -114,4 +91,4 @@ const Buscar = () => {
     : <Spinner></Spinner>)
     );
 }
-export default Buscar;
+export default BuscarReserva;

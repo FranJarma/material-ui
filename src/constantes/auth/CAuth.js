@@ -18,6 +18,9 @@ export const SE_HA_ENVIADO_CORREO = 'Se ha enviado un correo electrónico a la d
 //mensajes de alerts
 export const ENVIAREMOS_MAIL = 'Le enviaremos un email al correo electrónico ingresado con los pasos a seguir. Dicho email contiene un link de recuperación para que pueda modificar su contraseña.';
 export const NUEVO_USUARIO_MODAL = 'Ingrese datos. Una vez ingresados se enviará un email al correo ingresado con los datos del nuevo usuario.';
+export const MODIFICAR_USUARIO_MODAL = 'Ingrese los datos que desea modificar:';
+export const ELIMINAR_USUARIO_MODAL = 'Para eliminar el usuario, por favor ingrese el nombre de usuario:';
+
 //mensajes de spinners
 export const INICIANDO_SESION = 'Iniciando sesión...'
 export const CERRANDO_SESION = 'Cerrando sesión...'

@@ -12,30 +12,7 @@ import { FirebaseContext } from '../../firebase';
 import * as CReservas from './../../constantes/reservas/CReservas';
 import Reserva from './Reserva';
 import Toast from './../diseño/Toast';
-
-const useStyles = makeStyles((theme) => ({
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    cantidad: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 18,
-        textTransform: "uppercase",
-        marginLeft: "1rem",
-        fontWeight: "bold",
-        marginBottom: "2rem"
-    },
-}));
+import {useStyles} from './Styles';
 
 const ReservasHoy = () => {
     const classes = useStyles();

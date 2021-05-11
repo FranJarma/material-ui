@@ -1,5 +1,6 @@
 export const RESERVAS_HOY = 'Reservas del día de hoy';
 export const CALENDARIO_RESERVAS = 'Calendario de reservas';
+export const CAMBIAR_FECHA_RESERVAS = 'Cambiar fecha de reservas';
 export const TOTAL_RESERVAS ='Total de reservas:';
 export const TOTAL_RESERVAS_ENCONTRADAS ='Total de reservas encontradas:';
 
@@ -22,3 +23,4 @@ export const ALERTA_PRINCIPAL = 'En esta pantalla usted podrá ver todas aquella
 export const SUB_ALERTA1 = 'Validar una reserva para registrar el horario de ingreso del cliente al establecimiento.';
 export const SUB_ALERTA2 = 'Concluir una reserva para registrar el horario de salida del cliente del establecimiento.';
 export const ALERTA_CALENDARIO = 'En esta pantalla usted podrá ver todas aquellas reservas hechas en una fecha determinada por usuarios registrados.';
+export const ALERTA_CAMBIAR_FECHA = 'En esta pantalla usted podrá cambiar la fecha de una reserva según su código en caso de que el cliente no pueda utlizarla.'
