@@ -64,6 +64,26 @@ class Firebase {
     async recuperarContraseña(email){
         return this.auth.sendPasswordResetEmail(email);
     }
+//MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
+    //método para registrar nuevo estacionamiento
+    async registrarEstacionamiento(nombreCompleto, nSucursal, provincia, departamento, telefono, cuit, 
+        horario, diasApertura, tarifas, latitud, longitud, encargado, valoracion){
+        this.db.collection('estacionamientos').add({
+            nombreCompleto: nombreCompleto,
+            nSucursal: nSucursal,
+            provincia: provincia,
+            departamento: departamento,
+            telefono: telefono,
+            cuit: cuit,
+            horario: horario,
+            diasApertura: diasApertura,
+            tarifas: tarifas,
+            latitud: latitud,
+            longitud: longitud,
+            encargado: encargado,
+            valoracion: valoracion
+        })
+    }
 }
 const firebase = new Firebase();
 export default firebase;

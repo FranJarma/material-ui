@@ -1,235 +1,116 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../diseño/Navbar.js';
-import { List, makeStyles,
-Typography, Button, TextField, Grid, Select, Checkbox } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
-import Footer from '../diseño/Footer.js';
-import {
-    KeyboardTimePicker,
-  } from '@material-ui/pickers';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
-import Alert from '@material-ui/lab/Alert';
-import axios from 'axios';
+import React, {useState} from 'react';
+import { Typography, Button, Card, Grid, CardActionArea, CardContent, Avatar } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import {useStyles} from './Styles';
+import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
+import AdministrarEstacionamiento from './AdministrarEstacionamiento';
 
-const Estacionamiento = () => {
-    //states para los campos de fechas y horas y para los días de la semana y para las provincias
-    const [horaApertura, setearHoraIngreso] = useState(new Date());
-    const handleCambiarHoraApertura = (horaApertura) => {
-        setearHoraIngreso(horaApertura);
+const Estacionamiento = ({estacionamiento}) => {
+    //states para los modals
+    const [modalDarDeBaja, setAbrirModalDarDeBaja] = useState(false);
+    const handleClickAbrirModalDarDeBaja = () => {
+        setAbrirModalDarDeBaja(true);
     };
-    const [horaCierre, setearHoraCierre] = useState(new Date());
-    const handleCambiarHoraCierre = (horaCierre) => {
-        setearHoraCierre(horaCierre);
+    const handleClickCerrarModalDarDeBaja = () => {
+        setAbrirModalDarDeBaja(false);
     };
-
-    const [dia, setearDia] = useState([]);
-
-    const handleChangeDia = (event) => {
-        setearDia(event.target.value);
+    const [modalModificar, setAbrirModalModificar] = useState(false);
+    const handleClickAbrirModalModificar= () => {
+        setAbrirModalModificar(true);
     };
-    
-    const [provincias, setearProvincias] = useState([]);
-    const dias = [
-        'Lunes',
-        'Martes',
-        'Miercoles',
-        'Jueves',
-        'Viernes',
-        'Sábado',
-        'Domingo',
-    ];
-    //state para manejar la provincia seleccionada al cambiar el elemento del select
-    const [provinciaSeleccionada, setearProvinciaSeleccionada] = useState([]);
-    const handleChangeSelectProvincia = (event) => {
-        setearProvinciaSeleccionada(event.target.value);
+    const handleClickCerrarModalModificar = () => {
+        setAbrirModalModificar(false);
     };
-    //state para manejar los checkbox
-    var [state, setState] = useState({
-        todosLosDias: false,
-        horarioCorrido: false
-    });
-    const handleChangeCheckBox = (event) => {
-        setState({
-            ...state,
-            [event.target.name]: event.target.checked
-        });
-    }
-    const {
-        todosLosDias,
-        horarioCorrido
-    } = state;
-    //función para consultar a la api de provincias y traer los datos
-    useEffect(()=>{
-        axios.get(`https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.2/download/provincias.json`)
-        .then(res => {
-            const resultado = res.data;
-            setearProvincias(resultado.provincias);
-            console.log(resultado);
-        });
-    },[setearProvincias]);
-
     const classes = useStyles();
     return ( 
-        <>  
-        <Navbar/>
-        <Typography className={classes.titulo}>Mi Estacionamiento</Typography>
-        &nbsp;
-            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá ver y modificar los datos de su playa de estacionamiento. Es decir:
-             <ul>
-                 <li>Datos propios del establecimiento (nombre, dirección, n° de teléfono, etc).</li>
-                 <li>Horarios de apertura y cierre y días de atención.</li>
-                 <li>Ubicación georeferenciada.</li>
-            </ul>
-            </Alert>
-        &nbsp;
-        <List className={classes.cartaMiEstacionamiento}>
-        &nbsp;
-        <Typography className={classes.subtitulos}>Datos de la playa de estacionamiento</Typography>
-        &nbsp;
-            <Grid container spacing={3}>
-                <Grid item sm={12} xs={12}>
-                <TextField
-                className={classes.input}
-                label="Nombre Completo"
-                variant="standard"
-                fullWidth
-                autoFocus
-                value="Playa de estacionamiento del convento"
-                />
-                </Grid>
-                <Grid item sm={11} xs={11}>
-                <InputLabel className={classes.labelSelect}>Provincia</InputLabel>
-                <Select
-                className={classes.select}
-                value={provinciaSeleccionada}
-                displayEmpty
-                onChange={handleChangeSelectProvincia}
-                variant="standard"
-                fullWidth
-                >
-                <MenuItem value="" disabled>Seleccione</MenuItem>
-                {provincias.map((provincia) => (
-                    <MenuItem key={provincia.id} value={provincia.nombre}>
-                        {provincia.nombre}
-                    </MenuItem>
-                ))}
-                </Select>
-                </Grid>
-                <Grid item sm={6} xs={6} >
-                <TextField
-                className={classes.input}
-                label="N° de teléfono"
-                variant="standard"
-                value="4224256"
-                fullWidth
-                />
-                </Grid>
-                <Grid item sm={6} xs={6} >
-                <TextField
-                className={classes.input}
-                label="CUIT"
-                variant="standard"
-                value="25405245125"
-                fullWidth
-                />
-                </Grid>
+        <>
+        <Grid item xs={12} lg={4}>
+            <Card className = {classes.cartaEstacionamientos}>
+                <CardActionArea>
+                    <CardContent key={estacionamiento.uid}>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Avatar className={classes.avatar}>{estacionamiento.avatar}</Avatar>
+                            <Typography className={classes.nombreCompleto}>{estacionamiento.nombreCompleto}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Telefono: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.telefono}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Horario: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.horario}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Días de apertura: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.diasApertura.toString()}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Valoración: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.valoracion}</Typography>
+                        </div>
+                        <Button
+                        onClick={handleClickAbrirModalModificar}
+                        endIcon={<AssignmentTurnedInIcon/>}
+                        className= {classes.botonModificarDatos}
+                        >
+                        Modificar Datos
+                        </Button>
+                        <Button
+                        endIcon={<DeleteIcon/>}
+                        className= {classes.botonDarDeBaja}
+                        onClick={handleClickAbrirModalDarDeBaja}>
+                        Dar de baja
+                        </Button>
+                        <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalModificar}
+                        onClose={handleClickCerrarModalModificar}
+                        aria-labelledby="form-dialog-title">
+                            <div style={{backgroundColor: '#43a047'}}>
+                                <Typography className={classes.tituloModal} id="form-dialog-title"
+                                >Modificar estacionamiento
+                                <Typography onClick={handleClickCerrarModalModificar}
+                                className={classes.botonCerrarModal}
+                                >X</Typography>
+                                </Typography>
+                            </div>
+                            <DialogContent>
+                            &nbsp;
+                            <DialogContentText>{CEstacionamientos.MODIFICAR_ESTACIONAMIENTO_MODAL} </DialogContentText>
+                            <AdministrarEstacionamiento estacionamientoCompleto={estacionamiento} accion="Modificar"
+                            cerrarModal={handleClickCerrarModalModificar}
+                            />
+                            </DialogContent>
+                        </Dialog>
+                        <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalDarDeBaja}
+                        onClose={handleClickCerrarModalDarDeBaja}
+                        aria-labelledby="form-dialog-title">
+                            <div style={{backgroundColor: '#ef5350'}}>
+                                <Typography className={classes.tituloModal} id="form-dialog-title"
+                                >Eliminar estacionamiento
+                                <Typography onClick={handleClickCerrarModalDarDeBaja}
+                                className={classes.botonCerrarModal}
+                                >X</Typography>
+                                </Typography>
+                            </div>
+                            <DialogContent>
+                            &nbsp;
+                            <DialogContentText> {CEstacionamientos.ELIMINAR_ESTACIONAMIENTO_MODAL}
+                                <p style={{fontWeight: 'bold', textAlign: 'center'}}>{estacionamiento.nombreCompleto}</p>
+                            </DialogContentText>
+                            <AdministrarEstacionamiento estacionamientoCompleto={estacionamiento} accion="Eliminar"
+                            cerrarModal={handleClickCerrarModalDarDeBaja}
+                            />
+                            </DialogContent>
+                        </Dialog>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
             </Grid>
-            &nbsp;
-        <Typography className={classes.subtitulos}>Horarios y fechas</Typography>
-        &nbsp;
-            <Grid container spacing={3}>
-                { !horarioCorrido ?
-                <>
-                <Grid item sm={6} xs={6} >
-                <KeyboardTimePicker
-                className={classes.input}
-                fullWidth
-                label="Apertura"
-                value={horaApertura}
-                onChange={handleCambiarHoraApertura}
-                KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                }}
-                />  
-                </Grid>
-                <Grid item sm={6} xs={6} >
-                <KeyboardTimePicker
-                className={classes.input}
-                fullWidth
-                label="Cierre"
-                value={horaCierre}
-                onChange={handleCambiarHoraCierre}
-                KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                }}
-                />
-                </Grid>
-                </>
-                : ""}
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <Checkbox color="primary" name="horarioCorrido" onChange={handleChangeCheckBox}></Checkbox>
-                    <Typography className={classes.subtitulos}>Horario corrido</Typography>
-                </div>
-                { !todosLosDias ?
-                <>
-                <Grid item sm={11} xs={11}>
-                <InputLabel className={classes.labelSelect}>Días de apertura (Seleccione uno o varios)</InputLabel>
-                <Select
-                fullWidth
-                className={classes.select}
-                displayEmpty
-                multiple
-                value={dia}
-                onChange={handleChangeDia}
-                input={<Input/>}
-                renderValue={(selected) => (
-                    <div className={classes.chips}>
-                    {selected.map((value) => (
-                        <Chip key={value} label={value} className={classes.chip} />
-                    ))}
-                    </div>
-                )}
-                >
-                <MenuItem value="" disabled>Seleccione uno o varios</MenuItem>
-                {dias.map((dia) => (
-                    <MenuItem key={dia} value={dia}>
-                    {dia}
-                    </MenuItem>
-                    
-                ))}
-                </Select>
-                </Grid>
-                </>
-                : ""}
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <Checkbox color="primary" name="todosLosDias" onChange={handleChangeCheckBox}></Checkbox>
-                    <Typography className={classes.subtitulos}>Todos los días</Typography>
-                </div>  
-            </Grid>
-        &nbsp;
-        <Typography className={classes.subtitulos}>Ubicación</Typography>
-            <Grid container spacing={3}>
-                <Grid item sm={11} xs={11}>
-                <Select
-                fullWidth
-                className={classes.select}
-                />
-                </Grid>
-            </Grid>
-            &nbsp;
-            <Button
-                endIcon={<CheckIcon/>}
-                className= {classes.botonModificarDatos}>Modificar datos
-            </Button>
-        </List>
-        &nbsp;
-        <Footer/>
-    </>
-     );
+        </>
+        );
 }
  
 export default Estacionamiento;

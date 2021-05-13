@@ -1,4 +1,5 @@
 import {makeStyles} from '@material-ui/core';
+
 export const useStyles = makeStyles((theme) => ({
     titulo: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -6,22 +7,7 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 25,
         textAlign: "center"
     },
-    valoracion: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 20,
-        textTransform: "uppercase",
-        marginLeft: "1rem",
-        fontWeight: "bold"
-    },
-    mostrarTodas: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 12,
-        marginLeft: "1rem",
-        fontWeight: "bold"
-    },
-    cartaComentarios: {
+    cartaEstacionamientos: {
         flexGrow: 1,
         marginBottom: "1rem",
         boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
@@ -29,112 +15,12 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: "1rem",
         marginRight: "1rem"
     },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    comentario: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        marginLeft: "0.5rem",
-        fontSize: 16
-    },
-    observaciones: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#9e9e9e",
-        marginLeft: "0.5rem",
-        fontSize: 16
-    },
-    cantidad: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#9e9e9e",
-        marginLeft: "1rem",
-        fontSize: 14
-    },
-    votosPositivos: {
-        color: "#4db6ac"
-    },
-    votosNegativos: {
-        color: "#ff1744"
-    },
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18,
-        color:"#424242",
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    cartaReservas: {
-        flexGrow: 1,
-        paddingLeft: 20,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    input: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        paddingRight: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    botonModificarDatos: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        marginTop: "2rem",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18,
-        color:"#424242",
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    cartaMiEstacionamiento: {
-        flexGrow: 1,
-        paddingLeft: 20,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    input: {
-        paddingRight: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
+    formControl: {
+        minWidth: '100%',
     },
     select: {
         '&:after': {
-            borderColor: "#4db6ac",
+            borderColor: "#43a047",
         }
     },
     botonModificarDatos: {
@@ -142,67 +28,18 @@ export const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginTop: "2rem",
         fontSize: 15,
+        marginTop: "1rem",
+        [theme.breakpoints.down('xs')]:{
+            width: "100%"
+        },
         "&:hover":{
             backgroundColor: "#448aff",
         }
     },
-    chips: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    chip: {
-        margin: 2,
-    },
-    labelSelect: {
-        fontSize: "0.8rem"
-    },
-    labelCheckbox: {
-        fontSize: "0.8rem"
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    cartaEncargados: {
-        flexGrow: 1,
-        marginBottom: "1rem",
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        backgroundColor: theme.palette.background.paper,
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18,
-        color:"#424242",
-    },
-    select: {
-        '&:after': {
-            borderColor: "#4db6ac",
-        }
-    },
-    input: {
-        paddingRight: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    botonAgregar: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
+    botonDarDeBaja: {
+        backgroundColor: "#ef5350",
+        color: "#FFFFFF",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
@@ -215,35 +52,51 @@ export const useStyles = makeStyles((theme) => ({
             marginLeft: 0
         },
         "&:hover":{
-            backgroundColor: "#448aff",
+            backgroundColor: "#ef5350",
         }
     },
-    labelSelect: {
-        fontSize: "0.8rem"
-    },
-    botonDarDeBaja: {
-        backgroundColor: "#ff1744",
+    botonDarDeBajaModal: {
+        backgroundColor: "#ef5350",
         color: "#FFFFFF",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 15,
         marginTop: "1rem",
-        [theme.breakpoints.down('xs')]:{
-            width: "100%"
-        },
         "&:hover":{
-            backgroundColor: "#ff1744",
+            backgroundColor: "#ef5350",
         }
-
+    },
+    botonCerrarModal: {
+        color: '#FFFFFF',
+        cursor: 'pointer',
+        float: "right",
+        fontFamily: "Roboto Condensed, sans-serif",
+        fontWeight: "bold",
+        marginRight: '1rem'
+    },
+    tituloModal: {
+        color: '#FFFFFF',
+        fontFamily: "Roboto Condensed, sans-serif",
+        fontSize: 20,
+        marginTop: '1rem',
+        marginBottom: '1rem',
+        marginLeft: '1.5rem'
     },
     botonCancelar: {
         color: "#000000",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        marginLeft: "auto",
-        marginTop: "1rem",
         fontSize: 15,
-        alignContent: "auto"
+        marginRight: '8rem',
+        [theme.breakpoints.up('md')]:{
+            marginTop: '-68px'
+        },
+        [theme.breakpoints.down('md')]:{
+            marginTop: '-65px'
+        },
+        [theme.breakpoints.down('xs')]:{
+            display: 'none'
+        },
     },
     nombreCompleto: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -256,6 +109,9 @@ export const useStyles = makeStyles((theme) => ({
     camposTitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#9e9e9e",
+        [theme.breakpoints.up('md')]:{
+            marginLeft: "5rem"
+        },
         fontWeight: "bold",
         padding: "0.1rem",
         fontSize: 16,
@@ -263,28 +119,37 @@ export const useStyles = makeStyles((theme) => ({
     campos: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#9e9e9e",
+        [theme.breakpoints.up('md')]:{
+            marginLeft: "0.5rem",
+        },
         fontSize: 15,
         display: "flex",
         flexWrap: "wrap"
     },
-    inputDarDeBaja: {
+    input: {
         "& .MuiFormLabel-root.Mui-focused": {
-            color: "#ff1744"
+            color: "#43a047"
         },
         "& .MuiInput-underline:after": {
-            borderBottomColor: "#ff1744"
+            borderBottomColor: "#43a047"
         },
+    },
+    inputDarDeBaja: {
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ef5350;"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#ef5350"
+        }
     },
     avatar: {
         width: "4rem",
         height: "4rem"
     },
-    botonAgregarPlaya: {
+    botonAgregar: {
         backgroundColor: "#43a047",
         fontFamily: "Roboto Condensed, sans-serif",
         float:"right",
-        marginTop: "1rem",
-        marginRight: "1rem",
         color: "#FFFFFF",
         "&:hover": {
             backgroundColor: "#43a047"
@@ -299,157 +164,70 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         marginBottom: "2rem"
     },
-    titulo: {
+    cartaNuevoUsuario: {
+        [theme.breakpoints.up('lg')]:{
+            margin:"auto",
+            height: 750,
+            width: 600,
+            marginTop: "2rem",
+        },
+        [theme.breakpoints.down('md')]:{
+            margin: "auto",
+            height: 750,
+            width: 450,
+            marginTop: "3rem",
+        },
+        boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+    },
+    cartaEncabezado: {
+        backgroundColor: "#4db6ac",
+    },
+    icono: {
+        color: "#ffffff",
+        float:"right",
+    },
+    tituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
+        color: "#ffffff",
+        fontSize: 30
     },
-    cartaLugares: {
-        flexGrow: 1,
-        marginBottom: "1rem",
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        backgroundColor: theme.palette.background.paper,
-        marginLeft: "1rem",
-        marginRight: "1rem"
+    subtituloCarta:{
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#ffffff",
+        fontSize: 15
     },
-    botonAgregarLugar: {
-        backgroundColor: "#43a047",
-        float:"right",
-        marginTop: "1rem",
-        marginRight: "1rem",
-        color: "#FFFFFF",
-        "&:hover": {
-            backgroundColor: "#43a047"
+    botonVolver: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        fontSize: 15,
+        marginLeft: 20,
+        width: "90%",
+        "&:hover":{
+            backgroundColor: "#f5f5f5"
         }
     },
-    botonCancelar: {
-        color: "#000000",
+    inputNuevoEstacionamiento: {
         fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#rgba(0, 0, 0, 0.23);"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#43a047;"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#43a047"
+        }
+    },
+    logo: {
+        marginTop: "1rem",
         marginLeft: "auto",
-        alignContent: "auto"
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
-    input: {
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#448aff"
+        marginRight: "auto",
+        display: "block",
+        [theme.breakpoints.down('lg')]:{
+            width: 200,
         },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#448aff"
+        [theme.breakpoints.up('lg')]:{
+            width: 250,
         },
-    },
-    camposTitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#9e9e9e",
-        fontWeight: "bold",
-        padding: "0.1rem",
-        fontSize: 16,
-    },
-    campos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#9e9e9e",
-        fontSize: 15,
-        display: "flex",
-        flexWrap: "wrap"
-    },
-    cantidad: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
-        fontSize: 18,
-        textTransform: "uppercase",
-        marginLeft: "1rem",
-        fontWeight: "bold",
-        marginBottom: "2rem"
-    },
-    ocupado: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        color: "#ff3d00",
-        fontSize: 18,
-        float: "right",
-        textTransform: "uppercase",
-        fontWeight: "bold"
-    },
-    botonConfirmar: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    botonLiberarLugar: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 15,
-        marginTop: "1rem",
-        marginLeft: 0,
-        [theme.breakpoints.down('xs')]:{
-            width: "100%",
-        },
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    titulo: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        fontSize: 25,
-        textAlign: "center"
-    },
-    subtitulos: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        fontSize: 18,
-        color:"#424242",
-    },
-    container: {
-        marginLeft: "1rem"
-    },
-    cartaReservas: {
-        flexGrow: 1,
-        paddingLeft: 20,
-        marginBottom: "10rem",
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
-        marginLeft: "1rem",
-        marginRight: "1rem"
-    },
-    input: {
-        fontFamily: "Roboto Condensed, sans-serif",
-        paddingRight: "1rem",
-        marginLeft: "1rem",
-        marginTop: "1rem",
-        "& .MuiFormLabel-root.Mui-focused": {
-            color: "#4db6ac"
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "#4db6ac"
-        },
-    },
-    botonModificarDatos: {
-        backgroundColor: "#448aff",
-        color: "#ffffff",
-        fontFamily: "Roboto Condensed, sans-serif",
-        textTransform: "uppercase",
-        marginTop: "2rem",
-        fontSize: 15,
-        "&:hover":{
-            backgroundColor: "#448aff",
-        }
-    },
-    alerta:{
-        position: "relative",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-        borderRadius: 0
-    },
+    }
 }));

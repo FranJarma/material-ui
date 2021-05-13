@@ -50,40 +50,40 @@ function App() {
                   <Switch>
                     <Route exact path="/" component={Login}>
                     </Route>
-                    <RutaPrivada exact path="/home" component={Home}>
-                    </RutaPrivada>
+                    <Route exact path="/home" component={Home}>
+                    </Route>
                     <Route exact path="/nueva-cuenta" component={Registrar}>
                     </Route>
                     <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
                     </Route>
-                    <RutaPrivada exact path="/reservas-del-dia" component={ReservasHoy}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/nuevo-cobro" component={NuevoCobro}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/reservas-calendario" component={ReservasCalendario}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/cambiar-fecha" component={CambiarFechaReserva}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/mi-estacionamiento" component={Estacionamiento}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/valoraciones" component={Comentarios}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/datos-personales" component={DatosPersonales}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/reportes" component={Reportes}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/tarifas" component={Tarifas}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/lugares" component={Lugares}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/usuarios" component={Usuarios}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/nuevo-usuario" component={AdministrarUsuario}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/estacionamientos" component={Estacionamientos}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/buscar" component={BuscarReserva}>
-                    </RutaPrivada>
+                    <Route exact path="/reservas-del-dia" component={ReservasHoy}>
+                    </Route>
+                    <Route exact path="/nuevo-cobro" component={NuevoCobro}>
+                    </Route>
+                    <Route exact path="/reservas-calendario" component={ReservasCalendario}>
+                    </Route>
+                    <Route exact path="/cambiar-fecha" component={CambiarFechaReserva}>
+                    </Route>
+                    <Route exact path="/mi-estacionamiento" component={Estacionamiento}>
+                    </Route>
+                    <Route exact path="/valoraciones" component={Comentarios}>
+                    </Route>
+                    <Route exact path="/datos-personales" component={DatosPersonales}>
+                    </Route>
+                    <Route exact path="/reportes" component={Reportes}>
+                    </Route>
+                    <Route exact path="/tarifas" component={Tarifas}>
+                    </Route>
+                    <Route exact path="/lugares" component={Lugares}>
+                    </Route>
+                    <Route exact path="/usuarios" component={Usuarios}>
+                    </Route>
+                    <Route exact path="/nuevo-usuario" component={AdministrarUsuario}>
+                    </Route>
+                    <Route exact path="/estacionamientos" component={Estacionamientos}>
+                    </Route>
+                    <Route exact path="/buscar" component={BuscarReserva}>
+                    </Route>
                   </Switch>
                 </Router>
               </MuiPickersUtilsProvider>
