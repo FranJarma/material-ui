@@ -52,6 +52,18 @@ const Estacionamiento = ({estacionamiento}) => {
                             <Typography className={classes.camposTitulos}>Valoración: </Typography>
                             <Typography className={classes.campos}>{estacionamiento.valoracion}</Typography>
                         </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Dirección: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.ubicacion.direccion}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Provincia: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.ubicacion.provincia}</Typography>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                            <Typography className={classes.camposTitulos}>Ciudad: </Typography>
+                            <Typography className={classes.campos}>{estacionamiento.ubicacion.ciudad}</Typography>
+                        </div>
                         <Button
                         onClick={handleClickAbrirModalModificar}
                         endIcon={<AssignmentTurnedInIcon/>}

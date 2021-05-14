@@ -16,12 +16,62 @@ import {
     TimePicker,
   } from '@material-ui/pickers';
 import traducirError from '../../firebase/errores';
-import axios from 'axios';
+import {usePlacesWidget} from "react-google-autocomplete";
 //le pasamos como props la info del usuario seleccionado con el botón, la acción (registrar / modificar) y la función para cerrar el modal
 const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModal}) => {
     const classes = useStyles();
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
+    const { ref: materialRef } = usePlacesWidget({
+        apiKey: "AIzaSyAfSelxd1TelyS5koQS5V0HU0yGMGf5SnE",
+        onPlaceSelected: (ubicacion) => {
+            let direccion = "";
+            let numero = "";
+            let provincia = "";
+            let ciudad = "";
+            let codigoPostal = "";
+            for(const informacion of ubicacion.address_components){
+                const campos = informacion.types[0];
+                switch (campos) {
+                    case "street_number":
+                    {
+                        numero = informacion.short_name;
+                        break;
+                    }
+                    case "route": {
+                        direccion = informacion.short_name;
+                        break;
+                    }
+                    case "postal_code": {
+                        codigoPostal = `${informacion.long_name}${codigoPostal}`;
+                        break;
+                    }
+                    case "administrative_area_level_1": {
+                        provincia = informacion.short_name;
+                        break;
+                    }
+                    case "administrative_area_level_2": {
+                        ciudad = informacion.short_name;
+                        break;
+                      }
+                }
+                console.log(direccion + " " + numero)
+                guardarUbicacionEstacionamiento(
+                    {
+                        direccion: direccion + " " + numero,
+                        provincia: provincia,
+                        ciudad: ciudad,
+                        codigoPostal: codigoPostal,
+                        latitud: ubicacion.geometry.location.lat(),
+                        longitud: ubicacion.geometry.location.lng()
+                })
+            }
+        },
+        options:{
+            types: ["address"],
+            componentRestrictions: { country: "arg" }
+        }
+      });
     //state para manejar el contenido de los inputs
     const [estacionamiento, guardarEstacionamiento] = useState({
         nombreCompleto: '',
@@ -29,7 +79,16 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
         telefono: '',
         cuit: '',
         valoracion: 0,  
+
     });
+    //state para manejar la ubicacion
+    const [ubicacionEstacionamiento, guardarUbicacionEstacionamiento] = useState({
+        direccion: '',
+        provincia: '',
+        ciudad: '',
+        latitud: '',
+        longitud: ''
+    })
     const [dia, setearDia] = useState([]);
 
     const handleChangeDia = (event) => {
@@ -44,32 +103,13 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     const handleCambiarHoraCierre = (horaCierre) => {
         setearHoraCierre(horaCierre);
     };
-    //state para manejar la provincia seleccionada al cambiar el elemento del select
-    const [provinciaSeleccionada, setearProvinciaSeleccionada] = useState('');
-    const handleChangeSelectProvincia = (event) => {
-        console.log(event.target.value);
-        setearProvinciaSeleccionada(event.target.value);
-        axios.get(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${event.target.value}
-        &campos=id,nombre&max=529`)
-        .then(res => {
-            const resultado = res.data.departamentos.sort((a,b)=>(a.nombre)>b.nombre ? 1 : -1);
-            setearDepartamentos(resultado);
-        });
-    };
-    //state para manejar el departamento seleccionado al cambiar el elemento del select
-    const [departamentoSeleccionado, setearDepartamentoSeleccionado] = useState('');
-    const handleChangeSelectDepartamento = (event) => {
-        setearDepartamentoSeleccionado(event.target.value);
-    };
     //state para manejar el encargado al cambiar el elemento del select
     const [encargadoSeleccionado, setearEncargadoSeleccionado] = useState('');
     const handleChangeSelectEncargado = (event) => {
         setearEncargadoSeleccionado(event.target.value);
     };
-    //states para guardar encargados, provincias, departamentos y días
+    //states para guardar encargados ubicación y días
    const [encargados, guardarEncargados] = useState([]);
-   const [provincias, setearProvincias] = useState([]);
-   const [departamentos, setearDepartamentos] = useState([]);
    const dias = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sábado','Domingo'];
 
    const {firebase} = useContext(FirebaseContext);
@@ -96,22 +136,17 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
        });
        guardarEncargados(encargados);
    }
-    useEffect(()=>{
-        axios.get(`https://apis.datos.gob.ar/georef/api/provincias?campos=id,nombre`)
-        .then(res => {
-            const resultado = res.data.provincias.sort((a,b)=>(a.nombre)>b.nombre ? 1 : -1);
-            setearProvincias(resultado);
-        });
-    },[setearProvincias]);
 
     //guardamos el contenido del state en los inputs
     const { nombreCompleto, nSucursal, telefono, cuit, valoracion} = estacionamiento;
+
     //evento onChange
     const onChange = (e) => {
         guardarEstacionamiento({
             ...estacionamiento,
             [e.target.name] : e.target.value,
-        });
+    });
+
         // usuarioCompleto solamente se trae desde props para eliminar o modificarlo
         /*
         if(usuarioCompleto) {
@@ -144,12 +179,9 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             guardarEstacionamiento({
                 nombreCompleto: estacionamientoCompleto.nombreCompleto,
                 nSucursal: estacionamientoCompleto.nSucursal,
-                provincia: estacionamientoCompleto.provincia,
-                departamento: estacionamientoCompleto.departamento,
+                ubicacion: estacionamientoCompleto.ubicacion,
                 telefono: estacionamientoCompleto.telefono,
                 cuit: estacionamientoCompleto.cuit,
-                latitud: estacionamientoCompleto.latitud,
-                longitud: estacionamientoCompleto.longitud,
                 encargado: estacionamientoCompleto.encargado,
                 horario: estacionamientoCompleto.horario,
                 diasApertura: estacionamientoCompleto.diasApertura,
@@ -164,7 +196,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     //función para registrar estacionamiento
     async function registrarEstacionamiento() {
         try {
-            if(nombreCompleto === '' || telefono === '' || provinciaSeleccionada === '' || departamentoSeleccionado === ''
+            if(nombreCompleto === '' || telefono === '' || ubicacionEstacionamiento.direccion === ''
             || encargadoSeleccionado === ''|| cuit === '' || (!horarioCorrido && horaApertura === null)
             || (!horarioCorrido && horaCierre === null) || (!todosLosDias && dia.length === 0)){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
@@ -182,22 +214,22 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             else{
                 //validar si están checkeados los checks de horarioCorrido y todosLosDías
                 if(horarioCorrido && todosLosDias) {
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, provinciaSeleccionada,
-                    telefono, cuit, 'Horario corrido', 'Abre todos los días', 0, 0, 0, encargadoSeleccionado, valoracion);
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, 'Horario corrido', 'Abre todos los días', 0, encargadoSeleccionado, valoracion);
                 }
                 else if (todosLosDias){
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, provinciaSeleccionada,
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, `De: ${horaApertura.toTimeString().substr(0,5)} a ${horaCierre.toTimeString().substr(0,5)}`
-                    , 'Abre todos los días', 0, 0, 0, encargadoSeleccionado, valoracion);
+                    , 'Abre todos los días', 0, encargadoSeleccionado, valoracion);
                 }
                 else if (horarioCorrido){
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, provinciaSeleccionada,
-                    telefono, cuit, 'Horario corrido', dia, 0, 0, 0, encargadoSeleccionado, valoracion);
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, 'Horario corrido', dia, 0, encargadoSeleccionado, valoracion);
                 }
                 else {
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, provinciaSeleccionada,
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, `De: ${horaApertura.toTimeString().substr(0,5)} a ${horaCierre.toTimeString().substr(0,5)}`,
-                    dia, 0, 0, 0, encargadoSeleccionado, valoracion);
+                    dia, 0, encargadoSeleccionado, valoracion);
                 }
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.REGISTRO_EXITOSO);
                 cerrarModal();
@@ -266,47 +298,34 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         }
                     </InputMask>
                 </Grid>
-                <Grid item lg={12} xs={12}>
+                <Grid item lg={12} xs={12}> 
                     <TextField
-                    fullWidth
-                    className={classes.inputNuevoEstacionamiento}
-                    variant="outlined"
-                    label="Ubicación"
-                    >
-                    </TextField>
+                        className = {classes.inputNuevoEstacionamiento}
+                        fullWidth
+                        type="text"
+                        variant="outlined"
+                        label="Ubicación"
+                        inputRef={materialRef}
+                    ></TextField>
                 </Grid>
-                <Grid item lg={6} xs={12}>
+                <Grid item lg={6} xs={6}>
                     <TextField
                     fullWidth
-                    className={classes.inputNuevoEstacionamiento}
+                    disabled
+                    value={ubicacionEstacionamiento.provincia}
                     variant="outlined"
-                    value={provinciaSeleccionada}
-                    onChange={handleChangeSelectProvincia}
                     label="Provincia"
-                    select
                     >
-                    {provincias.map((provincia) => (
-                    <MenuItem key={provincia.id} value={provincia.nombre}>
-                        {provincia.nombre}
-                    </MenuItem>
-                    ))}
                     </TextField>
                 </Grid>
-                <Grid item lg={6} xs={12}>
+                <Grid item lg={6} xs={6}>
                     <TextField
                     fullWidth
-                    className={classes.inputNuevoEstacionamiento}
+                    disabled
+                    value={ubicacionEstacionamiento.ciudad}
                     variant="outlined"
-                    value={departamentoSeleccionado}
-                    onChange={handleChangeSelectDepartamento}
-                    label="Departamento"
-                    select
+                    label="Ciudad/Localidad"
                     >
-                    {departamentos.map((departamento) => (
-                    <MenuItem key={departamento.id} value={departamento.nombre}>
-                        {departamento.nombre}
-                    </MenuItem>
-                    ))}
                     </TextField>
                 </Grid>
                 <Grid item lg={12} xs={12}>
