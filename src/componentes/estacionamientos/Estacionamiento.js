@@ -10,6 +10,9 @@ import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacio
 import AdministrarEstacionamiento from './AdministrarEstacionamiento';
 
 const Estacionamiento = ({estacionamiento}) => {
+    const horaApertura = new Date(estacionamiento.horario.horaApertura.seconds * 1000);
+    const horaCierre = new Date(estacionamiento.horario.horaCierre.seconds * 1000);
+
     //states para los modals
     const [modalDarDeBaja, setAbrirModalDarDeBaja] = useState(false);
     const handleClickAbrirModalDarDeBaja = () => {
@@ -42,15 +45,18 @@ const Estacionamiento = ({estacionamiento}) => {
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Horario: </Typography>
-                            <Typography className={classes.campos}>{estacionamiento.horario}</Typography>
+                            <Typography className={classes.campos}>
+                            { !estacionamiento.horarioCorrido ?
+                            `De ${horaApertura.getHours()+ ":" + horaApertura.getMinutes()} a
+                            ${horaCierre.getHours()+ ":" + horaCierre.getMinutes()}`
+                            : 'Horario corrido'}
+                            </Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Días de apertura: </Typography>
-                            <Typography className={classes.campos}>{estacionamiento.diasApertura.toString()}</Typography>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Valoración: </Typography>
-                            <Typography className={classes.campos}>{estacionamiento.valoracion}</Typography>
+                            <Typography className={classes.campos}>{ estacionamiento.diasApertura.length !== 7 ?
+                            estacionamiento.diasApertura.toString()
+                            : 'Todos los días'}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Dirección: </Typography>
@@ -77,7 +83,7 @@ const Estacionamiento = ({estacionamiento}) => {
                         onClick={handleClickAbrirModalDarDeBaja}>
                         Dar de baja
                         </Button>
-                        <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalModificar}
+                        <Dialog style={{zIndex: 1}} maxWidth={'xl'} open={modalModificar}
                         onClose={handleClickCerrarModalModificar}
                         aria-labelledby="form-dialog-title">
                             <div style={{backgroundColor: '#43a047'}}>

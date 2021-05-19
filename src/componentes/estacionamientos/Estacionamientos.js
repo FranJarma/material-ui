@@ -74,7 +74,7 @@ const Estacionamientos = () => {
                         </>
                         ))}
                     </Grid>
-                <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalNuevoEstacionamiento}
+                <Dialog style={{zIndex: 1}} maxWidth={'xl'} open={modalNuevoEstacionamiento}
                     onClose={handleClickCerrarModalNuevoEstacionamiento}
                     aria-labelledby="form-dialog-title">
                     <div style={{backgroundColor: '#43a047'}}>
@@ -86,7 +86,6 @@ const Estacionamientos = () => {
                         </Typography>
                     </div>
                     <DialogContent>
-                    <DialogContentText> <p style={{fontWeight: 'bold'}}>{CEstacionamientos.DATOS_ESTACIONAMIENTO}</p></DialogContentText>
                         <AdministrarEstacionamiento estacionamientoId="" accion="Registrar" cerrarModal={handleClickCerrarModalNuevoEstacionamiento}/>
                     </DialogContent>
                 </Dialog>

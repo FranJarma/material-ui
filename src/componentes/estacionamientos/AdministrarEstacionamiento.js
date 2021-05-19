@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Button, Checkbox, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography,
-Input, Chip, FormControlLabel, FormHelperText } from '@material-ui/core';
+Input, Chip, FormControlLabel, FormHelperText, InputAdornment } from '@material-ui/core';
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -17,6 +17,11 @@ import {
   } from '@material-ui/pickers';
 import traducirError from '../../firebase/errores';
 import {usePlacesWidget} from "react-google-autocomplete";
+import IconTabs from './../diseño/Tabs';
+import TabDatosEstacionamiento from './TabDatosEstacionamiento';
+import TabTarifas from './TabTarifas';
+import TabHorariosDias from './TabHorariosDias';
+
 //le pasamos como props la info del usuario seleccionado con el botón, la acción (registrar / modificar) y la función para cerrar el modal
 const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModal}) => {
     const classes = useStyles();
@@ -55,7 +60,6 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         break;
                       }
                 }
-                console.log(direccion + " " + numero)
                 guardarUbicacionEstacionamiento(
                     {
                         direccion: direccion + " " + numero,
@@ -64,7 +68,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         codigoPostal: codigoPostal,
                         latitud: ubicacion.geometry.location.lat(),
                         longitud: ubicacion.geometry.location.lng()
-                })
+                    })
             }
         },
         options:{
@@ -78,6 +82,10 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
         nSucursal: '',
         telefono: '',
         cuit: '',
+        tarifaAuto: '',
+        tarifaCamioneta: '',
+        tarifaMoto: '',
+        tarifaTraffic: '',
         valoracion: 0,  
 
     });
@@ -95,11 +103,11 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
         setearDia(event.target.value);
     };
     //state para la hora de ingreso y salida
-    const [horaApertura, setearHoraApertura] = useState(null);
+    const [horaApertura, setearHoraApertura] = useState(new Date());
     const handleCambiarHoraApertura = (horaApertura) => {
         setearHoraApertura(horaApertura);
     };
-    const [horaCierre, setearHoraCierre] = useState(null);
+    const [horaCierre, setearHoraCierre] = useState(new Date());
     const handleCambiarHoraCierre = (horaCierre) => {
         setearHoraCierre(horaCierre);
     };
@@ -111,7 +119,23 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     //states para guardar encargados ubicación y días
    const [encargados, guardarEncargados] = useState([]);
    const dias = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sábado','Domingo'];
-
+   const infoTabs = [
+    {
+        icono: <AssignmentTurnedInIcon/>,
+        label: "Datos del estacionamiento",
+        componente: <TabDatosEstacionamiento/>
+    },
+    {
+        icono: <AssignmentTurnedInIcon/>,
+        label: "Tarifas",
+        componente: <TabTarifas/>
+    },
+    {
+        icono: <AssignmentTurnedInIcon/>,
+        label: "Horarios y días de apertura",
+        componente:<TabHorariosDias/>
+    },
+]
    const {firebase} = useContext(FirebaseContext);
    //use effect para que constantemente traiga las provincias, departamentos y encargados
    useEffect (() => {
@@ -138,7 +162,8 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
    }
 
     //guardamos el contenido del state en los inputs
-    const { nombreCompleto, nSucursal, telefono, cuit, valoracion} = estacionamiento;
+    const { nombreCompleto, nSucursal, telefono, cuit, valoracion, tarifaAuto, tarifaCamioneta, tarifaMoto,
+    tarifaTraffic} = estacionamiento;
 
     //evento onChange
     const onChange = (e) => {
@@ -168,7 +193,6 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
         setCheck({...check, [event.target.name] : event.target.checked})
     }
     const {horarioCorrido, todosLosDias} = check;
-    //state para manejar las tarifas
     //state para manejar el botón de dar de baja
     /*
     const [deshabilitado, setearDeshabilitado] = useState(true);
@@ -182,23 +206,36 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 ubicacion: estacionamientoCompleto.ubicacion,
                 telefono: estacionamientoCompleto.telefono,
                 cuit: estacionamientoCompleto.cuit,
-                encargado: estacionamientoCompleto.encargado,
-                horario: estacionamientoCompleto.horario,
                 diasApertura: estacionamientoCompleto.diasApertura,
-                tarifas: estacionamientoCompleto.tarifas
+                tarifaAuto: estacionamientoCompleto.tarifas[0].valor,
+                tarifaCamioneta: estacionamientoCompleto.tarifas[1].valor,
+                tarifaMoto: estacionamientoCompleto.tarifas[2].valor,
+                tarifaTraffic: estacionamientoCompleto.tarifas[3].valor,
             })
+            guardarUbicacionEstacionamiento({
+                direccion: estacionamientoCompleto.ubicacion.direccion,
+                provincia: estacionamientoCompleto.ubicacion.provincia,
+                ciudad: estacionamientoCompleto.ubicacion.ciudad,
+                latitud: estacionamientoCompleto.ubicacion.latitud,
+                longitud: estacionamientoCompleto.ubicacion.longitud
+            })
+            setearEncargadoSeleccionado(estacionamientoCompleto.encargado);
+            setearHoraApertura(new Date(estacionamientoCompleto.horario.horaApertura.seconds)*1000);
+            setearHoraCierre(new Date(estacionamientoCompleto.horario.horaCierre.seconds)*1000);
+            setearDia(estacionamientoCompleto.diasApertura);
             setCheck({
                 horarioCorrido: estacionamientoCompleto.horarioCorrido,
                 todosLosDias: estacionamientoCompleto.todosLosDias
             })
         }
-    }, [guardarEstacionamiento])
+    }, [])
     //función para registrar estacionamiento
     async function registrarEstacionamiento() {
         try {
             if(nombreCompleto === '' || telefono === '' || ubicacionEstacionamiento.direccion === ''
             || encargadoSeleccionado === ''|| cuit === '' || (!horarioCorrido && horaApertura === null)
-            || (!horarioCorrido && horaCierre === null) || (!todosLosDias && dia.length === 0)){
+            || (!horarioCorrido && horaCierre === null) || (!todosLosDias && dia.length === 0)
+            || tarifaAuto === '' || tarifaCamioneta === '' || tarifaMoto === '' || tarifaTraffic === ''){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
             else if(horaApertura > horaCierre) {
@@ -212,24 +249,29 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 Toast(CGeneral.VALIDACION_TELEFONO)
             }
             else{
+                console.log(encargadoSeleccionado);
                 //validar si están checkeados los checks de horarioCorrido y todosLosDías
                 if(horarioCorrido && todosLosDias) {
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, 'Horario corrido', 'Abre todos los días', 0, encargadoSeleccionado, valoracion);
+                    telefono, cuit, '', '', true, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado, valoracion);
                 }
                 else if (todosLosDias){
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, `De: ${horaApertura.toTimeString().substr(0,5)} a ${horaCierre.toTimeString().substr(0,5)}`
-                    , 'Abre todos los días', 0, encargadoSeleccionado, valoracion);
+                    telefono, cuit, horaApertura, horaCierre,
+                    false, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
+                    valoracion);
                 }
                 else if (horarioCorrido){
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, 'Horario corrido', dia, 0, encargadoSeleccionado, valoracion);
+                    telefono, cuit, '', '', true, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado, valoracion);
                 }
                 else {
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, `De: ${horaApertura.toTimeString().substr(0,5)} a ${horaCierre.toTimeString().substr(0,5)}`,
-                    dia, 0, encargadoSeleccionado, valoracion);
+                    telefono, cuit, horaApertura, horaCierre,
+                    false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
+                    valoracion);
                 }
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.REGISTRO_EXITOSO);
                 cerrarModal();
@@ -250,6 +292,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     ((!cargando && accion === "Registrar") || (!cargando && accion === "Modificar")? 
     <>
         <form>
+            <IconTabs infoTabs={infoTabs}/>
             <Grid container spacing={3}>
                 <Grid item lg={6} xs={12}> 
                     <TextField
@@ -298,37 +341,20 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         }
                     </InputMask>
                 </Grid>
-                <Grid item lg={12} xs={12}> 
+                <Grid item lg={6} xs={12}> 
                     <TextField
                         className = {classes.inputNuevoEstacionamiento}
                         fullWidth
                         type="text"
+                        defaultValue={estacionamientoCompleto ? 
+                        estacionamientoCompleto.ubicacion.direccion : ''}
                         variant="outlined"
                         label="Ubicación"
                         inputRef={materialRef}
+
                     ></TextField>
                 </Grid>
-                <Grid item lg={6} xs={6}>
-                    <TextField
-                    fullWidth
-                    disabled
-                    value={ubicacionEstacionamiento.provincia}
-                    variant="outlined"
-                    label="Provincia"
-                    >
-                    </TextField>
-                </Grid>
-                <Grid item lg={6} xs={6}>
-                    <TextField
-                    fullWidth
-                    disabled
-                    value={ubicacionEstacionamiento.ciudad}
-                    variant="outlined"
-                    label="Ciudad/Localidad"
-                    >
-                    </TextField>
-                </Grid>
-                <Grid item lg={12} xs={12}>
+                <Grid item lg={6} xs={12}>
                     <TextField
                     fullWidth
                     className={classes.inputNuevoEstacionamiento}
@@ -339,158 +365,149 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                     select
                     >
                     {encargados.map((encargado) => (
-                        <MenuItem key={encargado.id} value={encargado.nombreCompleto}>
-                            {encargado.nombreCompleto}
+                        <MenuItem key={encargado.uid} name={encargado.nombreCompleto}
+                        value={encargado.uid}>
+                        {encargado.nombreCompleto}
                         </MenuItem>
                     ))}
                     </TextField>
                 </Grid>
             </Grid>
-            <InputLabel><p style={{fontWeight: 'bold'}}>Tarifas:</p></InputLabel>
                 <Grid container spacing={3}>
                     <Grid item md={3} xs={6}>
-                        <InputMask
-                        mask="9999"
-                        onChange={onChange}
-                        >
-                            {() => <TextField
-                                className = {classes.inputNuevoEstacionamiento}
-                                type="text"
-                                fullWidth
-                                name="tarifas"
-                                variant="outlined"
-                                label="Camioneta"
-                            />
-                            }
-                        </InputMask>
+                        <TextField
+                            className = {classes.inputNuevoEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaAuto"
+                            variant="outlined"
+                            onChange={onChange}
+                            value={tarifaAuto}
+                            label="Auto"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
                     </Grid>
                     <Grid item md={3} xs={6}>
-                        <InputMask
-                        mask="9999"
-                        onChange={onChange}
-                        >
-                            {() => <TextField
-                                className = {classes.inputNuevoEstacionamiento}
-                                type="text"
-                                fullWidth
-                                name="tarifas"
-                                variant="outlined"
-                                label="Auto"
-                            />
-                            }
-                        </InputMask>
+                        <TextField
+                            className = {classes.inputNuevoEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaCamioneta"
+                            variant="outlined"
+                            onChange={onChange}
+                            value={tarifaCamioneta}
+                            label="Camioneta"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
                     </Grid>
                     <Grid item md={3} xs={6}>
-                        <InputMask
-                        mask="9999"
-                        onChange={onChange}
-                        >
-                            {() => <TextField
-                                className = {classes.inputNuevoEstacionamiento}
-                                type="text"
-                                fullWidth
-                                name="tarifas"
-                                variant="outlined"
-                                label="Motocicleta"
-                            />
-                            }
-                        </InputMask>
+                        <TextField
+                            className = {classes.inputNuevoEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaMoto"
+                            variant="outlined"
+                            onChange={onChange}
+                            value={tarifaMoto}
+                            label="Motocicleta"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
                     </Grid>
                     <Grid item md={3} xs={6}>
-                        <InputMask
-                        mask="9999"
-                        onChange={onChange}
-                        >
-                            {() => <TextField
-                                className = {classes.inputNuevoEstacionamiento}
-                                type="text"
-                                fullWidth
-                                name="tarifas"
-                                variant="outlined"
-                                label="Traffic"
-                            />
-                            }
-                        </InputMask>
+                        <TextField
+                            className = {classes.inputNuevoEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaTraffic"
+                            variant="outlined"
+                            onChange={onChange}
+                            value={tarifaTraffic}
+                            label="Traffic"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
                     </Grid>
                 </Grid>
-            <InputLabel><p style={{fontWeight: 'bold'}}>Horarios:</p></InputLabel>
-            <FormControlLabel
-                control={<Checkbox color="primary" checked={horarioCorrido} onChange={handleChangeCheckBox}
-                name="horarioCorrido" />}
-                label="Horario corrido"
-            />
-            &nbsp;
-            { !horarioCorrido ?
-            <>
-            <Grid container spacing={3}>
-                <Grid item md={3} xs={6}>
-                    <TimePicker
-                        format="HH:mm"
-                        ampm={false}
-                        className={classes.inputNuevoEstacionamiento}
-                        inputVariant="outlined"
-                        value={horaApertura}
+            <Grid container>
+            <Grid item lg={6} xs={12}>
+                        <Grid item lg={6} xs={12}>
+                        <FormControl className={classes.formControl}>
+                        <Select
                         fullWidth
-                        label="Hora de apertura"
-                        onChange={handleCambiarHoraApertura}
-                        margin="dense"
-                    />
+                        className={classes.select}
+                        displayEmpty
+                        multiple
+                        value={dia}
+                        onChange={handleChangeDia}
+                        input={<Input/>}
+                        renderValue={(selected) => (
+                            <div className={classes.chips}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value} className={classes.chip} />
+                            ))}
+                            </div>
+                        )}
+                        >
+                        {dias.map((dia) => (
+                            <MenuItem key={dia} value={dia}>
+                            {dia}
+                            </MenuItem>
+                            
+                        ))}
+                        </Select>
+                        <FormHelperText>Seleccione uno o varios</FormHelperText>
+                        </FormControl>
+                        </Grid>
                 </Grid>
-                <Grid item md={3} xs={6}>
-                    <TimePicker
-                        format="HH:mm"
-                        ampm={false}
-                        className={classes.inputNuevoEstacionamiento}
-                        inputVariant="outlined"
-                        value={horaCierre}
-                        fullWidth
-                        label="Hora de cierre"
-                        onChange={handleCambiarHoraCierre}
-                        margin="dense"
-                    />
-                </Grid>
-            </Grid>
-            </>
-            : ""}
-            <InputLabel><p style={{fontWeight: 'bold'}}>Días de apertura:</p></InputLabel>
-            <FormControlLabel
-                control={<Checkbox color="primary" checked={todosLosDias} onChange={handleChangeCheckBox}
-                name="todosLosDias" />}
-                label="Todos los días"
-            />
-            &nbsp;
-            { !todosLosDias ?
-                <>
                 <Grid item lg={6} xs={12}>
-                <FormControl className={classes.formControl}>
-                <Select
-                fullWidth
-                className={classes.select}
-                displayEmpty
-                multiple
-                value={dia}
-                onChange={handleChangeDia}
-                input={<Input/>}
-                renderValue={(selected) => (
-                    <div className={classes.chips}>
-                    {selected.map((value) => (
-                        <Chip key={value} label={value} className={classes.chip} />
-                    ))}
-                    </div>
-                )}
-                >
-                {dias.map((dia) => (
-                    <MenuItem key={dia} value={dia}>
-                    {dia}
-                </MenuItem>
-                    
-                ))}
-                </Select>
-                <FormHelperText>Seleccione uno o varios</FormHelperText>
-                </FormControl>
+                <FormControlLabel
+                    control={<Checkbox color="primary" checked={horarioCorrido}
+                    onChange={handleChangeCheckBox}
+                    name="horarioCorrido" />}
+                    label="Horario corrido"
+                />
+                &nbsp;
+                { !horarioCorrido ?
+                <>
+                <Grid container spacing={2}>
+                    <Grid item lg={4} sm={6}>
+                        <TimePicker
+                            format="HH:mm"
+                            ampm={false}
+                            className={classes.inputNuevoEstacionamiento}
+                            inputVariant="outlined"
+                            value={horaApertura}
+                            fullWidth
+                            label="Apertura"
+                            onChange={handleCambiarHoraApertura}
+                            margin="dense"
+                        />
+                    </Grid>
+                    <Grid item lg={4} sm={6}>
+                        <TimePicker
+                            format="HH:mm"
+                            ampm={false}
+                            className={classes.inputNuevoEstacionamiento}
+                            inputVariant="outlined"
+                            fullWidth
+                            value={horaCierre}
+                            label="Cierre"
+                            onChange={handleCambiarHoraCierre}
+                            margin="dense"
+                        />
+                    </Grid>
                 </Grid>
                 </>
-            : ""}
+                : ""}
+                </Grid>
+            </Grid>
             <Button style={{marginTop: '2rem'}} onClick={accion === "Registrar" ? registrarEstacionamiento : modificarEstacionamiento}
             endIcon={accion === "Registrar" ? <CheckIcon/> : <AssignmentTurnedInIcon/>}
             className={classes.botonAgregar}>{accion === "Registrar" ? "Agregar" : "Modificar"}</Button>

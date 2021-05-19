@@ -67,16 +67,39 @@ class Firebase {
 //MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
     //método para registrar nuevo estacionamiento
     async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, 
-        horario, diasApertura, tarifas, encargado, valoracion){
+        horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
+        tarifaAuto, tarifaMoto, tarifaTraffic, encargado, valoracion){
         this.db.collection('estacionamientos').add({
             nombreCompleto: nombreCompleto,
             nSucursal: nSucursal,
             telefono: telefono,
             ubicacion: ubicacion,
             cuit: cuit,
-            horario: horario,
-            diasApertura: diasApertura,
-            tarifas: tarifas,
+            horarioCorrido,
+            todosLosDias,
+            horario: {
+                horaApertura: horaApertura,
+                horaCierre: horaCierre,
+            },
+            diasApertura,
+            tarifas: [
+                {
+                    vehiculo: 'automovil',
+                    valor: tarifaAuto
+                },
+                {
+                    vehiculo: 'camioneta',
+                    valor: tarifaCamioneta
+                },
+                {
+                    vehiculo: 'motocicleta',
+                    valor: tarifaMoto
+                },
+                {
+                    vehiculo: 'traffic',
+                    valor: tarifaTraffic
+                },
+            ],
             encargado: encargado,
             valoracion: valoracion
         })

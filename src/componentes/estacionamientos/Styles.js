@@ -21,7 +21,8 @@ export const useStyles = makeStyles((theme) => ({
     select: {
         '&:after': {
             borderColor: "#43a047",
-        }
+        },
+        paddingTop: '0.8rem'
     },
     botonModificarDatos: {
         backgroundColor: "#448aff",
