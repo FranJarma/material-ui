@@ -16,8 +16,6 @@ function useAutenticado () {
         });
         return () => unsuscribe();
     },[]);
-    console.log(usuarioAutenticado)
     return usuarioAutenticado;
 }
-
 export default useAutenticado;

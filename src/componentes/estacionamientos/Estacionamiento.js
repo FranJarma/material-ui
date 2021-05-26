@@ -95,11 +95,10 @@ const Estacionamiento = ({estacionamiento}) => {
                                 </Typography>
                             </div>
                             <DialogContent>
-                            &nbsp;
-                            <DialogContentText>{CEstacionamientos.MODIFICAR_ESTACIONAMIENTO_MODAL} </DialogContentText>
-                            <AdministrarEstacionamiento estacionamientoCompleto={estacionamiento} accion="Modificar"
-                            cerrarModal={handleClickCerrarModalModificar}
-                            />
+                            <DialogContentText>
+                                <AdministrarEstacionamiento estacionamientoCompleto={estacionamiento} accion="Modificar"
+                                cerrarModal={handleClickCerrarModalModificar}/>
+                            </DialogContentText>
                             </DialogContent>
                         </Dialog>
                         <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalDarDeBaja}

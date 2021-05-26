@@ -37,7 +37,7 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
         guardarUsuario({
             ...usuario,
             [e.target.name] : e.target.value
-        });
+    });
         // usuarioCompleto solamente se trae desde props para eliminar o modificarlo
         if(usuarioCompleto) {
             if (e.target.value === usuarioCompleto.nombreUsuario){

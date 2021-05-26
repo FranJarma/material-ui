@@ -66,7 +66,7 @@ class Firebase {
     }
 //MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
     //método para registrar nuevo estacionamiento
-    async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, 
+    async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, 
         horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
         tarifaAuto, tarifaMoto, tarifaTraffic, encargado, valoracion){
         this.db.collection('estacionamientos').add({
@@ -75,6 +75,7 @@ class Firebase {
             telefono: telefono,
             ubicacion: ubicacion,
             cuit: cuit,
+            lugares: lugares,
             horarioCorrido,
             todosLosDias,
             horario: {
@@ -103,6 +104,49 @@ class Firebase {
             encargado: encargado,
             valoracion: valoracion
         })
+    }
+    //metodo para modificar datos del usuario por id
+    async modificarEstacionamiento(id, nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares,
+        horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
+        tarifaAuto, tarifaMoto, tarifaTraffic, encargado){
+        this.db.collection('estacionamientos').doc(id).update({
+            nombreCompleto: nombreCompleto,
+            nSucursal: nSucursal,
+            telefono: telefono,
+            ubicacion: ubicacion,
+            cuit: cuit,
+            lugares: lugares,
+            horarioCorrido,
+            todosLosDias,
+            horario: {
+                horaApertura: horaApertura,
+                horaCierre: horaCierre,
+            },
+            diasApertura,
+            tarifas: [
+                {
+                    vehiculo: 'automovil',
+                    valor: tarifaAuto
+                },
+                {
+                    vehiculo: 'camioneta',
+                    valor: tarifaCamioneta
+                },
+                {
+                    vehiculo: 'motocicleta',
+                    valor: tarifaMoto
+                },
+                {
+                    vehiculo: 'traffic',
+                    valor: tarifaTraffic
+                },
+            ],
+            encargado: encargado
+        })
+    }
+    //método para eliminar un estacionamiento por su id
+    async eliminarEstacionamiento(id){
+        this.db.collection('estacionamientos').doc(id).delete();
     }
 }
 const firebase = new Firebase();

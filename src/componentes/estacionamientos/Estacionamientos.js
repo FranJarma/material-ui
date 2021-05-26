@@ -86,7 +86,9 @@ const Estacionamientos = () => {
                         </Typography>
                     </div>
                     <DialogContent>
-                        <AdministrarEstacionamiento estacionamientoId="" accion="Registrar" cerrarModal={handleClickCerrarModalNuevoEstacionamiento}/>
+                        <DialogContentText>
+                            <AdministrarEstacionamiento estacionamientoId="" accion="Registrar" cerrarModal={handleClickCerrarModalNuevoEstacionamiento}/>
+                        </DialogContentText>
                     </DialogContent>
                 </Dialog>
                 {estacionamientos.length > 0 ? <Paginacion lista={estacionamientos}/> : ""}

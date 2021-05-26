@@ -17,13 +17,9 @@ import {
   } from '@material-ui/pickers';
 import traducirError from '../../firebase/errores';
 import {usePlacesWidget} from "react-google-autocomplete";
-import IconTabs from './../diseño/Tabs';
-import TabDatosEstacionamiento from './TabDatosEstacionamiento';
-import TabTarifas from './TabTarifas';
-import TabHorariosDias from './TabHorariosDias';
-
 //le pasamos como props la info del usuario seleccionado con el botón, la acción (registrar / modificar) y la función para cerrar el modal
 const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModal}) => {
+    console.log(estacionamientoCompleto)
     const classes = useStyles();
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
@@ -79,14 +75,15 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     //state para manejar el contenido de los inputs
     const [estacionamiento, guardarEstacionamiento] = useState({
         nombreCompleto: '',
+        nombreEstacionamientoDarDeBaja: '',
         nSucursal: '',
         telefono: '',
         cuit: '',
+        cantidadLugares: '',
         tarifaAuto: '',
         tarifaCamioneta: '',
         tarifaMoto: '',
         tarifaTraffic: '',
-        valoracion: 0,  
 
     });
     //state para manejar la ubicacion
@@ -98,6 +95,8 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
         longitud: ''
     })
     const [dia, setearDia] = useState([]);
+    //state para manejar el botón de dar de baja
+    const [deshabilitado, setearDeshabilitado] = useState(true);
 
     const handleChangeDia = (event) => {
         setearDia(event.target.value);
@@ -119,23 +118,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     //states para guardar encargados ubicación y días
    const [encargados, guardarEncargados] = useState([]);
    const dias = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sábado','Domingo'];
-   const infoTabs = [
-    {
-        icono: <AssignmentTurnedInIcon/>,
-        label: "Datos del estacionamiento",
-        componente: <TabDatosEstacionamiento/>
-    },
-    {
-        icono: <AssignmentTurnedInIcon/>,
-        label: "Tarifas",
-        componente: <TabTarifas/>
-    },
-    {
-        icono: <AssignmentTurnedInIcon/>,
-        label: "Horarios y días de apertura",
-        componente:<TabHorariosDias/>
-    },
-]
+
    const {firebase} = useContext(FirebaseContext);
    //use effect para que constantemente traiga las provincias, departamentos y encargados
    useEffect (() => {
@@ -162,8 +145,8 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
    }
 
     //guardamos el contenido del state en los inputs
-    const { nombreCompleto, nSucursal, telefono, cuit, valoracion, tarifaAuto, tarifaCamioneta, tarifaMoto,
-    tarifaTraffic} = estacionamiento;
+    const { nombreCompleto, nombreEstacionamientoDarDeBaja, nSucursal, telefono, cuit, cantidadLugares,
+    tarifaAuto, tarifaCamioneta, tarifaMoto, tarifaTraffic} = estacionamiento;
 
     //evento onChange
     const onChange = (e) => {
@@ -172,17 +155,15 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             [e.target.name] : e.target.value,
     });
 
-        // usuarioCompleto solamente se trae desde props para eliminar o modificarlo
-        /*
-        if(usuarioCompleto) {
-            if (e.target.value === usuarioCompleto.nombreUsuario){
-                setearDeshabilitado(false);
-            }
-            else {
-                setearDeshabilitado(true);
-            }
+    // estacionamientoCompleto solamente se trae desde props para eliminar o modificarlo
+    if(estacionamientoCompleto) {
+        if (e.target.value === estacionamientoCompleto.nombreCompleto){
+            setearDeshabilitado(false);
         }
-        */
+        else {
+            setearDeshabilitado(true);
+        }
+    }
     }
     //state para manejar los checkbox
     const [check, setCheck] = useState({
@@ -206,6 +187,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 ubicacion: estacionamientoCompleto.ubicacion,
                 telefono: estacionamientoCompleto.telefono,
                 cuit: estacionamientoCompleto.cuit,
+                cantidadLugares: estacionamientoCompleto.lugares.length,
                 diasApertura: estacionamientoCompleto.diasApertura,
                 tarifaAuto: estacionamientoCompleto.tarifas[0].valor,
                 tarifaCamioneta: estacionamientoCompleto.tarifas[1].valor,
@@ -231,9 +213,73 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
     }, [])
     //función para registrar estacionamiento
     async function registrarEstacionamiento() {
+        const lugares = [];
         try {
             if(nombreCompleto === '' || telefono === '' || ubicacionEstacionamiento.direccion === ''
-            || encargadoSeleccionado === ''|| cuit === '' || (!horarioCorrido && horaApertura === null)
+            || encargadoSeleccionado === ''|| cuit === '' || cantidadLugares === ''
+            || (!horarioCorrido && horaApertura === null) || (!horarioCorrido && horaCierre === null)
+            || (!todosLosDias && dia.length === 0)
+            || tarifaAuto === '' || tarifaCamioneta === '' || tarifaMoto === '' || tarifaTraffic === ''){
+                Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
+            }
+            else if(horaApertura > horaCierre) {
+                Toast(CEstacionamientos.HORARIO_CIERRE_MENOR_APERTURA);
+            }
+            //se utiliza la función includes para verificar si alguno de los dos campos tiene espacio en blanco
+            else if(cuit.includes('_')){
+                Toast(CGeneral.VALIDACION_CUIT)
+            }
+            else if(telefono.includes('_')){
+                Toast(CGeneral.VALIDACION_TELEFONO)
+            }
+            else{
+                //armar array con objetos de lugares
+                for(var i=0; i<cantidadLugares; i++){
+                    let lugar = {
+                        "id": i,
+                        "nombre": `Lugar ${i+1}`,
+                        "ocupado": false
+                    }
+                    lugares.push(lugar);
+                }
+                //validar si están checkeados los checks de horarioCorrido y todosLosDías
+                if(horarioCorrido && todosLosDias) {
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, '', '', true, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado, 0);
+                }
+                else if (todosLosDias){
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, horaApertura, horaCierre,
+                    false, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
+                    0);
+                }
+                else if (horarioCorrido){
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, '', '', true, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado, 0);
+                }
+                else {
+                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, horaApertura, horaCierre,
+                    false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
+                    0);
+                }
+                Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.REGISTRO_EXITOSO);
+                cerrarModal();
+            }
+        }
+        catch (error) {
+            console.log(error);
+            Toast(traducirError(error.code))
+        }
+    }
+    //función para modificar estacionamiento
+    async function modificarEstacionamiento() {
+        const lugares = [];
+        try {
+            if(nombreCompleto === '' || telefono === '' || ubicacionEstacionamiento.direccion === ''
+            || encargadoSeleccionado === ''|| cuit === '' || cantidadLugares === ''  || (!horarioCorrido && horaApertura === null)
             || (!horarioCorrido && horaCierre === null) || (!todosLosDias && dia.length === 0)
             || tarifaAuto === '' || tarifaCamioneta === '' || tarifaMoto === '' || tarifaTraffic === ''){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
@@ -249,31 +295,37 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 Toast(CGeneral.VALIDACION_TELEFONO)
             }
             else{
-                console.log(encargadoSeleccionado);
+                //armar array con objetos de lugares
+                for(var i=0; i<cantidadLugares; i++){
+                    let lugar = {
+                        "id": i,
+                        "nombre": `Lugar ${i+1}`,
+                        "ocupado": false
+                    }
+                    lugares.push(lugar);
+                }
                 //validar si están checkeados los checks de horarioCorrido y todosLosDías
                 if(horarioCorrido && todosLosDias) {
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, '', '', true, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
-                    encargadoSeleccionado, valoracion);
+                    await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal,
+                    ubicacionEstacionamiento, telefono, cuit, lugares, '', '', true, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado);
                 }
                 else if (todosLosDias){
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, horaApertura, horaCierre,
-                    false, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
-                    valoracion);
+                    await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, horaApertura, horaCierre, false, '', true,  tarifaCamioneta, tarifaAuto,
+                    tarifaMoto, tarifaTraffic, encargadoSeleccionado);
                 }
                 else if (horarioCorrido){
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, '', '', true, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
-                    encargadoSeleccionado, valoracion);
+                    await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, '', '', true, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado);
                 }
                 else {
-                    await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                    telefono, cuit, horaApertura, horaCierre,
-                    false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
-                    valoracion);
+                    await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal, ubicacionEstacionamiento,
+                    telefono, cuit, lugares, horaApertura, horaCierre,
+                    false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado);
                 }
-                Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.REGISTRO_EXITOSO);
+                Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
                 cerrarModal();
             }
         }
@@ -282,17 +334,22 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             Toast(traducirError(error.code))
         }
     }
-    //función para modificar estacionamiento
-    async function modificarEstacionamiento() {
-    }
     //función para eliminar el estacionamiento seleccionado
     async function eliminarEstacionamiento() {
+        try {
+            await firebase.eliminarEstacionamiento(estacionamientoCompleto.id);
+            cerrarModal();
+            Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_ELIMINADO);
+        } catch (error) {
+            console.log(error);
+            Toast(traducirError(error.code))
+        }
     }
     return ( 
     ((!cargando && accion === "Registrar") || (!cargando && accion === "Modificar")? 
     <>
         <form>
-            <IconTabs infoTabs={infoTabs}/>
+        <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem', marginTop: '1rem'}}>Datos del estacionamiento:</Typography>
             <Grid container spacing={3}>
                 <Grid item lg={6} xs={12}> 
                     <TextField
@@ -341,7 +398,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         }
                     </InputMask>
                 </Grid>
-                <Grid item lg={6} xs={12}> 
+                <Grid item lg={4} xs={12}> 
                     <TextField
                         className = {classes.inputNuevoEstacionamiento}
                         fullWidth
@@ -354,7 +411,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
 
                     ></TextField>
                 </Grid>
-                <Grid item lg={6} xs={12}>
+                <Grid item lg={4} xs={12}>
                     <TextField
                     fullWidth
                     className={classes.inputNuevoEstacionamiento}
@@ -372,7 +429,22 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                     ))}
                     </TextField>
                 </Grid>
+                <Grid item lg={4} xs={12}>
+                    <TextField
+                    fullWidth
+                    type="number"
+                    className={classes.inputNuevoEstacionamiento}
+                    variant="outlined"
+                    onChange={onChange}
+                    label="Cantidad de lugares"
+                    value={cantidadLugares}
+                    name="cantidadLugares"
+                    >
+                    </TextField>
+                </Grid>
             </Grid>
+            &nbsp;
+            <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem'}}>Tarifas:</Typography>
                 <Grid container spacing={3}>
                     <Grid item md={3} xs={6}>
                         <TextField
@@ -435,8 +507,10 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         />
                     </Grid>
                 </Grid>
-            <Grid container>
+            &nbsp;
+            <Grid container spacing={3}>
             <Grid item lg={6} xs={12}>
+                    <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem'}}>Días de apertura:</Typography>
                         <Grid item lg={6} xs={12}>
                         <FormControl className={classes.formControl}>
                         <Select
@@ -467,6 +541,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         </Grid>
                 </Grid>
                 <Grid item lg={6} xs={12}>
+                <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed'}}>Horarios:</Typography>
                 <FormControlLabel
                     control={<Checkbox color="primary" checked={horarioCorrido}
                     onChange={handleChangeCheckBox}
@@ -520,12 +595,15 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             type="text"
             fullWidth
             autoFocus
+            value={nombreEstacionamientoDarDeBaja}
+            name="nombreEstacionamientoDarDeBaja"
             variant="outlined"
             label={CGeneral.NOMBRE_USUARIO}
             onChange={onChange}
         ></TextField>
         <Button onClick={eliminarEstacionamiento}
         fullWidth
+        disabled = {deshabilitado ? true : false}
         endIcon={<DeleteIcon/>}
         className={classes.botonDarDeBajaModal}>Dar de baja</Button>
     </Grid>)

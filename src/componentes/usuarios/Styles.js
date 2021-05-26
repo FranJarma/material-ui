@@ -15,6 +15,16 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: "1rem",
         marginRight: "1rem"
     },
+    cartaDatosPersonales: {
+        flexGrow: 1,
+        marginBottom: "1rem",
+        paddingLeft: "2rem",
+        paddingRight: "2rem",
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
+        backgroundColor: theme.palette.background.paper,
+        marginLeft: "1rem",
+        marginRight: "1rem"
+    },
     select: {
         marginBottom: '1rem',
         marginTop: '1rem'
@@ -29,6 +39,7 @@ export const useStyles = makeStyles((theme) => ({
         textTransform: "uppercase",
         fontSize: 15,
         marginTop: "1rem",
+        marginBottom: "1rem",
         [theme.breakpoints.down('xs')]:{
             width: "100%"
         },
@@ -43,6 +54,7 @@ export const useStyles = makeStyles((theme) => ({
         textTransform: "uppercase",
         fontSize: 15,
         marginTop: "1rem",
+        marginBottom: "1rem",
         [theme.breakpoints.up('xs')]:{
             marginLeft: "1rem"
         },
@@ -206,6 +218,18 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
     inputNuevoUsuario: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#rgba(0, 0, 0, 0.23);"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#43a047;"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#43a047"
+        }
+    },
+    inputDatosPersonales: {
         fontFamily: "Roboto Condensed, sans-serif",
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#rgba(0, 0, 0, 0.23);"

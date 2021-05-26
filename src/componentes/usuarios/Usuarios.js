@@ -34,7 +34,8 @@ const Usuarios = () => {
    useEffect (() => {
        const obtenerUsuarios = () => {
            try {
-               firebase.db.collection('usuarios').orderBy('nombreCompleto', 'asc')
+               firebase.db.collection('usuarios')
+               .orderBy('nombreCompleto', 'asc')
                .onSnapshot(manejarSnapshot); 
            } catch (error) {
                Toast(error);
