@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import CommuteIcon from '@material-ui/icons/Commute';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -29,6 +29,7 @@ import traducirError from './../../firebase/errores';
 import * as CAuth from './../../constantes/auth/CAuth';
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import useInfoUsuario from '../../hooks/useInfoUsuario';
+import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
 
 const esAdmin = false;
 
@@ -37,6 +38,11 @@ const useStyles = makeStyles(theme => ({
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         fontSize: 18,
+        textAlign: "center",
+    },
+    subtituloAside: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        fontSize: 16,
         textAlign: "center",
     },
     imagenPerfil: {
@@ -89,6 +95,7 @@ const useStyles = makeStyles(theme => ({
 const Aside = () => {
     const classes = useStyles();
     const usuarioInfo = useInfoUsuario();
+    const estacionamientoInfo = useInfoEstacionamiento();
     //states para controlar los submenús
     const [subMenuReservas, abrirSubMenuReservas ] = useState(false);
 
@@ -133,6 +140,12 @@ const Aside = () => {
             <Avatar className={classes.imagenPerfil} />
             </div>
             : ''}
+            &nbsp;
+            {estacionamientoInfo ? 
+            <Typography className={classes.subtituloAside}>
+                {estacionamientoInfo.nombreCompleto}
+            </Typography>
+            : "" }
             &nbsp;
             <Divider></Divider>
             <List>

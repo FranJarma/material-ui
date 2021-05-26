@@ -148,6 +148,10 @@ class Firebase {
     async eliminarEstacionamiento(id){
         this.db.collection('estacionamientos').doc(id).delete();
     }
+    //método para traer estacionamiento por usuario
+    async traerEstacionamiento(uid){
+        return await this.db.collection('estacionamientos').where('encargado', '==', uid);
+    }
 }
 const firebase = new Firebase();
 export default firebase;
