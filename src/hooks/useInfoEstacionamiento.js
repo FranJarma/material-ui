@@ -3,7 +3,7 @@ import {FirebaseContext} from './..//firebase';
 import Toast from './../componentes/diseño/Toast';
 
 //state para traer la información del usuario logueado
-function useInfoUsuario (){
+function useInfoEstacionamiento (){
 const [estacionamientoInfo, guardarEstacionamientoInfo] = useState({});
 const {usuario, firebase} = useContext(FirebaseContext);
 useEffect (() => {
@@ -30,4 +30,4 @@ guardarEstacionamientoInfo(resultado[0]);
 }
 return estacionamientoInfo;
 }
-export default useInfoUsuario;
+export default useInfoEstacionamiento;

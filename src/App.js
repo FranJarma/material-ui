@@ -8,6 +8,7 @@ import NuevoCobro from './componentes/reservas/NuevoCobro.js';
 import BuscarReserva from './componentes/reservas/BuscarReserva.js';
 
 import Estacionamiento from './componentes/estacionamientos/Estacionamiento.js';
+import MiEstacionamiento from './componentes/estacionamientos/MiEstacionamiento.js';
 import Comentarios from './componentes/estacionamientos/Comentarios.js';
 import DatosPersonales from './componentes/usuarios/DatosPersonales.js';
 import Tarifas from './componentes/estacionamientos/Tarifas.js';
@@ -64,7 +65,7 @@ function App() {
                     </RutaPrivada>
                     <RutaPrivada exact path="/cambiar-fecha" component={CambiarFechaReserva}>
                     </RutaPrivada>
-                    <RutaPrivada exact path="/mi-estacionamiento" component={Estacionamiento}>
+                    <RutaPrivada exact path="/mi-estacionamiento" component={MiEstacionamiento}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/valoraciones" component={Comentarios}>
                     </RutaPrivada>

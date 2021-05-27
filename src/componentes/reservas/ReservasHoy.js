@@ -13,24 +13,29 @@ import * as CReservas from './../../constantes/reservas/CReservas';
 import Reserva from './Reserva';
 import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
+import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
 
 const ReservasHoy = () => {
     const classes = useStyles();
+    const estacionamientoInfo = useInfoEstacionamiento();
+    console.log(estacionamientoInfo.id);
     const fechaCompleta = new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear();
     //state para guardar reservas
     const [reservasDelDia, guardarReservasDelDia] = useState([]);
     const {firebase} = useContext(FirebaseContext);
     //use effect para que constantemente traiga las reservas
     useEffect (() => {
-        //las reservas que se tienen que traer son las del día de hoy y filtradas por el usuario logueado
+        /*las reservas que se tienen que traer son las del día de hoy, con hora de salida nula
+        y con el estacionamiento id del usuario logueado (encargado) */
         const obtenerReservasDeHoy = () => {
             try {
                 firebase.db.collection('reservas').orderBy('horaIngreso', 'desc')
                 .where('fechaCreacion','==',fechaCompleta)
                 .where('horaSalida', '==', "")
+                .where("estacionamiento", "==", estacionamientoInfo.id)
                 .onSnapshot(manejarSnapshot); 
             } catch (error) {
-                Toast(error);
+                console.log(error);
             }
         }
         obtenerReservasDeHoy();

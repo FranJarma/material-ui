@@ -15,6 +15,16 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: "1rem",
         marginRight: "1rem"
     },
+    cartaMiEstacionamiento: {
+        flexGrow: 1,
+        marginBottom: "1rem",
+        paddingLeft: "2rem",
+        paddingRight: "2rem",
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
+        backgroundColor: theme.palette.background.paper,
+        marginLeft: "1rem",
+        marginRight: "1rem"
+    },
     formControl: {
         minWidth: '100%',
     },
@@ -31,6 +41,21 @@ export const useStyles = makeStyles((theme) => ({
         textTransform: "uppercase",
         fontSize: 15,
         marginTop: "1rem",
+        [theme.breakpoints.down('xs')]:{
+            width: "100%"
+        },
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
+    botonModificarDatosMiEstacionamiento: {
+        backgroundColor: "#448aff",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        marginTop: "1rem",
+        marginBottom: "1rem",
         [theme.breakpoints.down('xs')]:{
             width: "100%"
         },
@@ -165,6 +190,15 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         marginBottom: "2rem"
     },
+    mostrarMapa: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#448aff",
+        fontSize: 14,
+        marginLeft: '1rem',
+        cursor: 'pointer',
+        fontWeight: "bold",
+        marginBottom: "1rem"
+    },
     cartaNuevoUsuario: {
         [theme.breakpoints.up('lg')]:{
             margin:"auto",
@@ -209,6 +243,19 @@ export const useStyles = makeStyles((theme) => ({
     },
     inputNuevoEstacionamiento: {
         fontFamily: "Roboto Condensed, sans-serif",
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#rgba(0, 0, 0, 0.23);"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#43a047;"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#43a047"
+        }
+    },
+    inputMiEstacionamiento: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        zIndex: 0,
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#rgba(0, 0, 0, 0.23);"
         },

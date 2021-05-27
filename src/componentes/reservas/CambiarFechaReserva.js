@@ -10,9 +10,12 @@ import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 import {useStyles} from './Styles';
 import * as CReservas from './../../constantes/reservas/CReservas';
+import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
 
 const CambiarFechaReserva = () => {
     const classes = useStyles();
+    const estacionamientoInfo = useInfoEstacionamiento();
+    console.log(estacionamientoInfo.lugares);
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
     const [nuevoLugar, setNuevoLugar] = useState([]);
 
