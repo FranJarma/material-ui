@@ -217,6 +217,16 @@ const Aside = () => {
                         </ListItemText>
                     </ListItem>
                     </Link>
+                    <Link to={'/lugares'} className={classes.titulosMenu}>
+                    <ListItem button className={classes.subMenu}>
+                        <ListItemIcon>
+                            <GridOnIcon className={classes.iconos}/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            Administrar lugares
+                        </ListItemText>
+                    </ListItem>
+                    </Link>
                     <Link to={'/tarifas'} className={classes.titulosMenu}>
                     <ListItem button className={classes.subMenu}>
                         <ListItemIcon>
@@ -234,16 +244,6 @@ const Aside = () => {
                         </ListItemIcon>
                         <ListItemText>
                             Comentarios y valoraciones
-                        </ListItemText>
-                    </ListItem>
-                    </Link>
-                    <Link to={'/lugares'} className={classes.titulosMenu}>
-                    <ListItem button className={classes.subMenu}>
-                        <ListItemIcon>
-                            <GridOnIcon className={classes.iconos}/>
-                        </ListItemIcon>
-                        <ListItemText>
-                            Administrar lugares
                         </ListItemText>
                     </ListItem>
                     </Link>

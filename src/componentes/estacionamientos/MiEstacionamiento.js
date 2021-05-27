@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {FirebaseContext} from './../../firebase/';
 import Navbar from '../diseño/Navbar.js';
 import { 
-Typography, Button, TextField, Grid, Card, Link } from '@material-ui/core';
+Typography, Button, TextField, Grid, Card, Link, TextareaAutosize } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 
@@ -15,6 +15,7 @@ import Swal from '../diseño/Swal';
 import traducirError from '../../firebase/errores';
 import {usePlacesWidget} from "react-google-autocomplete";
 import Mapa from './../mapas/Mapa';
+import FileUploader from 'react-firebase-file-uploader';
 
 const MiEstacionamiento = () => {
     const {usuario, firebase} = useContext(FirebaseContext);
@@ -192,6 +193,20 @@ const MiEstacionamiento = () => {
                     </InputMask>
                 </Grid>
                 </Grid>
+                <Grid container spacing={3}>
+                <Grid item lg={12}>
+                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                        <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem',
+                        marginRight: '1rem', marginTop: '1rem'}}>Imagen:</Typography>
+                        <FileUploader
+                        id="imagen"
+                        accept="image/*"
+                        name="imagen"
+                        >
+                        </FileUploader>
+                    </div>
+                </Grid>
+                </Grid>
                 <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem', marginTop: '1rem'}}>Ubicación:</Typography>
                 <Grid container spacing={3}>
                 <Grid item lg={6} xs={12}> 
@@ -213,6 +228,7 @@ const MiEstacionamiento = () => {
                         value={ubicacion.provincia}
                         variant="outlined"
                         label="Provincia"
+                        disabled
                         inputRef={materialRef}
                     ></TextField>
                 </Grid>
@@ -224,6 +240,7 @@ const MiEstacionamiento = () => {
                         value={ubicacion.ciudad}
                         variant="outlined"
                         label="Ciudad"
+                        disabled
                         inputRef={materialRef}
                     ></TextField>
                 </Grid>
@@ -247,6 +264,20 @@ const MiEstacionamiento = () => {
                 </Grid>
                 : ""}
             </Grid>
+            <Grid container spacing={3}>
+                <Grid item lg={12}>
+                        <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem',
+                        marginRight: '1rem', marginTop: '1rem'}}>Ingrese una descripción (servicios adicionales, abre feriados, etc):</Typography>
+                        <TextareaAutosize
+                        name="descripcion"
+                        placeholder="Por ej: Servicios de lavado y calibrado de gomas, abro feriados"
+                        className={classes.inputMiEstacionamiento}
+                        rowsMin={5}
+                        style={{width: "100%"}}
+                        >
+                        </TextareaAutosize>
+                </Grid>
+                </Grid>
             &nbsp;
             <Button
                 endIcon={<CheckIcon/>}

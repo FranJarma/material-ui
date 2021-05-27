@@ -17,7 +17,7 @@ const obtenerInfoUsuario = () => {
     }
 }
 obtenerInfoUsuario();
-},[])
+},[firebase.db, usuario.uid])
 function manejarSnapshot(snapshot){
 if (!snapshot) return;
 const resultado = snapshot.docs.map(doc => {
