@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 import firebaseConfig from './config';
 
 //se realiza una clase para que cada vez que se la llame, se inicializa la app
@@ -11,6 +12,7 @@ class Firebase {
         }
         this.auth = app.auth();
         this.db = app.firestore();
+        this.storage = app.storage();
     }
 // MÉTODOS PARA ADMINISTRACIÓN DE USUARIOS
     //método para registrar usuario
@@ -68,7 +70,7 @@ class Firebase {
     //método para registrar nuevo estacionamiento
     async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, 
         horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
-        tarifaAuto, tarifaMoto, tarifaTraffic, encargado, valoracion){
+        tarifaAuto, tarifaMoto, tarifaTraffic, encargado, valoracion, descripcion){
         this.db.collection('estacionamientos').add({
             nombreCompleto: nombreCompleto,
             nSucursal: nSucursal,
@@ -102,13 +104,14 @@ class Firebase {
                 },
             ],
             encargado: encargado,
-            valoracion: valoracion
+            valoracion: valoracion,
+            descripcion: descripcion
         })
     }
-    //metodo para modificar datos del usuario por id
+    //metodo para modificar datos del estacionamiento por id
     async modificarEstacionamiento(id, nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares,
         horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
-        tarifaAuto, tarifaMoto, tarifaTraffic, encargado){
+        tarifaAuto, tarifaMoto, tarifaTraffic, encargado, descripcion, urlImagen){
         this.db.collection('estacionamientos').doc(id).update({
             nombreCompleto: nombreCompleto,
             nSucursal: nSucursal,
@@ -141,9 +144,21 @@ class Firebase {
                     valor: tarifaTraffic
                 },
             ],
-            encargado: encargado
+            encargado: encargado,
+            descripcion: descripcion,
+            urlImagen: urlImagen
         })
     }
+        //metodo para modificar datos del estacionamiento por id (encargado)
+        async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen){
+            this.db.collection('estacionamientos').doc(id).update({
+                nombreCompleto: nombreCompleto,
+                telefono: telefono,
+                cuit: cuit,
+                descripcion: descripcion,
+                urlImagen: urlImagen
+            })
+        }
     //método para eliminar un estacionamiento por su id
     async eliminarEstacionamiento(id){
         this.db.collection('estacionamientos').doc(id).delete();

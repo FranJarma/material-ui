@@ -9,7 +9,7 @@ import Footer from '../diseño/Footer.js';
 import InputMask from 'react-input-mask';
 import * as CGeneral from '../../constantes/general/CGeneral';
 import {useStyles} from './Styles';
-import * as CAuth from '../../constantes/auth/CAuth';
+import * as CEstacionamientos from '../../constantes/estacionamientos/CEstacionamientos';
 import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
 import traducirError from '../../firebase/errores';
@@ -19,64 +19,9 @@ import FileUploader from 'react-firebase-file-uploader';
 
 const MiEstacionamiento = () => {
     const {usuario, firebase} = useContext(FirebaseContext);
-    const { ref: materialRef } = usePlacesWidget({
-        apiKey: "AIzaSyAfSelxd1TelyS5koQS5V0HU0yGMGf5SnE",
-        onPlaceSelected: (ubicacion) => {
-            let direccion = "";
-            let numero = "";
-            let provincia = "";
-            let ciudad = "";
-            let codigoPostal = "";
-            for(const informacion of ubicacion.address_components){
-                const campos = informacion.types[0];
-                switch (campos) {
-                    case "street_number":
-                    {
-                        numero = informacion.short_name;
-                        break;
-                    }
-                    case "route": {
-                        direccion = informacion.short_name;
-                        break;
-                    }
-                    case "postal_code": {
-                        codigoPostal = `${informacion.long_name}${codigoPostal}`;
-                        break;
-                    }
-                    case "administrative_area_level_1": {
-                        provincia = informacion.short_name;
-                        break;
-                    }
-                    case "administrative_area_level_2": {
-                        ciudad = informacion.short_name;
-                        break;
-                      }
-                }
-                guardarUbicacionEstacionamiento(
-                    {
-                        direccion: direccion + " " + numero,
-                        provincia: provincia,
-                        ciudad: ciudad,
-                        codigoPostal: codigoPostal,
-                        latitud: ubicacion.geometry.location.lat(),
-                        longitud: ubicacion.geometry.location.lng()
-                    })
-            }
-        },
-        options:{
-            types: ["address"],
-            componentRestrictions: { country: "arg" }
-        }
-      });
-
     const [estacionamientoInfo, guardarEstacionamientoInfo] = useState({
         nombreCompleto: '',
         cuit: '',
-        diasApertura: '',
-        encargado: '',
-        horario: '',
-        lugares: '',
-        tarifas: '',
         telefono: '',
         ubicacion: {
             direccion: '',
@@ -85,8 +30,7 @@ const MiEstacionamiento = () => {
             latitud: 0,
             longitud: 0
         },
-        valoracion: '',
-        horarioCorrido: false
+        descripcion: '',
     });
     const [mapa, mostrarMapa] = useState(false);
     const handleChangeMostrarMapa = () => {
@@ -97,22 +41,42 @@ const MiEstacionamiento = () => {
             mostrarMapa(true);
         }
     }
-    //state para manejar la ubicacion
-    const [ubicacionEstacionamiento, guardarUbicacionEstacionamiento] = useState({
-        direccion: '',
-        provincia: '',
-        ciudad: '',
-        latitud: '',
-        longitud: ''
-    });
-    const {nombreCompleto, cuit, diasApertura, encargado, horario, horarioCorrido, lugares, tarifas, telefono,
-    ubicacion, valoracion } = estacionamientoInfo;
+    const {nombreCompleto, cuit, telefono, ubicacion, descripcion } = estacionamientoInfo;
+    //state de la imagen para subir a storage
+    const [nombreImagen, guardarNombre] = useState('');
+    const [subiendo, guardarSubiendo] = useState(false);
+    const [progreso, guardarProgreso] = useState(0);
+    const [urlImagen, guardarUrlImagen] = useState('');
+    //funciones para dichos states
+    const handleUploadStart = () => {
+        guardarProgreso(0);
+        guardarSubiendo(true);
+    }
+    const handleProgress = progreso => guardarProgreso(progreso);
+    const handleUploadError = error => {
+        guardarSubiendo(error);
+        Toast(error);
+    }
+    const handleUploadSuccess = nombre => {
+        guardarProgreso(100);
+        guardarSubiendo(false);
+        guardarNombre(nombre);
+        firebase.storage
+        .ref('estacionamientos')
+        .child(nombre)
+        .getDownloadURL()
+        .then(url => {
+            guardarUrlImagen(url)
+        });
+    }
+
     //evento onChange
     const onChange = (e) => {
         guardarEstacionamientoInfo({
             ...estacionamientoInfo,
             [e.target.name] : e.target.value
-    })};
+        });
+};
     useEffect(()=>{
         const obtenerInfoEstacionamiento = () => {
             try {
@@ -135,6 +99,31 @@ const MiEstacionamiento = () => {
         });
         guardarEstacionamientoInfo(resultado[0]);
         console.log(resultado[0]);
+    }
+    //función para modificar estacionamiento
+    async function modificarEstacionamiento() {
+        try {
+            if(nombreCompleto === '' || cuit === '' || telefono === ''){
+                Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
+            }
+            //se utiliza la función includes para verificar si alguno de los dos campos tiene espacio en blanco
+            else if(cuit.includes('_')){
+                Toast(CGeneral.VALIDACION_CUIT)
+            }
+            else if(telefono.includes('_')){
+                Toast(CGeneral.VALIDACION_TELEFONO)
+            }
+            else {
+                //solo se puede modificar el teléfono, cuit, la descripción y la URl de la imagen
+                await firebase.modificarMiEstacionamiento(estacionamientoInfo.id, nombreCompleto,
+                telefono, cuit, descripcion, urlImagen);
+            }
+            Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
+        }
+        catch (error) {
+            console.log(error);
+            Toast(traducirError(error.code))
+        }
     }
     const classes = useStyles();
     return ( 
@@ -199,9 +188,14 @@ const MiEstacionamiento = () => {
                         <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem',
                         marginRight: '1rem', marginTop: '1rem'}}>Imagen:</Typography>
                         <FileUploader
-                        id="imagen"
                         accept="image/*"
-                        name="imagen"
+                        name="urlImagen"
+                        randomizeFilename
+                        storageRef={firebase.storage.ref("estacionamientos")}
+                        onUploadStart={handleUploadStart}
+                        onUploadError={handleUploadError}
+                        onUploadSuccess={handleUploadSuccess}
+                        onProgress={handleProgress}
                         >
                         </FileUploader>
                     </div>
@@ -215,9 +209,9 @@ const MiEstacionamiento = () => {
                         fullWidth
                         type="text"
                         value={ubicacion.direccion}
-                        variant="outlined"
+                        variant="filled"
                         label="Dirección"
-                        inputRef={materialRef}
+                        disabled
                     ></TextField>
                 </Grid>
                 <Grid item lg={3} xs={6}> 
@@ -226,10 +220,9 @@ const MiEstacionamiento = () => {
                         fullWidth
                         type="text"
                         value={ubicacion.provincia}
-                        variant="outlined"
+                        variant="filled"
                         label="Provincia"
                         disabled
-                        inputRef={materialRef}
                     ></TextField>
                 </Grid>
                 <Grid item lg={3} xs={6}> 
@@ -238,10 +231,9 @@ const MiEstacionamiento = () => {
                         fullWidth
                         type="text"
                         value={ubicacion.ciudad}
-                        variant="outlined"
+                        variant="filled"
                         label="Ciudad"
                         disabled
-                        inputRef={materialRef}
                     ></TextField>
                 </Grid>
                 <Link
@@ -270,9 +262,12 @@ const MiEstacionamiento = () => {
                         marginRight: '1rem', marginTop: '1rem'}}>Ingrese una descripción (servicios adicionales, abre feriados, etc):</Typography>
                         <TextareaAutosize
                         name="descripcion"
-                        placeholder="Por ej: Servicios de lavado y calibrado de gomas, abro feriados"
+                        value={descripcion}
+                        placeholder="Por ej: Servicios de lavado y calibrado de gomas, abro feriados (Max. 100 palabras)"
                         className={classes.inputMiEstacionamiento}
                         rowsMin={5}
+                        maxLength={100}
+                        onChange={onChange}
                         style={{width: "100%"}}
                         >
                         </TextareaAutosize>
@@ -280,6 +275,7 @@ const MiEstacionamiento = () => {
                 </Grid>
             &nbsp;
             <Button
+                onClick={modificarEstacionamiento}
                 endIcon={<CheckIcon/>}
                 className= {classes.botonModificarDatosMiEstacionamiento}>Modificar datos
             </Button>

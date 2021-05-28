@@ -246,24 +246,24 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 if(horarioCorrido && todosLosDias) {
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, '', '', true, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
-                    encargadoSeleccionado, 0);
+                    encargadoSeleccionado, 0, '');
                 }
                 else if (todosLosDias){
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, horaApertura, horaCierre,
                     false, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
-                    0);
+                    0, '');
                 }
                 else if (horarioCorrido){
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, '', '', true, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
-                    encargadoSeleccionado, 0);
+                    encargadoSeleccionado, 0, '');
                 }
                 else {
                     await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, horaApertura, horaCierre,
                     false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado,
-                    0);
+                    0, '');
                 }
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.REGISTRO_EXITOSO);
                 cerrarModal();
@@ -308,22 +308,23 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 if(horarioCorrido && todosLosDias) {
                     await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal,
                     ubicacionEstacionamiento, telefono, cuit, lugares, '', '', true, '', true,  tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
-                    encargadoSeleccionado);
+                    encargadoSeleccionado, '', '');
                 }
                 else if (todosLosDias){
                     await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, horaApertura, horaCierre, false, '', true,  tarifaCamioneta, tarifaAuto,
-                    tarifaMoto, tarifaTraffic, encargadoSeleccionado);
+                    tarifaMoto, tarifaTraffic, encargadoSeleccionado, '', '');
                 }
                 else if (horarioCorrido){
                     await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, '', '', true, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
-                    encargadoSeleccionado);
+                    encargadoSeleccionado, '', '');
                 }
                 else {
                     await firebase.modificarEstacionamiento(estacionamientoCompleto.id, nombreCompleto, nSucursal, ubicacionEstacionamiento,
                     telefono, cuit, lugares, horaApertura, horaCierre,
-                    false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic, encargadoSeleccionado);
+                    false, dia, false, tarifaCamioneta, tarifaAuto, tarifaMoto, tarifaTraffic,
+                    encargadoSeleccionado, '', '');
                 }
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
                 cerrarModal();
@@ -408,7 +409,6 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                         variant="outlined"
                         label="Ubicación"
                         inputRef={materialRef}
-
                     ></TextField>
                 </Grid>
                 <Grid item lg={4} xs={12}>
