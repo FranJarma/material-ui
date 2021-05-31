@@ -151,13 +151,32 @@ class Firebase {
         })
     }
     //metodo para modificar datos del estacionamiento por id (encargado)
-    async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen){
+    async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen,
+        tarifaAuto, tarifaCamioneta, tarifaMoto, tarifaTraffic){
         this.db.collection('estacionamientos').doc(id).update({
             nombreCompleto: nombreCompleto,
             telefono: telefono,
             cuit: cuit,
             descripcion: descripcion,
-            urlImagen: urlImagen
+            urlImagen: urlImagen,
+            tarifas: [
+                {
+                    vehiculo: 'automovil',
+                    valor: tarifaAuto
+                },
+                {
+                    vehiculo: 'camioneta',
+                    valor: tarifaCamioneta
+                },
+                {
+                    vehiculo: 'motocicleta',
+                    valor: tarifaMoto
+                },
+                {
+                    vehiculo: 'traffic',
+                    valor: tarifaTraffic
+                },
+            ],
         })
     }
     //método para eliminar un estacionamiento por su id

@@ -17,7 +17,7 @@ import TodayIcon from '@material-ui/icons/Today';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import StarIcon from '@material-ui/icons/Star';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link, useHistory }  from 'react-router-dom';
@@ -227,13 +227,13 @@ const Aside = () => {
                         </ListItemText>
                     </ListItem>
                     </Link>
-                    <Link to={'/tarifas'} className={classes.titulosMenu}>
+                    <Link to={'/lugares'} className={classes.titulosMenu}>
                     <ListItem button className={classes.subMenu}>
                         <ListItemIcon>
-                            <AttachMoneyIcon className={classes.iconos}/>
+                            <WatchLaterIcon className={classes.iconos}/>
                         </ListItemIcon>
                         <ListItemText>
-                        Vehículos y tarifas
+                            Horarios y días de apertura
                         </ListItemText>
                     </ListItem>
                     </Link>

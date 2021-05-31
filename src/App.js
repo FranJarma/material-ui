@@ -11,7 +11,6 @@ import Estacionamiento from './componentes/estacionamientos/Estacionamiento.js';
 import MiEstacionamiento from './componentes/estacionamientos/MiEstacionamiento.js';
 import Comentarios from './componentes/estacionamientos/Comentarios.js';
 import DatosPersonales from './componentes/usuarios/DatosPersonales.js';
-import Tarifas from './componentes/estacionamientos/Tarifas.js';
 import Lugares from './componentes/estacionamientos/Lugares.js';
 import Estacionamientos from './componentes/estacionamientos/Estacionamientos.js';
 
@@ -67,13 +66,13 @@ function App() {
                     </RutaPrivada>
                     <RutaPrivada exact path="/mi-estacionamiento" component={MiEstacionamiento}>
                     </RutaPrivada>
+                    <RutaPrivada exact path="/horarios-y-dias" component={MiEstacionamiento}>
+                    </RutaPrivada>
                     <RutaPrivada exact path="/valoraciones" component={Comentarios}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/datos-personales" component={DatosPersonales}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/reportes" component={Reportes}>
-                    </RutaPrivada>
-                    <RutaPrivada exact path="/tarifas" component={Tarifas}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/lugares" component={Lugares}>
                     </RutaPrivada>

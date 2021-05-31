@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {FirebaseContext} from './../../firebase/';
 import Navbar from '../diseño/Navbar.js';
 import { 
-Typography, Button, TextField, Grid, Card, Link, TextareaAutosize } from '@material-ui/core';
+Typography, Button, TextField, Grid, Card, Link, TextareaAutosize, InputAdornment, CircularProgress } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 
@@ -13,16 +13,20 @@ import * as CEstacionamientos from '../../constantes/estacionamientos/CEstaciona
 import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
 import traducirError from '../../firebase/errores';
-import {usePlacesWidget} from "react-google-autocomplete";
 import Mapa from './../mapas/Mapa';
 import FileUploader from 'react-firebase-file-uploader';
 
 const MiEstacionamiento = () => {
     const {usuario, firebase} = useContext(FirebaseContext);
     const [estacionamientoInfo, guardarEstacionamientoInfo] = useState({
+        id: '',
         nombreCompleto: '',
         cuit: '',
         telefono: '',
+        tarifaAuto: '',
+        tarifaCamioneta: '',
+        tarifaMoto: '',
+        tarifaTraffic: '',
         ubicacion: {
             direccion: '',
             provincia: '',
@@ -41,7 +45,8 @@ const MiEstacionamiento = () => {
             mostrarMapa(true);
         }
     }
-    const {nombreCompleto, cuit, telefono, ubicacion, descripcion } = estacionamientoInfo;
+    const {id, nombreCompleto, cuit, telefono, ubicacion, descripcion, tarifaAuto, tarifaCamioneta, 
+    tarifaMoto, tarifaTraffic } = estacionamientoInfo;
     //state de la imagen para subir a storage
     const [nombreImagen, guardarNombre] = useState('');
     const [subiendo, guardarSubiendo] = useState(false);
@@ -61,6 +66,7 @@ const MiEstacionamiento = () => {
         guardarProgreso(100);
         guardarSubiendo(false);
         guardarNombre(nombre);
+        alert(nombre);
         firebase.storage
         .ref('estacionamientos')
         .child(nombre)
@@ -97,13 +103,33 @@ const MiEstacionamiento = () => {
                 ...doc.data()
             }
         });
-        guardarEstacionamientoInfo(resultado[0]);
+        guardarEstacionamientoInfo({
+            id: resultado[0].id,
+            nombreCompleto: resultado[0].nombreCompleto,
+            cuit: resultado[0].cuit,
+            telefono: resultado[0].telefono,
+            tarifaAuto: resultado[0].tarifas[0].valor,
+            tarifaCamioneta: resultado[0].tarifas[1].valor,
+            tarifaMoto: resultado[0].tarifas[2].valor,
+            tarifaTraffic: resultado[0].tarifas[3].valor,
+            ubicacion: {
+                direccion: resultado[0].ubicacion.direccion,
+                provincia: resultado[0].ubicacion.provincia,
+                ciudad: resultado[0].ubicacion.ciudad,
+                latitud: resultado[0].ubicacion.latitud,
+                longitud: resultado[0].ubicacion.longitud
+            },
+            descripcion: resultado[0].descripcion,
+            urlImagen: resultado[0].urlImagen
+        });
         console.log(resultado[0]);
     }
     //función para modificar estacionamiento
     async function modificarEstacionamiento() {
         try {
-            if(nombreCompleto === '' || cuit === '' || telefono === ''){
+            if(nombreCompleto === '' || cuit === '' || telefono === '' || tarifaAuto === '' || 
+            tarifaCamioneta == '' || tarifaMoto === '' || tarifaTraffic === '')
+            {
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
             }
             //se utiliza la función includes para verificar si alguno de los dos campos tiene espacio en blanco
@@ -114,14 +140,17 @@ const MiEstacionamiento = () => {
                 Toast(CGeneral.VALIDACION_TELEFONO)
             }
             else {
-                //solo se puede modificar el teléfono, cuit, la descripción y la URl de la imagen
-                await firebase.modificarMiEstacionamiento(estacionamientoInfo.id, nombreCompleto,
-                telefono, cuit, descripcion, urlImagen);
+                /*solo se puede modificar el teléfono, cuit, la descripción, la URl de la imagen
+                y las tarifas*/
+                await firebase.modificarMiEstacionamiento(id, nombreCompleto,
+                telefono, cuit, descripcion, urlImagen, tarifaAuto, tarifaCamioneta, tarifaMoto,
+                tarifaTraffic);
+                console.log(id);
+                Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
             }
-            Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
         }
         catch (error) {
-            console.log(error);
+            console.log(error.code);
             Toast(traducirError(error.code))
         }
     }
@@ -181,7 +210,70 @@ const MiEstacionamiento = () => {
                         }
                     </InputMask>
                 </Grid>
-                </Grid>
+            </Grid>
+            <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem', marginTop: '1rem'}}>Tarifas:</Typography>
+            <Grid container spacing={3}>
+                <Grid item md={3} xs={6}>
+                        <TextField
+                            className = {classes.inputMiEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaAuto"
+                            value={tarifaAuto}
+                            variant="outlined"
+                            onChange={onChange}
+                            label="Auto"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item md={3} xs={6}>
+                        <TextField
+                            className = {classes.inputMiEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaCamioneta"
+                            value={tarifaCamioneta}
+                            variant="outlined"
+                            onChange={onChange}
+                            label="Camioneta"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item md={3} xs={6}>
+                        <TextField
+                            className = {classes.inputMiEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaMoto"
+                            value={tarifaMoto}
+                            variant="outlined"
+                            onChange={onChange}
+                            label="Motocicleta"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item md={3} xs={6}>
+                        <TextField
+                            className = {classes.inputMiEstacionamiento}
+                            type="number"
+                            fullWidth
+                            name="tarifaTraffic"
+                            value={tarifaTraffic}
+                            variant="outlined"
+                            onChange={onChange}
+                            label="Traffic"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
+                    </Grid>
+            </Grid>
                 <Grid container spacing={3}>
                 <Grid item lg={12}>
                     <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
@@ -198,6 +290,7 @@ const MiEstacionamiento = () => {
                         onProgress={handleProgress}
                         >
                         </FileUploader>
+                        {subiendo ? <CircularProgress value={progreso}/>: ""}
                     </div>
                 </Grid>
                 </Grid>
@@ -272,7 +365,7 @@ const MiEstacionamiento = () => {
                         >
                         </TextareaAutosize>
                 </Grid>
-                </Grid>
+            </Grid>
             &nbsp;
             <Button
                 onClick={modificarEstacionamiento}

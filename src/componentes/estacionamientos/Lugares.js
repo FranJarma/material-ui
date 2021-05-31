@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import {FirebaseContext} from './../../firebase/';
-import { makeStyles, Typography, Fab, Button, Card, CardContent, Grid, Divider} from '@material-ui/core';
+import { Typography, Fab, Button, Card, CardContent, Grid, Divider} from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
