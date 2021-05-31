@@ -25,6 +25,14 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: "1rem",
         marginRight: "1rem"
     },
+    cartaLugares: {
+        flexGrow: 1,
+        marginBottom: "1rem",
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
+        backgroundColor: theme.palette.background.paper,
+        marginLeft: "1rem",
+        marginRight: "1rem"
+    },
     formControl: {
         minWidth: '100%',
     },
@@ -47,6 +55,41 @@ export const useStyles = makeStyles((theme) => ({
         "&:hover":{
             backgroundColor: "#448aff",
         }
+    },
+    botonLiberarLugar: {
+        backgroundColor: "#448aff",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        marginTop: "1rem",
+        [theme.breakpoints.down('xs')]:{
+            width: "100%"
+        },
+        [theme.breakpoints.up('md')]:{
+            marginLeft: '1rem'
+        },
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
+    lugarDistribuido: {
+        backgroundColor: "#bbdefb",
+        borderRadius: 10,
+        color: "#ffffff",
+        margin: 5,
+        height: '2rem',
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
+    ocupado: {
+        color: "#ff3d00",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
     },
     botonModificarDatosMiEstacionamiento: {
         backgroundColor: "#448aff",
@@ -114,15 +157,6 @@ export const useStyles = makeStyles((theme) => ({
         textTransform: "uppercase",
         fontSize: 15,
         marginRight: '8rem',
-        [theme.breakpoints.up('md')]:{
-            marginTop: '-68px'
-        },
-        [theme.breakpoints.down('md')]:{
-            marginTop: '-65px'
-        },
-        [theme.breakpoints.down('xs')]:{
-            display: 'none'
-        },
     },
     nombreCompleto: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -138,6 +172,13 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]:{
             marginLeft: "5rem"
         },
+        fontWeight: "bold",
+        padding: "0.1rem",
+        fontSize: 16,
+    },
+    camposTitulosLugares: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#9e9e9e",
         fontWeight: "bold",
         padding: "0.1rem",
         fontSize: 16,
@@ -172,11 +213,36 @@ export const useStyles = makeStyles((theme) => ({
         width: "4rem",
         height: "4rem"
     },
+    alerta:{
+        position: "relative",
+        marginLeft: "1rem",
+        marginRight: "1rem",
+        borderRadius: 0,
+        marginBottom: '1rem'
+    },
     botonAgregar: {
         backgroundColor: "#43a047",
         fontFamily: "Roboto Condensed, sans-serif",
         float:"right",
         color: "#FFFFFF",
+        marginRight: '1rem',
+        "&:hover": {
+            backgroundColor: "#43a047"
+        }
+    },
+    botonHabilitar: {
+        backgroundColor: "#43a047",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#FFFFFF",
+        fontSize: 15,
+        marginTop: '1rem',
+        [theme.breakpoints.up('md')]:{
+            marginLeft: '1rem'
+        },
+        [theme.breakpoints.down('xs')]:{
+            width: "100%",
+            marginLeft: 0
+        },
         "&:hover": {
             backgroundColor: "#43a047"
         }

@@ -76,7 +76,7 @@ const MiEstacionamiento = () => {
             ...estacionamientoInfo,
             [e.target.name] : e.target.value
         });
-};
+    };
     useEffect(()=>{
         const obtenerInfoEstacionamiento = () => {
             try {
@@ -201,7 +201,7 @@ const MiEstacionamiento = () => {
                     </div>
                 </Grid>
                 </Grid>
-                <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem', marginTop: '1rem'}}>Ubicación:</Typography>
+                <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem', marginTop: '1rem'}}>Ubicación (si necesita modificarla, comunicarse con administrador del sistema):</Typography>
                 <Grid container spacing={3}>
                 <Grid item lg={6} xs={12}> 
                     <TextField

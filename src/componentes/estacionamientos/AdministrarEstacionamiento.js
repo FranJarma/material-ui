@@ -238,7 +238,8 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                     let lugar = {
                         "id": i,
                         "nombre": `Lugar ${i+1}`,
-                        "ocupado": false
+                        "ocupado": false,
+                        "estado": "habilitado"
                     }
                     lugares.push(lugar);
                 }
@@ -300,7 +301,8 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                     let lugar = {
                         "id": i,
                         "nombre": `Lugar ${i+1}`,
-                        "ocupado": false
+                        "ocupado": false,
+                        "estado": "habilitado"
                     }
                     lugares.push(lugar);
                 }

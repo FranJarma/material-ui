@@ -118,7 +118,8 @@ const Login = () => {
         });
     }
     //función para iniciar sesión
-    async function iniciarSesion() {
+    async function iniciarSesion(e) {
+        e.preventDefault();
         try {
             if(email === '' || contraseña === '') {
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
@@ -148,7 +149,7 @@ const Login = () => {
             </CardContent>
             <Divider></Divider>
             &nbsp;
-            <form>
+            <form onSubmit={iniciarSesion}>
                 <Grid>
                     <Grid item>
                         <TextField
@@ -179,7 +180,7 @@ const Login = () => {
                     <Button
                         className={classes.botonIniciarSesion}
                         variant="contained"
-                        onClick={iniciarSesion}
+                        type="submit"
                     >{CAuth.INICIAR_SESION}
                     </Button>
                     </Grid>

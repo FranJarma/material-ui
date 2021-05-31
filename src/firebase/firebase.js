@@ -1,3 +1,4 @@
+import { firestore } from 'firebase-admin';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -149,16 +150,16 @@ class Firebase {
             urlImagen: urlImagen
         })
     }
-        //metodo para modificar datos del estacionamiento por id (encargado)
-        async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen){
-            this.db.collection('estacionamientos').doc(id).update({
-                nombreCompleto: nombreCompleto,
-                telefono: telefono,
-                cuit: cuit,
-                descripcion: descripcion,
-                urlImagen: urlImagen
-            })
-        }
+    //metodo para modificar datos del estacionamiento por id (encargado)
+    async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen){
+        this.db.collection('estacionamientos').doc(id).update({
+            nombreCompleto: nombreCompleto,
+            telefono: telefono,
+            cuit: cuit,
+            descripcion: descripcion,
+            urlImagen: urlImagen
+        })
+    }
     //método para eliminar un estacionamiento por su id
     async eliminarEstacionamiento(id){
         this.db.collection('estacionamientos').doc(id).delete();
@@ -166,6 +167,60 @@ class Firebase {
     //método para traer estacionamiento por usuario
     async traerEstacionamiento(uid){
         return await this.db.collection('estacionamientos').where('encargado', '==', uid);
+    }
+    //métodos para administrar lugares
+    //agregar lugar
+    async agregarLugar(id, lugarId, nombre, ocupado, estado){
+        this.db.collection('estacionamientos').doc(id).get()
+        .then((doc)=> {
+            const lugares = doc.data().lugares;
+            lugares.push({
+                "id": lugarId,
+                "nombre": nombre,
+                "ocupado": ocupado,
+                "estado": estado
+
+            });
+            this.db.collection('estacionamientos').doc(id).update({
+                lugares: lugares
+            })
+        })
+    }
+    //liberar lugar
+    async liberarLugar(id, lugarId){
+        this.db.collection('estacionamientos').doc(id).get()
+        .then((doc)=> {
+            const lugares = doc.data().lugares;
+            const lugarAModificar = lugares.find(lugar => lugar.id === lugarId);
+            lugarAModificar.ocupado = false;
+            this.db.collection('estacionamientos').doc(id).update({
+                lugares: lugares
+            })
+        })
+    }
+    //habilitar lugar
+    async habilitarLugar(id, lugarId){
+        this.db.collection('estacionamientos').doc(id).get()
+        .then((doc)=> {
+            const lugares = doc.data().lugares;
+            const lugarAModificar = lugares.find(lugar => lugar.id === lugarId);
+            lugarAModificar.estado = "habilitado";
+            this.db.collection('estacionamientos').doc(id).update({
+                lugares: lugares
+            })
+        })
+    }
+    //deshabilitar lugar
+    async deshabilitarLugar(id, lugarId){
+        this.db.collection('estacionamientos').doc(id).get()
+        .then((doc)=> {
+            const lugares = doc.data().lugares;
+            const lugarAModificar = lugares.find(lugar => lugar.id === lugarId);
+            lugarAModificar.estado = "deshabilitado";
+            this.db.collection('estacionamientos').doc(id).update({
+                lugares: lugares
+            })
+        })
     }
 }
 const firebase = new Firebase();
