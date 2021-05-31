@@ -33,6 +33,20 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: "1rem",
         marginRight: "1rem"
     },
+    cartaComentarios: {
+        flexGrow: 1,
+        marginBottom: "1rem",
+        boxShadow: "0 2px 3px rgba(0,0,0,0.25), 0 0 3px rgba(0,0,0,0.22)",
+        backgroundColor: theme.palette.background.paper,
+        marginLeft: "1rem",
+        marginRight: "1rem"
+    },
+    votosPositivos: {
+        color: "#43a047"
+    },
+    votosNegativos: {
+        color: "#ef5350"
+    },
     formControl: {
         minWidth: '100%',
     },

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Navbar from '../diseño/Navbar.js';
-import { Card, CardContent, makeStyles, Typography, Button } from '@material-ui/core';
+import { Card, CardContent, makeStyles, Typography, Button, Divider } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Footer from '../diseño/Footer.js';
 import { Rating } from '@material-ui/lab';
@@ -95,8 +95,7 @@ const Comentarios = () => {
             </Alert>
             &nbsp;
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-            <Typography className={classes.valoracion}>Promedio General: {sum/5}
-            </Typography>
+            <Typography className={classes.cantidad}>Promedio General: {sum/5}
             <Rating
                 style={{marginLeft: "1rem"}}
                 readOnly
@@ -104,13 +103,13 @@ const Comentarios = () => {
                 value={sum/5}
             >
             </Rating>
-            </div>
+            </Typography>
 
-            <Typography className={classes.cantidad}>de un total de: {comentarios.length} comentarios</Typography>
+            </div>
              &nbsp;
+             <Card className = {classes.cartaComentarios}>
                 {comentarios.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(comentario =>(
                 <>
-                <Card className = {classes.cartaComentarios}>
                     <CardContent  key={comentario.id}>
                     <>
                     <Rating
@@ -126,9 +125,10 @@ const Comentarios = () => {
                     </div>
                     </>
                     </CardContent>
-                </Card>
+                    <Divider></Divider>
                 </>
                 ))}
+            </Card>
             &nbsp;
             <Paginacion lista={comentarios}/>
             <Footer/>
