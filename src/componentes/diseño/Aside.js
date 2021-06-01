@@ -227,7 +227,7 @@ const Aside = () => {
                         </ListItemText>
                     </ListItem>
                     </Link>
-                    <Link to={'/lugares'} className={classes.titulosMenu}>
+                    <Link to={'/horarios-y-dias'} className={classes.titulosMenu}>
                     <ListItem button className={classes.subMenu}>
                         <ListItemIcon>
                             <WatchLaterIcon className={classes.iconos}/>

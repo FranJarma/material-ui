@@ -32,6 +32,7 @@ import SpinnerState from './context/spinner/spinnerState.js';
 import firebase, {FirebaseContext} from '../src/firebase';
 import useAutenticado from './hooks/useAutenticado';
 import AdministrarUsuario from './componentes/usuarios/AdministrarUsuario';
+import AdministrarHorasDias from './componentes/estacionamientos/AdministrarHorasDias.js';
 
 function App() {
   const usuario = useAutenticado();
@@ -66,7 +67,7 @@ function App() {
                     </RutaPrivada>
                     <RutaPrivada exact path="/mi-estacionamiento" component={MiEstacionamiento}>
                     </RutaPrivada>
-                    <RutaPrivada exact path="/horarios-y-dias" component={MiEstacionamiento}>
+                    <RutaPrivada exact path="/horarios-y-dias" component={AdministrarHorasDias}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/valoraciones" component={Comentarios}>
                     </RutaPrivada>
