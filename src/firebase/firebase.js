@@ -1,15 +1,21 @@
-import { firestore } from 'firebase-admin';
+import * as admin from 'firebase-admin';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 import firebaseConfig from './config';
+var serviceAccount = require("./adminconfig.json");
 
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://console.cloud.google.com/storage/browser/parking-app-5fdb4.appspot.com'
+  });
 //se realiza una clase para que cada vez que se la llame, se inicializa la app
 class Firebase {
     constructor(){
         if(!app.apps.length){
             app.initializeApp(firebaseConfig);
+
         }
         this.auth = app.auth();
         this.db = app.firestore();
@@ -19,8 +25,10 @@ class Firebase {
     //método para registrar usuario
     async registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña, esEncargado, fechaCreacion,
         telefono, dni, esAdmin){
-        const nuevoUsuario = this.auth.createUserWithEmailAndPassword(email, contraseña).
-        then(nuevoUsuario => {
+        let usuario1 = this.auth.currentUser;
+        console.log(usuario1);
+        this.auth.createUserWithEmailAndPassword(email, contraseña)
+        .then(nuevoUsuario => {
             this.db.collection('usuarios').add({
                 uid: nuevoUsuario.user.uid,
                 nombreCompleto: nombreCompleto,
@@ -33,7 +41,8 @@ class Firebase {
                 esAdmin: esAdmin,
             })
         })
-        return await nuevoUsuario;
+        localStorage.removeItem('usuario');
+        this.auth.signOut();
     }
     //metodo para modificar datos del usuario por id
     async modificarUsuario(id, nombreCompleto, nombreUsuario, email, telefono, dni, esEncargado, esAdmin){
@@ -69,9 +78,10 @@ class Firebase {
     }
 //MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
     //método para registrar nuevo estacionamiento
-    async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, 
-        horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
-        tarifaAuto, tarifaMoto, tarifaTraffic, encargado, valoracion, descripcion){
+    async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, encargado, valoracion,
+        tarifaAuto, tarifaCamioneta, tarifaMoto, tarifaTraffic, horaAperturaLunes, horaAperturaMartes, horaAperturaMiercoles, horaAperturaJueves, horaAperturaViernes,
+        horaAperturaSabado, horaAperturaDomingo, horaCierreLunes, horaCierreMartes, horaCierreMiercoles, horaCierreJueves, horaCierreViernes, horaCierreSabado,
+        horaCierreDomingo){
         this.db.collection('estacionamientos').add({
             nombreCompleto: nombreCompleto,
             nSucursal: nSucursal,
@@ -79,13 +89,8 @@ class Firebase {
             ubicacion: ubicacion,
             cuit: cuit,
             lugares: lugares,
-            horarioCorrido,
-            todosLosDias,
-            horario: {
-                horaApertura: horaApertura,
-                horaCierre: horaCierre,
-            },
-            diasApertura,
+            encargado: encargado,
+            valoracion: valoracion,
             tarifas: [
                 {
                     vehiculo: 'automovil',
@@ -104,15 +109,47 @@ class Firebase {
                     valor: tarifaTraffic
                 },
             ],
-            encargado: encargado,
-            valoracion: valoracion,
-            descripcion: descripcion
+            horarios: [
+                {
+                    dia: 'Lunes',
+                    apertura: horaAperturaLunes,
+                    cierre: horaCierreLunes
+                },
+                {
+                    dia: 'Martes',
+                    apertura: horaAperturaMartes,
+                    cierre: horaCierreMartes
+                },
+                {
+                    dia: 'Miercoles',
+                    apertura: horaAperturaMiercoles,
+                    cierre: horaCierreMiercoles
+                },
+                {
+                    dia: 'Jueves',
+                    apertura: horaAperturaJueves,
+                    cierre: horaCierreJueves
+                },
+                {
+                    dia: 'Viernes',
+                    apertura: horaAperturaViernes,
+                    cierre: horaCierreViernes
+                },
+                {
+                    dia: 'Sabado',
+                    apertura: horaAperturaSabado,
+                    cierre: horaCierreSabado
+                },
+                {
+                    dia: 'Domingo',
+                    apertura: horaAperturaDomingo,
+                    cierre: horaCierreDomingo
+                }
+            ]
         })
     }
     //metodo para modificar datos del estacionamiento por id
-    async modificarEstacionamiento(id, nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares,
-        horaApertura, horaCierre, horarioCorrido, diasApertura, todosLosDias, tarifaCamioneta,
-        tarifaAuto, tarifaMoto, tarifaTraffic, encargado, descripcion, urlImagen){
+    async modificarEstacionamiento(id, nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, encargado){
         this.db.collection('estacionamientos').doc(id).update({
             nombreCompleto: nombreCompleto,
             nSucursal: nSucursal,
@@ -120,35 +157,50 @@ class Firebase {
             ubicacion: ubicacion,
             cuit: cuit,
             lugares: lugares,
-            horarioCorrido,
-            todosLosDias,
-            horario: {
-                horaApertura: horaApertura,
-                horaCierre: horaCierre,
-            },
-            diasApertura,
-            tarifas: [
-                {
-                    vehiculo: 'automovil',
-                    valor: tarifaAuto
-                },
-                {
-                    vehiculo: 'camioneta',
-                    valor: tarifaCamioneta
-                },
-                {
-                    vehiculo: 'motocicleta',
-                    valor: tarifaMoto
-                },
-                {
-                    vehiculo: 'traffic',
-                    valor: tarifaTraffic
-                },
-            ],
-            encargado: encargado,
-            descripcion: descripcion,
-            urlImagen: urlImagen
+            encargado: encargado
         })
+    }
+    //metodo para modificar datos del estacionamiento por id (encargado)
+    async modificarHorarios(id, aperturaLunes, aperturaMartes, aperturaMiercoles,
+        aperturaJueves, aperturaViernes, aperturaSabado, aperturaDomingo, cierreLunes, cierreMartes,
+        cierreMiercoles, cierreJueves, cierreViernes, cierreSabado, cierreDomingo){
+        this.db.collection('estacionamientos').doc(id).update({
+            horarios: this.db.FieldValue.delete()
+        })
+        .then(
+            this.db.collection('estacionamientos').doc(id).update({
+                horarios:[
+                    {
+                        apertura: aperturaLunes,
+                        cierre: cierreLunes
+                    },
+                    {
+                        apertura: aperturaMartes,
+                        cierre: cierreMartes
+                    },
+                    {
+                        apertura: aperturaMiercoles,
+                        cierre: cierreMiercoles
+                    },
+                    {
+                        apertura: aperturaJueves,
+                        cierre: cierreJueves
+                    },
+                    {
+                        apertura: aperturaViernes,
+                        cierre: cierreViernes
+                    },
+                    {
+                        apertura: aperturaSabado,
+                        cierre: cierreSabado
+                    },
+                    {
+                        apertura: aperturaDomingo,
+                        cierre: cierreDomingo
+                    }
+                ]
+            })
+        )
     }
     //metodo para modificar datos del estacionamiento por id (encargado)
     async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen,

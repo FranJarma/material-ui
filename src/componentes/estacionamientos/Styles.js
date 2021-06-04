@@ -177,6 +177,7 @@ export const useStyles = makeStyles((theme) => ({
         color: "#448aff",
         fontSize: 18,
         textTransform: "uppercase",
+        textAlign: 'center',
         fontWeight: "bold",
         marginLeft: "1rem"
     },

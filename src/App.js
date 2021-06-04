@@ -33,6 +33,7 @@ import firebase, {FirebaseContext} from '../src/firebase';
 import useAutenticado from './hooks/useAutenticado';
 import AdministrarUsuario from './componentes/usuarios/AdministrarUsuario';
 import AdministrarHorasDias from './componentes/estacionamientos/AdministrarHorasDias.js';
+import CambiarContraseña from './componentes/usuarios/CambiarContraseña';
 
 function App() {
   const usuario = useAutenticado();
@@ -56,6 +57,8 @@ function App() {
                     <RutaPrivada exact path="/nueva-cuenta" component={Registrar}>
                     </RutaPrivada>
                     <Route exact path="/recuperar-contraseña" component={RecuperarContraseña}>
+                    </Route>
+                    <Route exact path="/cambiar-contraseña" component={CambiarContraseña}>
                     </Route>
                     <RutaPrivada exact path="/reservas-del-dia" component={ReservasHoy}>
                     </RutaPrivada>

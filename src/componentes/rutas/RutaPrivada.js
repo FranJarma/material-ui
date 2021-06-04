@@ -8,6 +8,8 @@ const RutaPrivada = ({ component: Component, ...props}) => {
         if(usuario){
             return true;
         }else {
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('nombreUsuario');
             return false;
         }
     });

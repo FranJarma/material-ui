@@ -94,9 +94,8 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
                 Toast(CGeneral.VALIDACION_TELEFONO)
             }
             else{
-                await firebase.registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña, esEncargado,
-                new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear(),
-                telefono, dni, esAdmin);
+                await firebase.registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña,
+                esEncargado, new Date(), telefono, dni, esAdmin);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.REGISTRO_EXITOSO);
                 cerrarModal();
             }
@@ -125,7 +124,7 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
             }
             else{
                 //hay que pasarle el id del documento
-                await firebase.modificarUsuario(usuarioCompleto.id, nombreCompleto,
+                await firebase.modificarUsuario(usuarioCompleto.id, nombreCompleto, 
                 nombreUsuario, email, telefono, dni, esEncargado, esAdmin);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.USUARIO_MODIFICADO);
                 cerrarModal();
@@ -209,6 +208,7 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
                         fullWidth
                         value={email}
                         name="email"
+                        disabled = {accion === "Modificar" ? true : false}
                         variant="outlined"
                         label={CGeneral.EMAIL}
                         onChange={onChange}

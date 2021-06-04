@@ -10,10 +10,10 @@ useEffect (() => {
 const obtenerInfoUsuario = () => {
     try {
         firebase.db.collection('usuarios')
-        .where('uid','==', usuario.uid)
+        .where('uid','==', localStorage.getItem('usuario'))
         .onSnapshot(manejarSnapshot);
     } catch (error) {
-        Toast(error);
+        console.log(error);
     }
 }
 obtenerInfoUsuario();
@@ -27,6 +27,7 @@ const resultado = snapshot.docs.map(doc => {
     }
 });
 guardarUsuarioInfo(resultado[0]);
+localStorage.setItem('nombreUsuario', resultado[0].nombreCompleto)
 }
 return usuarioInfo;
 }

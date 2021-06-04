@@ -10,9 +10,6 @@ import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacio
 import AdministrarEstacionamiento from './AdministrarEstacionamiento';
 
 const Estacionamiento = ({estacionamiento}) => {
-    const horaApertura = new Date(estacionamiento.horario.horaApertura.seconds * 1000);
-    const horaCierre = new Date(estacionamiento.horario.horaCierre.seconds * 1000);
-
     //states para los modals
     const [modalDarDeBaja, setAbrirModalDarDeBaja] = useState(false);
     const handleClickAbrirModalDarDeBaja = () => {
@@ -36,38 +33,22 @@ const Estacionamiento = ({estacionamiento}) => {
                 <CardActionArea>
                     <CardContent key={estacionamiento.uid}>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Avatar className={classes.avatar}>{estacionamiento.avatar}</Avatar>
                             <Typography className={classes.nombreCompleto}>{estacionamiento.nombreCompleto}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Telefono: </Typography>
+                            <Typography className={classes.camposTitulosLugares}>Telefono: </Typography>
                             <Typography className={classes.campos}>{estacionamiento.telefono}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Horario: </Typography>
-                            <Typography className={classes.campos}>
-                            { !estacionamiento.horarioCorrido ?
-                            `De ${horaApertura.getHours()+ ":" + horaApertura.getMinutes()} a
-                            ${horaCierre.getHours()+ ":" + horaCierre.getMinutes()}`
-                            : 'Horario corrido'}
-                            </Typography>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Días de apertura: </Typography>
-                            <Typography className={classes.campos}>{ estacionamiento.diasApertura.length !== 7 ?
-                            estacionamiento.diasApertura.toString()
-                            : 'Todos los días'}</Typography>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Dirección: </Typography>
+                            <Typography className={classes.camposTitulosLugares}>Dirección: </Typography>
                             <Typography className={classes.campos}>{estacionamiento.ubicacion.direccion}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Provincia: </Typography>
+                            <Typography className={classes.camposTitulosLugares}>Provincia: </Typography>
                             <Typography className={classes.campos}>{estacionamiento.ubicacion.provincia}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Ciudad: </Typography>
+                            <Typography className={classes.camposTitulosLugares}>Ciudad: </Typography>
                             <Typography className={classes.campos}>{estacionamiento.ubicacion.ciudad}</Typography>
                         </div>
                         <Button

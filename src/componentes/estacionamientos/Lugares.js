@@ -25,10 +25,10 @@ const Lugares = () => {
     const [lugares, guardarLugares] = useState([]);
     const [estacionamientoInfo, guardarEstacionamientoInfo] = useState()
     useEffect(()=>{
-        const obtenerInfoEstacionamiento = () => {
+        async function obtenerInfoEstacionamiento () {
             try {
                 firebase.db.collection('estacionamientos')
-                .where('encargado','==', usuario.uid)
+                .where('encargado','==', localStorage.getItem('usuario'))
                 .onSnapshot(manejarSnapshot);
             } catch (error) {
                 console.log(error);

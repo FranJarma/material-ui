@@ -12,12 +12,11 @@ import {useStyles} from './Styles';
 import * as CEstacionamientos from '../../constantes/estacionamientos/CEstacionamientos';
 import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
-import traducirError from '../../firebase/errores';
 import Mapa from './../mapas/Mapa';
 import FileUploader from 'react-firebase-file-uploader';
 
 const MiEstacionamiento = () => {
-    const {usuario, firebase} = useContext(FirebaseContext);
+    const {firebase} = useContext(FirebaseContext);
     const [estacionamientoInfo, guardarEstacionamientoInfo] = useState({
         id: '',
         nombreCompleto: '',
@@ -84,13 +83,13 @@ const MiEstacionamiento = () => {
         });
     };
     useEffect(()=>{
-        const obtenerInfoEstacionamiento = () => {
+        async function obtenerInfoEstacionamiento () {
             try {
-                firebase.db.collection('estacionamientos')
-                .where('encargado','==', usuario.uid)
+                await firebase.db.collection('estacionamientos')
+                .where('encargado','==', localStorage.getItem('usuario'))
                 .onSnapshot(manejarSnapshot);
             } catch (error) {
-                console.log(error);
+                console.log(error.code);
             }
         }
         obtenerInfoEstacionamiento();
@@ -151,7 +150,6 @@ const MiEstacionamiento = () => {
         }
         catch (error) {
             console.log(error.code);
-            Toast(traducirError(error.code))
         }
     }
     const classes = useStyles();
@@ -373,6 +371,7 @@ const MiEstacionamiento = () => {
                 className= {classes.botonModificarDatosMiEstacionamiento}>Modificar datos
             </Button>
         </Card>
+
         &nbsp;
         <Footer/>
     </>

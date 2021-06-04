@@ -4,6 +4,15 @@ const traducirError = (codigo) => {
         case 'auth/invalid-email':
             mensaje = 'Ingrese un correo electrónico válido';
             return mensaje;
+        case 'auth/argument-error':
+            mensaje = 'Complete todos los campos';
+            return mensaje;
+        case 'auth/email-already-in-use':
+            mensaje = 'El correo ya se encuentra registrado';
+            return mensaje;
+        case 'auth/user-token-expired':
+            mensaje = 'Su sesión ha cambiado. Debe iniciarla de nuevo.';
+            return mensaje;
         case 'invalid-argument':
             mensaje = 'Complete todos los campos';
             return mensaje;

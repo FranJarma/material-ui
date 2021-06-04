@@ -135,7 +135,7 @@ const Aside = () => {
             {usuario ?
             <div className={classes.datosPersonales}>
             <Typography className={classes.tituloAside}>
-                {usuarioInfo.nombreCompleto}
+                {localStorage.getItem('nombreUsuario')}
             </Typography>
             <Avatar className={classes.imagenPerfil} />
             </div>
@@ -147,8 +147,9 @@ const Aside = () => {
             </Typography>
             : "" }
             &nbsp;
-            <Divider></Divider>
             <List>
+                {!usuarioInfo.esAdmin ?
+                <>
                 <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>
                         <CommuteIcon className={classes.iconos}/>
@@ -195,8 +196,6 @@ const Aside = () => {
                     </Link>
                     </List>
                 </Collapse>
-                {!usuarioInfo.esAdmin ?
-                <>
                 <ListItem button onClick= { handleClickAbrirSubMenuMiEstacionamiento }>
                     <ListItemIcon>
                         <StoreMallDirectoryIcon className={classes.iconos}/>

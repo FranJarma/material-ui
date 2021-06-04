@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import LockIcon from '@material-ui/icons/Lock';
 import { makeStyles, Button, Typography, Popover } from '@material-ui/core';
 import {FirebaseContext} from './../../firebase';
 import * as CAuth from './../../constantes/auth/CAuth';
@@ -87,7 +87,7 @@ const MenuUsuario = () => {
           color='inherit'
         >
           <AccountCircle className={classes.iconoUsuario}/>
-          <Typography className={classes.usuario}>{usuarioInfo.nombreCompleto}</Typography>
+          <Typography className={classes.usuario}>{localStorage.getItem('nombreUsuario')}</Typography>
         </Button>
         <Popover
           id="menu-usuario"
@@ -110,6 +110,14 @@ const MenuUsuario = () => {
               <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <PersonIcon className={classes.iconos} />
                 <div>{CAuth.MIS_DATOS}</div>
+              </div>
+            </MenuItem>
+          </Link>
+          <Link to={'/cambiar-contraseña'} className={classes.titulosMenu}>
+            <MenuItem className={classes.menuItem}>
+              <div style={{ display: 'flex', justifyContent: 'center'}}>
+                <LockIcon className={classes.iconos} />
+                <div>{CAuth.CAMBIAR_CONTRASEÑA}</div>
               </div>
             </MenuItem>
           </Link>
