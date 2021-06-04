@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import {FirebaseContext} from './../../firebase/';
-import { Typography, Fab, Button, Card, CardContent, Grid, Divider} from '@material-ui/core';
+import { Typography, Fab, Button, Card, CardContent, Grid, Divider, Link, FormHelperText} from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
@@ -18,11 +18,13 @@ import Spinner from '../diseño/Spinner.js';
 import {useStyles} from './Styles';
 import Swal from '../diseño/Swal';
 import Toast from '../diseño/Toast.js';
+import GrillaLugares from '../diseño/GrillaLugares.js';
 
 const Lugares = () => {
     const classes = useStyles();
     const {usuario, firebase} = useContext(FirebaseContext);
     const [lugares, guardarLugares] = useState([]);
+    let contador = 0;
     const [estacionamientoInfo, guardarEstacionamientoInfo] = useState()
     useEffect(()=>{
         async function obtenerInfoEstacionamiento () {
@@ -114,12 +116,19 @@ const Lugares = () => {
             &nbsp;
             <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla usted podrá administrar todos los lugares disponibles dentro de su playa de estacionamiento. Además podrá liberar aquellos lugares que se encuentren ocupados en caso de necesitarlo.
             </Alert>
+            <FormHelperText style={{marginLeft: '1rem'}}>Aclaración: en caso de equivocarse con la distribución de lugares, recargue la página
+            </FormHelperText>
             <Fab className={classes.botonAgregar} onClick={agregarLugar} aria-label="add">
                 <AddIcon /> 
             </Fab>
              &nbsp;
-             <Typography className={classes.cantidad}>Total de lugares: {lugares.length}</Typography>
-                 <Grid item lg={12} xs={12}>
+             <Typography className={classes.cantidad}>Total de lugares: {lugares.length}
+            </Typography>
+            <Link className={classes.mostrarGrilla}>
+                Mostrar grilla
+            </Link>
+             <Grid container>
+                 <Grid item lg={2} xs={12}>
                     <Card className = {classes.cartaLugares}>
                         {lugares.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(lugar =>(
                             <>
@@ -167,8 +176,26 @@ const Lugares = () => {
                             </>
                             ))}
                     </Card>
-                    {lugares.length > 0 ? <Paginacion lista={lugares}/> : ""}
                 </Grid>
+                <Grid item lg={4} xs={12}>
+                    <Card className={classes.cartaLugares}>
+                        <CardActionArea>
+                        <CardContent>
+                            <GrillaLugares cantidadLugares={lugares.length}>
+                            </GrillaLugares>
+                            <div style={{justifyContent: 'center', display: 'flex'}}>
+                            <Button
+                                endIcon={<CheckIcon/>}
+                                className= {classes.botonHabilitar}
+                            >Asignar ubicaciones
+                            </Button>
+                            </div>
+                        </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+            </Grid>
+            {lugares.length > 0 ? <Paginacion lista={lugares}/> : ""}
             <Footer/>
         </>
     : <Spinner></Spinner>)

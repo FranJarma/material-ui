@@ -271,6 +271,34 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         marginBottom: "2rem"
     },
+    botonGrillaLugar: {
+        backgroundColor: "#bbdefb",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif", 
+        [theme.breakpoints.only('lg')]:{
+            width: "9rem",
+            height: "3rem",
+            margin: '0.2rem',
+        },
+        [theme.breakpoints.only('md')]:{
+            width: "6rem",
+            height: "3rem",
+            margin: '0.2rem',
+        },
+        [theme.breakpoints.only('sm')]:{
+            width: "3rem",
+            height: "3rem",
+            margin: '0.2rem',
+        },
+        [theme.breakpoints.only('xs')]:{
+            width: "1rem",
+            height: "1rem",
+            margin: '0.2rem',
+        },
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
     mostrarMapa: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#448aff",
@@ -279,6 +307,13 @@ export const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
         fontWeight: "bold",
         marginBottom: "1rem"
+    },
+    mostrarGrilla: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#448aff",
+        fontSize: 12,
+        marginLeft: '1rem',
+        cursor: 'pointer',
     },
     cartaNuevoUsuario: {
         [theme.breakpoints.up('lg')]:{
