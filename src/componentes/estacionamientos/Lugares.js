@@ -22,10 +22,19 @@ import GrillaLugares from '../diseño/GrillaLugares.js';
 
 const Lugares = () => {
     const classes = useStyles();
-    const {usuario, firebase} = useContext(FirebaseContext);
+    const {firebase} = useContext(FirebaseContext);
     const [lugares, guardarLugares] = useState([]);
-    let contador = 0;
-    const [estacionamientoInfo, guardarEstacionamientoInfo] = useState()
+    const [estacionamientoInfo, guardarEstacionamientoInfo] = useState();
+    const [grilla, mostrarGrilla] = useState(false);
+    const posiciones = [];
+    const handleChangeMostrarGrilla = () => {
+        if(grilla === true) {
+            mostrarGrilla(false);
+        }
+        else {
+            mostrarGrilla(true);
+        }
+    }
     useEffect(()=>{
         async function obtenerInfoEstacionamiento () {
             try {
@@ -62,7 +71,7 @@ const Lugares = () => {
             Toast(error.code);
         }
     }
-    // función para liberar lugar
+    // TODO: función para liberar lugar
     async function liberarLugar(){
         //armar array con objetos de lugares
             let nuevoLugar = {
@@ -70,8 +79,6 @@ const Lugares = () => {
                 "nombre": `Lugar ${lugares.length+1}`,
                 "ocupado": false
             }
-            lugares.push(nuevoLugar);
-            Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.LUGAR_AGREGADO_CORRECTAMENTE);
     }
     // función para habilitar lugar
    async function habilitarLugar(id){
@@ -93,7 +100,7 @@ const Lugares = () => {
             Toast(error.code);
         }
     }
-        // función para deshabilitar lugar
+    // función para deshabilitar lugar
    async function liberarLugar(id){
     try {
         await firebase.liberarLugar(estacionamientoInfo.id, id);
@@ -124,11 +131,15 @@ const Lugares = () => {
              &nbsp;
              <Typography className={classes.cantidad}>Total de lugares: {lugares.length}
             </Typography>
-            <Link className={classes.mostrarGrilla}>
-                Mostrar grilla
-            </Link>
+            <Link
+                className={classes.mostrarGrilla}
+                onClick={handleChangeMostrarGrilla}
+                value={grilla}
+                >
+                {!grilla ? "Mostrar grilla" : "Ocultar grilla"}
+                </Link>
              <Grid container>
-                 <Grid item lg={2} xs={12}>
+                 <Grid item lg={8} xs={12}>
                     <Card className = {classes.cartaLugares}>
                         {lugares.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(lugar =>(
                             <>
@@ -138,8 +149,8 @@ const Lugares = () => {
                                         <Typography className={classes.ocupado}>Ocupado</Typography>
                                         : ""}
                                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                            <Typography className={classes.camposTitulosLugares}>Nombre: </Typography>
-                                            <Typography className={classes.campos}>{lugar.nombre}</Typography>
+                                            <Typography className={classes.camposTitulosLugares}>N°: </Typography>
+                                            <Typography className={classes.campos}>{lugar.numero}</Typography>
                                         </div>
                                         {lugar.estado === 'habilitado' && !lugar.ocupado ?
                                         <Button
@@ -177,23 +188,20 @@ const Lugares = () => {
                             ))}
                     </Card>
                 </Grid>
+                { grilla ?
+                <>
                 <Grid item lg={4} xs={12}>
                     <Card className={classes.cartaLugares}>
                         <CardActionArea>
                         <CardContent>
-                            <GrillaLugares cantidadLugares={lugares.length}>
-                            </GrillaLugares>
-                            <div style={{justifyContent: 'center', display: 'flex'}}>
-                            <Button
-                                endIcon={<CheckIcon/>}
-                                className= {classes.botonHabilitar}
-                            >Asignar ubicaciones
-                            </Button>
-                            </div>
+                                <GrillaLugares estacionamiento= {estacionamientoInfo.id} cantidadLugares={lugares.length} lugares={lugares} posiciones = {posiciones}>
+                                </GrillaLugares>
                         </CardContent>
                         </CardActionArea>
                     </Card>
                 </Grid>
+                </>
+                : ""}
             </Grid>
             {lugares.length > 0 ? <Paginacion lista={lugares}/> : ""}
             <Footer/>

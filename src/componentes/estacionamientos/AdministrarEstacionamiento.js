@@ -179,10 +179,9 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             }
             else{
                 //armar array con objetos de lugares
-                for(var i=0; i<cantidadLugares; i++){
+                for(var i=1; i<cantidadLugares; i++){
                     let lugar = {
-                        "id": i,
-                        "nombre": `Lugar ${i+1}`,
+                        "numero": i+1,
                         "ocupado": false,
                         "estado": "habilitado"
                     }
@@ -218,9 +217,8 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             else{
                 //armar array con objetos de lugares
                 for(var i=0; i<cantidadLugares; i++){
-                    let lugar = {
-                        "id": i,
-                        "nombre": `Lugar ${i+1}`,
+                      let lugar = {
+                        "numero": i+1,
                         "ocupado": false,
                         "estado": "habilitado"
                     }

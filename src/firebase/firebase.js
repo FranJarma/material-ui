@@ -231,6 +231,12 @@ class Firebase {
             ],
         })
     }
+    //metodo para asignar las posiciones de los lugares de un estacionamiento
+    async asignarPosiciones(id, posiciones) {
+        this.db.collection('estacionamientos').doc(id).update({
+            lugares: posiciones
+        })
+    }
     //método para eliminar un estacionamiento por su id
     async eliminarEstacionamiento(id){
         this.db.collection('estacionamientos').doc(id).delete();
