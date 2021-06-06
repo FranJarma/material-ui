@@ -63,8 +63,7 @@ const Lugares = () => {
     async function agregarLugar (){
         try {
             await firebase.agregarLugar(estacionamientoInfo.id,
-            lugares.length + 1, `Lugar ${lugares.length+1}`,
-            false, "habilitado");
+            lugares.length + 1, false, "habilitado");
             Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.LUGAR_AGREGADO_CORRECTAMENTE);
         } catch (error) {
             console.log(error)
@@ -131,13 +130,15 @@ const Lugares = () => {
              &nbsp;
              <Typography className={classes.cantidad}>Total de lugares: {lugares.length}
             </Typography>
+            { lugares.length > 0 ?
             <Link
                 className={classes.mostrarGrilla}
                 onClick={handleChangeMostrarGrilla}
                 value={grilla}
                 >
                 {!grilla ? "Mostrar grilla" : "Ocultar grilla"}
-                </Link>
+            </Link>
+            : ""}
              <Grid container>
                  <Grid item lg={8} xs={12}>
                     <Card className = {classes.cartaLugares}>

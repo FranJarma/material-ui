@@ -247,16 +247,14 @@ class Firebase {
     }
     //métodos para administrar lugares
     //agregar lugar
-    async agregarLugar(id, lugarId, nombre, ocupado, estado){
+    async agregarLugar(id, numero, ocupado, estado){
         this.db.collection('estacionamientos').doc(id).get()
         .then((doc)=> {
             const lugares = doc.data().lugares;
             lugares.push({
-                "id": lugarId,
-                "nombre": nombre,
+                "numero": numero,
                 "ocupado": ocupado,
                 "estado": estado
-
             });
             this.db.collection('estacionamientos').doc(id).update({
                 lugares: lugares
