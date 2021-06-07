@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
                 <Link to="/home">
                     <img src={logo} alt="" className={classes.logo} />
                 </Link>
-                <Buscar/>
+                {localStorage.getItem('esEncargado') === 'true' ? <Buscar/> : "" }
                 <MenuUsuario/>
                 </Toolbar>
             </AppBar>

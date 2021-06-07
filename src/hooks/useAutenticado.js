@@ -10,11 +10,11 @@ function useAutenticado () {
             if (usuario) {
                 guardarUsuarioAutenticado(usuario);
                 localStorage.setItem('usuario', usuario.uid)
-                console.log(usuario);
             }
             else {
                 guardarUsuarioAutenticado(null);
                 localStorage.removeItem('usuario');
+                localStorage.removeItem('esEncargado');
             }
         });
         return () => unsuscribe();

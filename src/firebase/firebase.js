@@ -1,15 +1,9 @@
-import * as admin from 'firebase-admin';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 import firebaseConfig from './config';
-var serviceAccount = require("./adminconfig.json");
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://console.cloud.google.com/storage/browser/parking-app-5fdb4.appspot.com'
-  });
 //se realiza una clase para que cada vez que se la llame, se inicializa la app
 class Firebase {
     constructor(){

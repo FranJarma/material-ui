@@ -148,7 +148,7 @@ const Aside = () => {
             : "" }
             &nbsp;
             <List>
-                {!usuarioInfo.esAdmin ?
+                {localStorage.getItem('esEncargado') === true ?
                 <>
                 <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>
@@ -233,16 +233,6 @@ const Aside = () => {
                         </ListItemIcon>
                         <ListItemText>
                             Horarios y días de apertura
-                        </ListItemText>
-                    </ListItem>
-                    </Link>
-                    <Link to={'/valoraciones'} className={classes.titulosMenu}>
-                    <ListItem button className={classes.subMenu}>
-                        <ListItemIcon>
-                            <StarIcon className={classes.iconos}/>
-                        </ListItemIcon>
-                        <ListItemText>
-                            Comentarios y valoraciones
                         </ListItemText>
                     </ListItem>
                     </Link>

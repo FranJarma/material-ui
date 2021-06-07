@@ -27,7 +27,8 @@ const resultado = snapshot.docs.map(doc => {
     }
 });
 guardarUsuarioInfo(resultado[0]);
-localStorage.setItem('nombreUsuario', resultado[0].nombreCompleto)
+localStorage.setItem('nombreUsuario', resultado[0].nombreCompleto);
+localStorage.setItem('esEncargado', resultado[0].esEncargado);
 }
 return usuarioInfo;
 }
