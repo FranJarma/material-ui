@@ -88,50 +88,31 @@ const Comentarios = () => {
     return (
         (!cargando ? 
         <>
-            <Navbar/>
-            <Typography className={classes.titulo}>Comentarios y valoraciones</Typography>
             &nbsp;
-            <Alert className={classes.alerta} severity="info" variant="filled">En esta pantalla podrá ver todos los comentarios y valoraciones hechos por los usuarios.
-            </Alert>
-            &nbsp;
-            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-            <Typography className={classes.cantidad}>Promedio General: {sum/5}
-            <Rating
-                style={{marginLeft: "1rem"}}
-                readOnly
-                precision={0.5}
-                value={sum/5}
-            >
-            </Rating>
-            </Typography>
-
-            </div>
-             &nbsp;
-             <Card className = {classes.cartaComentarios}>
-                {comentarios.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(comentario =>(
+            <Card className = {classes.cartaComentarios}>
+            {comentarios.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(comentario =>(
+            <>
+                <CardContent  key={comentario.id}>
                 <>
-                    <CardContent  key={comentario.id}>
-                    <>
-                    <Rating
-                    style={{marginLeft: "0.3rem"}}
-                    readOnly
-                    value={comentario.estrellas}
-                    ></Rating>
-                    <Typography className={classes.comentario}>{comentario.comentario}</Typography>
-                    <Typography className={classes.observaciones}>{comentario.observaciones}</Typography>
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <Button disabled startIcon={<ThumbUpAltIcon className={classes.votosPositivos} />}>{comentario.votosPositivos}</Button>
-                        <Button disabled startIcon={<ThumbDownAltIcon className={classes.votosNegativos}/>}>{comentario.votosNegativos}</Button>
-                    </div>
-                    </>
-                    </CardContent>
-                    <Divider></Divider>
+                <Rating
+                style={{marginLeft: "0.3rem"}}
+                readOnly
+                value={comentario.estrellas}
+                ></Rating>
+                <Typography className={classes.comentario}>{comentario.comentario}</Typography>
+                <Typography className={classes.observaciones}>{comentario.observaciones}</Typography>
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <Button disabled startIcon={<ThumbUpAltIcon className={classes.votosPositivos} />}>{comentario.votosPositivos}</Button>
+                    <Button disabled startIcon={<ThumbDownAltIcon className={classes.votosNegativos}/>}>{comentario.votosNegativos}</Button>
+                </div>
                 </>
-                ))}
-            </Card>
-            &nbsp;
-            <Paginacion lista={comentarios}/>
-            <Footer/>
+                </CardContent>
+                <Divider></Divider>
+            </>
+            ))}
+        </Card>
+        &nbsp;
+        <Paginacion lista={comentarios}/>
         </>
     : <Spinner></Spinner>)
     );

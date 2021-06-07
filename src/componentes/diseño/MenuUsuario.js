@@ -4,7 +4,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LockIcon from '@material-ui/icons/Lock';
-import { makeStyles, Button, Typography, Popover } from '@material-ui/core';
+import { makeStyles, Button, Typography, Popover, Divider } from '@material-ui/core';
 import {FirebaseContext} from './../../firebase';
 import * as CAuth from './../../constantes/auth/CAuth';
 import { Link, useHistory } from 'react-router-dom';
@@ -112,6 +112,7 @@ const MenuUsuario = () => {
                 <div>{CAuth.MIS_DATOS}</div>
               </div>
             </MenuItem>
+            <Divider/>
           </Link>
           <Link to={'/cambiar-contraseña'} className={classes.titulosMenu}>
             <MenuItem className={classes.menuItem}>
@@ -120,6 +121,7 @@ const MenuUsuario = () => {
                 <div>{CAuth.CAMBIAR_CONTRASEÑA}</div>
               </div>
             </MenuItem>
+            <Divider/>
           </Link>
           <MenuItem className={classes.menuItem} onClick={cerrarSesion}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
