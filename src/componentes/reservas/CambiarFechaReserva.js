@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
 import { List, makeStyles,
-Typography, Button, TextField, Grid, Select, MenuItem, InputLabel } from '@material-ui/core';
+Typography, Button, TextField, Grid, Select, MenuItem, InputLabel, Card } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {
   KeyboardDatePicker,
@@ -15,12 +15,19 @@ import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
 const CambiarFechaReserva = () => {
     const classes = useStyles();
     const estacionamientoInfo = useInfoEstacionamiento();
-    console.log(estacionamientoInfo.lugares);
     const [fechaSeleccionada, handleCambiarFecha] = useState(new Date());
     const [nuevoLugar, setNuevoLugar] = useState([]);
-
+    const [mostrarInfo, setMostrarInfo] = useState(false);
     const handleChangeNuevoLugar = (event) => {
         setNuevoLugar(event.target.value);
+    }
+    const handleChangeMostrarInfo = () => {
+        if (mostrarInfo === true) {
+            setMostrarInfo(false);
+        }
+        else {
+            setMostrarInfo(true);
+        }
     }
     const lugares = [
         'Lugar 1',
@@ -48,17 +55,25 @@ const CambiarFechaReserva = () => {
             </Alert>
         &nbsp;
         <form className={classes.container}>
-        <TextField
-        className={classes.inputCodigo}
-        label="Ingrese código de reserva"
-        variant="standard"
-        name="codigo"
-        autoFocus
-        />
-        <Button className= {classes.botonConsultar}>Consultar</Button>
+            <TextField
+            className={classes.inputCodigo}
+            label="Ingrese código de reserva de 20 dígitos"
+            variant="standard"
+            name="codigo"
+            autoFocus
+            inputProps = {{maxLength: 20}}
+            />
+            <Button
+            onClick={handleChangeMostrarInfo}
+            value={mostrarInfo}
+            className= {classes.botonConsultar}>
+            Consultar
+            </Button>
         </form>
         &nbsp;
-        <List className={classes.cartaReservas}>
+        {mostrarInfo ? 
+        <>
+        <Card className={classes.cartaReservas}>
         &nbsp;
         <Typography className={classes.subtitulos}>Datos de la persona</Typography>
         &nbsp;
@@ -231,13 +246,16 @@ const CambiarFechaReserva = () => {
                 ))}
                 </Select>
                 </Grid>
-                &nbsp;
             </Grid>
             <Button
                 endIcon={<CheckIcon/>}
                 className= {classes.botonCambiarReserva}>Cambiar reserva
             </Button>
-        </List>
+        </Card>
+        </>
+        : 
+        <Typography className={classes.cantidad}>No se encontró la reserva</Typography>
+        }
         &nbsp;
         <Footer/>
     </>

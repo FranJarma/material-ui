@@ -79,6 +79,7 @@ export const useStyles = makeStyles((theme) => ({
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
         marginTop: "2rem",
+        marginBottom: "2rem",
         fontSize: 15,
         "&:hover":{
             backgroundColor: "#448aff",
