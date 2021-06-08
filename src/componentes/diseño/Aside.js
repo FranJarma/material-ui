@@ -123,7 +123,7 @@ const Aside = () => {
         try {
             await firebase.cerrarSesion();
             mostrarSpinner(CAuth.CERRANDO_SESION);
-            history.push('/');
+            history.push('/login');
         }
         catch (error) {
             Toast(traducirError(error.code))
@@ -148,7 +148,7 @@ const Aside = () => {
             : "" }
             &nbsp;
             <List>
-                {localStorage.getItem('esEncargado') === true ?
+                {localStorage.getItem('esEncargado') === 'true' ?
                 <>
                 <ListItem button onClick= { handleClickAbrirSubMenuReservas }>
                     <ListItemIcon>

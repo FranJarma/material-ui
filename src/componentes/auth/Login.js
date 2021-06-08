@@ -138,9 +138,9 @@ const Login = () => {
     return ( 
     (!cargando ? 
     <>
-        <div>
+        <Link to="/">
             <img src={logo} alt="" className={classes.logo}></img>
-        </div>
+        </Link>
         <Card className={classes.cartaLogin}>
             <CardContent className={classes.cartaEncabezado}>
                 <Typography className={classes.tituloCarta}>{CGeneral.BIENVENIDO}</Typography>

@@ -32,7 +32,9 @@ import firebase, {FirebaseContext} from '../src/firebase';
 import useAutenticado from './hooks/useAutenticado';
 import AdministrarUsuario from './componentes/usuarios/AdministrarUsuario';
 import AdministrarHorasDias from './componentes/estacionamientos/AdministrarHorasDias.js';
+import EncontrarEstacionamiento from './componentes/estacionamientos/EncontrarEstacionamiento';
 import CambiarContraseña from './componentes/usuarios/CambiarContraseña';
+import Landing from './componentes/Landing';
 
 function App() {
   const usuario = useAutenticado();
@@ -49,7 +51,11 @@ function App() {
               <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
                 <Router>
                   <Switch>
-                    <Route exact path="/" component={Login} >
+                    <Route exact path="/" component={Landing} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento" component={EncontrarEstacionamiento} >
+                    </Route>
+                    <Route exact path="/login-encargados" component={Login} >
                     </Route>
                     <RutaPrivada exact path="/home" component={Home}>
                     </RutaPrivada>

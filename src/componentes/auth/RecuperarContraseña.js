@@ -139,7 +139,7 @@ const RecuperarContraseña = () => {
             else {
                 await firebase.recuperarContraseña(email);
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.SE_HA_ENVIADO_CORREO);
-                history.push("/");
+                history.push("/login-encargados");
             }
         } catch (error) {
             Toast(traducirError(error.code));
@@ -186,7 +186,7 @@ const RecuperarContraseña = () => {
                     &nbsp;
                     </>
                     <Grid item>
-                    <Link to={'/'} style={{textDecoration: 'none'}}>
+                    <Link exact to={'/login-encargados'} style={{textDecoration: 'none'}}>
                     <Button
                         className={classes.botonVolver}
                     >{CGeneral.VOLVER}
