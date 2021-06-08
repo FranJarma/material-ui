@@ -7,6 +7,13 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 25,
         textAlign: "center"
     },
+    imagen: {
+        height: "350px",
+        [theme.breakpoints.down('xs')]:{
+            width:"100%"
+        },
+        borderTopRightRadius: 0,
+    },
     cartaEstacionamientos: {
         flexGrow: 1,
         marginBottom: "1rem",
@@ -14,6 +21,12 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         marginLeft: "1rem",
         marginRight: "1rem"
+    },
+    cartaEstacionamientosCliente: {
+        flexDirection: "row",
+        marginLeft: "1.5rem",
+        marginRight: "1.5rem",
+        alignItems: "center"
     },
     cartaMiEstacionamiento: {
         flexGrow: 1,
@@ -172,14 +185,15 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 15,
         marginRight: '8rem',
     },
+    icono: {
+        color: "#4db6ac",
+    },
     nombreCompleto: {
         fontFamily: "Roboto Condensed, sans-serif",
-        color: "#448aff",
+        color: "#4db6ac",
         fontSize: 18,
         textTransform: "uppercase",
-        textAlign: 'center',
-        fontWeight: "bold",
-        marginLeft: "1rem"
+        fontWeight: "bold"
     },
     camposTitulos: {
         fontFamily: "Roboto Condensed, sans-serif",
@@ -260,6 +274,40 @@ export const useStyles = makeStyles((theme) => ({
         },
         "&:hover": {
             backgroundColor: "#43a047"
+        }
+    },
+    botonVerUbicacion: {
+        backgroundColor: "#4db6ac",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#FFFFFF",
+        fontSize: 15,
+        marginTop: '1rem',
+        [theme.breakpoints.up('md')]:{
+            marginLeft: '1rem'
+        },
+        [theme.breakpoints.down('xs')]:{
+            width: "100%",
+            marginLeft: 0
+        },
+        "&:hover": {
+            backgroundColor: "#4db6ac"
+        }
+    },
+    botonReservar: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#4db6ac",
+        fontSize: 15,
+        marginTop: '1rem',
+        [theme.breakpoints.up('md')]:{
+            marginLeft: '1rem'
+        },
+        [theme.breakpoints.down('xs')]:{
+            width: "100%",
+            marginLeft: 0
+        },
+        "&:hover": {
+            backgroundColor: "#FFFFFF",
+            color: "#4db6ac"
         }
     },
     cantidad: {
