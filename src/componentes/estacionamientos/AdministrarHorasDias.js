@@ -141,9 +141,9 @@ const AdministrarHorasDias = () => {
                 Toast(CEstacionamientos.HORARIO_CIERRE_MENOR_APERTURA)
             }
             else {
-                await firebase.modificarHorarios(id, aperturaLunes, aperturaMartes, aperturaMiercoles,
-                aperturaJueves, aperturaViernes, cierreLunes, cierreMartes, cierreMiercoles, cierreJueves,
-                cierreViernes, cierreSabado, cierreDomingo);
+                await firebase.modificarHorarios(id, aperturaLunes.toTimeString(), aperturaMartes.toTimeString(), aperturaMiercoles.toTimeString(),
+                aperturaJueves.toTimeString(), aperturaViernes.toTimeString(), aperturaSabado.toTimeString(), aperturaDomingo.toTimeString(), cierreLunes.toTimeString(), cierreMartes.toTimeString(), cierreMiercoles.toTimeString(), cierreJueves.toTimeString(),
+                cierreViernes.toTimeString(), cierreSabado.toTimeString(), cierreDomingo.toTimeString());
                 console.log(id);
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
                 }

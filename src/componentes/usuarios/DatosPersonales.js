@@ -96,7 +96,7 @@ const DatosPersonales = () => {
                     usuario.updateEmail(email)
                 )
                 Swal(CGeneral.OPERACION_COMPLETADA, CAuth.DATOS_PERSONALES_MODIFICADOS);
-                history.push('/');
+                history.push('/login-encargados');
             }
         }
         catch (error) {

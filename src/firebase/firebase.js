@@ -158,10 +158,6 @@ class Firebase {
     async modificarHorarios(id, aperturaLunes, aperturaMartes, aperturaMiercoles,
         aperturaJueves, aperturaViernes, aperturaSabado, aperturaDomingo, cierreLunes, cierreMartes,
         cierreMiercoles, cierreJueves, cierreViernes, cierreSabado, cierreDomingo){
-        this.db.collection('estacionamientos').doc(id).update({
-            horarios: this.db.FieldValue.delete()
-        })
-        .then(
             this.db.collection('estacionamientos').doc(id).update({
                 horarios:[
                     {
@@ -194,7 +190,6 @@ class Firebase {
                     }
                 ]
             })
-        )
     }
     //metodo para modificar datos del estacionamiento por id (encargado)
     async modificarMiEstacionamiento(id, nombreCompleto, telefono, cuit, descripcion, urlImagen,
@@ -229,6 +224,26 @@ class Firebase {
     async asignarPosiciones(id, posiciones) {
         this.db.collection('estacionamientos').doc(id).update({
             lugares: posiciones
+        })
+    }
+    //método para dejar un comentario y una valoración
+    async registrarPuntuacion(id, comentario, puntuacion, valoracion) {
+        this.db.collection('estacionamientos').doc(id).get()
+        .then((doc)=> {
+            const comentarios = doc.data().comentarios;
+            const puntuaciones = doc.data().puntuaciones;
+            comentarios.push({
+                contenido: comentario
+            });
+            puntuaciones.push({
+                contenido: puntuacion
+            });
+            const nuevaValoracion = puntuaciones.map(item => item.contenido).reduce((prev, next) => prev + next) / puntuaciones.length;
+            this.db.collection('estacionamientos').doc(id).update({
+                comentarios: comentarios,
+                puntuaciones: puntuaciones,
+                valoracion: nuevaValoracion
+            })
         })
     }
     //método para eliminar un estacionamiento por su id

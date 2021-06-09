@@ -72,7 +72,7 @@ const MenuUsuario = () => {
     try {
         await firebase.cerrarSesion();
         mostrarSpinner(CAuth.CERRANDO_SESION);
-        history.push('/');
+        history.push('/login-encargados');
     }
     catch (error) {
         Toast(traducirError(error.code))

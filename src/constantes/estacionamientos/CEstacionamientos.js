@@ -16,6 +16,9 @@ export const LUGAR_DESHABILITADO_CORRECTAMENTE = 'El lugar ha sido deshabilitado
 export const ESTACIONAMIENTO_MODIFICADO = 'Los datos del estacionamiento han sido modificados correctamente';
 export const ESTACIONAMIENTO_ELIMINADO = 'Los datos del estacionamiento han sido eliminados correctamente';
 export const HORARIO_CIERRE_MENOR_APERTURA = 'El horario de cierre no puede ser anterior al de apertura';
+export const INGRESE_COMENTARIO = 'Por favor, ingrese un comentario y seleccione una puntuación antes de continuar';
+export const COMENTARIO_REGISTRADO = 'Comentario y puntuación registrados correctamente';
+
 //mensajes de alerts
 export const ENVIAREMOS_MAIL = 'Le enviaremos un email al correo electrónico ingresado con los pasos a seguir. Dicho email contiene un link de recuperación para que pueda modificar su contraseña.';
 export const NUEVO_ESTACIONAMIENTO_MODAL = 'Ingrese datos del estacionamiento:';

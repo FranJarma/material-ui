@@ -282,12 +282,8 @@ export const useStyles = makeStyles((theme) => ({
         color: "#FFFFFF",
         fontSize: 15,
         marginTop: '1rem',
-        [theme.breakpoints.up('md')]:{
-            marginLeft: '1rem'
-        },
         [theme.breakpoints.down('xs')]:{
             width: "100%",
-            marginLeft: 0
         },
         "&:hover": {
             backgroundColor: "#4db6ac"
