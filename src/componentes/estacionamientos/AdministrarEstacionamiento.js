@@ -189,7 +189,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 }
                 //solo damos de alta el estacionamiento, las tarifas y lugares corren por cada encargado
                 await firebase.registrarEstacionamiento(nombreCompleto, nSucursal, ubicacionEstacionamiento,
-                telefono, cuit, lugares, encargadoSeleccionado, 0, '', '', '', '', '', '', '', '', '', '', '', '', '' , '', '', '', '', '');
+                telefono, cuit, lugares, encargadoSeleccionado);
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.REGISTRO_EXITOSO);
                 cerrarModal();
                 }

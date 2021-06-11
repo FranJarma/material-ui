@@ -37,20 +37,20 @@ const AdministrarHorasDias = () => {
     });
     const { lunes, martes, miercoles, jueves, viernes, sabado, domingo } = state;
     //state para las horas de apertura y cierre
-    const [aperturaLunes, setearAperturaLunes] = useState(new Date());
-    const [aperturaMartes, setearAperturaMartes] = useState(new Date());
-    const [aperturaMiercoles, setearAperturaMiercoles] = useState(new Date());
-    const [aperturaJueves, setearAperturaJueves] = useState(new Date());
-    const [aperturaViernes, setearAperturaViernes] = useState(new Date());
-    const [aperturaSabado, setearAperturaSabado] = useState(new Date());
-    const [aperturaDomingo, setearAperturaDomingo] = useState(new Date());
-    const [cierreLunes, setearCierreLunes] = useState(new Date());
-    const [cierreMartes, setearCierreMartes] = useState(new Date());
-    const [cierreMiercoles, setearCierreMiercoles] = useState(new Date());
-    const [cierreJueves, setearCierreJueves] = useState(new Date());
-    const [cierreViernes, setearCierreViernes] = useState(new Date());
-    const [cierreSabado, setearCierreSabado] = useState(new Date());
-    const [cierreDomingo, setearCierreDomingo] = useState(new Date());
+    const [aperturaLunes, setearAperturaLunes] = useState(null);
+    const [aperturaMartes, setearAperturaMartes] = useState(null);
+    const [aperturaMiercoles, setearAperturaMiercoles] = useState(null);
+    const [aperturaJueves, setearAperturaJueves] = useState(null);
+    const [aperturaViernes, setearAperturaViernes] = useState(null);
+    const [aperturaSabado, setearAperturaSabado] = useState(null);
+    const [aperturaDomingo, setearAperturaDomingo] = useState(null);
+    const [cierreLunes, setearCierreLunes] = useState(null);
+    const [cierreMartes, setearCierreMartes] = useState(null);
+    const [cierreMiercoles, setearCierreMiercoles] = useState(null);
+    const [cierreJueves, setearCierreJueves] = useState(null);
+    const [cierreViernes, setearCierreViernes] = useState(null);
+    const [cierreSabado, setearCierreSabado] = useState(null);
+    const [cierreDomingo, setearCierreDomingo] = useState(null);
 
     const handleCambiarAperturaLunes = (aperturaLunes) => {
         setearAperturaLunes(aperturaLunes);
@@ -141,9 +141,21 @@ const AdministrarHorasDias = () => {
                 Toast(CEstacionamientos.HORARIO_CIERRE_MENOR_APERTURA)
             }
             else {
-                await firebase.modificarHorarios(id, aperturaLunes.toTimeString(), aperturaMartes.toTimeString(), aperturaMiercoles.toTimeString(),
-                aperturaJueves.toTimeString(), aperturaViernes.toTimeString(), aperturaSabado.toTimeString(), aperturaDomingo.toTimeString(), cierreLunes.toTimeString(), cierreMartes.toTimeString(), cierreMiercoles.toTimeString(), cierreJueves.toTimeString(),
-                cierreViernes.toTimeString(), cierreSabado.toTimeString(), cierreDomingo.toTimeString());
+                await firebase.modificarHorarios(id,
+                aperturaLunes !== null ? aperturaLunes.toTimeString() : '',
+                aperturaMartes !== null ? aperturaMartes.toTimeString() : '',
+                aperturaMiercoles !== null ? aperturaMiercoles.toTimeString() : '',
+                aperturaJueves !== null ? aperturaJueves.toTimeString() : '',
+                aperturaViernes !== null ? aperturaViernes.toTimeString() : '',
+                aperturaSabado !== null ? aperturaSabado.toTimeString() : '',
+                aperturaDomingo !== null ? aperturaDomingo.toTimeString() : '',
+                cierreLunes !== null ? cierreLunes.toTimeString() : '',
+                cierreMartes !== null ? cierreMartes.toTimeString() : '',
+                cierreMiercoles !== null ? cierreMiercoles.toTimeString() : '',
+                cierreJueves !== null ? cierreJueves.toTimeString() : '',
+                cierreViernes !== null ? cierreViernes.toTimeString() : '',
+                cierreSabado !== null ? cierreSabado.toTimeString() : '',
+                cierreDomingo !== null ? cierreDomingo.toTimeString() : '',);
                 console.log(id);
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
                 }

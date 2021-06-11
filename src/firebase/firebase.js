@@ -72,10 +72,7 @@ class Firebase {
     }
     //MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
     //método para registrar nuevo estacionamiento
-    async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, encargado, valoracion,
-        tarifaAuto, tarifaCamioneta, tarifaMoto, tarifaTraffic, horaAperturaLunes, horaAperturaMartes, horaAperturaMiercoles, horaAperturaJueves, horaAperturaViernes,
-        horaAperturaSabado, horaAperturaDomingo, horaCierreLunes, horaCierreMartes, horaCierreMiercoles, horaCierreJueves, horaCierreViernes, horaCierreSabado,
-        horaCierreDomingo){
+    async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, encargado){
         this.db.collection('estacionamientos').add({
             nombreCompleto: nombreCompleto,
             nSucursal: nSucursal,
@@ -84,62 +81,9 @@ class Firebase {
             cuit: cuit,
             lugares: lugares,
             encargado: encargado,
-            valoracion: valoracion,
-            tarifas: [
-                {
-                    vehiculo: 'automovil',
-                    valor: tarifaAuto
-                },
-                {
-                    vehiculo: 'camioneta',
-                    valor: tarifaCamioneta
-                },
-                {
-                    vehiculo: 'motocicleta',
-                    valor: tarifaMoto
-                },
-                {
-                    vehiculo: 'traffic',
-                    valor: tarifaTraffic
-                },
-            ],
-            horarios: [
-                {
-                    dia: 'Lunes',
-                    apertura: horaAperturaLunes,
-                    cierre: horaCierreLunes
-                },
-                {
-                    dia: 'Martes',
-                    apertura: horaAperturaMartes,
-                    cierre: horaCierreMartes
-                },
-                {
-                    dia: 'Miercoles',
-                    apertura: horaAperturaMiercoles,
-                    cierre: horaCierreMiercoles
-                },
-                {
-                    dia: 'Jueves',
-                    apertura: horaAperturaJueves,
-                    cierre: horaCierreJueves
-                },
-                {
-                    dia: 'Viernes',
-                    apertura: horaAperturaViernes,
-                    cierre: horaCierreViernes
-                },
-                {
-                    dia: 'Sabado',
-                    apertura: horaAperturaSabado,
-                    cierre: horaCierreSabado
-                },
-                {
-                    dia: 'Domingo',
-                    apertura: horaAperturaDomingo,
-                    cierre: horaCierreDomingo
-                }
-            ],
+            valoracion: 0,
+            tarifas: [],
+            horarios: [],
             comentarios: [],
             puntuaciones: []
         })

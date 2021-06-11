@@ -6,7 +6,7 @@ import { SETEAR_PAGINA } from '../../constantes/context/context.js';
 const PaginacionState = (props) => {
     const initialState = {
         pagina: 1,
-        itemsPorPagina: 10
+        itemsPorPagina: 12
     };
 
 const [state, dispatch] = useReducer(PaginacionReducer, initialState);
