@@ -1,6 +1,7 @@
-import React, {useState, useContext} from 'react';
-import { Typography, Button, Card, Grid, CardContent, Chip, TextareaAutosize
+import React, {useState, useContext, useEffect} from 'react';
+import { Typography, Button, Card, Grid, CardContent, Chip, TextareaAutosize, CardActionArea
  } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -43,6 +44,7 @@ const EstacionamientoCliente = ({estacionamiento}) => {
             ...info,
             [e.target.name] : e.target.value});
     }
+
     const classes = useStyles();
     //función de firebase para registrar puntuación
     async function registrarPuntuacion () {
@@ -63,32 +65,20 @@ const EstacionamientoCliente = ({estacionamiento}) => {
     }
     return ( 
         <>
-        <Grid container>
-            <Grid item lg={3} xs={12}>
-                <Card className={classes.cartaEstacionamientosCliente}>
-                        <img className={classes.imagen} src={estacionamiento.urlImagen}></img>
-                        <Typography style={{textAlign: 'center'}} className={classes.nombreCompleto}>{estacionamiento.nombreCompleto}</Typography>
-                        <div style={{display: 'flex', textAlign: 'center'}}><StarIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.valoracion.toFixed(2)}</Typography></div>
-                        <div style={{display: 'flex', textAlign: 'center'}}><LocationOnIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.ubicacion.provincia} | {estacionamiento.ubicacion.direccion}</Typography></div>
-                        <div style={{display: 'flex', textAlign: 'center'}}><CallIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.telefono}</Typography></div>
-                        <div style={{textAlign: 'center'}}><Chip style={{marginTop: '1rem'}} label={estacionamiento.descripcion}></Chip></div>
-                        <CardContent>
-                            <div style={{textAlign: 'center'}}>
-                                <Button
-                                onClick={handleClickAbrirModalVerMas}
-                                className={classes.botonVerUbicacion}>
-                                <AddCircleIcon/>
-                                Ver más
-                                </Button>
-                                <Button
-                                className={classes.botonReservar}>
-                                Reservar acá
-                                </Button>
-                            </div>
-                        </CardContent>
-                </Card>
-            </Grid>
-        </Grid>
+            <Link style={{textDecoration: 'none'}} to={{
+                pathname: `detalles-estacionamiento/${estacionamiento.id}`,
+                state: {estacionamiento}
+            }}>
+            <Card className={classes.cartaEstacionamientosCliente}>
+                <CardActionArea>
+                    <img className={classes.imagen} src={estacionamiento.urlImagen}></img>
+                    <Typography style={{textAlign: "center"}} className={classes.nombreCompleto}>{estacionamiento.nombreCompleto}</Typography>
+                    <div style={{display: 'flex', textAlign: 'center'}}><StarIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.valoracion.toFixed(2)}</Typography></div>
+                    <div style={{display: 'flex', textAlign: 'center'}}><LocationOnIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.ubicacion.provincia} | {estacionamiento.ubicacion.direccion}</Typography></div>
+                    <div style={{display: 'flex', textAlign: 'center'}}><CallIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.telefono}</Typography></div>
+                </CardActionArea>
+            </Card>
+        </Link>
         <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalVerMas} onClose={handleClickCerrarModalVerMas} aria-labelledby="form-dialog-title">
             <div style={{backgroundColor: '#43a047'}}>
                 <Typography className={classes.tituloModal} id="form-dialog-title">
@@ -155,7 +145,7 @@ const EstacionamientoCliente = ({estacionamiento}) => {
                     </Grid>
                 </DialogContentText>
             </DialogContent>
-        </Dialog>
+        </Dialog> 
         </>
         );
 }

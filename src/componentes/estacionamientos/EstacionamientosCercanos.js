@@ -20,7 +20,8 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ChatIcon from '@material-ui/icons/Chat';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
-const EncontrarEstacionamientos = () => {
+
+const EstacionamientosCercanos = () => {
     const classes = useStyles();
     //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
@@ -81,7 +82,7 @@ const EncontrarEstacionamientos = () => {
         (!cargando ? 
         <>
         <NavbarCliente/>
-        <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos encontrados: {estacionamientos.length}</Typography>
+        <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos cercanos a su ubicación: {estacionamientos.length}</Typography>
                     <Card className={classes.cartaFiltros}>
                         <CardContent>
                             <TextField
@@ -112,7 +113,7 @@ const EncontrarEstacionamientos = () => {
                                     label={data.label}
                                 />
                                 </Link>
-                                    </>
+                                </>
                                 );
                                 })}
                             </div>
@@ -134,4 +135,4 @@ const EncontrarEstacionamientos = () => {
 );
 }
  
-export default EncontrarEstacionamientos;
+export default EstacionamientosCercanos;

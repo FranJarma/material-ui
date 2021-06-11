@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "./../../imagenes/logo.png";
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const anchoNavbarPx = 300;
 
@@ -35,6 +36,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3),
     },
     logo: {
+        cursor: 'pointer',
         [theme.breakpoints.down('xs')]:{
             display: "none"
         },
@@ -80,6 +82,12 @@ const useStyles = makeStyles(theme => ({
     const NavbarCliente = () => {
         const classes = useStyles();
         const [activo, setActivo] = useState(false);
+        let history = useHistory();
+        const volverAtras = () => {
+            //solo permitir volver atrás si no está en la raiz
+            if(history.location.pathname !== '/')
+                history.goBack();
+        }
         const cambiarLink = () => {
             if (activo) {
                 setActivo(false);
@@ -93,7 +101,7 @@ const useStyles = makeStyles(theme => ({
             <CssBaseline />
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                <img src={logo} alt="" className={classes.logo} />
+                <img src={logo} alt="" className={classes.logo} onClick={volverAtras} />
                 <div style={{display: "flex", marginLeft: "auto"}}>
                     <Link
                     onClick={cambiarLink}

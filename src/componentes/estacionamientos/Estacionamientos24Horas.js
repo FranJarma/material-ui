@@ -20,7 +20,8 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ChatIcon from '@material-ui/icons/Chat';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
-const EncontrarEstacionamientos = () => {
+
+const Estacionamientos24Horas = () => {
     const classes = useStyles();
     //context de paginación y spinner
     const paginacionContext = useContext(PaginacionContext);
@@ -81,7 +82,7 @@ const EncontrarEstacionamientos = () => {
         (!cargando ? 
         <>
         <NavbarCliente/>
-        <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos encontrados: {estacionamientos.length}</Typography>
+        <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos con horario corrido: {estacionamientos.length}</Typography>
                     <Card className={classes.cartaFiltros}>
                         <CardContent>
                             <TextField
@@ -105,13 +106,13 @@ const EncontrarEstacionamientos = () => {
                                 <Link style={{textDecoration: 'none', marginRight: '0.5rem', marginBottom: '0.5rem'}} to={{
                                     pathname: data.link,
                                 }}>
-                                <Chip
-                                    className={classes.chip}
-                                    clickable
-                                    icon={data.icono}
-                                    label={data.label}
-                                />
-                                </Link>
+                                        <Chip
+                                            className={classes.chip}
+                                            clickable
+                                            icon={data.icono}
+                                            label={data.label}
+                                        />
+                                    </Link>
                                     </>
                                 );
                                 })}
@@ -134,4 +135,4 @@ const EncontrarEstacionamientos = () => {
 );
 }
  
-export default EncontrarEstacionamientos;
+export default Estacionamientos24Horas;

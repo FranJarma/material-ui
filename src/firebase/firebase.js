@@ -70,7 +70,7 @@ class Firebase {
     async recuperarContraseña(email){
         return this.auth.sendPasswordResetEmail(email);
     }
-//MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
+    //MÉTODOS PARA ADMINISTRACIÓN DE ESTACIONAMIENTOS
     //método para registrar nuevo estacionamiento
     async registrarEstacionamiento(nombreCompleto, nSucursal, ubicacion, telefono, cuit, lugares, encargado, valoracion,
         tarifaAuto, tarifaCamioneta, tarifaMoto, tarifaTraffic, horaAperturaLunes, horaAperturaMartes, horaAperturaMiercoles, horaAperturaJueves, horaAperturaViernes,
@@ -139,7 +139,9 @@ class Firebase {
                     apertura: horaAperturaDomingo,
                     cierre: horaCierreDomingo
                 }
-            ]
+            ],
+            comentarios: [],
+            puntuaciones: []
         })
     }
     //metodo para modificar datos del estacionamiento por id
@@ -155,38 +157,46 @@ class Firebase {
         })
     }
     //metodo para modificar datos del estacionamiento por id (encargado)
-    async modificarHorarios(id, aperturaLunes, aperturaMartes, aperturaMiercoles,
-        aperturaJueves, aperturaViernes, aperturaSabado, aperturaDomingo, cierreLunes, cierreMartes,
-        cierreMiercoles, cierreJueves, cierreViernes, cierreSabado, cierreDomingo){
+    async modificarHorarios(id, horaAperturaLunes, horaAperturaMartes, horaAperturaMiercoles,
+        horaAperturaJueves, horaAperturaViernes, horaAperturaSabado, horaAperturaDomingo, horaCierreLunes,
+        horaCierreMartes, horaCierreMiercoles, horaCierreJueves, horaCierreViernes, horaCierreSabado,
+        horaCierreDomingo){
             this.db.collection('estacionamientos').doc(id).update({
                 horarios:[
                     {
-                        apertura: aperturaLunes,
-                        cierre: cierreLunes
+                        dia: 'Lunes',
+                        apertura: horaAperturaLunes,
+                        cierre: horaCierreLunes
                     },
                     {
-                        apertura: aperturaMartes,
-                        cierre: cierreMartes
+                        dia: 'Martes',
+                        apertura: horaAperturaMartes,
+                        cierre: horaCierreMartes
                     },
                     {
-                        apertura: aperturaMiercoles,
-                        cierre: cierreMiercoles
+                        dia: 'Miercoles',
+                        apertura: horaAperturaMiercoles,
+                        cierre: horaCierreMiercoles
                     },
                     {
-                        apertura: aperturaJueves,
-                        cierre: cierreJueves
+                        dia: 'Jueves',
+                        apertura: horaAperturaJueves,
+                        cierre: horaCierreJueves
                     },
                     {
-                        apertura: aperturaViernes,
-                        cierre: cierreViernes
+                        dia: 'Viernes',
+                        apertura: horaAperturaViernes,
+                        cierre: horaCierreViernes
                     },
                     {
-                        apertura: aperturaSabado,
-                        cierre: cierreSabado
+                        dia: 'Sabado',
+                        apertura: horaAperturaSabado,
+                        cierre: horaCierreSabado
                     },
                     {
-                        apertura: aperturaDomingo,
-                        cierre: cierreDomingo
+                        dia: 'Domingo',
+                        apertura: horaAperturaDomingo,
+                        cierre: horaCierreDomingo
                     }
                 ]
             })

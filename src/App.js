@@ -33,8 +33,17 @@ import useAutenticado from './hooks/useAutenticado';
 import AdministrarUsuario from './componentes/usuarios/AdministrarUsuario';
 import AdministrarHorasDias from './componentes/estacionamientos/AdministrarHorasDias.js';
 import EncontrarEstacionamiento from './componentes/estacionamientos/EncontrarEstacionamiento';
+import Estacionamientos24Horas from './componentes/estacionamientos/Estacionamientos24Horas';
+import EstacionamientosCercanos from './componentes/estacionamientos/EstacionamientosCercanos';
+import EstacionamientosHorarioCorrido from './componentes/estacionamientos/EstacionamientosHorarioCorrido';
+import EstacionamientosMasBaratos from './componentes/estacionamientos/EstacionamientosMasBaratos';
+import EstacionamientosMasComentados from './componentes/estacionamientos/EstacionamientosMasComentados';
+import EstacionamientosMasValorados from './componentes/estacionamientos/EstacionamientosMasValorados';
+
 import CambiarContraseña from './componentes/usuarios/CambiarContraseña';
 import Landing from './componentes/Landing';
+import EncontrarEstacionamientoMapa from './componentes/estacionamientos/EncontrarEstacionamientoMapa.js';
+import DetallesEstacionamientoCliente from './componentes/estacionamientos/DetallesEstacionamientoCliente.js';
 
 function App() {
   const usuario = useAutenticado();
@@ -54,6 +63,22 @@ function App() {
                     <Route exact path="/" component={Landing} >
                     </Route>
                     <Route exact path="/encontrar-estacionamiento" component={EncontrarEstacionamiento} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento/abiertos-todos-los-dias" component={Estacionamientos24Horas} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento/horario-corrido" component={EstacionamientosHorarioCorrido} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento/mas-valorados" component={EstacionamientosMasValorados} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento/mas-comentados" component={EstacionamientosMasComentados} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento/mas-cercanos" component={EstacionamientosCercanos} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento/mas-baratos" component={EstacionamientosMasBaratos} >
+                    </Route>
+                    <Route path="/detalles-estacionamiento/:id" component={DetallesEstacionamientoCliente} >
+                    </Route>
+                    <Route exact path="/encontrar-estacionamiento-mapa" component={EncontrarEstacionamientoMapa} >
                     </Route>
                     <Route exact path="/login-encargados" component={Login} >
                     </Route>

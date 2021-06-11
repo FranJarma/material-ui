@@ -9,9 +9,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     imagen: {
         height: "350px",
-        [theme.breakpoints.down('xs')]:{
-            width:"100%"
-        },
+        width: "100%",
         borderTopRightRadius: 0,
     },
     cartaEstacionamientos: {
@@ -26,7 +24,20 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: "row",
         marginLeft: "1.5rem",
         marginRight: "1.5rem",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: "1.5rem",
+        cursor: 'pointer'
+    },
+    cartaFiltros: {
+        flexDirection: "row",
+        marginLeft: "1.5rem",
+        marginRight: "1.5rem",
+        alignItems: "center",
+        backgroundColor: "#4db6ac",
+        [theme.breakpoints.only('xs')]:{
+            marginTop: "1rem"
+        },
+        marginBottom: '1rem'
     },
     cartaMiEstacionamiento: {
         flexGrow: 1,
@@ -293,14 +304,6 @@ export const useStyles = makeStyles((theme) => ({
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#4db6ac",
         fontSize: 15,
-        marginTop: '1rem',
-        [theme.breakpoints.up('md')]:{
-            marginLeft: '1rem'
-        },
-        [theme.breakpoints.down('xs')]:{
-            width: "100%",
-            marginLeft: 0
-        },
         "&:hover": {
             backgroundColor: "#FFFFFF",
             color: "#4db6ac"
@@ -387,6 +390,12 @@ export const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontSize: 30
     },
+    filtros:{
+        fontFamily: "Roboto Condensed, sans-serif",
+        backgroundColor: "#ffffff",
+        color: "#4db6ac",
+        fontSize:25,
+    },
     subtituloCarta:{
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#ffffff",
@@ -411,6 +420,22 @@ export const useStyles = makeStyles((theme) => ({
         },
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#43a047"
+        }
+    },
+    inputFiltros: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        marginBottom: "1rem",
+        backgroundColor: "#FFFFFF",
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#FFFFFF"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#FFFFFF"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#000000",
+            fontWeight: "bold",
+            lineHeight: 3
         }
     },
     inputMiEstacionamiento: {
