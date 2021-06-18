@@ -100,6 +100,11 @@ const useStyles = makeStyles( theme => ({
 
 const Login = () => {
     const classes = useStyles();
+    useEffect(()=> {
+        localStorage.removeItem('infoPersona');
+        localStorage.removeItem('infoReserva');
+        localStorage.removeItem('fecha');
+    });
     const history = useHistory();
     const spinnerContext = useContext(SpinnerContext);
     const { cargando, mostrarSpinner } = spinnerContext;

@@ -67,6 +67,11 @@ const Estacionamientos24Horas = () => {
     });
     guardarEstacionamientos(estacionamientos);
 }
+    useEffect(()=> {
+        localStorage.removeItem('infoPersona');
+        localStorage.removeItem('infoReserva');
+        localStorage.removeItem('fecha');
+    });
     //useEffect para preguntarle al usuario si quiere conocer su ubicación
     // useEffect(()=>{
     //     navigator.geolocation.getCurrentPosition(posicion => {

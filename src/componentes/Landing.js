@@ -1,5 +1,5 @@
 import { Card, CardActionArea, CardContent, Grid, List, ListItem, ListItemIcon, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavbarCliente from './diseño/NavbarCliente';
 import {makeStyles} from '@material-ui/core';
 import Footer from './diseño/Footer';
@@ -63,6 +63,11 @@ const useStyles = makeStyles(theme => ({
 
 const Landing = () => {
     const classes = useStyles();
+    useEffect(()=> {
+        localStorage.removeItem('infoPersona');
+        localStorage.removeItem('infoReserva');
+        localStorage.removeItem('fecha');
+    });
     const infoCarta = [
         {
             titulo: '¿Es encargado?',

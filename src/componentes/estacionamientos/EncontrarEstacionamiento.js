@@ -76,7 +76,11 @@ const EncontrarEstacionamientos = () => {
     //         alert(`Geolocalización:${posicion.coords.latitude};${posicion.coords.longitude}`);
     //     });
     // },[setPosicion])
-
+    useEffect(()=> {
+        localStorage.removeItem('infoPersona');
+        localStorage.removeItem('infoReserva');
+        localStorage.removeItem('fecha');
+    });
     return (
         (!cargando ? 
         <>
