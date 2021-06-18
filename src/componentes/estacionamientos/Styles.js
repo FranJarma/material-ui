@@ -303,10 +303,11 @@ export const useStyles = makeStyles((theme) => ({
     botonReservar: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#4db6ac",
+        width: "100%",
         fontSize: 15,
         "&:hover": {
-            backgroundColor: "#FFFFFF",
-            color: "#4db6ac"
+            backgroundColor: "#4db6ac",
+            color: "#FFFFFF"
         }
     },
     cantidad: {

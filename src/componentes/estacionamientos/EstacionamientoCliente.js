@@ -66,7 +66,7 @@ const EstacionamientoCliente = ({estacionamiento}) => {
     return ( 
         <>
             <Link style={{textDecoration: 'none'}} to={{
-                pathname: `detalles-estacionamiento/${estacionamiento.id}`,
+                pathname: `detalles-estacionamiento/${estacionamiento.nombreCompleto}`,
                 state: {estacionamiento}
             }}>
             <Card className={classes.cartaEstacionamientosCliente}>
@@ -79,73 +79,6 @@ const EstacionamientoCliente = ({estacionamiento}) => {
                 </CardActionArea>
             </Card>
         </Link>
-        <Dialog style={{zIndex: 1}} maxWidth={'md'} open={modalVerMas} onClose={handleClickCerrarModalVerMas} aria-labelledby="form-dialog-title">
-            <div style={{backgroundColor: '#43a047'}}>
-                <Typography className={classes.tituloModal} id="form-dialog-title">
-                    {estacionamiento.nombreCompleto}
-                    <Typography onClick={handleClickCerrarModalVerMas}
-                    className={classes.botonCerrarModal}>
-                    X</Typography>
-                </Typography>
-            </div>
-            <DialogContent>
-                <DialogContentText>
-                    <Mapa containerElement={<div style={{ height: '350px', width: 'auto' }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        isMarkerShown
-                        lat={estacionamiento.ubicacion.latitud}
-                        lng={estacionamiento.ubicacion.longitud}
-                        nombre={estacionamiento.nombreCompleto}
-                    >
-                    </Mapa>
-                    <Grid container spacing={3}>
-                        <Grid item lg={6} xs={6}>
-                            <Typography className={classes.camposTitulosLugares}>Tarifas:</Typography>
-                            <Typography className={classes.campos}>Auto: ${estacionamiento.tarifas[0].valor}</Typography>
-                            <Typography className={classes.campos}>Camioneta: ${estacionamiento.tarifas[1].valor}</Typography>
-                            <Typography className={classes.campos}>Motocicleta: ${estacionamiento.tarifas[2].valor}</Typography>
-                            <Typography className={classes.campos}>Traffic: ${estacionamiento.tarifas[3].valor}</Typography>
-                        </Grid>
-                        <Grid item lg={6} xs={6}>
-                            <Typography className={classes.camposTitulosLugares}>Horarios:</Typography>
-                            {estacionamiento.horarios[0].apertura !== "" ?<Typography className={classes.campos}>Lunes: {estacionamiento.horarios[0].apertura.split(':')[0]} a {estacionamiento.horarios[0].cierre.split(':')[0]} hs </Typography>:""}
-                            {estacionamiento.horarios[1].apertura !== "" ?<Typography className={classes.campos}>Martes: {estacionamiento.horarios[1].apertura.split(':')[0]} a {estacionamiento.horarios[1].cierre.split(':')[0]} hs </Typography>:""}
-                            {estacionamiento.horarios[2].apertura !== "" ?<Typography className={classes.campos}>Miércoles: {estacionamiento.horarios[2].apertura.split(':')[0]} a {estacionamiento.horarios[2].cierre.split(':')[0]} hs </Typography>:""}
-                            {estacionamiento.horarios[3].apertura !== "" ?<Typography className={classes.campos}>Jueves: {estacionamiento.horarios[3].apertura.split(':')[0]} a {estacionamiento.horarios[3].cierre.split(':')[0]} hs </Typography>:""}
-                            {estacionamiento.horarios[4].apertura !== "" ?<Typography className={classes.campos}>Viernes: {estacionamiento.horarios[4].apertura.split(':')[0]} a {estacionamiento.horarios[4].cierre.split(':')[0]} hs </Typography>:""}
-                            {estacionamiento.horarios[5].apertura !== "" ?<Typography className={classes.campos}>Sábado: {estacionamiento.horarios[5].apertura.split(':')[0]} a {estacionamiento.horarios[5].cierre.split(':')[0]} hs </Typography>:""}
-                            {estacionamiento.horarios[6].apertura !== "" ?<Typography className={classes.campos}>Domingo: {estacionamiento.horarios[6].apertura.split(':')[0]} a {estacionamiento.horarios[6].cierre.split(':')[0]} hs </Typography>:""}
-                        </Grid>
-                        <Grid item lg={12} xs={12}>
-                            <Typography className={classes.camposTitulosLugares}>Deje su comentario y valoración (estos datos son anónimos):</Typography>
-                                <TextareaAutosize
-                                    name="comentario"
-                                    value={comentario}
-                                    onChange={onChange}
-                                    required
-                                    className={classes.inputMiEstacionamiento}
-                                    rowsMin={5}
-                                    maxLength={100}
-                                    style={{width: "100%", resize: 'none'}}
-                                    >
-                                </TextareaAutosize>
-                                <Rating
-                                valor={puntuacion}
-                                onChange={(event, nuevaPuntuacion) => {
-                                    setPuntuacion(nuevaPuntuacion);
-                                }}
-                                >
-                                </Rating>
-                                <Button
-                                className={classes.botonAgregar}
-                                onClick={registrarPuntuacion}>
-                                Calificar
-                                </Button>
-                        </Grid>
-                    </Grid>
-                </DialogContentText>
-            </DialogContent>
-        </Dialog> 
         </>
         );
 }

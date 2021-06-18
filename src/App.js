@@ -44,6 +44,7 @@ import CambiarContraseña from './componentes/usuarios/CambiarContraseña';
 import Landing from './componentes/Landing';
 import EncontrarEstacionamientoMapa from './componentes/estacionamientos/EncontrarEstacionamientoMapa.js';
 import DetallesEstacionamientoCliente from './componentes/estacionamientos/DetallesEstacionamientoCliente.js';
+import NuevaReserva from './componentes/reservas/NuevaReserva.js';
 
 function App() {
   const usuario = useAutenticado();
@@ -76,7 +77,9 @@ function App() {
                     </Route>
                     <Route exact path="/encontrar-estacionamiento/mas-baratos" component={EstacionamientosMasBaratos} >
                     </Route>
-                    <Route path="/detalles-estacionamiento/:id" component={DetallesEstacionamientoCliente} >
+                    <Route path="/detalles-estacionamiento/:nombre" component={DetallesEstacionamientoCliente} >
+                    </Route>
+                    <Route path="/nueva-reserva/:nombre" component={NuevaReserva} >
                     </Route>
                     <Route exact path="/encontrar-estacionamiento-mapa" component={EncontrarEstacionamientoMapa} >
                     </Route>

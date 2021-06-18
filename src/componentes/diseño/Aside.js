@@ -123,7 +123,7 @@ const Aside = () => {
         try {
             await firebase.cerrarSesion();
             mostrarSpinner(CAuth.CERRANDO_SESION);
-            history.push('/login');
+            history.push('/login-encargados');
         }
         catch (error) {
             Toast(traducirError(error.code))

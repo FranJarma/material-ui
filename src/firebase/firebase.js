@@ -156,19 +156,23 @@ class Firebase {
             urlImagen: urlImagen,
             tarifas: [
                 {
-                    vehiculo: 'automovil',
+                    id: 0,
+                    vehiculo: 'Automovil',
                     valor: tarifaAuto
                 },
                 {
-                    vehiculo: 'camioneta',
+                    id: 1,
+                    vehiculo: 'Camioneta',
                     valor: tarifaCamioneta
                 },
                 {
-                    vehiculo: 'motocicleta',
+                    id: 2,
+                    vehiculo: 'Motocicleta',
                     valor: tarifaMoto
                 },
                 {
-                    vehiculo: 'traffic',
+                    id: 3,
+                    vehiculo: 'Traffic',
                     valor: tarifaTraffic
                 },
             ],
@@ -187,7 +191,9 @@ class Firebase {
             const comentarios = doc.data().comentarios;
             const puntuaciones = doc.data().puntuaciones;
             comentarios.push({
-                contenido: comentario
+                contenido: comentario,
+                votosPositivos: 0,
+                votosNegativos: 0
             });
             puntuaciones.push({
                 contenido: puntuacion
