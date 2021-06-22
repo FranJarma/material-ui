@@ -101,7 +101,7 @@ const DetallesEstacionamientoCliente = () => {
                                 </ul>
                             </CardContent>
                             <Link style={{textDecoration: 'none'}} to={{
-                                pathname: `/nueva-reserva/${estacionamiento.nombreCompleto}`,
+                                pathname: `/nueva-reserva/${estacionamiento.id}`,
                                 state: {estacionamiento}
                             }}>
                             <CardActionArea style={{textAlign: 'center'}}>

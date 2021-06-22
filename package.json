@@ -25,6 +25,7 @@
     "firebase-admin": "^9.7.0",
     "leaflet": "^1.7.1",
     "luxon": "^1.26.0",
+    "mercadopago": "^1.5.8",
     "moment": "^2.29.1",
     "notistack": "^1.0.6",
     "react": "^17.0.2",

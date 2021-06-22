@@ -111,7 +111,7 @@ const TabPersona = ({estacionamiento}) => {
     <Typography className={classes.subtitulos}>Datos del vehículo</Typography>
     <br/>
         <Grid container spacing={3}>
-            <Grid item lg={4} xs={6}>
+            <Grid item lg={4} xs={12}>
                 <TextField
                 variant="outlined"
                 fullWidth
@@ -134,7 +134,7 @@ const TabPersona = ({estacionamiento}) => {
                 ))}
                 </TextField>
             </Grid>
-            <Grid item lg={4} xs={6}>
+            <Grid item lg={4} xs={12}>
                 <TextField
                 variant="outlined"
                 fullWidth
@@ -155,7 +155,7 @@ const TabPersona = ({estacionamiento}) => {
                 ))}
                 </TextField>
             </Grid>
-            <Grid item lg={4} xs={6}>
+            <Grid item lg={4} xs={12}>
                 <InputMask
                     mask="aa 999 aa"
                     value={localStorage.patenteVehiculo}

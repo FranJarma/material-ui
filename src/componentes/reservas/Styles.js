@@ -130,6 +130,7 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     inputReserva: {
+        zIndex: 0,
         fontFamily: "Roboto Condensed, sans-serif",
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#rgba(0, 0, 0, 0.23);"

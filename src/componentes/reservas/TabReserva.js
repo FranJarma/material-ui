@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, TextField, Typography, TextareaAutosize, MenuItem } from '@material-ui/core';
+import { Grid, TextField, Typography, TextareaAutosize, MenuItem, FormHelperText } from '@material-ui/core';
 import { useStyles } from './Styles';
 import useLocalStorageState from 'use-local-storage-state'
 import DatePicker from 'react-datepicker';
@@ -153,6 +153,7 @@ const TabReserva = ({estacionamiento}) => {
                 </TextField>
             </Grid>
         </Grid>
+    <FormHelperText>Aclaración: el lugar se lo asignará el encargado una vez que sea el momento de la reserva </FormHelperText>
     <br/>
     <Typography className={classes.subtitulos}>Seleccione fecha y hora</Typography>
     <br/>

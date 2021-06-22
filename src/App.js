@@ -77,9 +77,9 @@ function App() {
                     </Route>
                     <Route exact path="/encontrar-estacionamiento/mas-baratos" component={EstacionamientosMasBaratos} >
                     </Route>
-                    <Route path="/detalles-estacionamiento/:nombre" component={DetallesEstacionamientoCliente} >
+                    <Route path="/detalles-estacionamiento/:id" component={DetallesEstacionamientoCliente} >
                     </Route>
-                    <Route path="/nueva-reserva/:nombre" component={NuevaReserva} >
+                    <Route path="/nueva-reserva/:id" component={NuevaReserva} >
                     </Route>
                     <Route exact path="/encontrar-estacionamiento-mapa" component={EncontrarEstacionamientoMapa} >
                     </Route>

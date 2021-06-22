@@ -20,6 +20,7 @@ export const LAS_CONTRASEÑAS_NO_COINCIDEN = 'Las contraseñas no coinciden';
 export const VALIDACION_DNI = 'El DNI no tiene el formato correcto';
 export const VALIDACION_CUIT = 'El CUIT no tiene el formato correcto';
 export const VALIDACION_TELEFONO = 'El número de teléfono no tiene el formato correcto';
+export const VALIDACION_PATENTE = 'El número de patente no tiene el formato correcto';
 export const CANCELAR = 'Cancelar';
 export const CONSULTAR = 'Consultar';
 export const MODIFICAR = 'Modificar';

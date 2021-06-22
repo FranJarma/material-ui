@@ -66,7 +66,7 @@ const EstacionamientoCliente = ({estacionamiento}) => {
     return ( 
         <>
             <Link style={{textDecoration: 'none'}} to={{
-                pathname: `detalles-estacionamiento/${estacionamiento.nombreCompleto}`,
+                pathname: `detalles-estacionamiento/${estacionamiento.id}`,
                 state: {estacionamiento}
             }}>
             <Card className={classes.cartaEstacionamientosCliente}>
