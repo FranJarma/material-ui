@@ -14,10 +14,8 @@ import Swal from '../diseño/Swal';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
-import useLocalStorageState from 'use-local-storage-state'
 import "./styles.css";
 import traducirError from '../../firebase/errores';
-
 
 const NuevaReserva = () => {
     const location = useLocation();
@@ -62,7 +60,6 @@ const NuevaReserva = () => {
         {id: 10, marca: 'Toyota'},
         {id: 11, marca: 'Volkswagen'}
     ];
-
     const handleChange = (event, nuevoTab) => {
         setTab(nuevoTab);
     };   
@@ -143,7 +140,8 @@ const NuevaReserva = () => {
             if (nombreCompleto === "" || dni === "" || email === "" || telefono === "" || tipoVehiculo === ""
             || marcaVehiculo === "" || patenteVehiculo === "" || hora === "")
         {
-            Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
+            setTab(tab+1);
+            //Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
         }
         //se utiliza la función includes para verificar si alguno de los dos campos tiene espacio en blanco
         else if(dni.includes('_')){
@@ -462,7 +460,11 @@ const NuevaReserva = () => {
                 <Typography className={classes.subtitulos}>Monto a pagar: </Typography>
                 <Typography className={classes.campos}> $ {tipoVehiculo.split('&')[1]}</Typography>
             </div>
-            <Button className={classes.botonSiguiente}>Pagar</Button>
+            <form action="http://localhost:4000/checkout" method="POST">
+                <input type="hidden" name="titulo" value={estacionamiento.nombreCompleto}></input>
+                <input type="hidden" name="precio" value={tipoVehiculo.split('&')[1]}></input>
+                <button className={classes.botonPagar}>Pagar</button>
+            </form>
             </>
             :""}
             </CardContent>

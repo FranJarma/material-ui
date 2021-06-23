@@ -97,6 +97,19 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: "#4db6ac",
         }
     },
+    botonPagar: {
+        backgroundColor: "#4db6ac",
+        color: "#ffffff",
+        [theme.breakpoints.down('md')]: {
+            width: "100%"
+        },
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#4db6ac",
+        }
+    },
     campos: {
         fontFamily: "Roboto Condensed, sans-serif",
         color: "#9e9e9e",
