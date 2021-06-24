@@ -16,17 +16,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 import "./styles.css";
 import traducirError from '../../firebase/errores';
-
+import useInfoUsuario from '../../hooks/useInfoUsuario';
 const NuevaReserva = () => {
     const location = useLocation();
+    const usuario = useInfoUsuario();
+    console.log(usuario);
     const { estacionamiento } = location.state;
     const classes = useStyles();
     const [tab, setTab] = useState(0);
     const [infoReserva, setInfoReserva] = useState({
-        nombreCompleto: '',
-        dni: '',
-        email: '',
-        telefono: '',
         tipoVehiculo: '',
         marcaVehiculo: '',
         patenteVehiculo: '',
@@ -34,7 +32,7 @@ const NuevaReserva = () => {
         hora: '',
         observaciones: ''
     });
-    const { nombreCompleto, dni, email, telefono, tipoVehiculo, marcaVehiculo, patenteVehiculo, valor, hora, observaciones } = infoReserva;
+    const { tipoVehiculo, marcaVehiculo, patenteVehiculo, valor, hora, observaciones } = infoReserva;
     const [fecha, setFecha] = useState(null);
     //evento onChange
     const onChange = (e) => {
@@ -137,25 +135,16 @@ const NuevaReserva = () => {
 
     async function confirmarReserva () {
         try {
-            if (nombreCompleto === "" || dni === "" || email === "" || telefono === "" || tipoVehiculo === ""
-            || marcaVehiculo === "" || patenteVehiculo === "" || hora === "")
+            if (tipoVehiculo === "" || marcaVehiculo === "" || patenteVehiculo === "" || hora === "")
         {
-            setTab(tab+1);
-            //Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
-        }
-        //se utiliza la función includes para verificar si alguno de los dos campos tiene espacio en blanco
-        else if(dni.includes('_')){
-            Toast(CGeneral.VALIDACION_DNI)
-        }
-        else if(telefono.includes('_')){
-            Toast(CGeneral.VALIDACION_TELEFONO)
+            //setTab(tab+1);
+            Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
         }
         else if(patenteVehiculo.includes('_')){
             Toast(CGeneral.VALIDACION_PATENTE)
         }
         else {
             setTab(tab+1);
-            Swal(CGeneral.OPERACION_COMPLETADA, 'Reserva registrada correctamente');
         }
         } catch (error) {
             Toast(traducirError(error.code))
@@ -186,70 +175,55 @@ const NuevaReserva = () => {
             <Typography className={classes.subtitulos}>Datos de la persona</Typography>
             <br/>
                 <Grid container spacing={3}>
-                    <Grid item lg={4} xs={12}>
+                    <Grid item lg={4} md={4} xs={12}>
                         <TextField
-                        autoFocus
-                        variant="outlined"
+                        disabled
+                        variant="filled"
                         fullWidth
-                        value={nombreCompleto}
-                        name="nombreCompleto"
+                        value={usuario.nombreCompleto}
                         label="Nombre completo"
-                        onChange={onChange}
                         className={classes.inputReserva}>
                         </TextField>
                     </Grid>
-                    <Grid item lg={4} xs={12}>
+                    <Grid item lg={4} md={4} xs={12}>
                         <TextField
-                        variant="outlined"
+                        disabled
+                        variant="filled"
                         fullWidth
                         type="text"
-                        value={email}
-                        name="email"
+                        value={usuario.email}
                         label="Email"
-                        onChange={onChange}
                         className={classes.inputReserva}>
                         </TextField>
                     </Grid>
-                    <Grid item lg={2} xs={6}>
-                    <InputMask
-                            mask="99.999.999"
-                            value={dni}
-                            onChange={onChange}
-                            >
-                                {() => <TextField
-                                    className = {classes.inputReserva}
-                                    type="text"
-                                    fullWidth
-                                    name="dni"
-                                    variant="outlined"
-                                    label="DNI"
-                                />
-                                }
-                    </InputMask>
+                    <Grid item lg={2} md={2} xs={6}>
+                        <TextField
+                            disabled
+                            value={usuario.dni}
+                            className = {classes.inputReserva}
+                            type="text"
+                            fullWidth
+                            variant="filled"
+                            label="DNI"
+                        ></TextField>
                     </Grid>
-                    <Grid item lg={2} xs={6}>
-                    <InputMask
-                            mask="(+54) 9999999999"
-                            value={telefono}
-                            onChange={onChange}
-                            >
-                                {() => <TextField
-                                    className = {classes.inputReserva}
-                                    type="text"
-                                    fullWidth
-                                    name="telefono"
-                                    variant="outlined"
-                                    label="N° de teléfono"
-                                />
-                                }
-                    </InputMask>
+                    <Grid item lg={2} md={2} xs={6}>
+                        <TextField
+                            disabled
+                            value={usuario.telefono}
+                            className = {classes.inputReserva}
+                            type="text"
+                            fullWidth
+                            variant="filled"
+                            label="N° de teléfono"
+                        ></TextField>
                     </Grid>
                 </Grid>
             <br/>
             <Typography className={classes.subtitulos}>Datos del vehículo</Typography>
             <br/>
                 <Grid container spacing={3}>
-                    <Grid item lg={4} xs={12}>
+                    <Grid item lg={4} md={4} xs={12}>
                         <TextField
                         variant="outlined"
                         fullWidth
@@ -272,7 +246,7 @@ const NuevaReserva = () => {
                         ))}
                         </TextField>
                     </Grid>
-                    <Grid item lg={4} xs={12}>
+                    <Grid item lg={4} md={4} xs={12}>
                         <TextField
                         variant="outlined"
                         fullWidth
@@ -293,7 +267,7 @@ const NuevaReserva = () => {
                         ))}
                         </TextField>
                     </Grid>
-                    <Grid item lg={4} xs={12}>
+                    <Grid item lg={4} md={4} xs={12}>
                         <InputMask
                             mask="aa 999 aa"
                             value={patenteVehiculo}
@@ -315,7 +289,7 @@ const NuevaReserva = () => {
                 <Typography className={classes.subtitulos}>Datos del estacionamiento</Typography>
         <br/>
         <Grid container spacing={3}>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} md={3} xs={12}>
                 <TextField
                 autoFocus
                 disabled
@@ -326,7 +300,7 @@ const NuevaReserva = () => {
                 className={classes.inputReserva}>
                 </TextField>
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} md={3} xs={12}>
                 <TextField
                 variant="filled"
                 disabled
@@ -336,7 +310,7 @@ const NuevaReserva = () => {
                 className={classes.inputReserva}>
                 </TextField>
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} md={3} xs={12}>
                 <TextField
                 variant="filled"
                 disabled
@@ -346,7 +320,7 @@ const NuevaReserva = () => {
                 className={classes.inputReserva}>
                 </TextField>
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} md={3} xs={12}>
                 <TextField
                 variant="filled"
                 disabled
@@ -362,7 +336,7 @@ const NuevaReserva = () => {
     <Typography className={classes.subtitulos}>Seleccione fecha y hora</Typography>
     <br/>
         <Grid container spacing={3}>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} md={3} xs={12}>
             <DatePicker
                 placeholderText="Fecha de reserva"
                 locale={es}
@@ -375,7 +349,7 @@ const NuevaReserva = () => {
                 withPortal
             />
             </Grid>
-            <Grid item lg={6} xs={12}>
+            <Grid item lg={6} md={6} xs={12}>
                 <TextField
                 variant="outlined"
                 fullWidth
@@ -398,7 +372,7 @@ const NuevaReserva = () => {
         <Typography className={classes.subtitulos}>Observaciones</Typography>
         <br/>
         <Grid container spacing={3}>
-            <Grid item lg={12} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
                 <TextareaAutosize
                     name="observaciones"
                     onChange={onChange}
@@ -418,19 +392,19 @@ const NuevaReserva = () => {
             <Divider></Divider>
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: '1rem'}}>
                 <Typography className={classes.subtitulos}>Nombre completo: </Typography>
-                <Typography className={classes.campos}>{nombreCompleto}</Typography>
+                <Typography className={classes.campos}>{usuario.nombreCompleto}</Typography>
             </div>
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: '1rem'}}>
                 <Typography className={classes.subtitulos}>DNI: </Typography>
-                <Typography className={classes.campos}>{dni}</Typography>
+                <Typography className={classes.campos}>{usuario.dni}</Typography>
             </div>
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: '1rem'}}>
                 <Typography className={classes.subtitulos}>Email: </Typography>
-                <Typography className={classes.campos}>{email}</Typography>
+                <Typography className={classes.campos}>{usuario.email}</Typography>
             </div>
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: '1rem'}}>
                 <Typography className={classes.subtitulos}>Teléfono: </Typography>
-                <Typography className={classes.campos}>{telefono}</Typography>
+                <Typography className={classes.campos}>{usuario.telefono}</Typography>
             </div>
             <Typography className={classes.subtitulos}>Datos del vehículo: </Typography>
             <Divider></Divider>
@@ -463,12 +437,15 @@ const NuevaReserva = () => {
             <form action="http://localhost:4000/checkout" method="POST">
                 <input type="hidden" name="titulo" value={estacionamiento.nombreCompleto}></input>
                 <input type="hidden" name="precio" value={tipoVehiculo.split('&')[1]}></input>
-                <button className={classes.botonPagar}>Pagar</button>
+                <div style={{textAlign: 'center'}}>
+                    <button className={classes.botonPagar}>Pagar</button>
+                </div>
             </form>
             </>
             :""}
             </CardContent>
         </Card>
+        <br/>
         <div style={{float: 'right', marginRight: '1rem', display: tab === 3 ? 'none' : ''}}>
             <Button disabled={tab===0 ? true: false} style={{display: tab ===1 ? "none" : ""}} onClick={()=>setTab(tab-1)} onChange={handleChange}>Anterior</Button>
             <Button onClick={()=>confirmarReserva()} style={{display: tab ===1 ? "none" : ""}} value={tab} className={classes.botonSiguiente}>Siguiente</Button>

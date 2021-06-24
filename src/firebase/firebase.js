@@ -38,6 +38,23 @@ class Firebase {
         localStorage.removeItem('usuario');
         this.auth.signOut();
     }
+    // MÉTODOS PARA ADMINISTRACIÓN DE USUARIOS
+    //método para registrar usuario
+    async registrarCliente(nombreCompleto, email, nombreUsuario, contraseña, fechaCreacion,
+        telefono, dni){
+        this.auth.createUserWithEmailAndPassword(email, contraseña)
+        .then(nuevoUsuario => {
+            this.db.collection('usuarios').add({
+                uid: nuevoUsuario.user.uid,
+                nombreCompleto: nombreCompleto,
+                nombreUsuario: nombreUsuario,
+                email: email,
+                fechaCreacion: fechaCreacion,
+                telefono: telefono,
+                dni: dni,
+            })
+        })
+    }
     //metodo para modificar datos del usuario por id
     async modificarUsuario(id, nombreCompleto, nombreUsuario, email, telefono, dni, esEncargado, esAdmin){
         this.db.collection('usuarios').doc(id).update({

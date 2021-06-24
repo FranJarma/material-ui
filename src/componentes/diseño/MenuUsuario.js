@@ -57,7 +57,6 @@ const MenuUsuario = () => {
   const open = Boolean(posicion);
   const classes = useStyles();
   const history = useHistory();
-  const usuarioInfo = useInfoUsuario();
   const {firebase} = useContext(FirebaseContext);
   const spinnerContext = useContext(SpinnerContext);
   const { mostrarSpinner } = spinnerContext;

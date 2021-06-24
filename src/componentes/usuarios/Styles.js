@@ -32,6 +32,28 @@ export const useStyles = makeStyles((theme) => ({
     formControl: {
         minWidth: '100%',
       },
+    botonIniciarSesion: {
+        width: "100%",
+        margin: "0.7rem",
+        backgroundColor: "#4db6ac",
+        color: "#FFFFFF",
+        fontFamily: "Roboto Condensed",
+        "&:hover":{
+            backgroundColor: "#4db6ac",
+            color: "#FFFFFF"
+        }
+    },
+    botonOlvideMiContraseña: {
+        width: "100%",
+        margin: "0.7rem",
+        backgroundColor: "#FFFFFF",
+        color: "#000000",
+        fontFamily: "Roboto Condensed",
+        "&:hover":{
+            backgroundColor: "#FFFFFF",
+            color: "#000000"
+        }
+    },
     botonModificarDatos: {
         backgroundColor: "#448aff",
         color: "#ffffff",
@@ -240,6 +262,18 @@ export const useStyles = makeStyles((theme) => ({
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#43a047"
         }
+    },
+    inputUsuarioCliente: {
+        fontFamily: "Roboto Condensed, sans-serif",
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#rgba(0, 0, 0, 0.23);"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#4db6ac;"
+        },
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#4db6ac"
+        }  
     },
     logo: {
         marginTop: "1rem",

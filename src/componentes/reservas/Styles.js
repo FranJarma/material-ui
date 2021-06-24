@@ -98,10 +98,15 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
     botonPagar: {
+        border: 0,
+        borderRadius: 5,
+        height: '5vh',
+        width: "25%",
         backgroundColor: "#4db6ac",
         color: "#ffffff",
         [theme.breakpoints.down('md')]: {
-            width: "100%"
+            width: "100%",
+            height: '10vh',
         },
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",

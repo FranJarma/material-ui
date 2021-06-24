@@ -45,6 +45,7 @@ import Landing from './componentes/Landing';
 import EncontrarEstacionamientoMapa from './componentes/estacionamientos/EncontrarEstacionamientoMapa.js';
 import DetallesEstacionamientoCliente from './componentes/estacionamientos/DetallesEstacionamientoCliente.js';
 import NuevaReserva from './componentes/reservas/NuevaReserva.js';
+import RutaPrivadaCliente from './componentes/rutas/RutaPrivadaCliente.js';
 
 function App() {
   const usuario = useAutenticado();
@@ -79,8 +80,8 @@ function App() {
                     </Route>
                     <Route path="/detalles-estacionamiento/:id" component={DetallesEstacionamientoCliente} >
                     </Route>
-                    <Route path="/nueva-reserva/:id" component={NuevaReserva} >
-                    </Route>
+                    <RutaPrivadaCliente path="/nueva-reserva/estacionamientoId=:id" component={NuevaReserva} >
+                    </RutaPrivadaCliente>
                     <Route exact path="/encontrar-estacionamiento-mapa" component={EncontrarEstacionamientoMapa} >
                     </Route>
                     <Route exact path="/login-encargados" component={Login} >

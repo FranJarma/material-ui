@@ -8,6 +8,9 @@ import maps from './../imagenes/maps.jpg';
 import maps2 from './../imagenes/maps2.jpg';
 import responsive from './../imagenes/responsive.jpg';
 import pagos from './../imagenes/pagos.jpg';
+import mercadopago from './../imagenes/mercadopago.png';
+import seguridad from './../imagenes/seguridad.jpg';
+import argentina from './../imagenes/argentina.jpg';
 
 import TodayIcon from '@material-ui/icons/Today';
 import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
@@ -113,9 +116,23 @@ const Landing = () => {
             link: 'https://devcode.la/blog/que-es-responsive-web-design/'
         },
         {
+            titulo: 'Disponible para playas de estacionamiento en toda Argentina',
+            imagen: argentina,
+        },
+        {
             titulo: 'Pagos online',
             imagen: pagos,
             link: 'https://debitoor.es/glosario/pago-online'
+        },
+        {
+            titulo: 'Seguridad',
+            imagen: seguridad,
+            link: 'https://definicion.de/seguridad-informatica/#:~:text=La%20seguridad%20inform%C3%A1tica%20es%20una,la%20inviolabilidad%20de%20un%20sistema.'
+        },
+        {
+            titulo: 'Mercado pago',
+            imagen: mercadopago,
+            link: 'https://www.mercadopago.com.ar/link-de-pago-plugins-y-plataformas-checkout?matt_tool=74490554&matt_word=&gclid=Cj0KCQjw2tCGBhCLARIsABJGmZ6iRy2GLyKFazeCcETOpxekD9GIjqQSiEd9I_EFMgkzWEsgzs_LkJIaApflEALw_wcB'
         },
         {
             titulo: 'Google maps',

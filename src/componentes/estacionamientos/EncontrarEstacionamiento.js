@@ -1,7 +1,8 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect, lazy, Suspense} from 'react';
 import { Link } from 'react-router-dom';
 import NavbarCliente from '../diseño/NavbarCliente.js';
 import { Typography, Grid, Card, TextField, CardContent, Chip, InputAdornment, IconButton} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Paginacion from '../diseño/Paginacion.js';
 import Footer from '../diseño/Footer.js';
 import PaginacionContext from '../../context/paginacion/paginacionContext';
@@ -11,7 +12,6 @@ import { FirebaseContext } from '../../firebase';
 import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
 import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
-import EstacionamientoCliente from './EstacionamientoCliente.js';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -20,6 +20,13 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ChatIcon from '@material-ui/icons/Chat';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
+
+const CustomComponent = React.lazy(
+    () =>
+      new Promise((resolve, reject) =>
+        setTimeout(() => resolve(import('./EstacionamientoCliente')), 2000)
+      )
+  );
 const EncontrarEstacionamientos = () => {
     const classes = useStyles();
     //context de paginación y spinner
@@ -85,7 +92,6 @@ const EncontrarEstacionamientos = () => {
         (!cargando ? 
         <>
         <NavbarCliente/>
-        <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos encontrados: {estacionamientos.length}</Typography>
                     <Card className={classes.cartaFiltros}>
                         <CardContent>
                             <TextField
@@ -122,14 +128,17 @@ const EncontrarEstacionamientos = () => {
                             </div>
                         </CardContent>
                     </Card>
+                    <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos encontrados: {estacionamientos.length}</Typography>
                 <Grid container>
+                    <Suspense fallback={<><Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Cargando...</Typography><CircularProgress style={{position:'absolute', left: "50%", rigth: "50%"}}/></>}>
                     {estacionamientos.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(estacionamiento =>(
                         <>
-                        <Grid item lg={3}>
-                            <EstacionamientoCliente key={estacionamiento.uid} estacionamiento={estacionamiento}/>
-                        </Grid>
+                            <Grid item lg={3} md={4} xs={12}>
+                                <CustomComponent key={estacionamiento.uid} estacionamiento={estacionamiento}/>
+                            </Grid>
                         </>
                     ))}
+                    </Suspense>
                 </Grid>
                 {estacionamientos.length > 0 ? <Paginacion lista={estacionamientos}/> : ""}
             <Footer/>

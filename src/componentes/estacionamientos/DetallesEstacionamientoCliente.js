@@ -67,7 +67,7 @@ const DetallesEstacionamientoCliente = () => {
         <NavbarCliente/>
         <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>{estacionamiento.nombreCompleto}</Typography>
             <Grid container>
-                <Grid item lg={9} xs={12}>
+                <Grid item lg={9} md={9} xs={12}>
                     <Mapa containerElement={<div style={{ height: '430px', width: 'auto', marginLeft: "1rem", marginRight: "1rem"}} />}
                         mapElement={<div style={{ height: `100%` }} />}
                         isMarkerShown
@@ -77,7 +77,7 @@ const DetallesEstacionamientoCliente = () => {
                     >
                     </Mapa>
                 </Grid>
-                    <Grid item lg={3} xs={12}>
+                    <Grid item lg={3} md={3} xs={12}>
                         <Card style={{marginLeft:'1rem', marginRight: '1rem', marginTop: '2rem', marginBottom: '1rem'}}>
                             <CardContent>
                                 <div className={classes.camposTitulosLugares}>Tarifas</div>
@@ -101,7 +101,7 @@ const DetallesEstacionamientoCliente = () => {
                                 </ul>
                             </CardContent>
                             <Link style={{textDecoration: 'none'}} to={{
-                                pathname: `/nueva-reserva/${estacionamiento.id}`,
+                                pathname: `/nueva-reserva/estacionamientoId=${estacionamiento.id}`,
                                 state: {estacionamiento}
                             }}>
                             <CardActionArea style={{textAlign: 'center'}}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,6 +6,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import logo from "./../../imagenes/logo.png";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import { Button, Dialog, DialogContent, Tabs, Tab } from '@material-ui/core';
+import LoginCliente from '../usuarios/LoginCliente';
+import RegistrarCliente from '../usuarios/RegistrarCliente';
+import OlvideContraseñaCliente from '../usuarios/OlvideContraseñaCliente';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import * as CGeneral from './../../constantes/general/CGeneral';
+import * as CAuth from './../../constantes/auth/CAuth';
+import SpinnerContext from '../../context/spinner/spinnerContext';
+import {FirebaseContext} from './../../firebase';
+import Toast from './Toast';
+import traducirError from './../../firebase/errores';
 
 const anchoNavbarPx = 300;
 
@@ -56,32 +69,50 @@ const useStyles = makeStyles(theme => ({
     },
     botonCerrarSesionNavbar: {
         backgroundColor: "#4db6ac",
+        textDecoration: 'none',
         color: "#FFFFFF",
         borderColor:"#4db6ac",
         fontFamily: "Roboto Condensed, sans-serif",
         textTransform: "uppercase",
-        fontSize: 15,
+        fontSize: 12,
         borderRadius: "0.5rem",
         "&:hover":{
-            backgroundColor: "#FFFFFF",
-            color:"#4db6ac"
+            backgroundColor: "#4db6ac",
         }
     },
     linkEncargados: {
         fontFamily: "sans-serif",
-        fontSize: 18,
+        fontSize: 14,
         textDecoration: "none",
         "&:hover":{
             color: "#4db6ac"
         },
         color: "#000000",
         margin: "0.5rem",
-    }
+    },
+    tabs: {
+        backgroundColor: "#FFFFFF",
+        color:"#4db6ac",
+        width: "100%"
+    },
+    tab: {
+        fontFamily: 'Roboto Condensed',
+        fontHeight: 'bold',
+        fontSize: 14,
+        [theme.breakpoints.only('xs')]: {
+            fontSize: 12
+        }
+    },
 }));
 
     const NavbarCliente = () => {
+        const {firebase} = useContext(FirebaseContext);
+        const spinnerContext = useContext(SpinnerContext);
+        const { cargando, mostrarSpinner } = spinnerContext;
         const classes = useStyles();
         const [activo, setActivo] = useState(false);
+        const [modal, setModal] = useState(false);
+        const [tab, setTab] = useState(0);
         let history = useHistory();
         const volverAtras = () => {
             //solo permitir volver atrás si no está en la raiz
@@ -94,6 +125,25 @@ const useStyles = makeStyles(theme => ({
             }
             else {
                 setActivo(true);
+            }
+        }
+        const abrirModalIniciarSesion = () => {
+            setModal(true);
+        }
+        const cerrarModalIniciarSesion = () => {
+            setModal(false);
+        }
+        const handleChangeTab = (event, nuevoTab) => {
+            setTab(nuevoTab);
+        };
+        //función para cerrar sesión
+        async function cerrarSesion(){
+            try {
+                await firebase.cerrarSesion();
+                mostrarSpinner(CAuth.CERRANDO_SESION);
+            }
+            catch (error) {
+                Toast(traducirError(error.code))
             }
         }
         return (
@@ -121,7 +171,43 @@ const useStyles = makeStyles(theme => ({
                     to="/login-encargados">
                     Acceso encargados
                     </Link>
+                    {localStorage.getItem('usuario') === '' || localStorage.getItem('usuario') === undefined || localStorage.getItem('usuario') === null ?
+                    <Button
+                    onClick={abrirModalIniciarSesion}
+                    className={classes.botonCerrarSesionNavbar}>
+                    Iniciar sesión
+                    </Button>
+                    : 
+                    <Button
+                    onClick={cerrarSesion}
+                    className={classes.botonCerrarSesionNavbar}>
+                    Cerrar sesión
+                    </Button>
+                    }
                 </div>
+                <Dialog
+                style={{zIndex: 1}}
+                fullWidth
+                maxWidth={'sm'}
+                open={modal}
+                onClose={cerrarModalIniciarSesion}>
+                    <DialogContent>
+                        <Tabs
+                            className={classes.tabs}
+                            TabIndicatorProps={{style: {background:'#4db6ac'}}}
+                            variant="fullWidth"
+                            value={tab}
+                            onChange={handleChangeTab}>
+                            <Tab className={classes.tab} icon={<AccountCircleIcon/>} label="Iniciar sesión"></Tab>
+                            <Tab className={classes.tab} icon={<PersonAddIcon/>} label="Registrarme"></Tab>
+                            <Tab className={classes.tab} icon={<VpnKeyIcon/>} label="Olvidé contraseña"></Tab>
+                        </Tabs>
+                        {tab === 0 ?
+                        <LoginCliente cerrarModal = {cerrarModalIniciarSesion}/>
+                        : tab === 1 ? <RegistrarCliente cerrarModal = {cerrarModalIniciarSesion}/> 
+                        : <OlvideContraseñaCliente cerrarModal = {cerrarModalIniciarSesion}/>}
+                    </DialogContent>
+                </Dialog>
                 </Toolbar>
             </AppBar>
             <div className={classes.contenido}>
