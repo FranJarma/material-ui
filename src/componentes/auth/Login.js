@@ -27,6 +27,12 @@ const useStyles = makeStyles( theme => ({
         [theme.breakpoints.down('md')]:{
             margin: "auto",
             height: 400,
+            width: 400,
+            marginTop: "3rem",
+        },
+        [theme.breakpoints.only('xs')]:{
+            margin: "auto",
+            height: 400,
             width: 300,
             marginTop: "3rem",
         },

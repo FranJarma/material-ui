@@ -15,6 +15,26 @@ class Firebase {
         this.db = app.firestore();
         this.storage = app.storage();
     }
+// MÉTODOS PARA ADMINISTRACIÓN DE RESERVAS
+    //método para registrar reserva
+    async registrarReserva(usuario, tipoVehiculo, marcaVehiculo, patenteVehiculo, estacionamiento, fechaReserva,
+    horaReserva, fechaCreacion, observaciones, estado, pago){
+        this.db.collection('reservas').add({
+            usuario: usuario,
+            tipoVehiculo: tipoVehiculo,
+            marcaVehiculo: marcaVehiculo,
+            patenteVehiculo: patenteVehiculo,
+            estacionamiento: estacionamiento,
+            fechaReserva: fechaReserva,
+            horaReserva: horaReserva,
+            fechaCreacion: fechaCreacion,
+            observaciones: observaciones,
+            estado: estado,
+            pago: [{
+                valor: pago
+            }]
+        })
+    }
 // MÉTODOS PARA ADMINISTRACIÓN DE USUARIOS
     //método para registrar usuario
     async registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña, esEncargado, fechaCreacion,

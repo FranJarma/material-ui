@@ -78,17 +78,24 @@ const useStyles = makeStyles(theme => ({
         borderRadius: "0.5rem",
         "&:hover":{
             backgroundColor: "#4db6ac",
-        }
+        },
+        padding: 0,
+        marginTop: '1rem',
+        marginBottom: '1rem'
     },
     linkEncargados: {
-        fontFamily: "sans-serif",
+        fontFamily: "Roboto Condensed",
         fontSize: 14,
         textDecoration: "none",
         "&:hover":{
-            color: "#4db6ac"
+            borderBottom: "2px solid #4db6ac",
         },
         color: "#000000",
-        margin: "0.5rem",
+        margin: "1rem",
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 12,
+            marginBottom: '0.4rem'
+        }
     },
     tabs: {
         backgroundColor: "#FFFFFF",
@@ -156,14 +163,14 @@ const useStyles = makeStyles(theme => ({
                     <Link
                     onClick={cambiarLink}
                     className={classes.linkEncargados}
-                    to="/">
-                    Inicio
+                    to="/encontrar-estacionamiento">
+                    Encontrar estacionamientos
                     </Link>
                     <Link
                     onClick={cambiarLink}
                     className={classes.linkEncargados}
-                    to="/encontrar-estacionamiento">
-                    Quiero reservar
+                    to="/mis-reservas">
+                    Mis Reservas
                     </Link>
                     <Link
                     onClick={cambiarLink}
@@ -175,13 +182,13 @@ const useStyles = makeStyles(theme => ({
                     <Button
                     onClick={abrirModalIniciarSesion}
                     className={classes.botonCerrarSesionNavbar}>
-                    Iniciar sesión
+                    Ingresar
                     </Button>
                     : 
                     <Button
                     onClick={cerrarSesion}
                     className={classes.botonCerrarSesionNavbar}>
-                    Cerrar sesión
+                    Salir
                     </Button>
                     }
                 </div>

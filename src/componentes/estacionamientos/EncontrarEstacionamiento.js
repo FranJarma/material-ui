@@ -92,45 +92,45 @@ const EncontrarEstacionamientos = () => {
         (!cargando ? 
         <>
         <NavbarCliente/>
-                    <Card className={classes.cartaFiltros}>
-                        <CardContent>
-                            <TextField
-                            placeholder="Buscar..."
-                            className = {classes.inputFiltros}
-                            fullWidth
-                            type="text"
-                            variant="outlined"
-                            InputProps={{
-                                endAdornment: <InputAdornment position="end">
-                                    <IconButton><SearchIcon/></IconButton>
-                                </InputAdornment>,
-                              }}
-                            ></TextField>
-                            <div style={{justifyContent: 'center',
-                            backgroundColor: "#4db6ac",
-                            display: 'flex', flexWrap: 'wrap'}}>
-                                {datosChip.map((data)=>{
-                                return(
-                                <>
-                                <Link style={{textDecoration: 'none', marginRight: '0.5rem', marginBottom: '0.5rem'}} to={{
-                                    pathname: data.link,
-                                }}>
-                                <Chip
-                                    className={classes.chip}
-                                    clickable
-                                    icon={data.icono}
-                                    label={data.label}
-                                />
-                                </Link>
-                                    </>
-                                );
-                                })}
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos encontrados: {estacionamientos.length}</Typography>
+            <Card className={classes.cartaFiltros}>
+                <CardContent>
+                    <TextField
+                    placeholder="Buscar..."
+                    className = {classes.inputFiltros}
+                    fullWidth
+                    type="text"
+                    variant="outlined"
+                    InputProps={{
+                        endAdornment: <InputAdornment position="end">
+                            <IconButton><SearchIcon/></IconButton>
+                        </InputAdornment>,
+                        }}
+                    ></TextField>
+                    <div style={{justifyContent: 'center',
+                    backgroundColor: "#4db6ac",
+                    display: 'flex', flexWrap: 'wrap'}}>
+                        {datosChip.map((data)=>{
+                        return(
+                        <>
+                        <Link style={{textDecoration: 'none', marginRight: '0.5rem', marginBottom: '0.5rem'}} to={{
+                            pathname: data.link,
+                        }}>
+                        <Chip
+                            className={classes.chip}
+                            clickable
+                            icon={data.icono}
+                            label={data.label}
+                        />
+                        </Link>
+                            </>
+                        );
+                        })}
+                    </div>
+                </CardContent>
+            </Card>
+            <Suspense fallback={<CircularProgress style={{position:'absolute', left: "50%", rigth: "50%"}}/>}>
+                <Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Estacionamientos encontrados: {estacionamientos.length}</Typography>
                 <Grid container>
-                    <Suspense fallback={<><Typography style={{color: "#000000", fontHeight: 'bold'}} className={classes.tituloModal}>Cargando...</Typography><CircularProgress style={{position:'absolute', left: "50%", rigth: "50%"}}/></>}>
                     {estacionamientos.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(estacionamiento =>(
                         <>
                             <Grid item lg={3} md={4} xs={12}>
@@ -138,9 +138,9 @@ const EncontrarEstacionamientos = () => {
                             </Grid>
                         </>
                     ))}
-                    </Suspense>
                 </Grid>
                 {estacionamientos.length > 0 ? <Paginacion lista={estacionamientos}/> : ""}
+            </Suspense>
             <Footer/>
         </>
     : <Spinner></Spinner>)

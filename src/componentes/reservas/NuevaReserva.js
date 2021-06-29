@@ -8,7 +8,7 @@ import PersonPinIcon from '@material-ui/icons/PersonPin';
 import CheckIcon from '@material-ui/icons/Check';
 import {useLocation} from 'react-router-dom';
 import Toast from './../diseño/Toast';
-import Footer from './../diseño/Footer.js';
+import firebase from './../../firebase';
 import * as CGeneral from './../../constantes/general/CGeneral';
 import Swal from '../diseño/Swal';
 import DatePicker from 'react-datepicker';
@@ -20,7 +20,6 @@ import useInfoUsuario from '../../hooks/useInfoUsuario';
 const NuevaReserva = () => {
     const location = useLocation();
     const usuario = useInfoUsuario();
-    console.log(usuario);
     const { estacionamiento } = location.state;
     const classes = useStyles();
     const [tab, setTab] = useState(0);
@@ -33,16 +32,14 @@ const NuevaReserva = () => {
         observaciones: ''
     });
     const { tipoVehiculo, marcaVehiculo, patenteVehiculo, valor, hora, observaciones } = infoReserva;
-    const [fecha, setFecha] = useState(null);
+    const [fecha, setFecha] = useState(new Date());
+    console.log(fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear())
     //evento onChange
     const onChange = (e) => {
         setInfoReserva({
             ...infoReserva,
             [e.target.name] : e.target.value
         });
-    }
-    const onChangeFecha = (fecha) => {
-        setFecha(fecha);
     }
     const marcas = [
         {id: 0, marca: 'Audi'},
@@ -83,16 +80,7 @@ const NuevaReserva = () => {
         horarioMinimo = arregloHorasApertura.sort()[0];
         horarioMaximo = arregloHorasCierre.sort().reverse()[0];
         for(let i=parseInt(horarioMinimo); i<=horarioMaximo; i++){
-            if (i<12) {
-            horarios.push({
-                hora: i + ' AM'
-            });
-            }
-            else {
-                horarios.push({
-                    hora: i + ' PM'
-                });
-            }
+            horarios.push({hora: i + ':00'});
         }
         return horarios;
     };
@@ -145,8 +133,11 @@ const NuevaReserva = () => {
         }
         else {
             setTab(tab+1);
+            await firebase.registrarReserva(usuario, tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo, estacionamiento.id,
+            fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear(), hora, new Date(), observaciones, 'registrada', tipoVehiculo.split('&')[1]);
         }
         } catch (error) {
+            console.log(error);
             Toast(traducirError(error.code))
         }
         
@@ -176,46 +167,46 @@ const NuevaReserva = () => {
             <br/>
                 <Grid container spacing={3}>
                     <Grid item lg={4} md={4} xs={12}>
+                        <FormHelperText>Nombre completo</FormHelperText>
                         <TextField
                         disabled
-                        variant="filled"
+                        variant="standard"
                         fullWidth
                         value={usuario.nombreCompleto}
-                        label="Nombre completo"
                         className={classes.inputReserva}>
                         </TextField>
                     </Grid>
                     <Grid item lg={4} md={4} xs={12}>
+                        <FormHelperText>Correo electrónico</FormHelperText>
                         <TextField
                         disabled
-                        variant="filled"
+                        variant="standard"
                         fullWidth
                         type="text"
                         value={usuario.email}
-                        label="Email"
                         className={classes.inputReserva}>
                         </TextField>
                     </Grid>
                     <Grid item lg={2} md={2} xs={6}>
+                        <FormHelperText>DNI</FormHelperText>
                         <TextField
                             disabled
                             value={usuario.dni}
                             className = {classes.inputReserva}
                             type="text"
                             fullWidth
-                            variant="filled"
-                            label="DNI"
+                            variant="standard"
                         ></TextField>
                     </Grid>
                     <Grid item lg={2} md={2} xs={6}>
+                        <FormHelperText>Teléfono</FormHelperText>
                         <TextField
                             disabled
                             value={usuario.telefono}
                             className = {classes.inputReserva}
                             type="text"
                             fullWidth
-                            variant="filled"
-                            label="N° de teléfono"
+                            variant="standard"
                         ></TextField>
                     </Grid>
                 </Grid>
@@ -293,7 +284,7 @@ const NuevaReserva = () => {
                 <TextField
                 autoFocus
                 disabled
-                variant="filled"
+                variant="standard"
                 fullWidth
                 value={estacionamiento.nombreCompleto}
                 label="Nombre completo"
@@ -302,7 +293,7 @@ const NuevaReserva = () => {
             </Grid>
             <Grid item lg={3} md={3} xs={12}>
                 <TextField
-                variant="filled"
+                variant="standard"
                 disabled
                 fullWidth
                 value={estacionamiento.ubicacion.direccion}
@@ -312,7 +303,7 @@ const NuevaReserva = () => {
             </Grid>
             <Grid item lg={3} md={3} xs={12}>
                 <TextField
-                variant="filled"
+                variant="standard"
                 disabled
                 fullWidth
                 value={estacionamiento.ubicacion.provincia}
@@ -322,7 +313,7 @@ const NuevaReserva = () => {
             </Grid>
             <Grid item lg={3} md={3} xs={12}>
                 <TextField
-                variant="filled"
+                variant="standard"
                 disabled
                 fullWidth
                 value={estacionamiento.telefono}
@@ -339,12 +330,11 @@ const NuevaReserva = () => {
             <Grid item lg={3} md={3} xs={12}>
             <DatePicker
                 placeholderText="Fecha de reserva"
-                locale={es}
+                dateFormat="dd/MM/yyyy"
                 minDate={new Date()}
-                onChange={onChangeFecha}
+                onChange={setFecha}
                 selected={fecha}
                 value={fecha}
-                dateFormat="dd/MM/yyyy"
                 filterDate={diasDeshabilitados}
                 withPortal
             />

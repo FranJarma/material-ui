@@ -45,6 +45,7 @@ import Landing from './componentes/Landing';
 import EncontrarEstacionamientoMapa from './componentes/estacionamientos/EncontrarEstacionamientoMapa.js';
 import DetallesEstacionamientoCliente from './componentes/estacionamientos/DetallesEstacionamientoCliente.js';
 import NuevaReserva from './componentes/reservas/NuevaReserva.js';
+import MisReservas from './componentes/reservas/MisReservas.js';
 import RutaPrivadaCliente from './componentes/rutas/RutaPrivadaCliente.js';
 
 function App() {
@@ -82,6 +83,8 @@ function App() {
                     </Route>
                     <RutaPrivadaCliente path="/nueva-reserva/estacionamientoId=:id" component={NuevaReserva} >
                     </RutaPrivadaCliente>
+                    <RutaPrivadaCliente path="/mis-reservas" component={RutaPrivadaCliente} >
+                    </RutaPrivadaCliente>
                     <Route exact path="/encontrar-estacionamiento-mapa" component={EncontrarEstacionamientoMapa} >
                     </Route>
                     <Route exact path="/login-encargados" component={Login} >
@@ -95,6 +98,8 @@ function App() {
                     <Route exact path="/cambiar-contraseña" component={CambiarContraseña}>
                     </Route>
                     <RutaPrivada exact path="/reservas-del-dia" component={ReservasHoy}>
+                    </RutaPrivada>
+                    <RutaPrivada exact path="/mis-reservas" component={MisReservas}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/nuevo-cobro" component={NuevoCobro}>
                     </RutaPrivada>

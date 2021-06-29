@@ -18,7 +18,6 @@ const LoginCliente = ({cerrarModal}) => {
         localStorage.removeItem('infoReserva');
         localStorage.removeItem('fecha');
     });
-    const history = useHistory();
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
         email: '',
@@ -44,6 +43,7 @@ const LoginCliente = ({cerrarModal}) => {
                 await firebase.login(email, contraseña);
                 mostrarSpinner(CAuth.INICIANDO_SESION);
                 cerrarModal();
+
             }
         }
         catch (error) {

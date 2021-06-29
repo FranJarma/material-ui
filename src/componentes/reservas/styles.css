@@ -1,8 +1,7 @@
 .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
-  display: flexbox;
-  width: 100%;
+  border: none;
   height: 8vh;
   font-family: "Roboto Condensed";
   font-size: medium;

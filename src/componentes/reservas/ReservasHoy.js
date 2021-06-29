@@ -14,12 +14,12 @@ import Reserva from './Reserva';
 import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
 import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
+import es from 'date-fns/locale/es';
 
 const ReservasHoy = () => {
     const classes = useStyles();
+    const fecha = new Date();
     const estacionamientoInfo = useInfoEstacionamiento();
-    console.log(estacionamientoInfo.id);
-    const fechaCompleta = new Date().getDate() + '/' + (new Date().getMonth()+1) + '/' + new Date().getFullYear();
     //state para guardar reservas
     const [reservasDelDia, guardarReservasDelDia] = useState([]);
     const {firebase} = useContext(FirebaseContext);
@@ -29,10 +29,8 @@ const ReservasHoy = () => {
         y con el estacionamiento id del usuario logueado (encargado) */
         const obtenerReservasDeHoy = () => {
             try {
-                firebase.db.collection('reservas').orderBy('horaIngreso', 'desc')
-                .where('fechaCreacion','==',fechaCompleta)
-                .where('horaSalida', '==', "")
-                .where("estacionamiento", "==", estacionamientoInfo.id)
+                firebase.db.collection('reservas')
+                .where('fechaReserva','==',fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear())
                 .onSnapshot(manejarSnapshot); 
             } catch (error) {
                 console.log(error);
@@ -73,7 +71,7 @@ const ReservasHoy = () => {
             }</Typography>
                 <Grid container>
                     {reservasDelDia.slice((pagina-1)* itemsPorPagina, pagina*itemsPorPagina).map(reservaDelDia =>(
-                        <Reserva key={reservaDelDia.id} reserva={reservaDelDia}/>
+                        <Reserva key={reservaDelDia.id} reserva={reservaDelDia} estacionamiento={estacionamientoInfo} reservas={reservasDelDia}/>
                     ))}
                 </Grid>
                 {reservasDelDia.length > 0 ? <Paginacion lista={reservasDelDia}/> : ""}

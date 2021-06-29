@@ -13,7 +13,10 @@
 
 #variables de entorno
 .env
-
+#firebase
+/firebase
+#mercadopago
+/mercadopago
 # misc
 .DS_Store
 .env.local

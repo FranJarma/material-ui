@@ -21,14 +21,20 @@ const useStyles = makeStyles( theme => ({
         [theme.breakpoints.up('lg')]:{
             margin:"auto",
             height: 300,
-            width: 600,
+            width: 450,
             marginTop: "2rem",
         },
         [theme.breakpoints.down('md')]:{
             margin: "auto",
             height: 300,
+            width: 400,
+            marginTop: "3rem",
+        },
+        [theme.breakpoints.only('xs')]:{
+            margin: "auto",
+            height: 300,
             width: 300,
-            marginTop: "2.5rem",
+            marginTop: "3rem",
         },
         boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
     },

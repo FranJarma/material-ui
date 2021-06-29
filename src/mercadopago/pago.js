@@ -1,7 +1,5 @@
 const mercadopago = require ('mercadopago');
-const functions = require('firebase-functions');
 const express = require('express');
-
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -24,7 +22,6 @@ app.post('/checkout', (req,res)=>{
 	};
 mercadopago.preferences.create(preference)
 .then(function(response){
-	console.log(response.body);
 	res.redirect(response.body.init_point);
 	// Este valor reemplazará el string "<%= global.id %>" en tu HTML
 	global.id = response.body.id;
