@@ -1,12 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import {FirebaseContext} from '../../firebase';
 import SwalInfo from '../diseño/SwalInfo';
-import Toast from '../diseño/Toast';
 
 const RutaPrivadaCliente = ({ component: Component, ...props}) => {
     const {usuario} = useContext(FirebaseContext);
-    const history = useLocation();
     useEffect(()=>{
         if(usuario){
             return true;

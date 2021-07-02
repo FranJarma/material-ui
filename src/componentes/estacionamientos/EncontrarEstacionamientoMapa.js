@@ -1,21 +1,14 @@
 import React, {useState, useContext, useEffect} from 'react';
 import NavbarCliente from '../diseño/NavbarCliente.js';
-import { Typography, Fab, Grid} from '@material-ui/core';
+import { Typography, Grid} from '@material-ui/core';
 import Paginacion from '../diseño/Paginacion.js';
 import Footer from '../diseño/Footer.js';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import PaginacionContext from '../../context/paginacion/paginacionContext';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
 import Spinner from '../diseño/Spinner.js';
 import { FirebaseContext } from '../../firebase';
 import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
-import Estacionamiento from './Estacionamiento.js';
-import AdministrarEstacionamiento from './AdministrarEstacionamiento';
-import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
 import EstacionamientoCliente from './EstacionamientoCliente.js';
 
 const EncontrarEstacionamientoMapa = () => {

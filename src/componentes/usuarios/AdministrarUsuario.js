@@ -101,7 +101,6 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
             }
         }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }
@@ -131,7 +130,6 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
             }
         }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }
@@ -142,7 +140,6 @@ const AdministrarUsuario = ({usuarioCompleto, accion, cerrarModal}) => {
             cerrarModal();
             Swal(CGeneral.OPERACION_COMPLETADA, CAuth.USUARIO_ELIMINADO);
         } catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }

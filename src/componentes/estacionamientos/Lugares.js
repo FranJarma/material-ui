@@ -19,6 +19,7 @@ import {useStyles} from './Styles';
 import Swal from '../diseño/Swal';
 import Toast from '../diseño/Toast.js';
 import GrillaLugares from '../diseño/GrillaLugares.js';
+import traducirError from '../../firebase/errores.js';
 
 const Lugares = () => {
     const classes = useStyles();
@@ -42,11 +43,11 @@ const Lugares = () => {
                 .where('encargado','==', localStorage.getItem('usuario'))
                 .onSnapshot(manejarSnapshot);
             } catch (error) {
-                console.log(error);
+                Toast(traducirError(error.code));
             }
         }
         obtenerInfoEstacionamiento();
-        },[])
+        })
         function manejarSnapshot(snapshot){
         if (!snapshot) return;
         const resultado = snapshot.docs.map(doc => {
@@ -57,7 +58,6 @@ const Lugares = () => {
         });
         guardarLugares(resultado[0].lugares);
         guardarEstacionamientoInfo(resultado[0]);
-        console.log(resultado[0]);
     }
     // función para agregar lugar
     async function agregarLugar (){
@@ -66,27 +66,17 @@ const Lugares = () => {
             lugares.length + 1, false, "habilitado");
             Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.LUGAR_AGREGADO_CORRECTAMENTE);
         } catch (error) {
-            console.log(error)
-            Toast(error.code);
+            Toast(traducirError(error.code));
         }
     }
-    // TODO: función para liberar lugar
-    async function liberarLugar(){
-        //armar array con objetos de lugares
-            let nuevoLugar = {
-                "id": lugares.length,
-                "nombre": `Lugar ${lugares.length+1}`,
-                "ocupado": false
-            }
-    }
+
     // función para habilitar lugar
    async function habilitarLugar(id){
     try {
         await firebase.habilitarLugar(estacionamientoInfo.id, id);
         Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.LUGAR_HABILITADO_CORRECTAMENTE);
     } catch (error) {
-        console.log(error)
-        Toast(error.code);
+        Toast(traducirError(error.code));
         }
     }
     // función para deshabilitar lugar
@@ -95,8 +85,7 @@ const Lugares = () => {
             await firebase.deshabilitarLugar(estacionamientoInfo.id, id);
             Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.LUGAR_DESHABILITADO_CORRECTAMENTE);
         } catch (error) {
-            console.log(error)
-            Toast(error.code);
+            Toast(traducirError(error.code));
         }
     }
     // función para deshabilitar lugar
@@ -105,8 +94,7 @@ const Lugares = () => {
         await firebase.liberarLugar(estacionamientoInfo.id, id);
         Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.LUGAR_LIBERADO_CORRECTAMENTE);
     } catch (error) {
-        console.log(error)
-        Toast(error.code);
+        Toast(traducirError(error.code));
         }
     }
     //context de paginación y spinner

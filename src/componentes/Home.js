@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Navbar from './diseño/Navbar';
 import Footer from './diseño/Footer';
 import * as CGeneral from './../constantes/general/CGeneral';
-import { Typography, makeStyles, Card, CardContent, CardActionArea, Grid, Avatar, Button } from '@material-ui/core';
+import { Typography, makeStyles, Card, CardContent, Grid } from '@material-ui/core';
 import Spinner from './diseño/Spinner';
 import SpinnerContext from '../context/spinner/spinnerContext';
 import { Link } from 'react-router-dom';
@@ -70,7 +70,6 @@ const Home = () => {
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
     const usuario = useInfoUsuario();
-    console.log(usuario);
     return (
     (!cargando ?
     <>

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Navbar from './../diseño/Navbar.js';
-import { List, makeStyles,
-Typography, Button, TextField, Grid, Select, MenuItem, InputLabel, Card } from '@material-ui/core';
+import { Typography, Button, TextField, Grid, Select, MenuItem, InputLabel, Card } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {
   KeyboardDatePicker,

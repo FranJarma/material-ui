@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext} from 'react';
+import Toast from '../componentes/diseño/Toast';
+import traducirError from '../firebase/errores';
 import {FirebaseContext} from './..//firebase';
-import Toast from './../componentes/diseño/Toast';
 
 //state para traer la información del usuario logueado
 function useInfoUsuario (){
@@ -13,7 +14,7 @@ const obtenerInfoUsuario = () => {
         .where('uid','==', localStorage.getItem('usuario'))
         .onSnapshot(manejarSnapshot);
     } catch (error) {
-        console.log(error);
+        Toast(traducirError(error.code));
     }
 }
 obtenerInfoUsuario();

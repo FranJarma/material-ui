@@ -111,6 +111,18 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    botonCerrarEstacionamiento: {
+        backgroundColor: "#ff9800",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        fontSize: 15,
+        marginTop: "1rem",
+        marginLeft: '0.7rem',
+        "&:hover":{
+            backgroundColor: "#ff9800",
+        }
+    },
     lugarDistribuido: {
         backgroundColor: "#bbdefb",
         borderRadius: 10,
@@ -266,6 +278,17 @@ export const useStyles = makeStyles((theme) => ({
         float:"right",
         color: "#FFFFFF",
         marginRight: '1rem',
+        "&:hover": {
+            backgroundColor: "#43a047"
+        }
+    },
+    botonAbrirEstacionamiento: {
+        backgroundColor: "#43a047",
+        fontFamily: "Roboto Condensed, sans-serif",
+        color: "#FFFFFF",
+        fontSize: 15,
+        marginTop: '1rem',
+        marginLeft: '1rem',
         "&:hover": {
             backgroundColor: "#43a047"
         }

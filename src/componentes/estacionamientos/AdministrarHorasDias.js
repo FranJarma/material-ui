@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {FirebaseContext} from './../../firebase/';
 import Navbar from '../diseño/Navbar.js';
-import { 
-Typography, Button, Grid, Card, FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, CardActionArea, CardContent, FormHelperText } from '@material-ui/core';
+import { Typography, Button, Grid, Card, FormControl, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Footer from '../diseño/Footer.js';
 import * as CGeneral from '../../constantes/general/CGeneral';
@@ -15,7 +14,6 @@ import { TimePicker } from '@material-ui/pickers';
 
 const AdministrarHorasDias = () => {
     const {firebase} = useContext(FirebaseContext);
-    let band = 1;
     const [estacionamientoInfo, guardarEstacionamientoInfo] = useState({
         id: '',
         horarios: [{
@@ -24,7 +22,7 @@ const AdministrarHorasDias = () => {
             dia: ''
         }]
     })
-    const {id, horarios } = estacionamientoInfo;
+    const {id} = estacionamientoInfo;
 
     const [state, setState] = useState({
         lunes: false,
@@ -109,7 +107,7 @@ const AdministrarHorasDias = () => {
                 .where('encargado','==', localStorage.getItem('usuario'))
                 .onSnapshot(manejarSnapshot);
             } catch (error) {
-                console.log(error);
+                Toast(error);
             }
         }
         obtenerInfoEstacionamiento();
@@ -126,7 +124,6 @@ const AdministrarHorasDias = () => {
             id: resultado[0].id,
             horarios: resultado[0].horarios
         });
-        console.log(resultado[0].horarios);
     }
     //función para modificar estacionamiento
     async function modificarEstacionamiento() {
@@ -156,13 +153,11 @@ const AdministrarHorasDias = () => {
                 cierreViernes !== null ? cierreViernes.toTimeString() : '',
                 cierreSabado !== null ? cierreSabado.toTimeString() : '',
                 cierreDomingo !== null ? cierreDomingo.toTimeString() : '',);
-                console.log(id);
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
                 }
 
             }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }

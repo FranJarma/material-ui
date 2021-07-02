@@ -1,6 +1,5 @@
 import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import Toast from '../diseño/Toast';
 import {useStyles} from './Styles';
 import firebase from './../../firebase';
@@ -12,7 +11,7 @@ import SpinnerContext from '../../context/spinner/spinnerContext';
 const LoginCliente = ({cerrarModal}) => {
     const classes = useStyles();
     const spinnerContext = useContext(SpinnerContext);
-    const { cargando, mostrarSpinner } = spinnerContext;
+    const { mostrarSpinner } = spinnerContext;
     useEffect(()=> {
         localStorage.removeItem('infoPersona');
         localStorage.removeItem('infoReserva');

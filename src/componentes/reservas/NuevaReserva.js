@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import NavbarCliente from '../diseño/NavbarCliente';
 import { useStyles } from './Styles';
 import { Button, Card, CardContent, Divider, Tab, Tabs, Typography,
@@ -10,13 +10,12 @@ import {useLocation} from 'react-router-dom';
 import Toast from './../diseño/Toast';
 import firebase from './../../firebase';
 import * as CGeneral from './../../constantes/general/CGeneral';
-import Swal from '../diseño/Swal';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import es from 'date-fns/locale/es';
 import "./styles.css";
 import traducirError from '../../firebase/errores';
 import useInfoUsuario from '../../hooks/useInfoUsuario';
+
 const NuevaReserva = () => {
     const location = useLocation();
     const usuario = useInfoUsuario();
@@ -27,13 +26,11 @@ const NuevaReserva = () => {
         tipoVehiculo: '',
         marcaVehiculo: '',
         patenteVehiculo: '',
-        valor: '',
         hora: '',
         observaciones: ''
     });
-    const { tipoVehiculo, marcaVehiculo, patenteVehiculo, valor, hora, observaciones } = infoReserva;
+    const { tipoVehiculo, marcaVehiculo, patenteVehiculo, hora, observaciones } = infoReserva;
     const [fecha, setFecha] = useState(new Date());
-    console.log(fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear())
     //evento onChange
     const onChange = (e) => {
         setInfoReserva({
@@ -133,11 +130,11 @@ const NuevaReserva = () => {
         }
         else {
             setTab(tab+1);
-            await firebase.registrarReserva(usuario, tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo, estacionamiento.id,
+            await firebase.registrarReserva(usuario, tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo, estacionamiento.id, estacionamiento.nombreCompleto,
+            estacionamiento.cuit, estacionamiento.ubicacion.provincia, estacionamiento.ubicacion.ciudad, estacionamiento.ubicacion.direccion,
             fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear(), hora, new Date(), observaciones, 'registrada', tipoVehiculo.split('&')[1]);
         }
         } catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
         
@@ -414,7 +411,7 @@ const NuevaReserva = () => {
             <Divider></Divider>
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: '1rem'}}>
                 <Typography className={classes.subtitulos}>Fecha: </Typography>
-                <Typography className={classes.campos}> {fecha.toLocaleString().split('0:00:00')[0]}</Typography>
+                <Typography className={classes.campos}> {fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear()}</Typography>
             </div>
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: '1rem'}}>
                 <Typography className={classes.subtitulos}>Hora: </Typography>

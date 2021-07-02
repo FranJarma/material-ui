@@ -151,7 +151,7 @@ const Landing = () => {
                 <Grid item lg={6} xs={12}>
                     <Card className={classes.cartaLanding}>
                         <CardActionArea>
-                            <img className={classes.imagen} src={carta.imagen}/>
+                            <img alt= "" className={classes.imagen} src={carta.imagen}/>
                             <CardContent className={classes.tituloCarta}>
                                 <Typography className={classes.tituloCarta}>
                                 {carta.titulo}
@@ -185,7 +185,7 @@ const Landing = () => {
                     <a style={{textDecoration: 'none'}} href={caracteristica.link}>
                         <Card className={classes.cartaLanding}>
                             <CardActionArea>
-                                <img className={classes.imagen} src={caracteristica.imagen}/>
+                                <img alt="" className={classes.imagen} src={caracteristica.imagen}/>
                                 <CardContent className={classes.tituloCarta}>
                                     <Typography className={classes.subtitulo}>
                                     {caracteristica.titulo}

@@ -11,7 +11,6 @@ import Spinner from '../diseño/Spinner.js';
 import { FirebaseContext } from '../../firebase';
 import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
-import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -20,8 +19,9 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ChatIcon from '@material-ui/icons/Chat';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import traducirError from '../../firebase/errores.js';
 
-const CustomComponent = React.lazy(
+const CustomComponent = lazy(
     () =>
       new Promise((resolve, reject) =>
         setTimeout(() => resolve(import('./EstacionamientoCliente')), 2000)
@@ -36,19 +36,14 @@ const EncontrarEstacionamientos = () => {
     const { cargando } = spinnerContext;
     //state para guardar estacionamientos
     const [estacionamientos, guardarEstacionamientos] = useState([]);
-    //state para geolocalización
-    const[posicion, setPosicion] = useState({
-        latitud: '',
-        longitud: ''
-    })
+
     const datosChip = [
-        {id: 0, label: 'Todos', icono: <ViewListIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento'},
-        {id: 1, label: 'Horario corrido', icono: <WatchLaterIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento/abiertos-todos-los-dias'},
-        {id: 2, label: 'Abiertos todos los días', icono: <EventAvailableIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento/horario-corrido'},
-        {id: 3, label: 'Más valorados', icono: <ThumbUpIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento/mas-valorados'},
-        {id: 4, label: 'Más comentados', icono: <ChatIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento/mas-comentados'},
-        {id: 5, label: 'Cercanos a mi ubicación', icono: <PersonPinCircleIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento/mas-cercanos'},
-        {id: 6, label: 'Precios más bajos', icono: <AttachMoneyIcon style={{color: "#4db6ac"}}/>, link: '/encontrar-estacionamiento/mas-baratos'},
+        {id: 0, label: 'Todos', icono: <ViewListIcon style={{color: "#4db6ac"}}/>},
+        {id: 1, label: 'Horario corrido', icono: <WatchLaterIcon style={{color: "#4db6ac"}}/> },
+        {id: 2, label: 'Abiertos todos los días', icono: <EventAvailableIcon style={{color: "#4db6ac"}}/>},
+        {id: 3, label: 'Más valorados', icono: <ThumbUpIcon style={{color: "#4db6ac"}}/>},
+        {id: 4, label: 'Cercanos a mi ubicación', icono: <PersonPinCircleIcon style={{color: "#4db6ac"}}/>},
+        {id: 5, label: 'Precios más bajos', icono: <AttachMoneyIcon style={{color: "#4db6ac"}}/>},
     ];
    const {firebase} = useContext(FirebaseContext);
    //use effect para que constantemente traiga los estacionamientos
@@ -72,6 +67,7 @@ const EncontrarEstacionamientos = () => {
         }
     });
     guardarEstacionamientos(estacionamientos);
+    console.log(estacionamientos);
 }
     //useEffect para preguntarle al usuario si quiere conocer su ubicación
     // useEffect(()=>{
@@ -88,6 +84,36 @@ const EncontrarEstacionamientos = () => {
         localStorage.removeItem('infoReserva');
         localStorage.removeItem('fecha');
     });
+    async function filtrarEstacionamientos (filtro){
+        try {
+            if (filtro === 0) {
+                firebase.db.collection('estacionamientos').orderBy('nombreCompleto', 'asc')
+                .onSnapshot(manejarSnapshot); 
+            }
+            else if (filtro === 1) {
+                firebase.db.collection('estacionamientos').where('horarios', '==', 'true')
+                .onSnapshot(manejarSnapshot); 
+            }
+            else if (filtro === 2) {
+                firebase.db.collection('estacionamientos').where('todosLosDias', '==', 'true')
+                .onSnapshot(manejarSnapshot); 
+            }
+            else if (filtro === 3) {
+                firebase.db.collection('estacionamientos').orderBy('valoracion', 'desc')
+                .onSnapshot(manejarSnapshot); 
+            }
+            else if (filtro === 4) {
+                firebase.db.collection('estacionamientos').orderBy('valoracion', 'desc')
+                .onSnapshot(manejarSnapshot); 
+            }
+            else if (filtro === 5) {
+                firebase.db.collection('estacionamientos').orderBy('tarifas', 'asc')
+                .onSnapshot(manejarSnapshot); 
+            }
+            } catch (error) {
+                Toast(traducirError(error.code));
+        }
+    }
     return (
         (!cargando ? 
         <>
@@ -111,18 +137,13 @@ const EncontrarEstacionamientos = () => {
                     display: 'flex', flexWrap: 'wrap'}}>
                         {datosChip.map((data)=>{
                         return(
-                        <>
-                        <Link style={{textDecoration: 'none', marginRight: '0.5rem', marginBottom: '0.5rem'}} to={{
-                            pathname: data.link,
-                        }}>
                         <Chip
-                            className={classes.chip}
+                            style={{margin: '0.5rem'}}
                             clickable
                             icon={data.icono}
                             label={data.label}
+                            onClick={() => filtrarEstacionamientos(data.id)}
                         />
-                        </Link>
-                            </>
                         );
                         })}
                     </div>

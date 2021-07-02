@@ -1,4 +1,5 @@
 export const RESERVAS_HOY = 'Reservas del día de hoy';
+export const MIS_RESERVAS = 'Mis reservas';
 export const CALENDARIO_RESERVAS = 'Calendario de reservas';
 export const CAMBIAR_FECHA_RESERVAS = 'Cambiar fecha de reservas';
 export const TOTAL_RESERVAS ='Total de reservas:';

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PersonIcon from '@material-ui/icons/Person';
@@ -11,7 +11,6 @@ import { Link, useHistory } from 'react-router-dom';
 import Toast from './Toast';
 import traducirError from './../../firebase/errores';
 import SpinnerContext from '../../context/spinner/spinnerContext';
-import useInfoUsuario from '../../hooks/useInfoUsuario';
 
 const useStyles = makeStyles(theme => ({
   menuPrincipal: {

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {FirebaseContext} from './../../firebase/';
 import Swal from './Swal';
 import * as CGeneral from './../../constantes/general/CGeneral';

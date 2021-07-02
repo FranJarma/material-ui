@@ -14,7 +14,6 @@ import Aside from "./Aside.js";
 import { Link } from 'react-router-dom';
 import Buscar from './Buscar';
 import MenuUsuario from './MenuUsuario';
-import useInfoUsuario from '../../hooks/useInfoUsuario';
 
 const anchoNavbarPx = 300;
 
@@ -66,7 +65,6 @@ const useStyles = makeStyles(theme => ({
 
     const Navbar = () => {
         const classes = useStyles();
-        const usuarioInfo = useInfoUsuario();
         const theme = useTheme();
         //state para controlar cuando se abre y cierra el navbar
         const [abierto, guardarAbierto] = useState(false);

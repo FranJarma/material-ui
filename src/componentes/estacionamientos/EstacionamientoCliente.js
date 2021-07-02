@@ -1,22 +1,17 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { Typography, Button, Card, Grid, CardContent, Chip, TextareaAutosize, CardActionArea
- } from '@material-ui/core';
+import React, {useState, useContext} from 'react';
+import { Typography, Card, CardActionArea } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import {useStyles} from './Styles';
 import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
 import * as CGeneral from './../../constantes/general/CGeneral';
-import Mapa from './../mapas/Mapa.js';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import CallIcon from '@material-ui/icons/Call';
 import StarIcon from '@material-ui/icons/Star';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Rating } from '@material-ui/lab';
 import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
 import { FirebaseContext } from '../../firebase';
+import traducirError from '../../firebase/errores';
  
 const EstacionamientoCliente = ({estacionamiento}) => {
     const { firebase } = useContext(FirebaseContext);
@@ -59,8 +54,7 @@ const EstacionamientoCliente = ({estacionamiento}) => {
                 setAbrirModalVerMas(false);
             }
         } catch (error) {
-            console.log(error);
-            Toast(error.code);
+            Toast(traducirError(error.code));
         }
     }
     return ( 
@@ -71,7 +65,7 @@ const EstacionamientoCliente = ({estacionamiento}) => {
             }}>
             <Card className={classes.cartaEstacionamientosCliente}>
                 <CardActionArea>
-                    <img className={classes.imagen} src={estacionamiento.urlImagen}></img>
+                    <img alt="" className={classes.imagen} src={estacionamiento.urlImagen}></img>
                     <Typography style={{textAlign: "center"}} className={classes.nombreCompleto}>{estacionamiento.nombreCompleto}</Typography>
                     <div style={{display: 'flex', textAlign: 'center'}}><StarIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.valoracion.toFixed(2)}</Typography></div>
                     <div style={{display: 'flex', textAlign: 'center'}}><LocationOnIcon style={{color:"#4db6ac"}}/><Typography style={{textAlign:'center'}} className={classes.campos}>{estacionamiento.ubicacion.provincia} | {estacionamiento.ubicacion.direccion}</Typography></div>

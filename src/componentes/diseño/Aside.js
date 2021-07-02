@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import CommuteIcon from '@material-ui/icons/Commute';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -15,7 +15,6 @@ import Collapse from '@material-ui/core/Collapse';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import TodayIcon from '@material-ui/icons/Today';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
-import StarIcon from '@material-ui/icons/Star';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import GridOnIcon from '@material-ui/icons/GridOn';
@@ -30,8 +29,6 @@ import * as CAuth from './../../constantes/auth/CAuth';
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import useInfoUsuario from '../../hooks/useInfoUsuario';
 import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
-
-const esAdmin = false;
 
 const useStyles = makeStyles(theme => ({
     tituloAside: {

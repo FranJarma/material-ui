@@ -17,14 +17,22 @@ class Firebase {
     }
 // MÉTODOS PARA ADMINISTRACIÓN DE RESERVAS
     //método para registrar reserva
-    async registrarReserva(usuario, tipoVehiculo, marcaVehiculo, patenteVehiculo, estacionamiento, fechaReserva,
+    async registrarReserva(usuario, tipoVehiculo, marcaVehiculo, patenteVehiculo, estacionamientoId, nombreEstacionamiento, cuitEstacionamiento,
+    provinciaEstacionamiento, ciudadEstacionamiento, direccionEstacionamiento, fechaReserva,
     horaReserva, fechaCreacion, observaciones, estado, pago){
         this.db.collection('reservas').add({
             usuario: usuario,
             tipoVehiculo: tipoVehiculo,
             marcaVehiculo: marcaVehiculo,
             patenteVehiculo: patenteVehiculo,
-            estacionamiento: estacionamiento,
+            estacionamiento: {
+                id: estacionamientoId,
+                cuit: cuitEstacionamiento,
+                nombre: nombreEstacionamiento,
+                provincia: provinciaEstacionamiento,
+                ciudad: ciudadEstacionamiento,
+                direccion: direccionEstacionamiento
+            },
             fechaReserva: fechaReserva,
             horaReserva: horaReserva,
             fechaCreacion: fechaCreacion,
@@ -39,8 +47,6 @@ class Firebase {
     //método para registrar usuario
     async registrarUsuario(nombreCompleto, email, nombreUsuario, contraseña, esEncargado, fechaCreacion,
         telefono, dni, esAdmin){
-        let usuario1 = this.auth.currentUser;
-        console.log(usuario1);
         this.auth.createUserWithEmailAndPassword(email, contraseña)
         .then(nuevoUsuario => {
             this.db.collection('usuarios').add({

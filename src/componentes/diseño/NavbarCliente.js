@@ -13,7 +13,6 @@ import OlvideContraseñaCliente from '../usuarios/OlvideContraseñaCliente';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import * as CGeneral from './../../constantes/general/CGeneral';
 import * as CAuth from './../../constantes/auth/CAuth';
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import {FirebaseContext} from './../../firebase';
@@ -94,7 +93,7 @@ const useStyles = makeStyles(theme => ({
         margin: "1rem",
         [theme.breakpoints.down('sm')]: {
             fontSize: 12,
-            marginBottom: '0.4rem'
+            textAlign: 'center',
         }
     },
     tabs: {
@@ -115,7 +114,7 @@ const useStyles = makeStyles(theme => ({
     const NavbarCliente = () => {
         const {firebase} = useContext(FirebaseContext);
         const spinnerContext = useContext(SpinnerContext);
-        const { cargando, mostrarSpinner } = spinnerContext;
+        const {  mostrarSpinner } = spinnerContext;
         const classes = useStyles();
         const [activo, setActivo] = useState(false);
         const [modal, setModal] = useState(false);
@@ -170,13 +169,13 @@ const useStyles = makeStyles(theme => ({
                     onClick={cambiarLink}
                     className={classes.linkEncargados}
                     to="/mis-reservas">
-                    Mis Reservas
+                    Mis reservas
                     </Link>
                     <Link
                     onClick={cambiarLink}
                     className={classes.linkEncargados}
                     to="/login-encargados">
-                    Acceso encargados
+                    Soy encargado
                     </Link>
                     {localStorage.getItem('usuario') === '' || localStorage.getItem('usuario') === undefined || localStorage.getItem('usuario') === null ?
                     <Button

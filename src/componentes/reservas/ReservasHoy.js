@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import Navbar from './../diseño/Navbar.js';
-import { makeStyles, Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Paginacion from './../diseño/Paginacion.js';
 import Footer from '../diseño/Footer.js';
@@ -11,10 +11,10 @@ import { FirebaseContext } from '../../firebase';
 
 import * as CReservas from './../../constantes/reservas/CReservas';
 import Reserva from './Reserva';
-import Toast from './../diseño/Toast';
 import {useStyles} from './Styles';
 import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
-import es from 'date-fns/locale/es';
+import Toast from '../diseño/Toast.js';
+import traducirError from '../../firebase/errores.js';
 
 const ReservasHoy = () => {
     const classes = useStyles();
@@ -33,11 +33,11 @@ const ReservasHoy = () => {
                 .where('fechaReserva','==',fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear())
                 .onSnapshot(manejarSnapshot); 
             } catch (error) {
-                console.log(error);
+                Toast(traducirError(error.code));
             }
         }
         obtenerReservasDeHoy();
-    },[])
+    })
     function manejarSnapshot(snapshot){
         if (!snapshot) return;
         const reservasDelDia = snapshot.docs.map(doc => {

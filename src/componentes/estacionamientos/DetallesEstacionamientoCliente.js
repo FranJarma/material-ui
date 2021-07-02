@@ -3,7 +3,6 @@ import NavbarCliente from '../diseño/NavbarCliente.js';
 import { Typography, Grid, Card, CardContent, Button, CardActionArea, Divider, TextareaAutosize} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Footer from '../diseño/Footer.js';
-import PaginacionContext from '../../context/paginacion/paginacionContext';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
 import Spinner from '../diseño/Spinner.js';
 import { FirebaseContext } from '../../firebase';
@@ -16,51 +15,41 @@ import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
 import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
 import * as CGeneral from './../../constantes/general/CGeneral';
+import traducirError from '../../firebase/errores.js';
 const DetallesEstacionamientoCliente = () => {
     const location = useLocation();
     const { estacionamiento } = location.state;
     const classes = useStyles();
-    //context de paginación y spinner
-    const paginacionContext = useContext(PaginacionContext);
-    const { pagina, itemsPorPagina } = paginacionContext;
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
-    //state para guardar estacionamientos
-    const [estacionamientos, guardarEstacionamientos] = useState([]);
-    //state para geolocalización
-    const[posicion, setPosicion] = useState({
-        latitud: '',
-        longitud: ''
-    })
-   const { firebase } = useContext(FirebaseContext);
-   //state para rating
-   const [puntuacion, setPuntuacion] = useState('');
-   //state para input de comentario
-   const [info, setInfo] = useState({
-       comentario: ''
-   });
-   const {comentario} = info;
-   const onChange = (e) => {
-       setInfo({
-           ...info,
-           [e.target.name] : e.target.value});
-   }
-   //función de firebase para registrar puntuación
-   async function registrarPuntuacion () {
-       //valoracion = sum(puntuaciones)/len(puntuacions)
-       try {
-           if (comentario === "" || puntuacion === "") {
-               Toast(CEstacionamientos.INGRESE_COMENTARIO);
-           }
-           else {
-               await firebase.registrarPuntuacion(estacionamiento.id, comentario, parseFloat(puntuacion));
-               Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.COMENTARIO_REGISTRADO);
-           }
-       } catch (error) {
-           console.log(error);
-           Toast(error.code);
-       }
-   }
+    const { firebase } = useContext(FirebaseContext);
+    //state para rating
+    const [puntuacion, setPuntuacion] = useState('');
+    //state para input de comentario
+    const [info, setInfo] = useState({
+        comentario: ''
+    });
+    const {comentario} = info;
+    const onChange = (e) => {
+        setInfo({
+            ...info,
+            [e.target.name] : e.target.value});
+    }
+    //función de firebase para registrar puntuación
+    async function registrarPuntuacion () {
+        //valoracion = sum(puntuaciones)/len(puntuacions)
+        try {
+            if (comentario === "" || puntuacion === "") {
+                Toast(CEstacionamientos.INGRESE_COMENTARIO);
+            }
+            else {
+                await firebase.registrarPuntuacion(estacionamiento.id, comentario, parseFloat(puntuacion));
+                Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.COMENTARIO_REGISTRADO);
+            }
+        } catch (error) {
+            Toast(traducirError(error.code));
+        }
+    }
     return (
         (!cargando ? 
         <>

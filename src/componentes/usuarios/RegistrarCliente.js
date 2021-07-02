@@ -14,7 +14,6 @@ const RegistrarCliente = ({cerrarModal}) => {
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
         nombreCompleto: '',
-        nombreUsuarioDarDeBaja: '',
         email: '',
         nombreUsuario: '',
         contraseña: '',
@@ -23,8 +22,7 @@ const RegistrarCliente = ({cerrarModal}) => {
         dni: ''
     })
     //guardamos el contenido del state en los inputs
-    const { nombreCompleto, email, nombreUsuario, nombreUsuarioDarDeBaja,
-    contraseña, rcontraseña, telefono, dni } = usuario;
+    const { nombreCompleto, email, nombreUsuario, contraseña, rcontraseña, telefono, dni } = usuario;
     //evento onChange
     const onChange = (e) => {
         guardarUsuario({
@@ -57,7 +55,6 @@ const RegistrarCliente = ({cerrarModal}) => {
             }
         }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }

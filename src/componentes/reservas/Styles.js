@@ -86,6 +86,41 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: "#448aff",
         }
     },
+    botonGenerarTicket: {
+        backgroundColor: "#448aff",
+        color: "#ffffff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        marginTop: '1rem',
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#448aff",
+        }
+    },
+    botonImprimir: {
+        backgroundColor: "#ffffff",
+        color: "#448aff",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        marginTop: '1rem',
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#FFFFFF",
+            color: "#448aff",
+        }
+    },
+    botonGenerarPdf: {
+        backgroundColor: "#FFFFFF",
+        color: "#ff0000",
+        fontFamily: "Roboto Condensed, sans-serif",
+        textTransform: "uppercase",
+        marginTop: '1rem',
+        fontSize: 15,
+        "&:hover":{
+            backgroundColor: "#FFFFFF",
+            color: "#ff0000"
+        }
+    },
     botonSiguiente: {
         backgroundColor: "#4db6ac",
         color: "#ffffff",
@@ -209,6 +244,17 @@ export const useStyles = makeStyles((theme) => ({
     inputLugar: {
         marginLeft: '1.5rem',
         paddingRight: '3rem',
+        fontFamily: "Roboto Condensed, sans-serif",
+        "& .MuiFormLabel-root.Mui-focused": {
+            color: "#448aff"
+        },
+        "& .MuiInput-underline:after": {
+            borderBottomColor: "#448aff"
+        },
+    },
+    selectPlaya: {
+        marginLeft: '1.5rem',
+        paddingRight: '2rem',
         fontFamily: "Roboto Condensed, sans-serif",
         "& .MuiFormLabel-root.Mui-focused": {
             color: "#448aff"

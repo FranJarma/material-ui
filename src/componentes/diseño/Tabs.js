@@ -14,7 +14,6 @@ const useStyles = makeStyles({
 });
 
 const IconTabs = ({infoTabs}) => {
-    console.log(infoTabs)
     const classes = useStyles();
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {

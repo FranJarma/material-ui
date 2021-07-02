@@ -18,11 +18,10 @@ const DatosPersonales = () => {
     const history = useHistory();
     //state para manejar el contenido de los inputs
     const [usuarioInfo, guardarUsuarioInfo] = useState({
-        id: '',
         contraseña: '',
         rcontraseña: '',
     });
-    const {id, contraseña, rcontraseña} = usuarioInfo;
+    const {contraseña, rcontraseña} = usuarioInfo;
     //evento onChange
     const onChange = (e) => {
         guardarUsuarioInfo({
@@ -56,7 +55,6 @@ const DatosPersonales = () => {
     }
 
     async function cambiarContraseña() {
-        console.log(usuarioInfo.id)
         try {
             if(contraseña === '' || rcontraseña === ''){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
@@ -73,7 +71,6 @@ const DatosPersonales = () => {
             }
         }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }

@@ -14,6 +14,7 @@ import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
 import Mapa from './../mapas/Mapa';
 import FileUploader from 'react-firebase-file-uploader';
+import traducirError from '../../firebase/errores';
 
 const MiEstacionamiento = () => {
     const {firebase} = useContext(FirebaseContext);
@@ -35,6 +36,7 @@ const MiEstacionamiento = () => {
         },
         descripcion: '',
     });
+    const [loading, setLoading] = useState(false);
     const [mapa, mostrarMapa] = useState(false);
     const handleChangeMostrarMapa = () => {
         if(mapa === true) {
@@ -43,6 +45,22 @@ const MiEstacionamiento = () => {
         else {
             mostrarMapa(true);
         }
+    }
+    const [abierto, abrirEstacionamiento] = useState(false);
+    const handleClickAbrirEstacionamiento = () => {
+        setLoading(true);
+        setTimeout(()=>{
+            if(abierto === true) {
+                abrirEstacionamiento(false);
+            }
+            else {
+                abrirEstacionamiento(true);
+            }
+            firebase.db.collection('estacionamientos').doc(id).update({
+                abierto: abierto
+            })
+            setLoading(false);
+        },2000);
     }
     const {id, nombreCompleto, cuit, telefono, ubicacion, descripcion, tarifaAuto, tarifaCamioneta, 
     tarifaMoto, tarifaTraffic } = estacionamientoInfo;
@@ -89,7 +107,7 @@ const MiEstacionamiento = () => {
                 .where('encargado','==', localStorage.getItem('usuario'))
                 .onSnapshot(manejarSnapshot);
             } catch (error) {
-                console.log(error.code);
+                Toast(traducirError(error.code));
             }
         }
         obtenerInfoEstacionamiento();
@@ -119,9 +137,8 @@ const MiEstacionamiento = () => {
                 longitud: resultado[0].ubicacion.longitud
             },
             descripcion: resultado[0].descripcion,
-            urlImagen: resultado[0].urlImagen
+            urlImagen: resultado[0].urlImagen,
         });
-        console.log(resultado[0]);
     }
     //función para modificar estacionamiento
     async function modificarEstacionamiento() {
@@ -144,12 +161,11 @@ const MiEstacionamiento = () => {
                 await firebase.modificarMiEstacionamiento(id, nombreCompleto,
                 telefono, cuit, descripcion, urlImagen, tarifaAuto, tarifaCamioneta, tarifaMoto,
                 tarifaTraffic);
-                console.log(id);
                 Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_MODIFICADO);
             }
         }
         catch (error) {
-            console.log(error.code);
+            Toast(traducirError(error.code));
         }
     }
     const classes = useStyles();
@@ -158,6 +174,7 @@ const MiEstacionamiento = () => {
         <Navbar/>
         <Typography className={classes.titulo}>Mi estacionamiento</Typography>
         &nbsp;
+        <Button endIcon={loading ? <CircularProgress style={{color: "#FFFFFF", padding: 'auto'}}/> : ""} className={abierto ? classes.botonCerrarEstacionamiento : classes.botonAbrirEstacionamiento} onClick={handleClickAbrirEstacionamiento}>{abierto ? "Cerrar estacionamiento" : "Abrir estacionamiento"}</Button>
         <Card className={classes.cartaMiEstacionamiento}>
         &nbsp;
         <Typography style={{fontWeight: 'bold', fontFamily: 'Roboto Condensed', marginBottom: '1rem', marginTop: '1rem'}}>Datos del estacionamiento:</Typography>

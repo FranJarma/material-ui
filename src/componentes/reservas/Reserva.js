@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { makeStyles, Typography, TextField, Button, Card, CardContent, Grid, Divider, MenuItem, FormHelperText } from '@material-ui/core';
+import { Typography, TextField, Button, Card, CardContent, Grid, MenuItem, FormHelperText } from '@material-ui/core';
 import {
     TimePicker,
   } from '@material-ui/pickers';
@@ -11,12 +11,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CheckIcon from '@material-ui/icons/Check';
 import UpdateIcon from '@material-ui/icons/Update';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import * as CGeneral from './../../constantes/general/CGeneral';
 import * as CReservas from './../../constantes/reservas/CReservas';
 import { FirebaseContext } from '../../firebase';
 import {useStyles} from './Styles';
 import swal from './../diseño/Swal';
+import Toast from '../diseño/Toast';
+import traducirError from '../../firebase/errores';
 
 const Reserva = ({reserva, estacionamiento, reservas}) => {
     const classes = useStyles();
@@ -66,12 +67,11 @@ const Reserva = ({reserva, estacionamiento, reservas}) => {
             swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_VALIDADA);
             setAbrirModalValidar(false);
         } catch (error) {
-            console.log(error);
+            Toast(traducirError(error.code));
         }
     }
 
     const concluirReserva = (id) => {
-        console.log(estacionamiento.id, lugar)
         try {
             firebase.db.collection('reservas').doc(id).update({
                 horaSalida: horaSalida.toTimeString().substr(0,5),
@@ -83,7 +83,7 @@ const Reserva = ({reserva, estacionamiento, reservas}) => {
             swal(CGeneral.OPERACION_COMPLETADA, CReservas.LA_RESERVA_HA_SIDO_CONCLUIDA);
             setAbrirModalConcluir(false);
         } catch(error){
-            console.log(error);
+            Toast(traducirError(error.code));
         }
     }
     return ( 

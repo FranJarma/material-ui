@@ -1,6 +1,5 @@
 import { Button, Grid, TextField } from '@material-ui/core';
-import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import Toast from '../diseño/Toast';
 import {useStyles} from './Styles';
 import firebase from './../../firebase';
@@ -15,7 +14,6 @@ const OlvideContraseñaCliente = ({cerrarModal}) => {
         localStorage.removeItem('infoReserva');
         localStorage.removeItem('fecha');
     });
-    const history = useHistory();
     //state para manejar el contenido de los inputs
     const [usuario, guardarUsuario] = useState({
         email: '',

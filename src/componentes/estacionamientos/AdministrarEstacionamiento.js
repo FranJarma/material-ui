@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, Checkbox, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography,
-Input, Chip, FormControlLabel, FormHelperText, InputAdornment } from '@material-ui/core';
+import { Button, Grid, MenuItem, TextField, Typography, FormHelperText } from '@material-ui/core';
 import SpinnerContext from '../../context/spinner/spinnerContext';
 import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,7 +15,6 @@ import traducirError from '../../firebase/errores';
 import {usePlacesWidget} from "react-google-autocomplete";
 //le pasamos como props la info del usuario seleccionado con el botón, la acción (registrar / modificar) y la función para cerrar el modal
 const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModal}) => {
-    console.log(estacionamientoCompleto)
     const classes = useStyles();
     const spinnerContext = useContext(SpinnerContext);
     const { cargando } = spinnerContext;
@@ -51,7 +49,7 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                     case "administrative_area_level_2": {
                         ciudad = informacion.short_name;
                         break;
-                      }
+                    }
                 }
                 guardarUbicacionEstacionamiento(
                     {
@@ -195,7 +193,6 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 }
             }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }
@@ -231,7 +228,6 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
                 }
         }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }
@@ -242,7 +238,6 @@ const AdministrarEstacionamiento = ({estacionamientoCompleto, accion, cerrarModa
             cerrarModal();
             Swal(CGeneral.OPERACION_COMPLETADA, CEstacionamientos.ESTACIONAMIENTO_ELIMINADO);
         } catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }

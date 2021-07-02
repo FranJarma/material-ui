@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Typography, Button, Card, Grid, CardActionArea, CardContent, Avatar } from '@material-ui/core';
+import { Typography, Button, Card, Grid, CardActionArea, CardContent } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import Dialog from '@material-ui/core/Dialog';

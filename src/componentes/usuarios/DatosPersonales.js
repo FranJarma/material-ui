@@ -31,7 +31,7 @@ const DatosPersonales = () => {
         esEncargado: false,
         esAdmin: false
     });
-    const {id, nombreCompleto, email, nombreUsuario, contraseña, rcontraseña, telefono, dni } = usuarioInfo;
+    const { nombreCompleto, email, nombreUsuario, contraseña, rcontraseña, telefono, dni } = usuarioInfo;
     //evento onChange
     const onChange = (e) => {
         guardarUsuarioInfo({
@@ -73,7 +73,6 @@ const DatosPersonales = () => {
     }
 
     async function modificarUsuario() {
-        console.log(usuarioInfo.id)
         try {
             if(nombreCompleto === '' || nombreUsuario === '' ||  email === '' || contraseña === '' || rcontraseña === '' || dni === '' || telefono === ''){
                 Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
@@ -100,7 +99,6 @@ const DatosPersonales = () => {
             }
         }
         catch (error) {
-            console.log(error);
             Toast(traducirError(error.code))
         }
     }
