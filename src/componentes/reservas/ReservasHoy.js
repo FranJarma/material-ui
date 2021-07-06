@@ -37,7 +37,7 @@ const ReservasHoy = () => {
             }
         }
         obtenerReservasDeHoy();
-    })
+    },[])
     function manejarSnapshot(snapshot){
         if (!snapshot) return;
         const reservasDelDia = snapshot.docs.map(doc => {

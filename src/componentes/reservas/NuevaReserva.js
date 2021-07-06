@@ -130,14 +130,13 @@ const NuevaReserva = () => {
         }
         else {
             setTab(tab+1);
-            await firebase.registrarReserva(usuario, tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo, estacionamiento.id, estacionamiento.nombreCompleto,
+            /*await firebase.registrarReserva(usuario, tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo, estacionamiento.id, estacionamiento.nombreCompleto,
             estacionamiento.cuit, estacionamiento.ubicacion.provincia, estacionamiento.ubicacion.ciudad, estacionamiento.ubicacion.direccion,
-            fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear(), hora, new Date(), observaciones, 'registrada', tipoVehiculo.split('&')[1]);
+            fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear(), hora, new Date(), observaciones, 'registrada', tipoVehiculo.split('&')[1]);*/
         }
         } catch (error) {
             Toast(traducirError(error.code))
         }
-        
     } 
     return (
         <>
@@ -421,7 +420,7 @@ const NuevaReserva = () => {
                 <Typography className={classes.subtitulos}>Monto a pagar: </Typography>
                 <Typography className={classes.campos}> $ {tipoVehiculo.split('&')[1]}</Typography>
             </div>
-            <form action="http://localhost:4000/checkout" method="POST">
+            <form action="https://checkout-mp-parkingapp.herokuapp.com/" method="POST">
                 <input type="hidden" name="titulo" value={estacionamiento.nombreCompleto}></input>
                 <input type="hidden" name="precio" value={tipoVehiculo.split('&')[1]}></input>
                 <div style={{textAlign: 'center'}}>
