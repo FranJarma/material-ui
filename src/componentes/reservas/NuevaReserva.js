@@ -120,9 +120,10 @@ const NuevaReserva = () => {
 
     async function confirmarReserva () {
         try {
-            if (tipoVehiculo === "" || marcaVehiculo === "" || patenteVehiculo === "" || hora === "")
+            if (tipoVehiculo === "" || marcaVehiculo === "" ||
+            patenteVehiculo === "" || hora === "")
         {
-            //setTab(tab+1);
+            setTab(tab+1);
             Toast(CGeneral.COMPLETE_TODOS_LOS_CAMPOS);
         }
         else if(patenteVehiculo.includes('_')){
@@ -130,9 +131,15 @@ const NuevaReserva = () => {
         }
         else {
             setTab(tab+1);
-            /*await firebase.registrarReserva(usuario, tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo, estacionamiento.id, estacionamiento.nombreCompleto,
-            estacionamiento.cuit, estacionamiento.ubicacion.provincia, estacionamiento.ubicacion.ciudad, estacionamiento.ubicacion.direccion,
-            fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear(), hora, new Date(), observaciones, 'registrada', tipoVehiculo.split('&')[1]);*/
+            await firebase.registrarReserva(usuario,
+            tipoVehiculo.split('&')[0], marcaVehiculo, patenteVehiculo,
+            estacionamiento.id, estacionamiento.nombreCompleto,
+            estacionamiento.cuit, estacionamiento.ubicacion.provincia,
+            estacionamiento.ubicacion.ciudad,
+            estacionamiento.ubicacion.direccion,
+            fecha.getDate() + '/'+(fecha.getMonth()+1)+'/'+
+            fecha.getFullYear(), hora, new Date(), observaciones,
+            'registrada', tipoVehiculo.split('&')[1]);
         }
         } catch (error) {
             Toast(traducirError(error.code))
@@ -420,7 +427,7 @@ const NuevaReserva = () => {
                 <Typography className={classes.subtitulos}>Monto a pagar: </Typography>
                 <Typography className={classes.campos}> $ {tipoVehiculo.split('&')[1]}</Typography>
             </div>
-            <form action="https://checkout-mp-parkingapp.herokuapp.com/" method="POST">
+            <form action="https://checkout-mp-parkingapp.herokuapp.com/checkout" method="POST">
                 <input type="hidden" name="titulo" value={estacionamiento.nombreCompleto}></input>
                 <input type="hidden" name="precio" value={tipoVehiculo.split('&')[1]}></input>
                 <div style={{textAlign: 'center'}}>
