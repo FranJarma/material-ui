@@ -47,7 +47,7 @@ const Lugares = () => {
             }
         }
         obtenerInfoEstacionamiento();
-        })
+        },[])
         function manejarSnapshot(snapshot){
         if (!snapshot) return;
         const resultado = snapshot.docs.map(doc => {

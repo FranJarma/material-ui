@@ -38,6 +38,7 @@ import EncontrarEstacionamientoMapa from './componentes/estacionamientos/Encontr
 import DetallesEstacionamientoCliente from './componentes/estacionamientos/DetallesEstacionamientoCliente.js';
 import NuevaReserva from './componentes/reservas/NuevaReserva.js';
 import MisReservas from './componentes/reservas/MisReservas.js';
+import Mensualidades from './componentes/reservas/Mensualidades';
 import RutaPrivadaCliente from './componentes/rutas/RutaPrivadaCliente.js';
 
 function App() {
@@ -78,6 +79,8 @@ function App() {
                     <Route exact path="/cambiar-contraseña" component={CambiarContraseña}>
                     </Route>
                     <RutaPrivada exact path="/reservas-del-dia" component={ReservasHoy}>
+                    </RutaPrivada>
+                    <RutaPrivada exact path="/mensualidades" component={Mensualidades}>
                     </RutaPrivada>
                     <RutaPrivada exact path="/mis-reservas" component={MisReservas}>
                     </RutaPrivada>

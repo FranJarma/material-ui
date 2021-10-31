@@ -1,11 +1,14 @@
 export const RESERVAS_HOY = 'Reservas del día de hoy';
+export const MENSUALIDADES = 'Mensualidades solicitadas';
 export const MIS_RESERVAS = 'Mis reservas';
 export const CALENDARIO_RESERVAS = 'Calendario de reservas';
 export const CAMBIAR_FECHA_RESERVAS = 'Cambiar fecha de reservas';
 export const TOTAL_RESERVAS ='Total de reservas:';
 export const TOTAL_RESERVAS_ENCONTRADAS ='Total de reservas encontradas:';
+export const TOTAL_MENSUALIDADES ='Total de mensualidades:';
 
 export const NO_SE_ENCONTRARON_RESERVAS ='No se encontraron reservas';
+export const NO_SE_ENCONTRARON_MENSUALIDADES ='No se encontraron mensualidades';
 export const MODIFICAR_HORA_INGRESO = 'Modificar hora de ingreso';
 export const VALIDAR = 'Validar';
 export const VALIDAR_RESERVA = 'Validar reserva';

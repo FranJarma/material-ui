@@ -13,12 +13,14 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import EventIcon from '@material-ui/icons/Event';
 import TodayIcon from '@material-ui/icons/Today';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+
 import { Link, useHistory }  from 'react-router-dom';
 
 import {FirebaseContext} from './../../firebase';
@@ -235,6 +237,16 @@ const Aside = () => {
                     </Link>
                     </List>
                 </Collapse>
+                <Link to={'/mensualidades'} className={classes.titulosMenu}>
+                <ListItem button>
+                    <ListItemIcon>
+                        <EventIcon className={classes.iconos}/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Mensualidades
+                    </ListItemText>
+                </ListItem>
+                </Link>
                 <Link to={'/reportes'} className={classes.titulosMenu}>
                 <ListItem button>
                     <ListItemIcon>
@@ -259,7 +271,6 @@ const Aside = () => {
                 </ListItem>
                 </Link>
                 </div>
-
             </List>
             <Divider></Divider>
             {usuarioInfo.esAdmin ?
