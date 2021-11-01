@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Typography, TextField, Button, Card, CardContent, Grid, MenuItem, FormHelperText } from '@material-ui/core';
+import { Typography, TextField, Button, Card, CardContent, Grid } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CheckIcon from '@material-ui/icons/Check';
 import * as CGeneral from './../../constantes/general/CGeneral';
-import * as CReservas from './../../constantes/reservas/CReservas';
 import { FirebaseContext } from '../../firebase';
 import {useStyles} from './Styles';
 import swal from './../diseño/Swal';
@@ -15,22 +14,27 @@ import traducirError from '../../firebase/errores';
 
 const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
     const classes = useStyles();
-    //state para el lugar
-    const [lugar, setLugar] = useState('');
-    const onChangeLugar = e => {
-        setLugar(e.target.value)
-    }
     const [abrirModalMensualidad, setAbrirModalMensualidad] = useState(false);
     const handleChangeModalMensualidad = () => {
         setAbrirModalMensualidad(!abrirModalMensualidad);
     }
-
+    const [infoMensualidad, setInfoMensualidad] = useState({
+        precio: 2500
+    });
+    const {precio} = infoMensualidad;
+    const onChange= (e) => {
+        setInfoMensualidad({
+            ...infoMensualidad,
+            [e.target.name] : e.target.value
+        })
+    }
     const {firebase} = useContext(FirebaseContext);
     //funciones de firebase
     const otorgarMensualidad = (id) => {
         try {
             firebase.db.collection('mensualidades').doc(id).update({
-                estado: "Otorgada"
+                estado: "Otorgada",
+                total: precio
             });
             swal(CGeneral.OPERACION_COMPLETADA, "La mensualidad ha sido otorgada");
             setAbrirModalMensualidad(false);
@@ -39,10 +43,11 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
         }
     }
     //funciones de firebase
-    const revocarMensualidad = (id) => {
+    const revocarMensualidad = (id) =>{
         try {
             firebase.db.collection('mensualidades').doc(id).update({
-                estado: "Revocada"
+                estado: "Revocada",
+                total: 0
             });
             swal(CGeneral.OPERACION_COMPLETADA, "La mensualidad ha sido revocada");
             setAbrirModalMensualidad(false);
@@ -51,7 +56,7 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
         }
     }
     //funciones de firebase
-    return ( 
+    return (
         <Grid item xs={12} lg={4}>
             <Card id="lista" className = {classes.cartaReservas}>
                     <CardContent key={mensualidad.id}>
@@ -65,7 +70,7 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Horario solicitado:  </Typography>
-                            <Typography className={classes.campos}>{mensualidad.horarioSolicitado[0]} - {mensualidad.horarioSolicitado[1]}</Typography>
+                            <Typography className={classes.campos}>{mensualidad.horaIngreso} - {mensualidad.horaSalida}</Typography>
                         </div>
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Observaciones: </Typography>
@@ -74,10 +79,6 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
                         <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <Typography className={classes.camposTitulos}>Estado: </Typography>
                             <Typography className={classes.campos}>{mensualidad.estado}</Typography>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                            <Typography className={classes.camposTitulos}>Precio por mes: </Typography>
-                                <Typography className={classes.campos}>$ {estacionamiento.tarifas[0].valor * mensualidad.diasSolicitados.length * (mensualidad.horarioSolicitado[1].split(":")[0] - mensualidad.horarioSolicitado[0].split(":")[0])}</Typography>
                         </div>
                         <br/>
                         {mensualidad.estado !== "Otorgada" ?
@@ -90,36 +91,28 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
                         : <Button
                         color="secondary"
                         variant="contained"
-                        onClick={()=>revocarMensualidad(mensualidad.id)}
+                        onClick={() => revocarMensualidad(mensualidad.id)}
                         >
                         Revocar
                         </Button>}
                         <Dialog open={abrirModalMensualidad} onClose={handleChangeModalMensualidad} aria-labelledby="form-dialog-title">
                                 <DialogTitle id="form-dialog-title">Otorgar Mensualidad</DialogTitle>
                                 <DialogContent>
+                                    <Grid container>
+                                        <Grid item xs={12} md={12} sm={12} lg={12} xl={12}>
+                                            <TextField
+                                            variant="outlined"
+                                            label="Ingrese precio total"
+                                            type="number"
+                                            name="precio"
+                                            value={precio}
+                                            onChange={onChange}>
+                                            </TextField>
+                                        </Grid>
+                                    </Grid>
                                 </DialogContent>
-                                <FormHelperText style={{marginLeft:'1.5rem'}}>Seleccione lugar</FormHelperText>
-                                <TextField
-                                variant="standard"
-                                fullWidth
-                                name="lugar"
-                                value={lugar}
-                                onChange={onChangeLugar}
-                                className={classes.inputLugar}
-                                select
-                                >
-                                {estacionamiento.lugares.map((lugar) => (
-                                <MenuItem
-                                disabled={lugar.ocupado === true || lugar.estado === 'deshabilitado' ? true : false}
-                                key={lugar.numero}
-                                name={lugar.numero}
-                                value={lugar.numero}>
-                                {lugar.numero} {lugar.ocupado === true ? `- Ocupado ` : lugar.estado === 'deshabilitado' ? "- Deshabilitado" : ""}
-                                </MenuItem>
-                                ))}
-                                </TextField>
                                 <DialogActions>
-                                    <Button onClick={()=> otorgarMensualidad(mensualidad.id)} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>Confirmar</Button>
+                                    <Button onClick={() => otorgarMensualidad(mensualidad.id)} endIcon={<CheckIcon/>} className={classes.botonValidarReserva}>Confirmar</Button>
                                     <Button onClick={handleChangeModalMensualidad} className={classes.botonCancelar}>{CGeneral.CANCELAR}</Button>
                                 </DialogActions>
                             </Dialog>

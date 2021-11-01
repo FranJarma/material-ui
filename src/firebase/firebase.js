@@ -311,6 +311,18 @@ class Firebase {
             })
         })
     }
+    //mensualidades
+    async solicitarMensualidad(usuario, estacionamiento, dias, horaIngreso, horaSalida, observaciones){
+        this.db.collection('mensualidades').add({
+            usuario: usuario,
+            estacionamiento: estacionamiento,
+            diasSolicitados: dias,
+            horaIngreso: horaIngreso,
+            horaSalida: horaSalida,
+            observaciones: observaciones,
+            estado: "Solicitada"
+        })
+    }
 }
 const firebase = new Firebase();
 export default firebase;

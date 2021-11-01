@@ -29,8 +29,10 @@ const Mensualidades = () => {
         const obtenerMensualidades = () => {
             try {
                 firebase.db.collection('mensualidades')
+                .where('estacionamiento.id','==', estacionamientoInfo.id)
                 .onSnapshot(manejarSnapshot); 
             } catch (error) {
+                console.log(error);
                 Toast(traducirError(error.code));
             }
         }

@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import NavbarCliente from '../diseño/NavbarCliente.js';
-import { Typography, Grid, Card, CardContent, Button, CardActionArea, Divider, TextareaAutosize} from '@material-ui/core';
+import { Typography, Grid, Card, CardContent, Button, CardActionArea, Divider, TextareaAutosize, Dialog, DialogTitle, DialogContent, FormHelperText, TextField, DialogActions, MenuItem, Select} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Footer from '../diseño/Footer.js';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
@@ -10,14 +10,19 @@ import {useStyles} from './Styles';
 import {useLocation} from 'react-router-dom';
 import Mapa from './../mapas/Mapa.js';
 import Comentarios from './../estacionamientos/Comentarios';
-import { Rating } from '@material-ui/lab';
+import { Alert, Rating } from '@material-ui/lab';
 import Toast from '../diseño/Toast';
 import Swal from '../diseño/Swal';
 import * as CEstacionamientos from './../../constantes/estacionamientos/CEstacionamientos';
 import * as CGeneral from './../../constantes/general/CGeneral';
 import traducirError from '../../firebase/errores.js';
+import CheckIcon from '@material-ui/icons/Check';
+import useInfoUsuario from '../../hooks/useInfoUsuario';
+import { TimePicker } from "@material-ui/pickers";
+
 const DetallesEstacionamientoCliente = () => {
     const location = useLocation();
+    const usuario = useInfoUsuario();
     const { estacionamiento } = location.state;
     const classes = useStyles();
     const spinnerContext = useContext(SpinnerContext);
@@ -27,9 +32,27 @@ const DetallesEstacionamientoCliente = () => {
     const [puntuacion, setPuntuacion] = useState('');
     //state para input de comentario
     const [info, setInfo] = useState({
-        comentario: ''
+        comentario: '',
+        observaciones: ''
     });
-    const {comentario} = info;
+    const [diasSeleccionados, setDiasSeleccionados] = useState([]);
+    const [horaIngreso, setHoraIngreso] = useState(new Date());
+    const [horaSalida, setHoraSalida] = useState(new Date());
+    const handleChangeDiasSeleccionados = (e) => {
+        const {
+          target: { value },
+        } = e;
+        setDiasSeleccionados(
+          // On autofill we get a the stringified value.
+          typeof value === 'string' ? value.split(',') : value,
+        );
+      };
+    //modal
+    const [modalSolicitarMensualidad, setModalSolicitarMensualidad] = useState(false);
+    const handleChangeModalSolicitarMensualidad = () => {
+        setModalSolicitarMensualidad(!modalSolicitarMensualidad);
+    }
+    const {comentario, observaciones} = info;
     const onChange = (e) => {
         setInfo({
             ...info,
@@ -50,6 +73,20 @@ const DetallesEstacionamientoCliente = () => {
             Toast(traducirError(error.code));
         }
     }
+    async function solicitarMensualidad () {
+        try {
+            if(diasSeleccionados.length === 0) Toast('Complete todos los campos');
+            if(horaIngreso > horaSalida) Toast('La hora de salida no puede ser mayor que la de ingreso');
+            await firebase.solicitarMensualidad(usuario, estacionamiento,
+         diasSeleccionados,horaIngreso.getHours() + ':' + horaIngreso.getMinutes(),
+            horaIngreso.getHours() + ':' + horaIngreso.getMinutes(), observaciones);
+            Swal(CGeneral.OPERACION_COMPLETADA, "La mensualidad ha sido solicitada");
+            setModalSolicitarMensualidad(false);
+        } catch (error) {
+            Toast(traducirError(error.code));
+        }
+    }
+    const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
     return (
         (!cargando ? 
         <>
@@ -93,12 +130,73 @@ const DetallesEstacionamientoCliente = () => {
                                 pathname: `/nueva-reserva/estacionamientoId=${estacionamiento.id}`,
                                 state: {estacionamiento}
                             }}>
-                            <CardActionArea style={{textAlign: 'center'}}>
-                                <Button className={classes.botonReservar}>Reservar acá</Button>
-                            </CardActionArea>
+                            <Button fullWidth variant="contained" color="primary">Reservar acá</Button>
                             </Link>
+                            <Button color="primary" fullWidth onClick={handleChangeModalSolicitarMensualidad}>Solicitar mensualidad</Button>
                         </Card>
                     </Grid>
+                    <Dialog fullWidth open={modalSolicitarMensualidad} onClose={handleChangeModalSolicitarMensualidad} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Solicitar Mensualidad</DialogTitle>
+                        <DialogContent style={{overflow: 'hidden'}}>
+                        <Grid container spacing={3} >
+                            <Grid item xs={12} md={12} lg={12} xl={12}>
+                                <FormHelperText>Seleccione días</FormHelperText>
+                                <Select 
+                                variant="outlined"
+                                fullWidth
+                                value={diasSeleccionados}
+                                onChange={handleChangeDiasSeleccionados}
+                                multiple
+                                >
+                                    {dias.map((nombre)=>(
+                                        <MenuItem key={nombre} value={nombre}>{nombre}</MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+                            <Grid item xs={6} md={6} lg={6} xl={6}>
+                                <TimePicker
+                                clearable
+                                label="Hora de Ingreso"
+                                value={horaIngreso}
+                                minutesStep={10}
+                                onChange={hora => setHoraIngreso(hora)}
+                                fullWidth
+                                inputVariant="outlined"
+                            />
+                            </Grid>
+                            <Grid item xs={6} md={6} lg={6} xl={6}>
+                                <TimePicker
+                                clearable
+                                label="Hora de Salida"
+                                value={horaSalida}
+                                minutesStep={10}
+                                onChange={hora => setHoraSalida(hora)}
+                                fullWidth
+                                inputVariant="outlined"
+                            />
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={12} xl={12}>
+                            <FormHelperText>Observaciones (motivo de mensualidad, forma de pago, etc)</FormHelperText>
+                            <TextareaAutosize
+                                name="observaciones"
+                                value={observaciones}
+                                onChange={onChange}
+                                required
+                                className={classes.inputMiEstacionamiento}
+                                rowsMin={5}
+                                maxLength={100}
+                                style={{width: "100%", resize: 'none'}}
+                                >
+                            </TextareaAutosize>
+                            <Alert severity="info">Una vez registrada la solicitud, la misma le llegará al encargado de la playa de estacionamiento para que la pueda revisar y aprobar</Alert>
+                            </Grid>
+                        </Grid>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={solicitarMensualidad} endIcon={<CheckIcon/>} variant="contained" color="primary">Confirmar</Button>
+                            <Button onClick={handleChangeModalSolicitarMensualidad} className={classes.botonCancelar}>{CGeneral.CANCELAR}</Button>
+                        </DialogActions>
+                    </Dialog>
                 <Grid item lg={12} xs={12} style={{marginLeft:'1rem', marginRight: '1rem'}}>
                 <Typography className={classes.camposTitulosLugares}>Deje su comentario y valoración (estos datos son anónimos):</Typography>
                     <TextareaAutosize
