@@ -12,8 +12,6 @@ import { FirebaseContext } from '../../firebase';
 import * as CReservas from './../../constantes/reservas/CReservas';
 import {useStyles} from './Styles';
 import useInfoEstacionamiento from '../../hooks/useInfoEstacionamiento';
-import Toast from '../diseño/Toast.js';
-import traducirError from '../../firebase/errores.js';
 import Mensualidad from './Mensualidad.js';
 
 const Mensualidades = () => {
@@ -22,6 +20,7 @@ const Mensualidades = () => {
     //state para guardar reservas
     const [mensualidades, guardarMensualidades] = useState([]);
     const {firebase} = useContext(FirebaseContext);
+
     //use effect para que constantemente traiga las reservas
     useEffect (() => {
         /*las reservas que se tienen que traer son las del día de hoy, con hora de salida nula
@@ -29,11 +28,9 @@ const Mensualidades = () => {
         const obtenerMensualidades = () => {
             try {
                 firebase.db.collection('mensualidades')
-                .where('estacionamiento.id','==', estacionamientoInfo.id)
                 .onSnapshot(manejarSnapshot); 
             } catch (error) {
                 console.log(error);
-                Toast(traducirError(error.code));
             }
         }
         obtenerMensualidades();

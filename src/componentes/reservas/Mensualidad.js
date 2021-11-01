@@ -30,7 +30,7 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
     }
     const {firebase} = useContext(FirebaseContext);
     //funciones de firebase
-    const otorgarMensualidad = (id) => {
+    async function otorgarMensualidad (id) {
         try {
             firebase.db.collection('mensualidades').doc(id).update({
                 estado: "Otorgada",
@@ -43,7 +43,7 @@ const Mensualidad = ({mensualidad, estacionamiento, mensualidades}) => {
         }
     }
     //funciones de firebase
-    const revocarMensualidad = (id) =>{
+    async function revocarMensualidad (id) {
         try {
             firebase.db.collection('mensualidades').doc(id).update({
                 estado: "Revocada",

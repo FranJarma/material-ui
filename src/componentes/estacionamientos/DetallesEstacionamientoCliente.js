@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import NavbarCliente from '../diseño/NavbarCliente.js';
-import { Typography, Grid, Card, CardContent, Button, CardActionArea, Divider, TextareaAutosize, Dialog, DialogTitle, DialogContent, FormHelperText, TextField, DialogActions, MenuItem, Select} from '@material-ui/core';
+import { Typography, Grid, Card, CardContent, Button, Divider, TextareaAutosize, Dialog, DialogTitle, DialogContent, FormHelperText, TextField, DialogActions, MenuItem, Select} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Footer from '../diseño/Footer.js';
 import SpinnerContext from '../../context/spinner/spinnerContext.js';
@@ -77,9 +77,9 @@ const DetallesEstacionamientoCliente = () => {
         try {
             if(diasSeleccionados.length === 0) Toast('Complete todos los campos');
             if(horaIngreso > horaSalida) Toast('La hora de salida no puede ser mayor que la de ingreso');
-            await firebase.solicitarMensualidad(usuario, estacionamiento,
-         diasSeleccionados,horaIngreso.getHours() + ':' + horaIngreso.getMinutes(),
-            horaIngreso.getHours() + ':' + horaIngreso.getMinutes(), observaciones);
+            await firebase.solicitarMensualidad(usuario, estacionamiento.id,
+            diasSeleccionados, horaIngreso.toTimeString().split(':')[0] + ':' + horaIngreso.toTimeString().split(':')[1],
+            horaSalida.toTimeString().split(':')[0] + ':' + horaSalida.toTimeString().split(':')[1], observaciones);
             Swal(CGeneral.OPERACION_COMPLETADA, "La mensualidad ha sido solicitada");
             setModalSolicitarMensualidad(false);
         } catch (error) {

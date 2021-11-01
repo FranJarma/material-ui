@@ -312,10 +312,10 @@ class Firebase {
         })
     }
     //mensualidades
-    async solicitarMensualidad(usuario, estacionamiento, dias, horaIngreso, horaSalida, observaciones){
+    async solicitarMensualidad(usuario, estacionamientoId, dias, horaIngreso, horaSalida, observaciones){
         this.db.collection('mensualidades').add({
             usuario: usuario,
-            estacionamiento: estacionamiento,
+            estacionamientoId: estacionamientoId,
             diasSolicitados: dias,
             horaIngreso: horaIngreso,
             horaSalida: horaSalida,

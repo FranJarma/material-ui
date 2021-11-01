@@ -70,7 +70,7 @@ const Landing = () => {
         localStorage.removeItem('infoPersona');
         localStorage.removeItem('infoReserva');
         localStorage.removeItem('fecha');
-    });
+    },[]);
     const infoCarta = [
         {
             titulo: '¿Es encargado?',
