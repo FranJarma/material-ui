@@ -1,10 +1,10 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyBM2YLX-lE3tfnyaYht1XcIBlUGvm5oUIQ",
-    authDomain: "parking-app-5fdb4.firebaseapp.com",
-    projectId: "parking-app-5fdb4",
-    storageBucket: "parking-app-5fdb4.appspot.com",
-    messagingSenderId: "704291891508",
-    appId: "1:704291891508:web:317f9e6cb7d4f776ca5d61",
-    measurementId: "G-J89M1K6502"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 export default firebaseConfig;
